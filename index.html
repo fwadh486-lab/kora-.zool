@@ -1,10 +1,239 @@
-<! DOCTYBE html>
-<html>
-<head></head>
-<title></title>
-<title>kora zool</title>
-</hade>
-  <bady></bady>
-  مرحبا
-</html>bady
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101827">
+<title>CORAZOL | كورازول</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;
+ font-family:Arial,sans-serif;
+ background:#101827;
+ color:white;
+}
+header{
+ background:#192538;
+ padding:20px;
+ text-align:center;
+}
+.logo{
+ font-size:30px;
+ font-weight:bold;
+ color:#20e39a;
+}
+.subtitle{color:#aebbd0;font-size:13px}
+button{
+ border:0;
+ border-radius:9px;
+ padding:11px;
+ cursor:pointer;
+ font-weight:bold;
+}
+.lang{background:#20e39a;color:#101827;margin-top:12px}
+nav{
+ display:flex;
+ justify-content:space-around;
+ background:#192538;
+ padding:12px 3px;
+ position:sticky;
+ top:0;
+}
+nav button{
+ background:transparent;
+ color:white;
+ font-size:13px;
+}
+nav button.active{color:#20e39a}
+main{padding:15px;max-width:650px;margin:auto}
+h2{font-size:19px}
+.card{
+ background:#1c2a40;
+ border-radius:14px;
+ padding:17px;
+ margin:12px 0;
+}
+.league{color:#20e39a;font-size:13px}
+.match{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:10px;
+ margin-top:15px;
+}
+.team{flex:1;text-align:center}
+.score{
+ font-size:23px;
+ font-weight:bold;
+ white-space:nowrap;
+}
+.status{
+ color:#aebbd0;
+ font-size:12px;
+ text-align:center;
+ margin-top:10px;
+}
+.live{color:#20e39a}
+table{
+ width:100%;
+ border-collapse:collapse;
+ text-align:center;
+}
+th,td{
+ padding:12px 5px;
+ border-bottom:1px solid #35435a;
+ font-size:13px;
+}
+th{color:#20e39a}
+section{display:none}
+section.active{display:block}
+footer{
+ text-align:center;
+ color:#8392aa;
+ padding:25px;
+ font-size:12px;
+}
+</style>
+</head>
+
+<body>
+<header>
+ <div class="logo">⚽ CORAZOL</div>
+ <p class="subtitle" data-ar="عالم كرة القدم بين يديك"
+ data-en="Your football world">
+ عالم كرة القدم بين يديك</p>
+ <button class="lang" onclick="changeLang()">English / عربي</button>
+</header>
+
+<nav>
+ <button class="active" onclick="showTab('matches',this)"
+ data-ar="المباريات" data-en="Matches">المباريات</button>
+ <button onclick="showTab('standings',this)"
+ data-ar="الترتيب" data-en="Standings">الترتيب</button>
+ <button onclick="showTab('favorites',this)"
+ data-ar="المفضلة" data-en="Favorites">المفضلة</button>
+</nav>
+
+<main>
+<section id="matches" class="active">
+<h2 data-ar="⚽ مباريات اليوم" data-en="⚽ Today's Matches">
+⚽ مباريات اليوم</h2>
+
+<div class="card">
+<div class="league" data-ar="الدوري الإسباني"
+data-en="La Liga">الدوري الإسباني</div>
+<div class="match">
+<div class="team" data-ar="ريال مدريد" data-en="Real Madrid">
+ريال مدريد</div>
+<div class="score">2 - 1</div>
+<div class="team" data-ar="برشلونة" data-en="Barcelona">
+برشلونة</div>
+</div>
+<div class="status live" data-ar="● مثال تجريبي - الدقيقة 75"
+data-en="● Demo - 75th minute">
+● مثال تجريبي - الدقيقة 75</div>
+</div>
+
+<div class="card">
+<div class="league" data-ar="الدوري الإنجليزي الممتاز"
+data-en="Premier League">الدوري الإنجليزي الممتاز</div>
+<div class="match">
+<div class="team" data-ar="أرسنال" data-en="Arsenal">
+أرسنال</div>
+<div class="score">0 - 0</div>
+<div class="team" data-ar="ليفربول" data-en="Liverpool">
+ليفربول</div>
+</div>
+<div class="status" data-ar="مباراة تجريبية"
+data-en="Demo match">مباراة تجريبية</div>
+</div>
+
+<div class="card">
+<div class="league" data-ar="دوري روشن السعودي"
+data-en="Saudi Pro League">دوري روشن السعودي</div>
+<div class="match">
+<div class="team" data-ar="الهلال" data-en="Al Hilal">
+الهلال</div>
+<div class="score">1 - 1</div>
+<div class="team" data-ar="النصر" data-en="Al Nassr">
+النصر</div>
+</div>
+<div class="status" data-ar="نتيجة تجريبية"
+data-en="Demo result">نتيجة تجريبية</div>
+</div>
+</section>
+
+<section id="standings">
+<h2 data-ar="🏆 ترتيب الدوري - بيانات تجريبية"
+data-en="🏆 League Standings - Demo">
+🏆 ترتيب الدوري - بيانات تجريبية</h2>
+<div class="card">
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th data-ar="الفريق" data-en="Team">الفريق</th>
+<th data-ar="لعب" data-en="P">لعب</th>
+<th data-ar="نقاط" data-en="Pts">نقاط</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>1</td><td>Real Madrid</td><td>10</td><td>25</td></tr>
+<tr><td>2</td><td>Barcelona</td><td>10</td><td>23</td></tr>
+<tr><td>3</td><td>Atletico Madrid</td><td>10</td><td>21</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<section id="favorites">
+<h2 data-ar="⭐ المفضلة" data-en="⭐ Favorites">
+⭐ المفضلة</h2>
+<div class="card" data-ar="قريباً: تابع فرقك ومبارياتك المفضلة."
+data-en="Coming soon: Follow your favorite teams and matches.">
+قريباً: تابع فرقك ومبارياتك المفضلة.
+</div>
+</section>
+</main>
+
+<footer>
+CORAZOL © 2026<br>
+<span data-ar="نسخة تجريبية - النتائج ليست مباشرة"
+data-en="Demo version - Scores are not live">
+نسخة تجريبية - النتائج ليست مباشرة
+</span>
+</footer>
+
+<script>
+let language=localStorage.getItem("corazol_lang")||"ar";
+
+function applyLang(){
+ document.documentElement.lang=language;
+ document.documentElement.dir=language==="ar"?"rtl":"ltr";
+ document.querySelectorAll("[data-ar]").forEach(el=>{
+  el.textContent=el.getAttribute("data-"+language);
+ });
+}
+
+function changeLang(){
+ language=language==="ar"?"en":"ar";
+ localStorage.setItem("corazol_lang",language);
+ applyLang();
+}
+
+function showTab(id,button){
+ document.querySelectorAll("section").forEach(s=>{
+  s.classList.remove("active");
+ });
+ document.getElementById(id).classList.add("active");
+ document.querySelectorAll("nav button").forEach(b=>{
+  b.classList.remove("active");
+ });
+ button.classList.add("active");
+}
+
+applyLang();
+</script>
+</body>
 </html>

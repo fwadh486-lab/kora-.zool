@@ -226,7 +226,7 @@ let liveEvents=[],feedFailures=[],lastUpdated=null,dayOffset=0,requestSequence=0
 let audioContext=null;let soundEnabled=localStorage.getItem("korazol_sound")==="yes";let observedScores=new Map();
 function setSoundAlerts(enabled){soundEnabled=enabled;localStorage.setItem("korazol_sound",enabled?"yes":"no");if(enabled){try{audioContext=audioContext||new (window.AudioContext||window.webkitAudioContext)();audioContext.resume()}catch(e){soundEnabled=false;document.getElementById("soundAlerts").checked=false}}}
 function playGoalTone(){if(!soundEnabled||!audioContext||document.hidden)return;try{const start=audioContext.currentTime;[660,880,1100].forEach((hz,i)=>{const o=audioContext.createOscillator(),g=audioContext.createGain();o.type="sine";o.frequency.value=hz;g.gain.setValueAtTime(.0001,start+i*.19);g.gain.exponentialRampToValueAtTime(.12,start+i*.19+.025);g.gain.exponentialRampToValueAtTime(.0001,start+i*.19+.16);o.connect(g);g.connect(audioContext.destination);o.start(start+i*.19);o.stop(start+i*.19+.17)})}catch(e){}}
-function checkGoals(events){if(dayOffset!==0)return;for(const e of events){if(!e.live)continue;const previous=observedScores.get(e.id);const current=e.score;if(previous&&previous!==current&&/^\\d+ - \\d+$/.test(previous)&&/^\\d+ - \\d+$/.test(current)){const a=previous.split(" - ").map(Number),b=current.split(" - ").map(Number);if(b[0]>a[0]||b[1]>a[1])playGoalTone()}observedScores.set(e.id,current)}}
+function checkGoals(events){if(dayOffset!==0)return;for(const e of events){if(!e.live)continue;const previous=observedScores.get(e.id);const current=e.score;if(previous&&previous!==current&&/^\d+ - \d+$/.test(previous)&&/^\d+ - \d+$/.test(current)){const a=previous.split(" - ").map(Number),b=current.split(" - ").map(Number);if(b[0]>a[0]||b[1]>a[1])playGoalTone()}observedScores.set(e.id,current)}}
 function selectedDate(){const parts=new Intl.DateTimeFormat("en-US",{timeZone:"Asia/Riyadh",year:"numeric",month:"2-digit",day:"2-digit"}).formatToParts(new Date());const v=Object.fromEntries(parts.map(p=>[p.type,p.value]));const d=new Date(Date.UTC(+v.year,+v.month-1,+v.day+dayOffset));return d;}
 function shiftDay(n){dayOffset+=n;refreshScores()}
 function goToday(){dayOffset=0;refreshScores()}
@@ -278,8 +278,8 @@ async function showMatchGoals(e,box){
    const scorer=athletes.find(a=>/scorer|goal/i.test(a.type||""))?.athlete?.displayName||p.scorer?.displayName||p.player?.displayName||"";
    const assist=athletes.find(a=>/assist/i.test(a.type||""))?.athlete?.displayName||p.assist?.displayName||"";
    const minute=p.clock?.displayValue||p.minute||"";
-   const candidate=desc.split(". ").slice(1).join(". ").split(" (")[0].trim();
-   const cleanName=scorer||(candidate.length>2&&candidate.length<55&&!candidate.toLowerCase().includes("goal")?candidate:"");
+   const candidate="";
+   const cleanName=scorer;
    if(cleanName)goals.push({scorer:cleanName,assist,minute});
   }
   goalCache.set(key,goals);if(box.isConnected)renderGoalRows(box,goals);

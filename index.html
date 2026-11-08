@@ -145,16 +145,19 @@ select{border-radius:13px;background:#1b2b40;border-color:#40576f}
 
 <main>
 <section id="matches" class="active">
-<div class="notice" role="status" data-ar="النتائج المعروضة أمثلة توضيحية وليست مباريات اليوم الحقيقية. الربط المباشر قيد الإعداد." data-en="Displayed scores are examples, not actual matches today. Live data connection is pending.">النتائج المعروضة أمثلة توضيحية وليست مباريات اليوم الحقيقية. الربط المباشر قيد الإعداد.</div>
+<div class="notice" id="feedNotice" role="status" data-ar="النتائج المعروضة أمثلة توضيحية وليست مباريات اليوم الحقيقية. الربط المباشر قيد الإعداد." data-en="Displayed scores are examples, not actual matches today. Live data connection is pending.">النتائج المعروضة أمثلة توضيحية وليست مباريات اليوم الحقيقية. الربط المباشر قيد الإعداد.</div>
 <h2 data-ar="⚽ نماذج المباريات" data-en="⚽ Sample Matches">
 ⚽ نماذج المباريات</h2>
 
 <label for="leagueFilter" data-ar="تصفية حسب الدوري" data-en="Filter by league">تصفية حسب الدوري</label>
 <select id="leagueFilter" onchange="filterMatches()"><option value="all" data-ar="كل الدوريات" data-en="All leagues">كل الدوريات</option><option value="es" data-ar="الدوري الإسباني" data-en="La Liga">الدوري الإسباني</option><option value="en" data-ar="الدوري الإنجليزي" data-en="Premier League">الدوري الإنجليزي</option><option value="sa" data-ar="الدوري السعودي" data-en="Saudi Pro League">الدوري السعودي</option><option value="sd" data-ar="الدوري السوداني" data-en="Sudanese League">الدوري السوداني</option></select>
+<div id="liveMatches"></div>
+<div id="sampleMatches" hidden>
 <article class="card match-card" data-match="es"><div class="card-top"><span class="league" data-ar="الدوري الإسباني" data-en="La Liga">الدوري الإسباني</span><span class="demo-tag" data-ar="تجريبي" data-en="DEMO">تجريبي</span></div><div class="match"><div class="team" data-ar="ريال مدريد" data-en="Real Madrid">ريال مدريد</div><div class="score">2 - 1</div><div class="team" data-ar="برشلونة" data-en="Barcelona">برشلونة</div></div><div class="card-bottom"><span class="status" data-ar="● مثال تجريبي - الدقيقة 75" data-en="● Demo - 75th minute">● مثال تجريبي - الدقيقة 75</span><button class="fav-btn" data-id="es" onclick="toggleFavorite(this)" aria-label="Favorite">☆</button></div></article>
 <article class="card match-card" data-match="en"><div class="card-top"><span class="league" data-ar="الدوري الإنجليزي الممتاز" data-en="Premier League">الدوري الإنجليزي الممتاز</span><span class="demo-tag" data-ar="تجريبي" data-en="DEMO">تجريبي</span></div><div class="match"><div class="team" data-ar="أرسنال" data-en="Arsenal">أرسنال</div><div class="score">0 - 0</div><div class="team" data-ar="ليفربول" data-en="Liverpool">ليفربول</div></div><div class="card-bottom"><span class="status" data-ar="مباراة تجريبية" data-en="Demo match">مباراة تجريبية</span><button class="fav-btn" data-id="en" onclick="toggleFavorite(this)" aria-label="Favorite">☆</button></div></article>
 <article class="card match-card" data-match="sa"><div class="card-top"><span class="league" data-ar="دوري روشن السعودي" data-en="Saudi Pro League">دوري روشن السعودي</span><span class="demo-tag" data-ar="تجريبي" data-en="DEMO">تجريبي</span></div><div class="match"><div class="team" data-ar="الهلال" data-en="Al Hilal">الهلال</div><div class="score">1 - 1</div><div class="team" data-ar="النصر" data-en="Al Nassr">النصر</div></div><div class="card-bottom"><span class="status" data-ar="نتيجة تجريبية" data-en="Demo result">نتيجة تجريبية</span><button class="fav-btn" data-id="sa" onclick="toggleFavorite(this)" aria-label="Favorite">☆</button></div></article>
 <article class="card match-card" data-match="sd"><div class="card-top"><span class="league" data-ar="الدوري السوداني الممتاز" data-en="Sudanese Premier League">الدوري السوداني الممتاز</span><span class="demo-tag" data-ar="تجريبي" data-en="DEMO">تجريبي</span></div><div class="match"><div class="team" data-ar="الهلال السوداني" data-en="Al Hilal Omdurman">الهلال السوداني</div><div class="score">—</div><div class="team" data-ar="المريخ السوداني" data-en="Al Merrikh">المريخ السوداني</div></div><div class="card-bottom"><span class="status" data-ar="عرض تجريبي — لا توجد نتيجة مباشرة" data-en="Demo display — no live score">عرض تجريبي — لا توجد نتيجة مباشرة</span><button class="fav-btn" data-id="sd" onclick="toggleFavorite(this)" aria-label="Favorite">☆</button></div></article>
+</div>
 </section>
 
 <section id="standings">
@@ -187,8 +190,8 @@ data-en="🏆 League Standings - Demo">
 
 <footer>
 كورة زول © 2026<br>
-<span data-ar="نسخة تجريبية - النتائج ليست مباشرة"
-data-en="Demo version - Scores are not live">
+<span data-ar="النتائج عبر مصدر خارجي عند توفره — الترتيب تجريبي"
+data-en="Scores from an external provider when available — standings are demos">
 نسخة تجريبية - النتائج ليست مباشرة
 </span>
 </footer>
@@ -207,6 +210,8 @@ function applyLang(){
  });
  renderFavorites();
  renderStandings();
+ if(lastUpdated)updateNotice();
+ if(lastUpdated)renderLive();
 }
 
 function changeLang(){
@@ -215,10 +220,66 @@ function changeLang(){
  applyLang();
 }
 
-function filterMatches(){const value=document.getElementById("leagueFilter").value;document.querySelectorAll("[data-match]").forEach(c=>c.style.display=value==="all"||c.dataset.match===value?"":"none");}
-function getFavorites(){try{const stored=JSON.parse(localStorage.getItem("corazol_favorites")||"[]");return Array.isArray(stored)?stored.filter(x=>["es","en","sa","sd"].includes(x)):[]}catch(e){return []}}
+const feeds={es:"esp.1",en:"eng.1",sa:"ksa.1"};
+let liveEvents=[],feedFailures=[],lastUpdated=null;
+function localized(ar,en){return language==="ar"?ar:en}
+function updateNotice(){
+ const n=document.getElementById("feedNotice");
+ if(!lastUpdated){n.textContent=localized("جاري الاتصال بمصدر النتائج...","Connecting to scores provider...");return;}
+ const t=lastUpdated.toLocaleTimeString(language==="ar"?"ar-SA":"en-GB",{hour:"2-digit",minute:"2-digit"});
+ n.textContent=localized("آخر محاولة تحديث: "+t+". ","Last refresh attempt: "+t+". ")+(feedFailures.length?localized("بعض الدوريات لم تُحمّل؛ قد يكون المصدر غير متاح. ","Some leagues could not load. "):"")+localized("الدوري السوداني غير متوفر حالياً في هذا المصدر. الترتيب أدناه تجريبي.","Sudanese league is not supported by this source. Standings below are demos.");
+}
+function renderLive(){
+ const target=document.getElementById("liveMatches");target.replaceChildren();
+ const selected=document.getElementById("leagueFilter").value;
+ const events=liveEvents.filter(e=>selected==="all"||e.league===selected);
+ if(!events.length){const p=document.createElement("p");p.className="notice";p.textContent=selected==="sd"?localized("نتائج الدوري السوداني غير متاحة حالياً من المصدر المتصل.","Sudanese league scores are not available from this provider."):localized("لا توجد مباريات متاحة لهذا الاختيار اليوم، أو تعذّر تحميل النتائج.","No available matches for this selection today, or the feed failed.");target.appendChild(p);}
+ events.forEach(e=>{
+  const card=document.createElement("article");card.className="card match-card";
+  const top=document.createElement("div");top.className="card-top";
+  const league=document.createElement("span");league.className="league";league.textContent=localized({es:"الدوري الإسباني",en:"الدوري الإنجليزي",sa:"الدوري السعودي"}[e.league],{es:"La Liga",en:"Premier League",sa:"Saudi Pro League"}[e.league]);
+  const badge=document.createElement("span");badge.className="demo-tag";badge.textContent=e.live?localized("مباشر","LIVE"):e.status;top.append(league,badge);
+  const match=document.createElement("div");match.className="match";
+  const home=document.createElement("div");home.className="team";home.textContent=e.home;
+  const score=document.createElement("div");score.className="score";score.textContent=e.score;
+  const away=document.createElement("div");away.className="team";away.textContent=e.away;match.append(home,score,away);
+  const bottom=document.createElement("div");bottom.className="card-bottom";
+  const status=document.createElement("span");status.className="status";status.textContent=e.status;
+  const fav=document.createElement("button");fav.className="fav-btn";fav.dataset.id=e.id;fav.textContent=getFavorites().includes(e.id)?"★":"☆";fav.setAttribute("aria-label",localized("المفضلة","Favorite"));fav.onclick=()=>toggleFavorite(fav);bottom.append(status,fav);card.append(top,match,bottom);target.appendChild(card);
+ });
+ renderFavorites();
+}
+async function refreshScores(){
+ const today=new Date();const date=[today.getFullYear(),String(today.getMonth()+1).padStart(2,"0"),String(today.getDate()).padStart(2,"0")].join("");
+ const result=await Promise.allSettled(Object.entries(feeds).map(async ([league,code])=>{
+  const url="https://site.api.espn.com/apis/site/v2/sports/soccer/"+code+"/scoreboard?dates="+date;
+  const response=await fetch(url,{cache:"no-store",signal:AbortSignal.timeout(12000)});
+  if(!response.ok)throw Error("HTTP "+response.status);
+  const json=await response.json();
+  return (json.events||[]).map(ev=>{
+   const comp=ev.competitions?.[0]||{},teams=comp.competitors||[];
+   const home=teams.find(t=>t.homeAway==="home")||teams[0]||{};
+   const away=teams.find(t=>t.homeAway==="away")||teams[1]||{};
+   const status=ev.status?.type?.shortDetail||ev.status?.type?.description||"";
+   const state=ev.status?.type?.state;
+   return {id:league+":"+ev.id,league,home:home.team?.displayName||"—",away:away.team?.displayName||"—",score:state==="pre"?"— : —":(home.score??"—")+" - "+(away.score??"—"),status,live:state==="in"};
+  });
+ }));
+ liveEvents=result.flatMap(r=>r.status==="fulfilled"?r.value:[]);
+ feedFailures=result.map((r,i)=>r.status==="rejected"?Object.keys(feeds)[i]:null).filter(Boolean);
+ lastUpdated=new Date();updateNotice();renderLive();
+}
+function filterMatches(){renderLive();}
+function getFavorites(){try{const stored=JSON.parse(localStorage.getItem("corazol_favorites")||"[]");return Array.isArray(stored)?stored.filter(x=>typeof x==="string"):[]}catch(e){return []}}
 function toggleFavorite(button){const id=button.dataset.id;let favorites=getFavorites();favorites=favorites.includes(id)?favorites.filter(x=>x!==id):[...favorites,id];localStorage.setItem("corazol_favorites",JSON.stringify(favorites));renderFavorites();}
-function renderFavorites(){const favorites=getFavorites();document.querySelectorAll(".fav-btn").forEach(b=>{const active=favorites.includes(b.dataset.id);b.textContent=active?"★":"☆";b.title=language==="ar"?(active?"إزالة من المفضلة":"أضف للمفضلة"):(active?"Remove favorite":"Add to favorites")});const target=document.getElementById("favoriteMatches");target.replaceChildren();if(!favorites.length){const p=document.createElement("p");p.textContent=language==="ar"?"ما أضفت أي مباريات للمفضلة لسه.":"No favorite matches yet.";target.appendChild(p);return;}favorites.forEach(id=>{const original=document.querySelector("[data-match=\""+id+"\"]");if(!original)return;const clone=original.cloneNode(true);clone.removeAttribute("data-match");clone.querySelector(".fav-btn")?.remove();target.appendChild(clone);});}
+function renderFavorites(){
+ const favorites=getFavorites();
+ document.querySelectorAll("#liveMatches .fav-btn").forEach(b=>{b.textContent=favorites.includes(b.dataset.id)?"★":"☆"});
+ const target=document.getElementById("favoriteMatches");target.replaceChildren();
+ const matches=liveEvents.filter(e=>favorites.includes(e.id));
+ if(!matches.length){const p=document.createElement("p");p.textContent=localized("ما عندك مباريات محفوظة ضمن نتائج اليوم.","No saved matches in today's results.");target.appendChild(p);return;}
+ matches.forEach(e=>{const p=document.createElement("div");p.className="card";p.textContent=e.home+"  "+e.score+"  "+e.away+" — "+e.status;target.appendChild(p)});
+}
 function showTab(id,button){
  document.querySelectorAll("section").forEach(s=>{
   s.classList.remove("active");
@@ -231,6 +292,8 @@ function showTab(id,button){
 }
 
 applyLang();
+refreshScores();
+setInterval(refreshScores,60000);
 </script>
 </body>
 </html>

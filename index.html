@@ -147,6 +147,7 @@ select{border-radius:13px;background:#1b2b40;border-color:#40576f}
 
 <main>
 <section id="matches" class="active">
+<div class="card" id="alertSettings"><label><input type="checkbox" id="soundAlerts" onchange="setSoundAlerts(this.checked)"> <span data-ar="🔔 تنبيه صوتي للأهداف أثناء فتح الموقع" data-en="🔔 Goal sound alerts while site is open">🔔 تنبيه صوتي للأهداف أثناء فتح الموقع</span></label><p class="status" data-ar="يعمل فقط أثناء فتح الصفحة وبعد تفعيل الصوت. إشعارات الخلفية قيد التطوير." data-en="Works only while the page is open after enabling audio. Background push is not yet available.">يعمل فقط أثناء فتح الصفحة وبعد تفعيل الصوت. إشعارات الخلفية قيد التطوير.</p></div>
 <div class="notice" id="feedNotice" role="status" data-ar="النتائج المعروضة أمثلة توضيحية وليست مباريات اليوم الحقيقية. الربط المباشر قيد الإعداد." data-en="Displayed scores are examples, not actual matches today. Live data connection is pending.">النتائج المعروضة أمثلة توضيحية وليست مباريات اليوم الحقيقية. الربط المباشر قيد الإعداد.</div>
 <h2 data-ar="⚽ المباريات والنتائج" data-en="⚽ Matches & Scores">
 ⚽ المباريات والنتائج</h2>
@@ -222,6 +223,10 @@ function changeLang(){
 
 const feeds={es:"esp.1",en:"eng.1",sa:"ksa.1"};
 let liveEvents=[],feedFailures=[],lastUpdated=null,dayOffset=0,requestSequence=0;
+let audioContext=null;let soundEnabled=localStorage.getItem("korazol_sound")==="yes";let observedScores=new Map();
+function setSoundAlerts(enabled){soundEnabled=enabled;localStorage.setItem("korazol_sound",enabled?"yes":"no");if(enabled){try{audioContext=audioContext||new (window.AudioContext||window.webkitAudioContext)();audioContext.resume()}catch(e){soundEnabled=false;document.getElementById("soundAlerts").checked=false}}}
+function playGoalTone(){if(!soundEnabled||!audioContext||document.hidden)return;try{const start=audioContext.currentTime;[660,880,1100].forEach((hz,i)=>{const o=audioContext.createOscillator(),g=audioContext.createGain();o.type="sine";o.frequency.value=hz;g.gain.setValueAtTime(.0001,start+i*.19);g.gain.exponentialRampToValueAtTime(.12,start+i*.19+.025);g.gain.exponentialRampToValueAtTime(.0001,start+i*.19+.16);o.connect(g);g.connect(audioContext.destination);o.start(start+i*.19);o.stop(start+i*.19+.17)})}catch(e){}}
+function checkGoals(events){if(dayOffset!==0)return;for(const e of events){if(!e.live)continue;const previous=observedScores.get(e.id);const current=e.score;if(previous&&previous!==current&&/^\\d+ - \\d+$/.test(previous)&&/^\\d+ - \\d+$/.test(current)){const a=previous.split(" - ").map(Number),b=current.split(" - ").map(Number);if(b[0]>a[0]||b[1]>a[1])playGoalTone()}observedScores.set(e.id,current)}}
 function selectedDate(){const parts=new Intl.DateTimeFormat("en-US",{timeZone:"Asia/Riyadh",year:"numeric",month:"2-digit",day:"2-digit"}).formatToParts(new Date());const v=Object.fromEntries(parts.map(p=>[p.type,p.value]));const d=new Date(Date.UTC(+v.year,+v.month-1,+v.day+dayOffset));return d;}
 function shiftDay(n){dayOffset+=n;refreshScores()}
 function goToday(){dayOffset=0;refreshScores()}
@@ -272,6 +277,7 @@ async function refreshScores(){
  }));
  if(sequence!==requestSequence){refreshButton.disabled=false;return;}
  liveEvents=result.flatMap(r=>r.status==="fulfilled"?r.value:[]);
+ checkGoals(liveEvents);
  feedFailures=result.map((r,i)=>r.status==="rejected"?Object.keys(feeds)[i]:null).filter(Boolean);
  lastUpdated=new Date();updateNotice();renderLive();refreshButton.disabled=false;
 }
@@ -298,6 +304,7 @@ function showTab(id,button){
 }
 
 applyLang();
+document.getElementById("soundAlerts").checked=soundEnabled;
 refreshScores();
 setInterval(()=>{if(!document.hidden)refreshScores()},60000);
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)refreshScores()});

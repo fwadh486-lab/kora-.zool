@@ -125,7 +125,7 @@ nav button.active{background:#20e39a18;border-radius:12px}
 select{border-radius:13px;background:#1b2b40;border-color:#40576f}
 @media(max-width:360px){.match-card .team{font-size:12px}.match-card .score{font-size:21px;padding:9px 7px}}
 .sound-bell{position:absolute;top:10px;right:12px;z-index:3;width:38px;height:38px;border:1px solid #50657c;border-radius:50%;background:#243951;color:#fff;font-size:19px;display:grid;place-items:center;cursor:pointer;padding:0}.sound-bell[aria-pressed="true"]{border-color:#20e39a;background:#245443}.sound-bell:focus-visible{outline:2px solid #20e39a}
-.zoot-team{position:relative;min-width:0;flex:1;text-align:center}.zoot-team .team{min-width:0}.zoot-label{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);white-space:nowrap;color:#20e39a;font-size:17px;font-weight:900;text-shadow:0 2px 7px #000;animation:zootPop .5s ease-out both;pointer-events:none}@keyframes zootPop{from{opacity:0;transform:translate(-50%,12px) scale(.5)}to{opacity:1;transform:translate(-50%,0) scale(1)}}
+.zoot-team{position:relative;min-width:0;flex:1;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}.zoot-team .team{min-width:0}.zoot-label{position:relative;display:block;white-space:nowrap;color:#20e39a;font-size:17px;font-weight:900;text-shadow:0 2px 7px #000;animation:zootPop .5s ease-out both;pointer-events:none}@keyframes zootPop{from{opacity:0;transform:translateY(12px) scale(.5)}to{opacity:1;transform:translateY(0) scale(1)}}
 .test-goal{position:absolute;top:54px;right:12px;z-index:3;background:#254c40;color:#e7fff4;border:1px solid #20e39a;border-radius:10px;padding:5px 9px;font-size:12px;cursor:pointer}
 </style>
 </head>

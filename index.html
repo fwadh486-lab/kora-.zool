@@ -148,7 +148,7 @@ select{border-radius:13px;background:#1b2b40;border-color:#40576f}
 <main>
 <section id="matches" class="active">
 <div class="card" id="alertSettings"><label><input type="checkbox" id="soundAlerts" onchange="setSoundAlerts(this.checked)"> <span data-ar="🔔 تنبيه صوتي للأهداف أثناء فتح الموقع" data-en="🔔 Goal sound alerts while site is open">🔔 تنبيه صوتي للأهداف أثناء فتح الموقع</span></label><p class="status" data-ar="يعمل فقط أثناء فتح الصفحة وبعد تفعيل الصوت. إشعارات الخلفية قيد التطوير." data-en="Works only while the page is open after enabling audio. Background push is not yet available.">يعمل فقط أثناء فتح الصفحة وبعد تفعيل الصوت. إشعارات الخلفية قيد التطوير.</p></div>
-<div class="notice" id="feedNotice" role="status" data-ar="جاري تحميل نتائج المباريات من المصدر المباشر..." data-en="Loading live match data from the provider...">جاري تحميل نتائج المباريات من المصدر المباشر...</div>
+<div class="notice" id="feedNotice" role="status" data-ar="جاري تحميل نتائج المباريات من المصدر المباشر..." data-en="Loading live match data from the provider..." hidden>جاري تحميل نتائج المباريات من المصدر المباشر...</div>
 <h2 data-ar="⚽ المباريات والنتائج" data-en="⚽ Matches & Scores">
 ⚽ المباريات والنتائج</h2>
 
@@ -234,9 +234,7 @@ function showDate(){const d=selectedDate();document.getElementById("matchDate").
 function localized(ar,en){return language==="ar"?ar:en}
 function updateNotice(){
  const n=document.getElementById("feedNotice");
- if(!lastUpdated){n.textContent=localized("جاري الاتصال بمصدر النتائج...","Connecting to scores provider...");return;}
- const t=lastUpdated.toLocaleTimeString(language==="ar"?"ar-SA":"en-GB",{hour:"2-digit",minute:"2-digit"});
- n.textContent=localized("آخر محاولة تحديث: "+t+". ","Last refresh attempt: "+t+". ")+(feedFailures.length?localized("بعض الدوريات لم تُحمّل؛ قد يكون المصدر غير متاح. ","Some leagues could not load. "):"")+localized("الدوري السوداني غير متوفر حالياً في هذا المصدر. الترتيب أدناه تجريبي.","Sudanese league is not supported by this source. Standings below are demos.");
+ if(n)n.hidden=true;
 }
 function renderLive(){
  const target=document.getElementById("liveMatches");target.replaceChildren();

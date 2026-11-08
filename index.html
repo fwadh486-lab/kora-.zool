@@ -98,6 +98,9 @@ footer{
 }
 
 /* CORAZOL refreshed match cards */
+header{position:relative;padding:50px 20px 22px}
+header .lang{position:absolute;top:10px;left:12px;margin:0;padding:7px 10px;font-size:11px;border-radius:10px;z-index:2}
+
 body{background:radial-gradient(ellipse at 50% 0%,#203650 0%,#101827 48%,#0c1422 100%);min-height:100vh}
 header{background:linear-gradient(145deg,#213a54,#142238);border-bottom:1px solid #304961}
 .logo{letter-spacing:1px;text-shadow:0 0 22px #20e39a40}
@@ -125,7 +128,7 @@ select{border-radius:13px;background:#1b2b40;border-color:#40576f}
  <p class="subtitle" data-ar="عالم كرة القدم بين يديك"
  data-en="Your football world">
  عالم كرة القدم بين يديك</p>
- <button class="lang" onclick="changeLang()">English / عربي</button>
+ <button class="lang" onclick="changeLang()" aria-label="تغيير اللغة">EN / عربي</button>
 </header>
 
 <nav>

@@ -98,7 +98,7 @@ footer{
 }
 
 .notice{background:#23374a;border:1px solid #52738b;border-radius:12px;padding:12px 14px;font-size:13px;line-height:1.7;color:#d9e6f3;margin:0 0 18px}
-.refresh-btn{background:#20e39a;color:#101827;margin:0 0 12px;padding:10px 14px}
+.date-controls{display:flex;align-items:center;justify-content:center;gap:10px;margin:4px 0 16px}.date-controls button{background:#273f57;color:white;min-width:38px}.date-controls span{font-size:14px;min-width:130px;text-align:center}.refresh-btn{background:#20e39a;color:#101827;margin:0 0 12px;padding:10px 14px}
 /* CORAZOL refreshed match cards */
 .logo{display:flex;align-items:center;justify-content:center;gap:10px;direction:ltr}.logo span{direction:rtl}.turban-ball{height:69px;width:64px;flex-shrink:0;filter:drop-shadow(0 3px 6px #0008)}
 
@@ -153,6 +153,7 @@ select{border-radius:13px;background:#1b2b40;border-color:#40576f}
 <label for="leagueFilter" data-ar="تصفية حسب الدوري" data-en="Filter by league">تصفية حسب الدوري</label>
 <select id="leagueFilter" onchange="filterMatches()"><option value="all" data-ar="كل الدوريات" data-en="All leagues">كل الدوريات</option><option value="es" data-ar="الدوري الإسباني" data-en="La Liga">الدوري الإسباني</option><option value="en" data-ar="الدوري الإنجليزي" data-en="Premier League">الدوري الإنجليزي</option><option value="sa" data-ar="الدوري السعودي" data-en="Saudi Pro League">الدوري السعودي</option><option value="sd" data-ar="الدوري السوداني" data-en="Sudanese League">الدوري السوداني</option></select>
 <button id="refreshBtn" class="refresh-btn" onclick="refreshScores()" data-ar="↻ تحديث النتائج" data-en="↻ Refresh scores">↻ تحديث النتائج</button>
+<div class="date-controls"><button onclick="shiftDay(-1)" aria-label="Previous day">‹</button><span id="matchDate"></span><button onclick="shiftDay(1)" aria-label="Next day">›</button><button onclick="goToday()" data-ar="اليوم" data-en="Today">اليوم</button></div>
 <div id="liveMatches"></div>
 </section>
 
@@ -208,6 +209,7 @@ function applyLang(){
  renderStandings();
  if(lastUpdated)updateNotice();
  if(lastUpdated)renderLive();
+ showDate();
 }
 
 function changeLang(){
@@ -217,7 +219,11 @@ function changeLang(){
 }
 
 const feeds={es:"esp.1",en:"eng.1",sa:"ksa.1"};
-let liveEvents=[],feedFailures=[],lastUpdated=null;
+let liveEvents=[],feedFailures=[],lastUpdated=null,dayOffset=0,requestSequence=0;
+function selectedDate(){const parts=new Intl.DateTimeFormat("en-US",{timeZone:"Asia/Riyadh",year:"numeric",month:"2-digit",day:"2-digit"}).formatToParts(new Date());const v=Object.fromEntries(parts.map(p=>[p.type,p.value]));const d=new Date(Date.UTC(+v.year,+v.month-1,+v.day+dayOffset));return d;}
+function shiftDay(n){dayOffset+=n;refreshScores()}
+function goToday(){dayOffset=0;refreshScores()}
+function showDate(){const d=selectedDate();document.getElementById("matchDate").textContent=d.toLocaleDateString(language==="ar"?"ar-SA":"en-GB",{timeZone:"UTC",weekday:"short",day:"numeric",month:"short"});}
 function localized(ar,en){return language==="ar"?ar:en}
 function updateNotice(){
  const n=document.getElementById("feedNotice");
@@ -247,7 +253,7 @@ function renderLive(){
 }
 async function refreshScores(){
  const refreshButton=document.getElementById("refreshBtn");refreshButton.disabled=true;
- const date=new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Riyadh",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date()).replaceAll("-","");
+ const sequence=++requestSequence;showDate();const date=selectedDate().toISOString().slice(0,10).replaceAll("-","");
  const result=await Promise.allSettled(Object.entries(feeds).map(async ([league,code])=>{
   const url="https://site.api.espn.com/apis/site/v2/sports/soccer/"+code+"/scoreboard?dates="+date;
   const response=await fetch(url,{cache:"no-store",signal:AbortSignal.timeout(12000)});
@@ -262,6 +268,7 @@ async function refreshScores(){
    return {id:league+":"+ev.id,league,home:home.team?.displayName||"—",away:away.team?.displayName||"—",score:state==="pre"?"— : —":(home.score??"—")+" - "+(away.score??"—"),status,live:state==="in"};
   });
  }));
+ if(sequence!==requestSequence)return;
  liveEvents=result.flatMap(r=>r.status==="fulfilled"?r.value:[]);
  feedFailures=result.map((r,i)=>r.status==="rejected"?Object.keys(feeds)[i]:null).filter(Boolean);
  lastUpdated=new Date();updateNotice();renderLive();refreshButton.disabled=false;

@@ -278,9 +278,8 @@ async function showMatchGoals(e,box){
    const scorer=athletes.find(a=>/scorer|goal/i.test(a.type||""))?.athlete?.displayName||p.scorer?.displayName||p.player?.displayName||"";
    const assist=athletes.find(a=>/assist/i.test(a.type||""))?.athlete?.displayName||p.assist?.displayName||"";
    const minute=p.clock?.displayValue||p.minute||"";
-   const afterScore=desc.match(/\\b\\d+\\s*[,–-]\\s*\\d+\\s*[.)]?\\s*([A-ZÀ-ÿ][\\p{L}’\x27.-]+(?:\\s+[A-ZÀ-ÿ][\\p{L}’\x27.-]+){0,3})\\s*\\(/u)?.[1];
-   const fromShot=desc.match(/([A-ZÀ-ÿ][\\p{L}’\x27.-]+(?:\\s+[A-ZÀ-ÿ][\\p{L}’\x27.-]+){0,3})\\s*\\((?:Brighton|Liverpool|Chelsea|Arsenal|Manchester|[A-Z][a-z]+)[^)]*\\)\\s*(?:right|left) footed shot/iu)?.[1];
-   const cleanName=scorer||afterScore||fromShot||desc.match(/\\.\\s*([A-ZÀ-ÿ][\\p{L}’\x27.-]+(?:\\s+[A-ZÀ-ÿ][\\p{L}’\x27.-]+){0,3})\\s*\\(/u)?.[1]||"";
+   const candidate=desc.split(". ").slice(1).join(". ").split(" (")[0].trim();
+   const cleanName=scorer||(candidate.length>2&&candidate.length<55&&!candidate.toLowerCase().includes("goal")?candidate:"");
    if(cleanName)goals.push({scorer:cleanName,assist,minute});
   }
   goalCache.set(key,goals);if(box.isConnected)renderGoalRows(box,goals);

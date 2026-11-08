@@ -358,7 +358,7 @@ function showTab(id,button){
 applyLang();
 updateSoundBell();
 refreshScores();
-setInterval(()=>{if(!document.hidden)refreshScores()},60000);
+setInterval(()=>{if(!document.hidden&&dayOffset===0)refreshScores()},15000);
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)refreshScores()});
 </script>
 </body>

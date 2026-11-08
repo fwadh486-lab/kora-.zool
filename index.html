@@ -144,6 +144,7 @@ select{border-radius:13px;background:#1b2b40;border-color:#40576f}
 <nav>
  <button class="active" onclick="showTab('matches',this)"
  data-ar="المباريات" data-en="Matches">المباريات</button>
+ <button onclick="showTab('fixtures',this)" data-ar="الجدول الجاي" data-en="Fixtures">الجدول الجاي</button>
  <button onclick="showTab('standings',this)"
  data-ar="الترتيب" data-en="Standings">الترتيب</button>
  <button onclick="showTab('favorites',this)"
@@ -164,6 +165,7 @@ select{border-radius:13px;background:#1b2b40;border-color:#40576f}
 <div id="liveMatches"></div>
 </section>
 
+<section id="fixtures"><h2 data-ar="📅 جدول المباريات الجاية" data-en="📅 Upcoming fixtures">📅 جدول المباريات الجاية</h2><iframe id="fixturesFrame" title="جدول المباريات الجاية" loading="lazy" style="width:100%;height:78vh;min-height:580px;border:0;border-radius:12px;background:#0e192a" data-src="./fixtures.html?embedded=1"></iframe></section>
 <section id="standings">
 <div class="notice" data-ar="جدول الترتيب المعروض مثال توضيحي، وليس ترتيب الموسم الحالي." data-en="The standings below are illustrative, not current season standings.">جدول الترتيب المعروض مثال توضيحي، وليس ترتيب الموسم الحالي.</div>
 <label for="standingsLeague" data-ar="اختر الدوري" data-en="Choose league">اختر الدوري</label>
@@ -346,6 +348,7 @@ function showTab(id,button){
   s.classList.remove("active");
  });
  document.getElementById(id).classList.add("active");
+ if(id==="fixtures"){const frame=document.getElementById("fixturesFrame");if(frame&&!frame.src)frame.src=frame.dataset.src;}
  document.querySelectorAll("nav button").forEach(b=>{
   b.classList.remove("active");
  });

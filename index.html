@@ -98,7 +98,8 @@ footer{
 }
 
 .notice{background:#23374a;border:1px solid #52738b;border-radius:12px;padding:12px 14px;font-size:13px;line-height:1.7;color:#d9e6f3;margin:0 0 18px}
-.date-controls{display:flex;align-items:center;justify-content:center;gap:10px;margin:4px 0 16px}.date-controls button{background:#273f57;color:white;min-width:38px}.date-controls span{font-size:14px;min-width:130px;text-align:center}.refresh-btn{background:#20e39a;color:#101827;margin:0 0 12px;padding:10px 14px}
+.date-controls{display:flex;align-items:center;justify-content:center;gap:10px;margin:4px 0 16px}.date-controls button{background:#273f57;color:white;min-width:38px}.date-controls span{font-size:14px;min-width:130px;text-align:center}.match-detail{display:inline-block;color:#20e39a;text-decoration:none;font-size:13px;margin-top:14px;padding:6px 0}.match-detail:focus-visible{outline:2px solid #20e39a}
+.refresh-btn{background:#20e39a;color:#101827;margin:0 0 12px;padding:10px 14px}
 /* CORAZOL refreshed match cards */
 .logo{display:flex;align-items:center;justify-content:center;gap:10px;direction:ltr}.logo span{direction:rtl}.turban-ball{height:69px;width:64px;flex-shrink:0;filter:drop-shadow(0 3px 6px #0008)}
 
@@ -158,6 +159,7 @@ select{border-radius:13px;background:#1b2b40;border-color:#40576f}
 </section>
 
 <section id="standings">
+<div class="notice" data-ar="جدول الترتيب المعروض مثال توضيحي، وليس ترتيب الموسم الحالي." data-en="The standings below are illustrative, not current season standings.">جدول الترتيب المعروض مثال توضيحي، وليس ترتيب الموسم الحالي.</div>
 <label for="standingsLeague" data-ar="اختر الدوري" data-en="Choose league">اختر الدوري</label>
 <select id="standingsLeague" onchange="renderStandings()"><option value="es" data-ar="الدوري الإسباني" data-en="La Liga">الدوري الإسباني</option><option value="en" data-ar="الدوري الإنجليزي" data-en="Premier League">الدوري الإنجليزي</option><option value="sa" data-ar="الدوري السعودي" data-en="Saudi Pro League">الدوري السعودي</option><option value="sd" data-ar="الدوري السوداني" data-en="Sudanese League">الدوري السوداني</option></select>
 <h2 data-ar="🏆 ترتيب الدوري - بيانات تجريبية"
@@ -247,7 +249,7 @@ function renderLive(){
   const away=document.createElement("div");away.className="team";away.textContent=e.away;match.append(home,score,away);
   const bottom=document.createElement("div");bottom.className="card-bottom";
   const status=document.createElement("span");status.className="status";status.textContent=e.status;
-  const fav=document.createElement("button");fav.className="fav-btn";fav.dataset.id=e.id;fav.textContent=getFavorites().includes(e.id)?"★":"☆";fav.setAttribute("aria-label",localized("المفضلة","Favorite"));fav.onclick=()=>toggleFavorite(fav);bottom.append(status,fav);card.append(top,match,bottom);target.appendChild(card);
+  const fav=document.createElement("button");fav.className="fav-btn";fav.dataset.id=e.id;fav.textContent=getFavorites().includes(e.id)?"★":"☆";fav.setAttribute("aria-label",localized("المفضلة","Favorite"));fav.onclick=()=>toggleFavorite(fav);bottom.append(status,fav);card.append(top,match,bottom);if(e.detail){const detail=document.createElement("a");detail.className="match-detail";detail.href=e.detail;detail.target="_blank";detail.rel="noopener noreferrer";detail.textContent=localized("تفاصيل المباراة ↗","Match details ↗");card.appendChild(detail)}target.appendChild(card);
  });
  renderFavorites();
 }
@@ -265,10 +267,10 @@ async function refreshScores(){
    const away=teams.find(t=>t.homeAway==="away")||teams[1]||{};
    const status=ev.status?.type?.shortDetail||ev.status?.type?.description||"";
    const state=ev.status?.type?.state;
-   return {id:league+":"+ev.id,league,home:home.team?.displayName||"—",away:away.team?.displayName||"—",score:state==="pre"?"— : —":(home.score??"—")+" - "+(away.score??"—"),status,live:state==="in"};
+   return {id:league+":"+ev.id,league,home:home.team?.displayName||"—",away:away.team?.displayName||"—",score:state==="pre"?"— : —":(home.score??"—")+" - "+(away.score??"—"),status,live:state==="in",detail:ev.links?.find(l=>l.rel?.includes("summary"))?.href||ev.links?.[0]?.href||null};
   });
  }));
- if(sequence!==requestSequence)return;
+ if(sequence!==requestSequence){refreshButton.disabled=false;return;}
  liveEvents=result.flatMap(r=>r.status==="fulfilled"?r.value:[]);
  feedFailures=result.map((r,i)=>r.status==="rejected"?Object.keys(feeds)[i]:null).filter(Boolean);
  lastUpdated=new Date();updateNotice();renderLive();refreshButton.disabled=false;

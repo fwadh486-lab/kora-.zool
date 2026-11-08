@@ -28,6 +28,21 @@ jobs:
           gradle-version: '8.9'
       - name: Build APK
         run: gradle --no-daemon assembleDebug
+      - name: Verify APK integrity and signature
+        shell: bash
+        run: |
+          set -euo pipefail
+          APK="app/build/outputs/apk/debug/app-debug.apk"
+          test -s "$APK"
+          unzip -t "$APK" >/dev/null
+          SDK="${ANDROID_HOME:-${ANDROID_SDK_ROOT:-}}"
+          APKSIGNER="$(find "$SDK/build-tools" -type f -name apksigner | sort -V | tail -n 1)"
+          test -n "$APKSIGNER"
+          "$APKSIGNER" verify --verbose --print-certs "$APK"
+          echo "APK size:"
+          wc -c < "$APK"
+          echo "APK SHA-256:"
+          sha256sum "$APK"
       - uses: actions/upload-artifact@v4
         with:
           name: KoraZol-debug-apk

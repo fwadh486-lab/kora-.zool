@@ -267,27 +267,32 @@ async function showMatchGoals(e,box){
   const response=await fetch("https://site.api.espn.com/apis/site/v2/sports/soccer/"+code+"/summary?event="+encodeURIComponent(e.eventId),{signal:AbortSignal.timeout(12000)});
   if(!response.ok)throw Error("HTTP "+response.status);
   const data=await response.json();
-  const raw=[...(data.scoringPlays||[]),...(data.keyEvents||[]),...(data.plays||[])];
+  const competition=data.header?.competitions?.[0]||{};
+  const raw=[...(competition.details||[]),...(data.scoringPlays||[]),...(data.keyEvents||[]),...(data.plays||[])];
   const seen=new Set(),goals=[];
+  const athleteName=a=>a?.athlete?.displayName||a?.athlete?.fullName||a?.displayName||a?.fullName||"";
   for(const p of raw){
-   const desc=String(p.text||p.shortText||p.description||p.type?.text||"");
-   const type=String(p.type?.text||p.type?.name||"");
-   if(!/goal|scored/i.test(type+" "+desc)||/disallowed|cancelled|overturned|no goal/i.test(desc))continue;
-   const id=String(p.id||desc);if(seen.has(id))continue;seen.add(id);
+   const desc=String(p.text||p.shortText||p.description||"");
+   const type=String(p.type?.text||p.type?.name||p.type||"");
+   const isGoal=p.scoringPlay===true||p.isScore===true||/goal|scored/i.test(type);
+   if(!isGoal||/disallowed|cancelled|overturned|no goal|ruled out/i.test(type+" "+desc))continue;
    const athletes=p.athletes||p.participants||[];
-   const scorer=athletes.find(a=>/scorer|goal/i.test(a.type||""))?.athlete?.displayName||p.scorer?.displayName||p.player?.displayName||"";
-   const assist=athletes.find(a=>/assist/i.test(a.type||""))?.athlete?.displayName||p.assist?.displayName||"";
-   const minute=p.clock?.displayValue||p.minute||"";
-   const candidate="";
-   const cleanName=scorer;
-   if(cleanName)goals.push({scorer:cleanName,assist,minute});
+   const scorer=athleteName(athletes.find(a=>/scorer|goal|score/i.test(String(a.type||a.role||""))))||
+     athleteName(athletes.find(a=>!/assist/i.test(String(a.type||a.role||""))))||
+     athleteName(p.scorer)||athleteName(p.player)||"";
+   const assist=athleteName(athletes.find(a=>/assist/i.test(String(a.type||a.role||""))))||athleteName(p.assist);
+   const minute=String(p.clock?.displayValue||p.minute||p.time?.displayValue||"").replace(/['′]/g,"");
+   if(!scorer)continue;
+   const id=[scorer,minute,p.team?.id||p.teamId||""].join(":");
+   if(seen.has(id))continue;seen.add(id);
+   goals.push({scorer,assist,minute});
   }
   goalCache.set(key,goals);if(box.isConnected)renderGoalRows(box,goals);
  }catch(err){if(box.isConnected)box.textContent=localized("تفاصيل الأهداف غير متاحة حالياً.","Goal details unavailable.")}
 }
 function renderGoalRows(box,goals){
  box.replaceChildren();
- if(!goals.length){box.remove();return}
+ if(!goals.length){box.textContent=localized("أسماء مسجلي الأهداف غير متاحة من المصدر حالياً.","Scorer names unavailable from provider.");return}
  for(const g of goals){
   const row=document.createElement("div");row.className="goal-row";
   const scorer=document.createElement("div");scorer.textContent="⚽ "+g.scorer+(g.minute?" — "+g.minute+"′":"");row.appendChild(scorer);

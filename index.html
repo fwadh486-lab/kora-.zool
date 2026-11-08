@@ -275,20 +275,21 @@ async function showMatchGoals(e,box){
    if(!/goal|scored/i.test(type+" "+desc)||/disallowed|cancelled|overturned|no goal/i.test(desc))continue;
    const id=String(p.id||desc);if(seen.has(id))continue;seen.add(id);
    const athletes=p.athletes||p.participants||[];
-   const scorer=athletes.find(a=>/scorer|goal/i.test(a.type||""))?.athlete?.displayName||p.scorer?.displayName||"";
+   const scorer=athletes.find(a=>/scorer|goal/i.test(a.type||""))?.athlete?.displayName||p.scorer?.displayName||p.player?.displayName||"";
    const assist=athletes.find(a=>/assist/i.test(a.type||""))?.athlete?.displayName||p.assist?.displayName||"";
    const minute=p.clock?.displayValue||p.minute||"";
-   goals.push({scorer,assist,minute,desc});
+   const cleanName=scorer||desc.match(/(?:Goal!?\\s*[-–:]?\\s*)?([A-ZÀ-ÿ][\\p{L}’\x27.-]+(?:\\s+[A-ZÀ-ÿ][\\p{L}’\x27.-]+){0,3})\\s*\\(/u)?.[1]||"";
+   if(cleanName)goals.push({scorer:cleanName,assist,minute});
   }
   goalCache.set(key,goals);if(box.isConnected)renderGoalRows(box,goals);
  }catch(err){if(box.isConnected)box.textContent=localized("تفاصيل الأهداف غير متاحة حالياً.","Goal details unavailable.")}
 }
 function renderGoalRows(box,goals){
  box.replaceChildren();
- if(!goals.length){box.textContent=localized("أسماء المسجلين غير متاحة من المصدر حالياً.","Scorer names not available from provider.");return}
+ if(!goals.length){box.textContent=localized("أسماء المسجلين غير متاحة حالياً.","Scorer names unavailable.");return}
  for(const g of goals){
   const row=document.createElement("div");row.className="goal-row";
-  const scorer=document.createElement("div");scorer.textContent="⚽ "+(g.scorer||g.desc)+(g.minute?" — "+g.minute+"′":"");row.appendChild(scorer);
+  const scorer=document.createElement("div");scorer.textContent="⚽ "+g.scorer+(g.minute?" — "+g.minute+"′":"");row.appendChild(scorer);
   if(g.assist){const assist=document.createElement("div");assist.className="goal-assist";assist.textContent=localized("صناعة: ","Assist: ")+g.assist;row.appendChild(assist)}
   box.appendChild(row)
  }

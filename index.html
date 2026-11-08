@@ -88,6 +88,8 @@ th,td{
 th{color:#20e39a}
 section{display:none}
 section.active{display:block}
+select{background:#1c2a40;color:white;border:1px solid #35435a;border-radius:9px;padding:10px;width:100%;margin:8px 0 12px}
+.fav-btn{background:#263b52;color:#f7d35b;margin-top:12px;padding:8px 12px}
 footer{
  text-align:center;
  color:#8392aa;
@@ -120,7 +122,9 @@ footer{
 <h2 data-ar="⚽ مباريات اليوم" data-en="⚽ Today's Matches">
 ⚽ مباريات اليوم</h2>
 
-<div class="card">
+<label for="leagueFilter" data-ar="تصفية حسب الدوري" data-en="Filter by league">تصفية حسب الدوري</label>
+<select id="leagueFilter" onchange="filterMatches()"><option value="all" data-ar="كل الدوريات" data-en="All leagues">كل الدوريات</option><option value="es" data-ar="الدوري الإسباني" data-en="La Liga">الدوري الإسباني</option><option value="en" data-ar="الدوري الإنجليزي" data-en="Premier League">الدوري الإنجليزي</option><option value="sa" data-ar="الدوري السعودي" data-en="Saudi Pro League">الدوري السعودي</option><option value="sd" data-ar="الدوري السوداني" data-en="Sudanese League">الدوري السوداني</option></select>
+<div class="card" data-match="es">
 <div class="league" data-ar="الدوري الإسباني"
 data-en="La Liga">الدوري الإسباني</div>
 <div class="match">
@@ -135,7 +139,7 @@ data-en="● Demo - 75th minute">
 ● مثال تجريبي - الدقيقة 75</div>
 </div>
 
-<div class="card">
+<div class="card" data-match="en">
 <div class="league" data-ar="الدوري الإنجليزي الممتاز"
 data-en="Premier League">الدوري الإنجليزي الممتاز</div>
 <div class="match">
@@ -149,7 +153,7 @@ data-en="Premier League">الدوري الإنجليزي الممتاز</div>
 data-en="Demo match">مباراة تجريبية</div>
 </div>
 
-<div class="card">
+<div class="card" data-match="sa">
 <div class="league" data-ar="دوري روشن السعودي"
 data-en="Saudi Pro League">دوري روشن السعودي</div>
 <div class="match">
@@ -161,8 +165,9 @@ data-en="Saudi Pro League">دوري روشن السعودي</div>
 </div>
 <div class="status" data-ar="نتيجة تجريبية"
 data-en="Demo result">نتيجة تجريبية</div>
+<button class="fav-btn" data-id="es" onclick="toggleFavorite(this)" data-ar="☆ أضف للمفضلة" data-en="☆ Add to favorites">☆ أضف للمفضلة</button>
 </div>
-<div class="card">
+<div class="card" data-match="sd">
 <div class="league" data-ar="الدوري السوداني الممتاز" data-en="Sudanese Premier League">الدوري السوداني الممتاز</div>
 <div class="match">
 <div class="team" data-ar="الهلال السوداني" data-en="Al Hilal Omdurman">الهلال السوداني</div>
@@ -170,6 +175,7 @@ data-en="Demo result">نتيجة تجريبية</div>
 <div class="team" data-ar="المريخ السوداني" data-en="Al Merrikh">المريخ السوداني</div>
 </div>
 <div class="status" data-ar="عرض تجريبي — لا توجد نتيجة مباشرة" data-en="Demo display — no live score">عرض تجريبي — لا توجد نتيجة مباشرة</div>
+<button class="fav-btn" data-id="sd" onclick="toggleFavorite(this)" data-ar="☆ أضف للمفضلة" data-en="☆ Add to favorites">☆ أضف للمفضلة</button>
 </div>
 </section>
 
@@ -199,10 +205,7 @@ data-en="🏆 League Standings - Demo">
 <section id="favorites">
 <h2 data-ar="⭐ المفضلة" data-en="⭐ Favorites">
 ⭐ المفضلة</h2>
-<div class="card" data-ar="قريباً: تابع فرقك ومبارياتك المفضلة."
-data-en="Coming soon: Follow your favorite teams and matches.">
-قريباً: تابع فرقك ومبارياتك المفضلة.
-</div>
+<div id="favoriteMatches"></div>
 </section>
 </main>
 
@@ -223,6 +226,7 @@ function applyLang(){
  document.querySelectorAll("[data-ar]").forEach(el=>{
   el.textContent=el.getAttribute("data-"+language);
  });
+ renderFavorites();
 }
 
 function changeLang(){
@@ -231,6 +235,10 @@ function changeLang(){
  applyLang();
 }
 
+function filterMatches(){const value=document.getElementById("leagueFilter").value;document.querySelectorAll("[data-match]").forEach(c=>c.style.display=value==="all"||c.dataset.match===value?"":"none");}
+function getFavorites(){try{return JSON.parse(localStorage.getItem("corazol_favorites")||"[]")}catch(e){return []}}
+function toggleFavorite(button){const id=button.dataset.id;let favorites=getFavorites();favorites=favorites.includes(id)?favorites.filter(x=>x!==id):[...favorites,id];localStorage.setItem("corazol_favorites",JSON.stringify(favorites));renderFavorites();}
+function renderFavorites(){const favorites=getFavorites();document.querySelectorAll(".fav-btn").forEach(b=>{const active=favorites.includes(b.dataset.id);b.textContent=language==="ar"?(active?"★ إزالة من المفضلة":"☆ أضف للمفضلة"):(active?"★ Remove favorite":"☆ Add to favorites")});const target=document.getElementById("favoriteMatches");target.replaceChildren();if(!favorites.length){const p=document.createElement("p");p.textContent=language==="ar"?"ما أضفت أي مباريات للمفضلة لسه.":"No favorite matches yet.";target.appendChild(p);return;}favorites.forEach(id=>{const original=document.querySelector("[data-match=\""+id+"\"]");if(!original)return;const clone=original.cloneNode(true);clone.removeAttribute("data-match");clone.querySelector(".fav-btn")?.remove();target.appendChild(clone);});}
 function showTab(id,button){
  document.querySelectorAll("section").forEach(s=>{
   s.classList.remove("active");

@@ -96,6 +96,26 @@ footer{
  padding:25px;
  font-size:12px;
 }
+
+/* CORAZOL refreshed match cards */
+body{background:radial-gradient(ellipse at 50% 0%,#203650 0%,#101827 48%,#0c1422 100%);min-height:100vh}
+header{background:linear-gradient(145deg,#213a54,#142238);border-bottom:1px solid #304961}
+.logo{letter-spacing:1px;text-shadow:0 0 22px #20e39a40}
+nav{z-index:5;border-bottom:1px solid #304961;box-shadow:0 5px 18px #0002}
+nav button.active{background:#20e39a18;border-radius:12px}
+.match-card{position:relative;overflow:hidden;border:1px solid #3d536c;border-radius:22px;background:linear-gradient(145deg,#243951,#18273b 75%);box-shadow:0 12px 28px #0004,inset 0 1px #ffffff13;padding:17px 16px;margin:16px 0;transition:transform .2s,box-shadow .2s}
+.match-card:before{content:"";position:absolute;inset:0 auto 0 0;width:4px;background:linear-gradient(#20e39a,#3c7cde)}
+.match-card:hover{transform:translateY(-2px);box-shadow:0 15px 30px #0006}
+.card-top,.card-bottom{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.demo-tag{border:1px solid #b7c5d044;background:#ffffff0b;border-radius:100px;padding:4px 9px;font-size:10px;color:#b9c9da;white-space:nowrap}
+.match-card .match{margin:20px 0 16px;gap:6px}
+.match-card .team{font-size:14px;font-weight:700;line-height:1.5;min-width:0}
+.match-card .score{font-size:26px;font-weight:800;letter-spacing:1px;padding:10px 12px;border-radius:13px;background:#0e1a2d;border:1px solid #36516c;box-shadow:inset 0 1px 5px #0006;color:#fff}
+.match-card .status{margin:0;text-align:start;line-height:1.5}
+.match-card .fav-btn{margin:0;border-radius:50%;width:40px;height:40px;flex-shrink:0;font-size:23px;padding:0;background:#ffffff12;color:#f8ce5e}
+.match-card .fav-btn:hover{background:#ffffff28}
+select{border-radius:13px;background:#1b2b40;border-color:#40576f}
+@media(max-width:360px){.match-card .team{font-size:12px}.match-card .score{font-size:21px;padding:9px 7px}}
 </style>
 </head>
 
@@ -124,62 +144,10 @@ footer{
 
 <label for="leagueFilter" data-ar="تصفية حسب الدوري" data-en="Filter by league">تصفية حسب الدوري</label>
 <select id="leagueFilter" onchange="filterMatches()"><option value="all" data-ar="كل الدوريات" data-en="All leagues">كل الدوريات</option><option value="es" data-ar="الدوري الإسباني" data-en="La Liga">الدوري الإسباني</option><option value="en" data-ar="الدوري الإنجليزي" data-en="Premier League">الدوري الإنجليزي</option><option value="sa" data-ar="الدوري السعودي" data-en="Saudi Pro League">الدوري السعودي</option><option value="sd" data-ar="الدوري السوداني" data-en="Sudanese League">الدوري السوداني</option></select>
-<div class="card" data-match="es">
-<div class="league" data-ar="الدوري الإسباني"
-data-en="La Liga">الدوري الإسباني</div>
-<div class="match">
-<div class="team" data-ar="ريال مدريد" data-en="Real Madrid">
-ريال مدريد</div>
-<div class="score">2 - 1</div>
-<div class="team" data-ar="برشلونة" data-en="Barcelona">
-برشلونة</div>
-</div>
-<div class="status live" data-ar="● مثال تجريبي - الدقيقة 75"
-data-en="● Demo - 75th minute">
-● مثال تجريبي - الدقيقة 75</div>
-</div>
-
-<div class="card" data-match="en">
-<div class="league" data-ar="الدوري الإنجليزي الممتاز"
-data-en="Premier League">الدوري الإنجليزي الممتاز</div>
-<div class="match">
-<div class="team" data-ar="أرسنال" data-en="Arsenal">
-أرسنال</div>
-<div class="score">0 - 0</div>
-<div class="team" data-ar="ليفربول" data-en="Liverpool">
-ليفربول</div>
-<button class="fav-btn" data-id="es" onclick="toggleFavorite(this)">☆ أضف للمفضلة</button>
-</div>
-<div class="status" data-ar="مباراة تجريبية"
-data-en="Demo match">مباراة تجريبية</div>
-</div>
-
-<div class="card" data-match="sa">
-<div class="league" data-ar="دوري روشن السعودي"
-data-en="Saudi Pro League">دوري روشن السعودي</div>
-<div class="match">
-<div class="team" data-ar="الهلال" data-en="Al Hilal">
-الهلال</div>
-<div class="score">1 - 1</div>
-<div class="team" data-ar="النصر" data-en="Al Nassr">
-النصر</div>
-<button class="fav-btn" data-id="en" onclick="toggleFavorite(this)">☆ أضف للمفضلة</button>
-</div>
-<div class="status" data-ar="نتيجة تجريبية"
-data-en="Demo result">نتيجة تجريبية</div>
-<button class="fav-btn" data-id="es" onclick="toggleFavorite(this)" data-ar="☆ أضف للمفضلة" data-en="☆ Add to favorites">☆ أضف للمفضلة</button>
-</div>
-<div class="card" data-match="sd">
-<div class="league" data-ar="الدوري السوداني الممتاز" data-en="Sudanese Premier League">الدوري السوداني الممتاز</div>
-<div class="match">
-<div class="team" data-ar="الهلال السوداني" data-en="Al Hilal Omdurman">الهلال السوداني</div>
-<div class="score">—</div>
-<div class="team" data-ar="المريخ السوداني" data-en="Al Merrikh">المريخ السوداني</div>
-<button class="fav-btn" data-id="sa" onclick="toggleFavorite(this)">☆ أضف للمفضلة</button>
-</div>
-<div class="status" data-ar="عرض تجريبي — لا توجد نتيجة مباشرة" data-en="Demo display — no live score">عرض تجريبي — لا توجد نتيجة مباشرة</div>
-<button class="fav-btn" data-id="sd" onclick="toggleFavorite(this)" data-ar="☆ أضف للمفضلة" data-en="☆ Add to favorites">☆ أضف للمفضلة</button>
-</div>
+<article class="card match-card" data-match="es"><div class="card-top"><span class="league" data-ar="الدوري الإسباني" data-en="La Liga">الدوري الإسباني</span><span class="demo-tag" data-ar="تجريبي" data-en="DEMO">تجريبي</span></div><div class="match"><div class="team" data-ar="ريال مدريد" data-en="Real Madrid">ريال مدريد</div><div class="score">2 - 1</div><div class="team" data-ar="برشلونة" data-en="Barcelona">برشلونة</div></div><div class="card-bottom"><span class="status" data-ar="● مثال تجريبي - الدقيقة 75" data-en="● Demo - 75th minute">● مثال تجريبي - الدقيقة 75</span><button class="fav-btn" data-id="es" onclick="toggleFavorite(this)" aria-label="Favorite">☆</button></div></article>
+<article class="card match-card" data-match="en"><div class="card-top"><span class="league" data-ar="الدوري الإنجليزي الممتاز" data-en="Premier League">الدوري الإنجليزي الممتاز</span><span class="demo-tag" data-ar="تجريبي" data-en="DEMO">تجريبي</span></div><div class="match"><div class="team" data-ar="أرسنال" data-en="Arsenal">أرسنال</div><div class="score">0 - 0</div><div class="team" data-ar="ليفربول" data-en="Liverpool">ليفربول</div></div><div class="card-bottom"><span class="status" data-ar="مباراة تجريبية" data-en="Demo match">مباراة تجريبية</span><button class="fav-btn" data-id="en" onclick="toggleFavorite(this)" aria-label="Favorite">☆</button></div></article>
+<article class="card match-card" data-match="sa"><div class="card-top"><span class="league" data-ar="دوري روشن السعودي" data-en="Saudi Pro League">دوري روشن السعودي</span><span class="demo-tag" data-ar="تجريبي" data-en="DEMO">تجريبي</span></div><div class="match"><div class="team" data-ar="الهلال" data-en="Al Hilal">الهلال</div><div class="score">1 - 1</div><div class="team" data-ar="النصر" data-en="Al Nassr">النصر</div></div><div class="card-bottom"><span class="status" data-ar="نتيجة تجريبية" data-en="Demo result">نتيجة تجريبية</span><button class="fav-btn" data-id="sa" onclick="toggleFavorite(this)" aria-label="Favorite">☆</button></div></article>
+<article class="card match-card" data-match="sd"><div class="card-top"><span class="league" data-ar="الدوري السوداني الممتاز" data-en="Sudanese Premier League">الدوري السوداني الممتاز</span><span class="demo-tag" data-ar="تجريبي" data-en="DEMO">تجريبي</span></div><div class="match"><div class="team" data-ar="الهلال السوداني" data-en="Al Hilal Omdurman">الهلال السوداني</div><div class="score">—</div><div class="team" data-ar="المريخ السوداني" data-en="Al Merrikh">المريخ السوداني</div></div><div class="card-bottom"><span class="status" data-ar="عرض تجريبي — لا توجد نتيجة مباشرة" data-en="Demo display — no live score">عرض تجريبي — لا توجد نتيجة مباشرة</span><button class="fav-btn" data-id="sd" onclick="toggleFavorite(this)" aria-label="Favorite">☆</button></div></article>
 </section>
 
 <section id="standings">
@@ -241,7 +209,7 @@ function changeLang(){
 function filterMatches(){const value=document.getElementById("leagueFilter").value;document.querySelectorAll("[data-match]").forEach(c=>c.style.display=value==="all"||c.dataset.match===value?"":"none");}
 function getFavorites(){try{return JSON.parse(localStorage.getItem("corazol_favorites")||"[]")}catch(e){return []}}
 function toggleFavorite(button){const id=button.dataset.id;let favorites=getFavorites();favorites=favorites.includes(id)?favorites.filter(x=>x!==id):[...favorites,id];localStorage.setItem("corazol_favorites",JSON.stringify(favorites));renderFavorites();}
-function renderFavorites(){const favorites=getFavorites();document.querySelectorAll(".fav-btn").forEach(b=>{const active=favorites.includes(b.dataset.id);b.textContent=language==="ar"?(active?"★ إزالة من المفضلة":"☆ أضف للمفضلة"):(active?"★ Remove favorite":"☆ Add to favorites")});const target=document.getElementById("favoriteMatches");target.replaceChildren();if(!favorites.length){const p=document.createElement("p");p.textContent=language==="ar"?"ما أضفت أي مباريات للمفضلة لسه.":"No favorite matches yet.";target.appendChild(p);return;}favorites.forEach(id=>{const original=document.querySelector("[data-match=\""+id+"\"]");if(!original)return;const clone=original.cloneNode(true);clone.removeAttribute("data-match");clone.querySelector(".fav-btn")?.remove();target.appendChild(clone);});}
+function renderFavorites(){const favorites=getFavorites();document.querySelectorAll(".fav-btn").forEach(b=>{const active=favorites.includes(b.dataset.id);b.textContent=active?"★":"☆";b.title=language==="ar"?(active?"إزالة من المفضلة":"أضف للمفضلة"):(active?"Remove favorite":"Add to favorites")});const target=document.getElementById("favoriteMatches");target.replaceChildren();if(!favorites.length){const p=document.createElement("p");p.textContent=language==="ar"?"ما أضفت أي مباريات للمفضلة لسه.":"No favorite matches yet.";target.appendChild(p);return;}favorites.forEach(id=>{const original=document.querySelector("[data-match=\""+id+"\"]");if(!original)return;const clone=original.cloneNode(true);clone.removeAttribute("data-match");clone.querySelector(".fav-btn")?.remove();target.appendChild(clone);});}
 function showTab(id,button){
  document.querySelectorAll("section").forEach(s=>{
   s.classList.remove("active");

@@ -98,6 +98,8 @@ footer{
 }
 
 /* CORAZOL refreshed match cards */
+.logo{display:flex;align-items:center;justify-content:center;gap:10px;direction:ltr}.logo span{direction:rtl}.turban-ball{height:69px;width:64px;flex-shrink:0;filter:drop-shadow(0 3px 6px #0008)}
+
 header{position:relative;padding:50px 20px 22px}
 header .lang{position:absolute;top:10px;left:12px;margin:0;padding:7px 10px;font-size:11px;border-radius:10px;z-index:2}
 
@@ -124,7 +126,7 @@ select{border-radius:13px;background:#1b2b40;border-color:#40576f}
 
 <body>
 <header>
- <div class="logo" data-ar="⚽ كورة زول" data-en="⚽ KORA ZOL">⚽ كورة زول</div>
+ <div class="logo" ><svg class="turban-ball" viewBox="0 0 100 110" role="img" aria-label="كرة قدم بعمامة سودانية" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="ballShade"><stop stop-color="#fff"/><stop offset="1" stop-color="#c4d0d8"/></radialGradient></defs><circle cx="51" cy="65" r="34" fill="url(#ballShade)" stroke="#152338" stroke-width="3"/><path d="M50 47l-14 10 5 17h19l9-16-19-11zm-25 12-7 8 6 17 13-6-3-18zm46-1 13-2 3 18-13 10-10-11zM44 91l-3 7 18 0 7-8z" fill="#182638"/><path d="M16 44Q9 21 35 14Q61 3 82 23L89 34Q66 27 46 38Q27 48 16 44Z" fill="#f8f9fc" stroke="#d1d9e2" stroke-width="2"/><path d="M15 40Q40 16 83 27M19 32Q47 11 78 22M25 23Q49 9 69 17" fill="none" stroke="#c8d2de" stroke-width="4" stroke-linecap="round"/><path d="M16 43Q40 28 85 32" fill="none" stroke="#f7f8fa" stroke-width="9"/><path d="M17 47Q40 32 85 36" fill="none" stroke="#c51e36" stroke-width="2"/><path d="M19 43Q12 62 20 91L29 96Q25 67 32 43Z" fill="#f6f7fa" stroke="#d2dae4" stroke-width="2"/><path d="M20 88l9 3" stroke="#c51e36" stroke-width="3"/></svg><span>كورة زول</span></div>
  <p class="subtitle" data-ar="عالم كرة القدم بين يديك"
  data-en="Your football world">
  عالم كرة القدم بين يديك</p>
@@ -196,6 +198,7 @@ let language=localStorage.getItem("corazol_lang")||"ar";
 
 function applyLang(){
  document.documentElement.lang=language;
+ document.querySelector(".logo span").textContent=language==="ar"?"كورة زول":"KORA ZOL";
  document.documentElement.dir=language==="ar"?"rtl":"ltr";
  document.querySelectorAll("[data-ar]").forEach(el=>{
   el.textContent=el.getAttribute("data-"+language);

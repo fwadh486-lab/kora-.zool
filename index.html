@@ -154,7 +154,7 @@ select{border-radius:13px;background:#1b2b40;border-color:#40576f}
 
 <label for="leagueFilter" data-ar="تصفية حسب الدوري" data-en="Filter by league">تصفية حسب الدوري</label>
 <select id="leagueFilter" onchange="filterMatches()"><option value="all" data-ar="كل الدوريات" data-en="All leagues">كل الدوريات</option><option value="es" data-ar="الدوري الإسباني" data-en="La Liga">الدوري الإسباني</option><option value="en" data-ar="الدوري الإنجليزي" data-en="Premier League">الدوري الإنجليزي</option><option value="sa" data-ar="الدوري السعودي" data-en="Saudi Pro League">الدوري السعودي</option><option value="sd" data-ar="الدوري السوداني" data-en="Sudanese League">الدوري السوداني</option></select>
-<button id="refreshBtn" class="refresh-btn" onclick="refreshScores()" data-ar="↻ تحديث النتائج" data-en="↻ Refresh scores">↻ تحديث النتائج</button>
+
 <div class="date-controls"><button onclick="shiftDay(-1)" aria-label="Previous day">‹</button><span id="matchDate"></span><button onclick="shiftDay(1)" aria-label="Next day">›</button><button onclick="goToday()" data-ar="اليوم" data-en="Today">اليوم</button></div>
 <div id="liveMatches"></div>
 </section>
@@ -299,7 +299,7 @@ function renderGoalRows(box,goals){
  }
 }
 async function refreshScores(){
- const refreshButton=document.getElementById("refreshBtn");refreshButton.disabled=true;
+ 
  const sequence=++requestSequence;showDate();const date=selectedDate().toISOString().slice(0,10).replaceAll("-","");
  const result=await Promise.allSettled(Object.entries(feeds).map(async ([league,code])=>{
   const url="https://site.api.espn.com/apis/site/v2/sports/soccer/"+code+"/scoreboard?dates="+date;
@@ -315,11 +315,11 @@ async function refreshScores(){
    return {id:league+":"+ev.id,eventId:ev.id,league,home:home.team?.displayName||"—",away:away.team?.displayName||"—",score:state==="pre"?"— : —":(home.score??"—")+" - "+(away.score??"—"),status,live:state==="in",detail:ev.links?.find(l=>l.rel?.includes("summary"))?.href||ev.links?.[0]?.href||null};
   });
  }));
- if(sequence!==requestSequence){refreshButton.disabled=false;return;}
+ if(sequence!==requestSequence)return;
  liveEvents=result.flatMap(r=>r.status==="fulfilled"?r.value:[]);
  checkGoals(liveEvents);
  feedFailures=result.map((r,i)=>r.status==="rejected"?Object.keys(feeds)[i]:null).filter(Boolean);
- lastUpdated=new Date();updateNotice();renderLive();refreshButton.disabled=false;
+ lastUpdated=new Date();updateNotice();renderLive();
 }
 function filterMatches(){renderLive();}
 function getFavorites(){try{const stored=JSON.parse(localStorage.getItem("corazol_favorites")||"[]");return Array.isArray(stored)?stored.filter(x=>typeof x==="string"):[]}catch(e){return []}}

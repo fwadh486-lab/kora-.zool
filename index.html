@@ -98,6 +98,7 @@ footer{
 }
 
 .notice{background:#23374a;border:1px solid #52738b;border-radius:12px;padding:12px 14px;font-size:13px;line-height:1.7;color:#d9e6f3;margin:0 0 18px}
+.refresh-btn{background:#20e39a;color:#101827;margin:0 0 12px;padding:10px 14px}
 /* CORAZOL refreshed match cards */
 .logo{display:flex;align-items:center;justify-content:center;gap:10px;direction:ltr}.logo span{direction:rtl}.turban-ball{height:69px;width:64px;flex-shrink:0;filter:drop-shadow(0 3px 6px #0008)}
 
@@ -146,18 +147,13 @@ select{border-radius:13px;background:#1b2b40;border-color:#40576f}
 <main>
 <section id="matches" class="active">
 <div class="notice" id="feedNotice" role="status" data-ar="النتائج المعروضة أمثلة توضيحية وليست مباريات اليوم الحقيقية. الربط المباشر قيد الإعداد." data-en="Displayed scores are examples, not actual matches today. Live data connection is pending.">النتائج المعروضة أمثلة توضيحية وليست مباريات اليوم الحقيقية. الربط المباشر قيد الإعداد.</div>
-<h2 data-ar="⚽ نماذج المباريات" data-en="⚽ Sample Matches">
-⚽ نماذج المباريات</h2>
+<h2 data-ar="⚽ المباريات والنتائج" data-en="⚽ Matches & Scores">
+⚽ المباريات والنتائج</h2>
 
 <label for="leagueFilter" data-ar="تصفية حسب الدوري" data-en="Filter by league">تصفية حسب الدوري</label>
 <select id="leagueFilter" onchange="filterMatches()"><option value="all" data-ar="كل الدوريات" data-en="All leagues">كل الدوريات</option><option value="es" data-ar="الدوري الإسباني" data-en="La Liga">الدوري الإسباني</option><option value="en" data-ar="الدوري الإنجليزي" data-en="Premier League">الدوري الإنجليزي</option><option value="sa" data-ar="الدوري السعودي" data-en="Saudi Pro League">الدوري السعودي</option><option value="sd" data-ar="الدوري السوداني" data-en="Sudanese League">الدوري السوداني</option></select>
+<button id="refreshBtn" class="refresh-btn" onclick="refreshScores()" data-ar="↻ تحديث النتائج" data-en="↻ Refresh scores">↻ تحديث النتائج</button>
 <div id="liveMatches"></div>
-<div id="sampleMatches" hidden>
-<article class="card match-card" data-match="es"><div class="card-top"><span class="league" data-ar="الدوري الإسباني" data-en="La Liga">الدوري الإسباني</span><span class="demo-tag" data-ar="تجريبي" data-en="DEMO">تجريبي</span></div><div class="match"><div class="team" data-ar="ريال مدريد" data-en="Real Madrid">ريال مدريد</div><div class="score">2 - 1</div><div class="team" data-ar="برشلونة" data-en="Barcelona">برشلونة</div></div><div class="card-bottom"><span class="status" data-ar="● مثال تجريبي - الدقيقة 75" data-en="● Demo - 75th minute">● مثال تجريبي - الدقيقة 75</span><button class="fav-btn" data-id="es" onclick="toggleFavorite(this)" aria-label="Favorite">☆</button></div></article>
-<article class="card match-card" data-match="en"><div class="card-top"><span class="league" data-ar="الدوري الإنجليزي الممتاز" data-en="Premier League">الدوري الإنجليزي الممتاز</span><span class="demo-tag" data-ar="تجريبي" data-en="DEMO">تجريبي</span></div><div class="match"><div class="team" data-ar="أرسنال" data-en="Arsenal">أرسنال</div><div class="score">0 - 0</div><div class="team" data-ar="ليفربول" data-en="Liverpool">ليفربول</div></div><div class="card-bottom"><span class="status" data-ar="مباراة تجريبية" data-en="Demo match">مباراة تجريبية</span><button class="fav-btn" data-id="en" onclick="toggleFavorite(this)" aria-label="Favorite">☆</button></div></article>
-<article class="card match-card" data-match="sa"><div class="card-top"><span class="league" data-ar="دوري روشن السعودي" data-en="Saudi Pro League">دوري روشن السعودي</span><span class="demo-tag" data-ar="تجريبي" data-en="DEMO">تجريبي</span></div><div class="match"><div class="team" data-ar="الهلال" data-en="Al Hilal">الهلال</div><div class="score">1 - 1</div><div class="team" data-ar="النصر" data-en="Al Nassr">النصر</div></div><div class="card-bottom"><span class="status" data-ar="نتيجة تجريبية" data-en="Demo result">نتيجة تجريبية</span><button class="fav-btn" data-id="sa" onclick="toggleFavorite(this)" aria-label="Favorite">☆</button></div></article>
-<article class="card match-card" data-match="sd"><div class="card-top"><span class="league" data-ar="الدوري السوداني الممتاز" data-en="Sudanese Premier League">الدوري السوداني الممتاز</span><span class="demo-tag" data-ar="تجريبي" data-en="DEMO">تجريبي</span></div><div class="match"><div class="team" data-ar="الهلال السوداني" data-en="Al Hilal Omdurman">الهلال السوداني</div><div class="score">—</div><div class="team" data-ar="المريخ السوداني" data-en="Al Merrikh">المريخ السوداني</div></div><div class="card-bottom"><span class="status" data-ar="عرض تجريبي — لا توجد نتيجة مباشرة" data-en="Demo display — no live score">عرض تجريبي — لا توجد نتيجة مباشرة</span><button class="fav-btn" data-id="sd" onclick="toggleFavorite(this)" aria-label="Favorite">☆</button></div></article>
-</div>
 </section>
 
 <section id="standings">
@@ -192,7 +188,7 @@ data-en="🏆 League Standings - Demo">
 كورة زول © 2026<br>
 <span data-ar="النتائج عبر مصدر خارجي عند توفره — الترتيب تجريبي"
 data-en="Scores from an external provider when available — standings are demos">
-نسخة تجريبية - النتائج ليست مباشرة
+النتائج من مصدر خارجي عند توفر الاتصال، والترتيب تجريبي
 </span>
 </footer>
 
@@ -233,7 +229,7 @@ function renderLive(){
  const target=document.getElementById("liveMatches");target.replaceChildren();
  const selected=document.getElementById("leagueFilter").value;
  const events=liveEvents.filter(e=>selected==="all"||e.league===selected);
- if(!events.length){const p=document.createElement("p");p.className="notice";p.textContent=selected==="sd"?localized("نتائج الدوري السوداني غير متاحة حالياً من المصدر المتصل.","Sudanese league scores are not available from this provider."):localized("لا توجد مباريات متاحة لهذا الاختيار اليوم، أو تعذّر تحميل النتائج.","No available matches for this selection today, or the feed failed.");target.appendChild(p);}
+ if(!events.length){const p=document.createElement("p");p.className="notice";const failed=selected==="all"?feedFailures.length===Object.keys(feeds).length:feedFailures.includes(selected);p.textContent=selected==="sd"?localized("نتائج الدوري السوداني غير متاحة حالياً من المصدر المتصل.","Sudanese league scores are not available from this provider."):failed?localized("تعذّر تحميل نتائج الدوري من المصدر. جرّب التحديث.","Could not load league scores. Try refreshing."):localized("لا توجد مباريات مدرجة لهذا الدوري اليوم.","No scheduled matches for this league today.");target.appendChild(p);}
  events.forEach(e=>{
   const card=document.createElement("article");card.className="card match-card";
   const top=document.createElement("div");top.className="card-top";
@@ -250,7 +246,8 @@ function renderLive(){
  renderFavorites();
 }
 async function refreshScores(){
- const today=new Date();const date=[today.getFullYear(),String(today.getMonth()+1).padStart(2,"0"),String(today.getDate()).padStart(2,"0")].join("");
+ const refreshButton=document.getElementById("refreshBtn");refreshButton.disabled=true;
+ const date=new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Riyadh",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date()).replaceAll("-","");
  const result=await Promise.allSettled(Object.entries(feeds).map(async ([league,code])=>{
   const url="https://site.api.espn.com/apis/site/v2/sports/soccer/"+code+"/scoreboard?dates="+date;
   const response=await fetch(url,{cache:"no-store",signal:AbortSignal.timeout(12000)});
@@ -267,7 +264,7 @@ async function refreshScores(){
  }));
  liveEvents=result.flatMap(r=>r.status==="fulfilled"?r.value:[]);
  feedFailures=result.map((r,i)=>r.status==="rejected"?Object.keys(feeds)[i]:null).filter(Boolean);
- lastUpdated=new Date();updateNotice();renderLive();
+ lastUpdated=new Date();updateNotice();renderLive();refreshButton.disabled=false;
 }
 function filterMatches(){renderLive();}
 function getFavorites(){try{const stored=JSON.parse(localStorage.getItem("corazol_favorites")||"[]");return Array.isArray(stored)?stored.filter(x=>typeof x==="string"):[]}catch(e){return []}}
@@ -293,7 +290,8 @@ function showTab(id,button){
 
 applyLang();
 refreshScores();
-setInterval(refreshScores,60000);
+setInterval(()=>{if(!document.hidden)refreshScores()},60000);
+document.addEventListener("visibilitychange",()=>{if(!document.hidden)refreshScores()});
 </script>
 </body>
 </html>

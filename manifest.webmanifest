@@ -12,7 +12,7 @@
   "theme_color": "#101827",
   "icons": [
     {
-      "src": "./icon.svg",
+      "src": "./icon.svg?v=turban20261109",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any maskable"

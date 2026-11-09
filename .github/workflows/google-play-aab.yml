@@ -1,0 +1,40 @@
+name: Kora Zol Google Play AAB
+on:
+  workflow_dispatch:
+jobs:
+  bundle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.11'
+      - name: Build Android App Bundle
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KORAZOL_KEYSTORE_BASE64 }}
+          KORAZOL_STORE_PASSWORD: ${{ secrets.KORAZOL_STORE_PASSWORD }}
+          KORAZOL_KEY_ALIAS: ${{ secrets.KORAZOL_KEY_ALIAS }}
+          KORAZOL_KEY_PASSWORD: ${{ secrets.KORAZOL_KEY_PASSWORD }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -z "$KEYSTORE_BASE64" || -z "$KORAZOL_STORE_PASSWORD" || -z "$KORAZOL_KEY_ALIAS" || -z "$KORAZOL_KEY_PASSWORD" ]]; then
+            echo "::error::Configure four KORAZOL signing secrets before producing a Google Play bundle."
+            exit 1
+          fi
+          echo "$KEYSTORE_BASE64" | base64 --decode > "$RUNNER_TEMP/korazol-upload.jks"
+          export KORAZOL_KEYSTORE_PATH="$RUNNER_TEMP/korazol-upload.jks"
+          gradle --no-daemon :app:bundleRelease
+          test -s app/build/outputs/bundle/release/app-release.aab
+          jarsigner -verify -verbose -certs app/build/outputs/bundle/release/app-release.aab >/dev/null
+          rm -f "$KORAZOL_KEYSTORE_PATH"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: KoraZol-GooglePlay-AAB
+          path: app/build/outputs/bundle/release/app-release.aab
+          if-no-files-found: error
+          retention-days: 30

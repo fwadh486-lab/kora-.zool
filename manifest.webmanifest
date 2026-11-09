@@ -1,0 +1,21 @@
+{
+  "id": "./",
+  "name": "كورة زول | Kora Zol",
+  "short_name": "كورة زول",
+  "description": "مباريات ونتائج كرة القدم",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "./?source=pwa",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#101827",
+  "theme_color": "#101827",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

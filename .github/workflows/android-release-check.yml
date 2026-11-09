@@ -1,0 +1,43 @@
+name: Kora Zol Android installable APK
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'app/**'
+      - '.github/workflows/android-release-check.yml'
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v3
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.11'
+      - name: Build Android APK
+        run: gradle --no-daemon :app:assembleDebug
+      - name: Verify installable APK package
+        shell: bash
+        run: |
+          set -euo pipefail
+          APK=app/build/outputs/apk/debug/app-debug.apk
+          test -s "$APK"
+          unzip -t "$APK" >/dev/null
+          BT="$(find "$ANDROID_HOME/build-tools" -mindepth 1 -maxdepth 1 -type d | sort -V | tail -n 1)"
+          "$BT/apksigner" verify --verbose "$APK"
+          "$BT/aapt" dump badging "$APK" | tee /tmp/korazol-badging.txt
+          grep -q "package: name='com.korazol.app'" /tmp/korazol-badging.txt
+          grep -q "launchable-activity: name='com.korazol.app.MainActivity'" /tmp/korazol-badging.txt
+          echo "APK bytes: $(wc -c < "$APK")"
+          sha256sum "$APK"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: KoraZol-Android-APK
+          path: app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
+          retention-days: 30

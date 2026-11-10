@@ -1,0 +1,11 @@
+{
+  "testedAt": "2026-11-10T17:40:11.012649+00:00",
+  "season": 2024,
+  "league": 39,
+  "fixtures": [],
+  "lineup": null,
+  "errors": [
+    "fixtures: {'access': 'Your account is suspended, check on https://dashboard.api-football.com.'}"
+  ],
+  "requests": 1
+}

@@ -1,5 +1,5 @@
-const CACHE='korazol-shell-v2';
-const SHELL=['./','./index.html','./fixtures.html','./manifest.webmanifest','./icon.svg'];
+const CACHE='korazol-shell-v6';
+const SHELL=['./','./index.html','./fixtures.html','./manifest.webmanifest','./kora-zol-icon-192.png'];
 self.addEventListener('install',event=>{
  event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(SHELL)));
  self.skipWaiting();

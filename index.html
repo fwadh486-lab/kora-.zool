@@ -576,7 +576,23 @@ async function refreshScores(){
  if(result.some(r=>r.status==='fulfilled'))lastUpdated=new Date();updateNotice();renderLive();
 }
 let upcomingRequest=0;
-async function loadUpcoming(){const sequence=++upcomingRequest;const now=new Date();const dates=[];for(let n=0;n<10;n++){const d=new Date(now);d.setDate(d.getDate()+n);dates.push(d.toISOString().slice(0,10).replaceAll("-",""))}const jobs=Object.entries(feeds).flatMap(([league,code])=>dates.map(date=>async()=>{const response=await fetch("https://site.api.espn.com/apis/site/v2/sports/soccer/"+code+"/scoreboard?dates="+date,{signal:AbortSignal.timeout(10000)});if(!response.ok)return[];const json=await response.json();return(json.events||[]).filter(ev=>ev.status?.type?.state==="pre"&&new Date(ev.date)>now).map(ev=>{const c=ev.competitions?.[0]?.competitors||[];const home=c.find(t=>t.homeAway==="home")||c[0]||{};const away=c.find(t=>t.homeAway==="away")||c[1]||{};return{id:league+":"+ev.id,eventId:ev.id,league,home:home.team?.displayName||"—",away:away.team?.displayName||"—",homeLogo:home.team?.logo||home.team?.logos?.[0]?.href||"",awayLogo:away.team?.logo||away.team?.logos?.[0]?.href||"",date:ev.date,score:"— : —",status:"Upcoming",live:false}}) }));const result=[];let nextJob=0;async function worker(){while(nextJob<jobs.length){const job=jobs[nextJob++];try{result.push({status:"fulfilled",value:await job()})}catch(e){result.push({status:"rejected",reason:e})}}}await Promise.all(Array.from({length:8},()=>worker()));if(sequence!==upcomingRequest)return;const all=result.flatMap(x=>x.status==="fulfilled"?x.value:[]);const unique=new Map(all.map(e=>[e.id,e]));window.upcomingEvents=[...unique.values()].sort((a,b)=>new Date(a.date)-new Date(b.date));try{localStorage.setItem("korazol_upcoming_v1",JSON.stringify(window.upcomingEvents))}catch{}renderLive()}
+async function loadUpcoming(){
+ const sequence=++upcomingRequest,now=new Date();
+ const fmt=d=>d.toISOString().slice(0,10).replaceAll("-","");
+ const end=new Date(now);end.setDate(end.getDate()+10);
+ const range=fmt(now)+"-"+fmt(end);
+ const found=[];let successes=0,failures=0;
+ const leagues=Object.entries(feeds);
+ async function get(league,code,dates){const response=await fetch("https://site.api.espn.com/apis/site/v2/sports/soccer/"+code+"/scoreboard?dates="+dates,{cache:"no-store",signal:AbortSignal.timeout(12000)});if(!response.ok)throw Error("HTTP "+response.status);const data=await response.json();return(data.events||[]).filter(ev=>ev.status?.type?.state==="pre"&&new Date(ev.date)>now).map(ev=>{const teams=ev.competitions?.[0]?.competitors||[];const home=teams.find(t=>t.homeAway==="home")||teams[0]||{};const away=teams.find(t=>t.homeAway==="away")||teams[1]||{};return{id:league+":"+ev.id,eventId:ev.id,league,home:home.team?.displayName||"—",away:away.team?.displayName||"—",homeLogo:home.team?.logo||home.team?.logos?.[0]?.href||"",awayLogo:away.team?.logo||away.team?.logos?.[0]?.href||"",date:ev.date,score:"— : —",status:"Upcoming",live:false}})}
+ await Promise.all(leagues.map(async([league,code])=>{try{const items=await get(league,code,range);successes++;found.push(...items)}catch(e){failures++}}));
+ if(sequence!==upcomingRequest)return;
+ const old=Array.isArray(window.upcomingEvents)?window.upcomingEvents.filter(e=>new Date(e.date)>now):[];
+ const merged=new Map([...old,...found].map(e=>[e.id,e]));
+ window.upcomingEvents=[...merged.values()].sort((a,b)=>new Date(a.date)-new Date(b.date));
+ try{localStorage.setItem("korazol_upcoming_v1",JSON.stringify(window.upcomingEvents))}catch(e){}
+ renderLive();
+ if(!found.length){const notice=document.getElementById("feedNotice");if(notice)notice.textContent=successes?localized("لم يرجع مصدر المباريات أي مواجهات قادمة خلال 10 أيام. جرّب إعادة التحميل.","No upcoming fixtures returned for the next 10 days."):localized("تعذر الاتصال بمصدر المباريات. سيتم عرض البيانات المحفوظة إن وجدت.","Could not reach the match provider; showing cached fixtures if available.")}
+}
 try{window.upcomingEvents=JSON.parse(localStorage.getItem("korazol_upcoming_v1")||"[]")}catch{window.upcomingEvents=[]}
 function filterMatches(){renderLive();}
 function getFavorites(){try{const stored=JSON.parse(localStorage.getItem("corazol_favorites")||"[]");return Array.isArray(stored)?stored.filter(x=>typeof x==="string"):[]}catch(e){return []}}
@@ -614,7 +630,7 @@ window.addEventListener('online',refreshScores);
 window.addEventListener('offline',updateNotice);
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)refreshScores()});
 </script>
-<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=25').catch(e=>console.warn('PWA service worker:',e)));}</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=26').catch(e=>console.warn('PWA service worker:',e)));}</script>
 </body>
 </html>
 <!-- CORAZOL navigation fix v3 -->

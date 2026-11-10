@@ -349,7 +349,7 @@ function openMatchCenter(e,side){
  addText(body,'h2',e.home+'  '+(e.score||'—')+'  '+e.away);
  addText(body,'p',e.status||'');
  const panel=document.createElement('div');panel.className='lineup-panel';body.append(panel);
- showTab('matchCenter',document.querySelector('nav button'));
+ showTab('matchCenter',null);
  if(!e.eventId||!feeds[e.league]){addText(panel,'p',localized('لا تتوفر بيانات لهذه المباراة.','Match data unavailable.'));return}
  addText(panel,'p',localized('جاري تحميل التشكيلة والتفاصيل...','Loading lineups and details...'));
  const requested=e.eventId;
@@ -358,10 +358,10 @@ function openMatchCenter(e,side){
  .then(data=>{
   if(!panel.isConnected||requested!==e.eventId)return;
   panel.replaceChildren();
-  const lineups=data.rosters||data.lineups||[];
+  const rawLineups=data.rosters||data.lineups||[];const lineups=Array.isArray(rawLineups)?rawLineups:[];
   const comps=data.header?.competitions?.[0]?.competitors||[];
   const sides=[{label:e.home,homeAway:'home'},{label:e.away,homeAway:'away'}];
-  const isUpcoming=String(e.score||'').includes('—')||data.header?.competitions?.[0]?.status?.type?.state==='pre';
+  const isUpcoming=data.header?.competitions?.[0]?.status?.type?.state==='pre';
   if(isUpcoming)addText(panel,'p',localized('التشكيلة الرسمية لم تُعلن بعد. التشكيلة المتوقعة والغيابات تظهر فقط إذا وفرها مصدر موثوق؛ لا نعرض توقعات مفبركة.','Official lineup not announced. Predicted XI and absences appear only when verified data is available.'),'lineup-note');
   for(let i=0;i<2;i++){
    const sideInfo=sides[i],roster=lineups.find(x=>x.homeAway===sideInfo.homeAway||x.team?.displayName===sideInfo.label)||lineups[i]||{};
@@ -369,7 +369,7 @@ function openMatchCenter(e,side){
    addText(section,'h3',sideInfo.label);
    const formation=roster.formation||comps.find(x=>x.homeAway===sideInfo.homeAway)?.formation;
    if(formation)addText(section,'p',localized('الخطة: ','Formation: ')+formation);
-   const entries=roster.roster||roster.athletes||roster.players||[];
+   const entries=Array.isArray(roster.roster)?roster.roster:Array.isArray(roster.athletes)?roster.athletes:Array.isArray(roster.players)?roster.players:[];
    const starters=entries.filter(x=>x.starter===true||x.starting===true||x.substitute===false);
    const bench=entries.filter(x=>x.starter===false||x.starting===false||x.substitute===true);
    const renderPlayers=(title,items)=>{
@@ -387,7 +387,7 @@ function openMatchCenter(e,side){
    };
    renderPlayers(localized('التشكيلة الأساسية','Starting XI'),starters);
    renderPlayers(localized('الاحتياطي','Substitutes'),bench);
-   const coach=roster.coach?.displayName||roster.coach?.name||comps.find(x=>x.homeAway===sideInfo.homeAway)?.coach?.displayName;
+   const coach=roster.coach?.displayName||roster.coach?.name||roster.coaches?.[0]?.displayName||comps.find(x=>x.homeAway===sideInfo.homeAway)?.coach?.displayName;
    addText(section,'p',localized('المدرب: ','Coach: ')+(coach||localized('غير متاح','Unavailable')));
    panel.append(section);
   }
@@ -483,7 +483,7 @@ function renderFavorites(){
  matches.forEach(e=>{const p=document.createElement("div");p.className="card";p.textContent=e.home+"  "+e.score+"  "+e.away+" — "+e.status;target.appendChild(p)});
 }
 function showTab(id,button){
- document.querySelectorAll("section").forEach(s=>{
+ document.querySelectorAll("main > section").forEach(s=>{
   s.classList.remove("active");
  });
  document.getElementById(id).classList.add("active");
@@ -491,7 +491,7 @@ function showTab(id,button){
  document.querySelectorAll("nav button").forEach(b=>{
   b.classList.remove("active");
  });
- button.classList.add("active");
+ if(button)button.classList.add("active");
 }
 
 applyLang();
@@ -506,7 +506,7 @@ window.addEventListener('online',refreshScores);
 window.addEventListener('offline',updateNotice);
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)refreshScores()});
 </script>
-<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=4').catch(e=>console.warn('PWA service worker:',e)));}</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=5').catch(e=>console.warn('PWA service worker:',e)));}</script>
 </body>
 </html>
 <!-- CORAZOL navigation fix v3 -->

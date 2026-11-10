@@ -139,6 +139,9 @@ select{border-radius:13px;background:#1b2b40;border-color:#40576f}
 .legacy-brand{display:flex;align-items:center;justify-content:center;gap:10px}
 .lineup-panel{display:grid;gap:14px}.lineup-team{display:block;background:#182b40;border:1px solid #36516c;border-radius:15px;padding:14px}.lineup-team h3{color:#20e39a}.lineup-team h4{margin:16px 0 8px}.player-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:8px}.player-item{display:flex;align-items:center;gap:9px;background:#263b52;border-radius:10px;padding:9px;font-size:12px}.player-item small{display:block;color:#b6c8db}.player-number{color:#20e39a;font-weight:900}.lineup-note,.lineup-muted{color:#bdcee0;line-height:1.8}.lineup-timeline{border-top:1px solid #456;padding-top:12px}.match-card .team[role="button"]{cursor:pointer;border-radius:9px;padding:6px}.match-card .team[role="button"]:focus-visible{outline:2px solid #20e39a}
 .football-pitch{position:relative;isolation:isolate;overflow:hidden;min-height:540px;border:3px solid #a5e3ac;border-radius:13px;background:repeating-linear-gradient(to bottom,#167c47 0px,#167c47 68px,#1d8b50 68px,#1d8b50 136px);display:flex;flex-direction:column;justify-content:space-around;padding:22px 7px;box-shadow:inset 0 0 28px #003b28}.pitch-markings{position:absolute;z-index:-1;inset:12px;border:2px solid #ffffff66;border-radius:2px;pointer-events:none}.pitch-markings:before{content:"";position:absolute;left:0;right:0;top:50%;border-top:2px solid #ffffff66}.pitch-markings:after{content:"";position:absolute;top:50%;left:50%;width:85px;height:85px;transform:translate(-50%,-50%);border:2px solid #ffffff66;border-radius:50%}.pitch-row{display:flex;align-items:center;justify-content:space-around;gap:3px;width:100%}.pitch-player{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:0;flex:1;cursor:pointer;text-align:center}.pitch-shirt{display:grid;place-items:center;width:33px;height:37px;background:#eff7ff;color:#17314b;font-size:14px;font-weight:900;clip-path:polygon(15% 0,34% 0,41% 9%,59% 9%,66% 0,85% 0,100% 24%,83% 39%,83% 100%,17% 100%,17% 39%,0 24%);filter:drop-shadow(0 2px 3px #0005)}.pitch-name{color:#fff;font-size:10px;font-weight:800;line-height:1.3;overflow-wrap:anywhere;text-shadow:0 2px 3px #000;max-width:100%}.pitch-player:focus-visible,.player-item:focus-visible{outline:2px solid #fff;outline-offset:3px}.player-list-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:8px}.player-detail{background:#233e55;border:1px solid #20e39a;border-radius:12px;padding:12px;margin-top:12px}.player-detail p{margin:4px 0}@media(min-width:500px){.pitch-name{font-size:12px}.pitch-shirt{width:42px;height:46px}}
+/* Modern match lineup v2 */
+.lineup-panel{display:grid;gap:18px}.lineup-team{display:block;background:#142438;border:1px solid #34495f;border-radius:22px;padding:13px;overflow:hidden;box-shadow:0 12px 30px #0003}.lineup-team h3{font-size:19px;margin:4px 3px 8px}.squad-block{margin:16px 0 0;background:#1b3045;border:1px solid #344e64;border-radius:17px;padding:12px}.squad-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px}.squad-heading h4{margin:0;font-size:15px;color:#e8f5ff}.squad-count{background:#31536a;border-radius:20px;padding:2px 9px;color:#a9f3ce;font-size:12px}.football-pitch{position:relative;isolation:isolate;min-height:580px;padding:20px 5px;display:flex;flex-direction:column;justify-content:space-around;gap:14px;overflow:hidden;border:1px solid #79c89e;border-radius:14px;background:repeating-linear-gradient(180deg,#17683f 0,#17683f 78px,#1b7447 78px,#1b7447 156px);box-shadow:inset 0 0 55px #053a2a}.pitch-markings{position:absolute;z-index:-1;inset:12px;border:1.5px solid #d4ffe65c;pointer-events:none}.pitch-markings:before{content:"";position:absolute;top:50%;left:0;right:0;border-top:1.5px solid #d4ffe65c}.pitch-markings:after{content:"";position:absolute;top:50%;left:50%;width:88px;height:88px;transform:translate(-50%,-50%);border:1.5px solid #d4ffe65c;border-radius:50%}.pitch-row{display:flex;justify-content:space-around;align-items:center;gap:2px;width:100%}.pitch-player{background:none;border:0;color:white;min-width:0;flex:1;padding:2px;display:flex;align-items:center;flex-direction:column;gap:5px;cursor:pointer}.player-avatar{position:relative;display:grid;place-items:center;width:52px;height:52px;flex-shrink:0;border-radius:50%;border:2px solid #c4f4d7;background:linear-gradient(145deg,#486d7b,#163e4a);box-shadow:0 4px 14px #0006;overflow:hidden}.player-avatar img{width:100%;height:100%;object-fit:cover;object-position:top center}.player-avatar:empty:before{content:"👤";font-size:23px;opacity:.75}.avatar-number{position:absolute;bottom:0;right:0;background:#101d2b;color:#fff;font-size:10px;padding:0 4px;border-radius:5px}.squad-player-info{display:flex;flex-direction:column;align-items:center;min-width:0;width:100%;line-height:1.25}.squad-player-info strong{font-size:10px;font-weight:800;text-align:center;overflow-wrap:anywhere;text-shadow:0 2px 5px #000}.squad-player-info small{color:#a9c1d4;font-size:11px}.squad-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.squad-player{background:#233c52;color:#fff;border:1px solid #3c5b6f;border-radius:13px;padding:9px 7px;display:flex;align-items:center;gap:9px;text-align:start;min-width:0}.squad-player .player-avatar{width:42px;height:42px}.squad-player .squad-player-info{align-items:flex-start;text-align:start}.squad-player .squad-player-info strong{font-size:12px;text-align:start;text-shadow:none}.absent-block{border-color:#6e4d56}.absence-row{display:flex;justify-content:space-between;gap:10px;border-top:1px solid #40576a;padding:10px 0;font-size:12px}.absence-row span{color:#e4b3ad}.player-detail{background:#233e55;border:1px solid #20e39a;border-radius:12px;padding:12px;margin-top:12px}.player-detail p{margin:4px 0}.pitch-player:focus-visible,.squad-player:focus-visible{outline:2px solid #fff;outline-offset:2px}@media(max-width:380px){.player-avatar{width:43px;height:43px}.squad-player-info strong{font-size:9px}.squad-list{grid-template-columns:1fr 1fr}.football-pitch{min-height:530px}}@media(min-width:500px){.player-avatar{width:61px;height:61px}.squad-player-info strong{font-size:12px}}
+
 /* Kora Zol branded interior backdrop */
 header{background:linear-gradient(90deg,#142238ee,#142238dd),linear-gradient(145deg,#213a54,#142238)}
 body{background:radial-gradient(ellipse at 50% 0%,#224c48 0%,#101827 48%,#0c1422 100%)}
@@ -374,46 +377,51 @@ function openMatchCenter(e,side){
    const starters=entries.filter(x=>x.starter===true||x.starting===true||x.substitute===false);
    const bench=entries.filter(x=>x.starter===false||x.starting===false||x.substitute===true);
    const renderPlayers=(title,items,onPitch=false)=>{
-    addText(section,'h4',title);
-    if(!items.length){addText(section,'p',localized('لم يوفر المصدر هذه البيانات بعد.','Not provided by data source.'),'lineup-muted');return}
-    const list=document.createElement('div');list.className=onPitch?'football-pitch':'player-grid';
-    if(onPitch){const markings=document.createElement('div');markings.className='pitch-markings';list.append(markings)}
+    const block=document.createElement('div');block.className='squad-block';
+    const heading=document.createElement('div');heading.className='squad-heading';addText(heading,'h4',title);addText(heading,'span',items.length?String(items.length):'—','squad-count');block.append(heading);
+    if(!items.length){addText(block,'p',localized('البيانات غير متاحة من المصدر','Data not available from provider'),'lineup-muted');section.append(block);return}
+    const list=document.createElement('div');list.className=onPitch?'football-pitch':'squad-list';
+    if(onPitch){const marks=document.createElement('div');marks.className='pitch-markings';list.append(marks)}
     const formationNumbers=String(formation||'').split('-').map(Number).filter(n=>Number.isInteger(n)&&n>0);
-    const validFormation=formationNumbers.length>=2&&formationNumbers.reduce((x,y)=>x+y,0)===10;
-    const rowSizes=validFormation?[1,...formationNumbers]:[1,4,3,3];
-    const total=rowSizes.reduce((x,y)=>x+y,0);
-    const positionRank=p=>{const raw=String(p.position?.abbreviation||p.athlete?.position?.abbreviation||p.position?.name||'').toUpperCase();return /^(GK|G)$|GOAL/.test(raw)?0:/^(D|CB|LB|RB|LWB|RWB|DF)$|DEF/.test(raw)?1:/^(M|CM|CDM|CAM|LM|RM|MF)$|MID/.test(raw)?2:/^(F|ST|CF|LW|RW|FW)$|FOR|ATT/.test(raw)?3:4};
-    const ordered=onPitch?[...items].sort((x,y)=>positionRank(x)-positionRank(y)):items;
-    if(onPitch&&ordered.length!==11)addText(section,'p',localized('عدد اللاعبين المتاح من المصدر: ','Players provided by source: ')+ordered.length,'lineup-muted');
-    let cursor=0;
-    for(const count of (onPitch&&ordered.length===11?rowSizes:[ordered.length])){
-      const row=document.createElement('div');row.className=onPitch?'pitch-row':'player-list-row';
-      for(const p of ordered.slice(cursor,cursor+count)){
-       const item=document.createElement('div');item.className=onPitch?'pitch-player':'player-item';
-       const number=p.jersey||p.athlete?.jersey||p.athlete?.jerseyNumber||'';
-       if(onPitch){
-        addText(item,'span',number||'⚽','pitch-shirt');
-        addText(item,'span',playerName(p),'pitch-name');
-       }else{
-        addText(item,'span',number?'#'+number:'⚽','player-number');
-        const info=document.createElement('div');addText(info,'strong',playerName(p));
-        const position=p.position?.abbreviation||p.athlete?.position?.abbreviation||p.position?.name||'';
-        if(position)addText(info,'small',position);item.append(info);
-       }
-       item.tabIndex=0;item.title=playerName(p);
-       const show=()=>{const old=section.querySelector('.player-detail');if(old)old.remove();const detail=document.createElement('div');detail.className='player-detail';addText(detail,'strong',playerName(p));const position=p.position?.displayName||p.position?.name||p.athlete?.position?.displayName||'';if(position)addText(detail,'p',localized('المركز: ','Position: ')+position);if(number)addText(detail,'p',localized('الرقم: ','Number: ')+number);section.append(detail)};
-       item.onclick=show;item.onkeydown=ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();show()}};
-       row.append(item);
+    const valid=formationNumbers.length>=2&&formationNumbers.reduce((x,y)=>x+y,0)===10;
+    const rowSizes=valid?[1,...formationNumbers]:[1,4,3,3];
+    const rank=p=>{const pos=String(p.position?.abbreviation||p.athlete?.position?.abbreviation||p.position?.name||'').toUpperCase();return /GK|GOAL/.test(pos)?0:/DEF|^(D|CB|LB|RB|DF)$/.test(pos)?1:/MID|^(M|CM|CDM|CAM|MF)$/.test(pos)?2:/ATT|FOR|^(F|ST|CF|LW|RW|FW)$/.test(pos)?3:4};
+    const ordered=onPitch?[...items].sort((x,y)=>rank(x)-rank(y)):items;
+    if(onPitch&&ordered.length!==11)addText(block,'p',localized('المصدر وفر ','Source provided ')+ordered.length+localized(' لاعب فقط؛ العرض تقريبي.',' players; layout is approximate.'),'lineup-muted');
+    const playerPhoto=p=>{const a=p.athlete||p;const urls=[a.headshot?.href,a.headshot?.url,a.photo,a.image?.href,a.image,p.headshot?.href,p.photo];return urls.find(u=>typeof u==='string'&&u.startsWith('https://'))||''};
+    const makePlayer=p=>{
+      const item=document.createElement('button');item.type='button';item.className=onPitch?'pitch-player':'squad-player';
+      const avatar=document.createElement('span');avatar.className='player-avatar';
+      const url=playerPhoto(p);
+      if(url){const img=document.createElement('img');img.src=url;img.alt='';img.loading='lazy';img.referrerPolicy='no-referrer';img.onerror=()=>img.remove();avatar.append(img)}
+      const number=p.jersey||p.athlete?.jersey||p.athlete?.jerseyNumber||'';
+      if(number)addText(avatar,'span',String(number),'avatar-number');
+      const info=document.createElement('span');info.className='squad-player-info';
+      addText(info,'strong',playerName(p));
+      if(!onPitch){const pos=p.position?.abbreviation||p.athlete?.position?.abbreviation||p.position?.name||'';if(pos)addText(info,'small',pos)}
+      item.append(avatar,info);
+      item.onclick=()=>{const old=section.querySelector('.player-detail');if(old)old.remove();const detail=document.createElement('div');detail.className='player-detail';addText(detail,'strong',playerName(p));const pos=p.position?.displayName||p.position?.name||p.athlete?.position?.displayName||'';if(pos)addText(detail,'p',localized('المركز: ','Position: ')+pos);if(number)addText(detail,'p',localized('الرقم: ','Number: ')+number);section.append(detail)};
+      return item;
+    };
+    if(onPitch){
+      let cursor=0;for(const count of (ordered.length===11?rowSizes:[ordered.length])){
+        const row=document.createElement('div');row.className='pitch-row';
+        for(const p of ordered.slice(cursor,cursor+count))row.append(makePlayer(p));
+        list.append(row);cursor+=count;
       }
-      list.append(row);cursor+=count;
-    }
-    section.append(list);
+    }else{for(const p of ordered)list.append(makePlayer(p))}
+    block.append(list);section.append(block);
    };
    renderPlayers(localized('التشكيلة الأساسية','Starting XI'),starters,true);
-   renderPlayers(localized('الاحتياطي','Substitutes'),bench);
+   renderPlayers(localized('دكة البدلاء','Substitutes'),bench);
    const coach=roster.coach?.displayName||roster.coach?.name||roster.coaches?.[0]?.displayName||comps.find(x=>x.homeAway===sideInfo.homeAway)?.coach?.displayName;
    addText(section,'p',localized('المدرب: ','Coach: ')+(coach||localized('غير متاح','Unavailable')));
-   panel.append(section);
+   const absencesForTeam=(Array.isArray(data.injuries)?data.injuries:[]).filter(x=>!x.team||x.team?.displayName===sideInfo.label||x.team?.homeAway===sideInfo.homeAway);
+   const absentBlock=document.createElement('div');absentBlock.className='squad-block absent-block';
+   const absentHead=document.createElement('div');absentHead.className='squad-heading';addText(absentHead,'h4',localized('الغائبون والإصابات','Unavailable players'));absentBlock.append(absentHead);
+   if(absencesForTeam.length){for(const a of absencesForTeam){const line=document.createElement('div');line.className='absence-row';addText(line,'strong',playerName(a));addText(line,'span',String(a.status||a.reason||a.type?.text||localized('سبب غير محدد','Reason unspecified')));absentBlock.append(line)}}
+   else addText(absentBlock,'p',localized('لا توجد بيانات غيابات مؤكدة متاحة لهذه المباراة.','No verified absence data available for this match.'),'lineup-muted');
+   section.append(absentBlock);panel.append(section);
   }
   const competition=data.header?.competitions?.[0]||{};
   const events=competition.details||data.keyEvents||[];
@@ -421,11 +429,7 @@ function openMatchCenter(e,side){
   if(!events.length)addText(timeline,'p',localized('لا توجد أحداث متاحة بعد.','No events available yet.'));
   for(const ev of events){const minute=ev.clock?.displayValue||ev.minute||'';addText(timeline,'p',(minute?minute+'′ — ':'')+(ev.text||ev.shortText||ev.description||ev.type?.text||localized('حدث','Event')))}
   panel.append(timeline);
-  const absences=data.injuries||data.absences||[];
-  const missing=document.createElement('div');addText(missing,'h3',localized('الغيابات والإصابات','Absences and injuries'));
-  if(Array.isArray(absences)&&absences.length){for(const item of absences)addText(missing,'p',playerName(item)+' — '+(item.status||item.type||''))}
-  else addText(missing,'p',localized('لا تتوفر قائمة غيابات مؤكدة من مصدر البيانات، ولا يعني ذلك عدم وجود إصابات.','No verified absence list from this source; this does not mean there are no injuries.'),'lineup-muted');
-  panel.append(missing);
+
  })
  .catch(()=>{if(panel.isConnected){panel.replaceChildren();addText(panel,'p',localized('تعذر تحميل التشكيلة حالياً. جرّب مرة أخرى.','Could not load lineup. Please try again.'))}});
 }

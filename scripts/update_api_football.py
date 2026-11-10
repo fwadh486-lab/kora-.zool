@@ -96,7 +96,7 @@ if path.exists():
     snapshot["matches"].extend(m for m in old.get("matches", []) if m.get("id") not in seen and (m.get("date") or "") >= (today - timedelta(days=14)).isoformat())
     for team_id, item in old.get("lastLineups", {}).items():
         snapshot["lastLineups"].setdefault(team_id, item)
-if not snapshot["matches"] and path.exists():
-    raise SystemExit("No fresh fixtures: preserving previous API-Football snapshot")
+if not snapshot["matches"]:
+    raise SystemExit("API-Football returned no fixtures. Check subscription access; preserving previous snapshot.")
 path.write_text(json.dumps(snapshot, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 print("API-Football fixtures:", len(snapshot["matches"]), "lineups:", len(snapshot["lastLineups"]), "calls:", calls, "errors:", errors)

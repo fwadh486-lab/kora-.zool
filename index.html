@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#101827">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap">
 <link rel="manifest" href="./manifest.webmanifest?v=iconfix20261109c">
 <link rel="icon" type="image/svg+xml" href="./icon.svg?v=iconfix20261109c">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -12,7 +14,7 @@
 *{box-sizing:border-box}
 body{
  margin:0;
- font-family:Arial,sans-serif;
+ font-family:'Cairo',Tahoma,Arial,sans-serif;
  background:#101827;
  color:white;
 }
@@ -237,6 +239,8 @@ function changeLang(){
 
 const feeds={es:"esp.1",en:"eng.1",sa:"ksa.1"};
 let liveEvents=[],feedFailures=[],lastUpdated=null,dayOffset=0,requestSequence=0;
+const scoreCacheKey='korazol_scores_v2';
+function restoreCachedScores(){try{const saved=JSON.parse(localStorage.getItem(scoreCacheKey)||'null');if(saved&&Array.isArray(saved.events)){liveEvents=saved.events;lastUpdated=new Date(saved.updated);renderLive();}}catch(e){}}
 let audioContext=null;let soundEnabled=localStorage.getItem("korazol_sound")==="yes";let observedScores=new Map();
 function updateSoundBell(){const b=document.getElementById("soundBell");if(!b)return;b.textContent=soundEnabled?"🔔":"🔕";b.setAttribute("aria-pressed",String(soundEnabled));b.setAttribute("aria-label",soundEnabled?"إيقاف تنبيهات الأهداف":"تشغيل تنبيهات الأهداف");b.title=b.getAttribute("aria-label")}
 function setSoundAlerts(enabled){soundEnabled=enabled;localStorage.setItem("korazol_sound",enabled?"yes":"no");if(enabled){try{audioContext=audioContext||new (window.AudioContext||window.webkitAudioContext)();audioContext.resume()}catch(e){soundEnabled=false;localStorage.setItem("korazol_sound","no")}}updateSoundBell()}
@@ -252,7 +256,7 @@ function showDate(){const d=selectedDate();document.getElementById("matchDate").
 function localized(ar,en){return language==="ar"?ar:en}
 function updateNotice(){
  const n=document.getElementById("feedNotice");
- if(n)n.hidden=true;
+ if(n){n.hidden=false;const offline=!navigator.onLine;n.textContent=localized(offline?'أنت غير متصل. يتم عرض آخر بيانات محفوظة.':'آخر تحديث: ','Offline: showing last saved scores.':'Last updated: ')+(lastUpdated?lastUpdated.toLocaleTimeString(language==='ar'?'ar-SA':'en-US',{hour:'2-digit',minute:'2-digit'}):localized('لا توجد بيانات محفوظة','No cached data'));}
 }
 function renderLive(){
  const target=document.getElementById("liveMatches");target.replaceChildren();
@@ -334,10 +338,11 @@ async function refreshScores(){
   });
  }));
  if(sequence!==requestSequence)return;
- liveEvents=result.flatMap(r=>r.status==="fulfilled"?r.value:[]);
+ const fresh=result.flatMap(r=>r.status==="fulfilled"?r.value:[]);
+ if(result.some(r=>r.status==='fulfilled')){liveEvents=fresh;try{localStorage.setItem(scoreCacheKey,JSON.stringify({events:liveEvents,updated:new Date().toISOString()}));}catch(e){}}
  checkGoals(liveEvents);
  feedFailures=result.map((r,i)=>r.status==="rejected"?Object.keys(feeds)[i]:null).filter(Boolean);
- lastUpdated=new Date();updateNotice();renderLive();
+ if(result.some(r=>r.status==='fulfilled'))lastUpdated=new Date();updateNotice();renderLive();
 }
 function filterMatches(){renderLive();}
 function getFavorites(){try{const stored=JSON.parse(localStorage.getItem("corazol_favorites")||"[]");return Array.isArray(stored)?stored.filter(x=>typeof x==="string"):[]}catch(e){return []}}
@@ -363,12 +368,15 @@ function showTab(id,button){
 }
 
 applyLang();
+restoreCachedScores();
 updateSoundBell();
 refreshScores();
-setInterval(()=>{if(!document.hidden&&dayOffset===0)refreshScores()},15000);
+setInterval(()=>{if(!document.hidden&&navigator.onLine&&dayOffset===0)refreshScores()},liveEvents.some(e=>e.live)?15000:30000);
+window.addEventListener('online',refreshScores);
+window.addEventListener('offline',updateNotice);
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)refreshScores()});
 </script>
-<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(e=>console.warn('PWA service worker:',e)));}</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=2').catch(e=>console.warn('PWA service worker:',e)));}</script>
 </body>
 </html>
 <!-- CORAZOL update -->

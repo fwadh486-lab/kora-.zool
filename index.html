@@ -176,12 +176,12 @@ body{background:radial-gradient(ellipse at 50% 0%,#224c48 0%,#101827 48%,#0c1422
 
 <section id="fixtures"><h2 data-ar="📅 جدول المباريات الجاية" data-en="📅 Upcoming fixtures">📅 جدول المباريات الجاية</h2><iframe id="fixturesFrame" title="جدول المباريات الجاية" loading="lazy" style="width:100%;height:78vh;min-height:580px;border:0;border-radius:12px;background:#0e192a" data-src="./fixtures.html?embedded=1&design=20261108font1"></iframe></section>
 <section id="standings">
-<div class="notice" data-ar="جدول الترتيب المعروض مثال توضيحي، وليس ترتيب الموسم الحالي." data-en="The standings below are illustrative, not current season standings.">جدول الترتيب المعروض مثال توضيحي، وليس ترتيب الموسم الحالي.</div>
+<div class="notice" id="standingsInfo" role="status">جاري تحميل الترتيب الحقيقي...</div>
 <label for="standingsLeague" data-ar="اختر الدوري" data-en="Choose league">اختر الدوري</label>
 <select id="standingsLeague" onchange="renderStandings()"><option value="es" data-ar="الدوري الإسباني" data-en="La Liga">الدوري الإسباني</option><option value="en" data-ar="الدوري الإنجليزي" data-en="Premier League">الدوري الإنجليزي</option><option value="sa" data-ar="الدوري السعودي" data-en="Saudi Pro League">الدوري السعودي</option><option value="sd" data-ar="الدوري السوداني" data-en="Sudanese League">الدوري السوداني</option></select>
-<h2 data-ar="🏆 ترتيب الدوري - بيانات تجريبية"
-data-en="🏆 League Standings - Demo">
-🏆 ترتيب الدوري - بيانات تجريبية</h2>
+<h2 data-ar="🏆 ترتيب الدوري"
+data-en="🏆 League Standings">
+🏆 ترتيب الدوري</h2>
 <div class="card">
 <table>
 <thead>
@@ -189,7 +189,7 @@ data-en="🏆 League Standings - Demo">
 <th>#</th>
 <th data-ar="الفريق" data-en="Team">الفريق</th>
 <th data-ar="لعب" data-en="P">لعب</th>
-<th data-ar="نقاط" data-en="Pts">نقاط</th>
+<th data-ar="ف" data-en="W">ف</th><th data-ar="ت" data-en="D">ت</th><th data-ar="خ" data-en="L">خ</th><th data-ar="ف.أ" data-en="GD">ف.أ</th><th data-ar="نقاط" data-en="Pts">نقاط</th>
 </tr>
 </thead>
 <tbody id="standingsBody"></tbody>
@@ -206,17 +206,47 @@ data-en="🏆 League Standings - Demo">
 
 <footer>
 كورة زول © 2026<br>
-<span data-ar="النتائج عبر مصدر خارجي عند توفره — الترتيب تجريبي"
-data-en="Scores from an external provider when available — standings are demos">
-النتائج من مصدر خارجي عند توفر الاتصال، والترتيب تجريبي
+<span data-ar="النتائج من مصدر خارجي والترتيب من football-data.org عند توفره"
+data-en="Scores from external sources; standings via football-data.org when available">
+النتائج من مصدر خارجي والترتيب من football-data.org عند توفره
 </span>
 </footer>
 
 <script>
 let language=localStorage.getItem("corazol_lang")||"ar";
 
-const sampleStandings={es:[["ريال مدريد","Real Madrid",10,25],["برشلونة","Barcelona",10,23],["أتلتيكو مدريد","Atletico Madrid",10,21]],en:[["أرسنال","Arsenal",10,24],["ليفربول","Liverpool",10,22],["مانشستر سيتي","Manchester City",10,20]],sa:[["الهلال","Al Hilal",10,25],["النصر","Al Nassr",10,23],["الاتحاد","Al Ittihad",10,21]],sd:[["الهلال السوداني","Al Hilal Omdurman",10,24],["المريخ السوداني","Al Merrikh",10,22],["الأهلي شندي","Al Ahly Shendi",10,19]]};
-function renderStandings(){const key=document.getElementById("standingsLeague").value;const body=document.getElementById("standingsBody");body.replaceChildren();(sampleStandings[key]||[]).forEach((row,i)=>{const tr=document.createElement("tr");[i+1,row[language==="ar"?0:1],row[2],row[3]].forEach(v=>{const td=document.createElement("td");td.textContent=v;tr.appendChild(td)});body.appendChild(tr)});}
+const standingsSnapshot={leagues:{},updated:null,error:null};
+async function loadStandings(){
+ try{
+  const response=await fetch('./data/standings.json?v='+Math.floor(Date.now()/3600000),{cache:'no-cache'});
+  if(!response.ok)throw new Error('Standings unavailable');
+  const data=await response.json();
+  if(!data||typeof data.leagues!=='object')throw new Error('Invalid standings data');
+  standingsSnapshot.leagues=data.leagues;
+  standingsSnapshot.updated=data.updated||null;
+  standingsSnapshot.error=null;
+ }catch(error){standingsSnapshot.error=error.message;}
+ renderStandings();
+}
+function renderStandings(){
+ const key=document.getElementById("standingsLeague").value;
+ const body=document.getElementById("standingsBody");
+ const info=document.getElementById("standingsInfo");
+ body.replaceChildren();
+ const rows=standingsSnapshot.leagues[key];
+ if(!Array.isArray(rows)||!rows.length){
+  info.textContent=localized(key==="sa"||key==="sd"?"الترتيب غير متوفر من مزود البيانات المجاني لهذا الدوري.":"الترتيب غير متاح حالياً. سيتم تحديثه بعد تشغيل مزامنة GitHub Actions.",key==="sa"||key==="sd"?"This league is not covered by the connected free standings provider.":"Standings not available yet. Run the GitHub Actions sync.");
+  return;
+ }
+ info.textContent=localized("آخر تحديث للترتيب: ","Standings updated: ")+(standingsSnapshot.updated?new Date(standingsSnapshot.updated).toLocaleString(language==="ar"?"ar-SA":"en-US"):"—");
+ for(const row of rows){
+  const tr=document.createElement("tr");
+  for(const value of [row.rank,row.team,row.played,row.won,row.draw,row.lost,row.gd,row.points]){
+   const td=document.createElement("td");td.textContent=value??"—";tr.appendChild(td);
+  }
+  body.appendChild(tr);
+ }
+}
 function applyLang(){
  document.documentElement.lang=language;
  document.querySelector(".logo span").textContent=language==="ar"?"كورة زول":"KORA ZOL";
@@ -369,6 +399,7 @@ function showTab(id,button){
 
 applyLang();
 restoreCachedScores();
+loadStandings();
 updateSoundBell();
 refreshScores();
 setInterval(()=>{if(!document.hidden&&navigator.onLine&&dayOffset===0)refreshScores()},liveEvents.some(e=>e.live)?15000:30000);

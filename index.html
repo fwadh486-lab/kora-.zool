@@ -403,8 +403,8 @@ function renderLive(){
  const icons={en:"🏴",es:"🇪🇸",sa:"🇸🇦",de:"🇩🇪",it:"🇮🇹",fr:"🇫🇷",cl:"🏆"};
  function card(e){const c=document.createElement("article");c.className="reference-match";
   const row=document.createElement("div");row.className="reference-match-row";
-  function team(n,logo,side){const b=document.createElement("button");b.type="button";b.className="reference-team";if(logo){const im=document.createElement("img");im.src=logo;im.alt="";im.loading="lazy";im.onerror=()=>im.remove();b.append(im)}const label=document.createElement("span");label.textContent=n;b.append(label);b.onclick=()=>openMatchCenter(e,side);return b}
-  row.append(team(e.home,e.homeLogo,"home"));const score=document.createElement("button");score.type="button";score.className="reference-score";const val=document.createElement("strong");val.textContent=e.score==="— : —"&&e.date?new Date(e.date).toLocaleTimeString(language==="ar"?"ar-SA":"en-US",{hour:"2-digit",minute:"2-digit"}):e.score;score.append(val);const sub=document.createElement("small");sub.textContent=e.live?localized("● مباشر","● LIVE"):e.date&&e.score==="— : —"?new Date(e.date).toLocaleDateString(language==="ar"?"ar-SA":"en-US",{weekday:"short",day:"numeric",month:"short"}):e.status;sub.className=e.live?"reference-live":"";score.append(sub);score.onclick=()=>openMatchCenter(e);row.append(score,team(e.away,e.awayLogo,"away"));c.append(row);
+  function team(n,logo,side){const b=document.createElement("button");b.type="button";b.className="reference-team";if(logo){const im=document.createElement("img");im.src=logo;im.alt="";im.loading="lazy";im.onerror=()=>im.remove();b.append(im)}const label=document.createElement("span");label.textContent=n;b.append(label);b.onclick=()=>{if(e.eventId)openMatchCenter(e,side);else alert(localized("تفاصيل التشكيلة غير متاحة لهذه المباراة من المصدر الحالي.","Lineup details are not available for this match."))};return b}
+  row.append(team(e.home,e.homeLogo,"home"));const score=document.createElement("button");score.type="button";score.className="reference-score";const val=document.createElement("strong");val.textContent=e.score==="— : —"&&e.date?new Date(e.date).toLocaleTimeString(language==="ar"?"ar-SA":"en-US",{hour:"2-digit",minute:"2-digit"}):e.score;score.append(val);const sub=document.createElement("small");sub.textContent=e.live?localized("● مباشر","● LIVE"):e.date&&e.score==="— : —"?new Date(e.date).toLocaleDateString(language==="ar"?"ar-SA":"en-US",{weekday:"short",day:"numeric",month:"short"}):e.status;sub.className=e.live?"reference-live":"";score.append(sub);score.onclick=()=>{if(e.eventId)openMatchCenter(e);else alert(localized("تفاصيل المباراة غير متاحة من المصدر الحالي.","Match details unavailable."))};row.append(score,team(e.away,e.awayLogo,"away"));c.append(row);
   const bottom=document.createElement("div");bottom.className="reference-bottom";const status=document.createElement("span");status.textContent=e.live?localized("المباراة جارية","Match live"):e.date&&e.score==="— : —"?localized("الموعد بتوقيت جهازك","Your local time"):e.status;bottom.append(status);const fav=document.createElement("button");fav.className="reference-fav";fav.dataset.id=e.id;fav.textContent=getFavorites().includes(e.id)?"★":"☆";fav.setAttribute("aria-label",localized("المفضلة","Favorite"));fav.onclick=()=>toggleFavorite(fav);bottom.append(fav);c.append(bottom);return c}
  function group(list,title){if(!list.length)return;const h=document.createElement("h3");h.className="reference-heading";h.textContent=title;target.append(h);const byLeague=new Map();for(const e of list){if(!byLeague.has(e.league))byLeague.set(e.league,[]);byLeague.get(e.league).push(e)}for(const [league,matches] of byLeague){const wrap=document.createElement("div");wrap.className="reference-league";const label=document.createElement("div");label.className="reference-league-title";label.textContent=(icons[league]||"⚽")+" "+(names[league]||league);wrap.append(label);for(const e of matches)wrap.append(card(e));target.append(wrap)}}
  const live=all.filter(e=>e.live);
@@ -576,6 +576,7 @@ async function refreshScores(){
  if(result.some(r=>r.status==='fulfilled'))lastUpdated=new Date();updateNotice();renderLive();
 }
 let upcomingRequest=0;
+async function loadSnapshotFixtures(){try{const res=await fetch("./data/fixtures.json?v="+Math.floor(Date.now()/180000),{cache:"no-store"});if(!res.ok)return;const data=await res.json();if(!Array.isArray(data.matches))return;const now=Date.now();const matches=data.matches.filter(e=>e.date&&new Date(e.date).getTime()>now-86400000);const old=Array.isArray(window.upcomingEvents)?window.upcomingEvents:[];const merged=new Map([...old,...matches].map(e=>[e.id,e]));window.upcomingEvents=[...merged.values()].sort((a,b)=>new Date(a.date)-new Date(b.date));localStorage.setItem("korazol_upcoming_v1",JSON.stringify(window.upcomingEvents));renderLive()}catch(e){console.warn("Fixture snapshot unavailable",e)}}
 async function loadUpcoming(){
  const sequence=++upcomingRequest,now=new Date();
  const fmt=d=>d.toISOString().slice(0,10).replaceAll("-","");
@@ -623,6 +624,7 @@ loadStandings();
 fetchCrestMap().then(()=>{if(liveEvents.length){for(const e of liveEvents){e.homeLogo=resolveCrest(e.home,e.homeLogo);e.awayLogo=resolveCrest(e.away,e.awayLogo)}renderLive()}});
 updateSoundBell();
 refreshScores();
+loadSnapshotFixtures();
 loadUpcoming();
 const deepLink=new URLSearchParams(location.search);if(deepLink.has("match")&&deepLink.has("league")){const code=deepLink.get("league");const league=Object.keys(feeds).find(k=>feeds[k]===code);const eventId=deepLink.get("match");if(league&&/^[0-9]+$/.test(eventId)){openMatchCenter({eventId,league,home:deepLink.get("home")||"الفريق الأول",away:deepLink.get("away")||"الفريق الثاني",score:"—",status:""});}}
 setInterval(()=>{if(!document.hidden&&navigator.onLine&&dayOffset===0)refreshScores()},liveEvents.some(e=>e.live)?15000:30000);
@@ -630,7 +632,7 @@ window.addEventListener('online',refreshScores);
 window.addEventListener('offline',updateNotice);
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)refreshScores()});
 </script>
-<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=26').catch(e=>console.warn('PWA service worker:',e)));}</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=27').catch(e=>console.warn('PWA service worker:',e)));}</script>
 </body>
 </html>
 <!-- CORAZOL navigation fix v3 -->

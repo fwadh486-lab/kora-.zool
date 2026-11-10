@@ -393,6 +393,7 @@ function renderLive(){
 function playerName(p){return p?.athlete?.displayName||p?.athlete?.fullName||p?.displayName||p?.name||'—'}
 function addText(parent,tag,value,cls){const el=document.createElement(tag);el.textContent=value;if(cls)el.className=cls;parent.append(el);return el}
 function openMatchCenter(e,side){
+ if(e.eventId&&feeds[e.league]){location.href='./lineup-v2.html?league='+encodeURIComponent(feeds[e.league])+'&match='+encodeURIComponent(e.eventId)+'&home='+encodeURIComponent(e.home)+'&away='+encodeURIComponent(e.away);return;}
  const body=document.getElementById('matchCenterBody');if(!body)return;
  body.replaceChildren();
  addText(body,'h2',e.home+'  '+(e.score||'—')+'  '+e.away);
@@ -580,7 +581,7 @@ window.addEventListener('online',refreshScores);
 window.addEventListener('offline',updateNotice);
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)refreshScores()});
 </script>
-<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=8').catch(e=>console.warn('PWA service worker:',e)));}</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=9').catch(e=>console.warn('PWA service worker:',e)));}</script>
 </body>
 </html>
 <!-- CORAZOL navigation fix v3 -->

@@ -138,6 +138,7 @@ select{border-radius:13px;background:#1b2b40;border-color:#40576f}
 .brand-image[hidden],.legacy-brand[hidden]{display:none!important}
 .legacy-brand{display:flex;align-items:center;justify-content:center;gap:10px}
 .lineup-panel{display:grid;gap:14px}.lineup-team{display:block;background:#182b40;border:1px solid #36516c;border-radius:15px;padding:14px}.lineup-team h3{color:#20e39a}.lineup-team h4{margin:16px 0 8px}.player-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:8px}.player-item{display:flex;align-items:center;gap:9px;background:#263b52;border-radius:10px;padding:9px;font-size:12px}.player-item small{display:block;color:#b6c8db}.player-number{color:#20e39a;font-weight:900}.lineup-note,.lineup-muted{color:#bdcee0;line-height:1.8}.lineup-timeline{border-top:1px solid #456;padding-top:12px}.match-card .team[role="button"]{cursor:pointer;border-radius:9px;padding:6px}.match-card .team[role="button"]:focus-visible{outline:2px solid #20e39a}
+.football-pitch{position:relative;isolation:isolate;overflow:hidden;min-height:540px;border:3px solid #a5e3ac;border-radius:13px;background:repeating-linear-gradient(to bottom,#167c47 0px,#167c47 68px,#1d8b50 68px,#1d8b50 136px);display:flex;flex-direction:column;justify-content:space-around;padding:22px 7px;box-shadow:inset 0 0 28px #003b28}.pitch-markings{position:absolute;z-index:-1;inset:12px;border:2px solid #ffffff66;border-radius:2px;pointer-events:none}.pitch-markings:before{content:"";position:absolute;left:0;right:0;top:50%;border-top:2px solid #ffffff66}.pitch-markings:after{content:"";position:absolute;top:50%;left:50%;width:85px;height:85px;transform:translate(-50%,-50%);border:2px solid #ffffff66;border-radius:50%}.pitch-row{display:flex;align-items:center;justify-content:space-around;gap:3px;width:100%}.pitch-player{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:0;flex:1;cursor:pointer;text-align:center}.pitch-shirt{display:grid;place-items:center;width:33px;height:37px;background:#eff7ff;color:#17314b;font-size:14px;font-weight:900;clip-path:polygon(15% 0,34% 0,41% 9%,59% 9%,66% 0,85% 0,100% 24%,83% 39%,83% 100%,17% 100%,17% 39%,0 24%);filter:drop-shadow(0 2px 3px #0005)}.pitch-name{color:#fff;font-size:10px;font-weight:800;line-height:1.3;overflow-wrap:anywhere;text-shadow:0 2px 3px #000;max-width:100%}.pitch-player:focus-visible,.player-item:focus-visible{outline:2px solid #fff;outline-offset:3px}.player-list-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:8px}.player-detail{background:#233e55;border:1px solid #20e39a;border-radius:12px;padding:12px;margin-top:12px}.player-detail p{margin:4px 0}@media(min-width:500px){.pitch-name{font-size:12px}.pitch-shirt{width:42px;height:46px}}
 /* Kora Zol branded interior backdrop */
 header{background:linear-gradient(90deg,#142238ee,#142238dd),linear-gradient(145deg,#213a54,#142238)}
 body{background:radial-gradient(ellipse at 50% 0%,#224c48 0%,#101827 48%,#0c1422 100%)}
@@ -372,20 +373,43 @@ function openMatchCenter(e,side){
    const entries=Array.isArray(roster.roster)?roster.roster:Array.isArray(roster.athletes)?roster.athletes:Array.isArray(roster.players)?roster.players:[];
    const starters=entries.filter(x=>x.starter===true||x.starting===true||x.substitute===false);
    const bench=entries.filter(x=>x.starter===false||x.starting===false||x.substitute===true);
-   const renderPlayers=(title,items)=>{
+   const renderPlayers=(title,items,onPitch=false)=>{
     addText(section,'h4',title);
     if(!items.length){addText(section,'p',localized('لم يوفر المصدر هذه البيانات بعد.','Not provided by data source.'),'lineup-muted');return}
-    const list=document.createElement('div');list.className='player-grid';
-    for(const p of items){const item=document.createElement('div');item.className='player-item';
-     const number=p.jersey||p.athlete?.jersey||p.athlete?.jerseyNumber||'';
-     addText(item,'span',number?'#'+number:'⚽','player-number');
-     const info=document.createElement('div');addText(info,'strong',playerName(p));
-     const position=p.position?.abbreviation||p.athlete?.position?.abbreviation||p.position?.name||'';
-     if(position)addText(info,'small',position);
-     item.append(info);list.append(item)}
+    const list=document.createElement('div');list.className=onPitch?'football-pitch':'player-grid';
+    if(onPitch){const markings=document.createElement('div');markings.className='pitch-markings';list.append(markings)}
+    const formationNumbers=String(formation||'').split('-').map(Number).filter(n=>Number.isInteger(n)&&n>0);
+    const validFormation=formationNumbers.length>=2&&formationNumbers.reduce((x,y)=>x+y,0)===10;
+    const rowSizes=validFormation?[1,...formationNumbers]:[1,4,3,3];
+    const total=rowSizes.reduce((x,y)=>x+y,0);
+    const positionRank=p=>{const raw=String(p.position?.abbreviation||p.athlete?.position?.abbreviation||p.position?.name||'').toUpperCase();return /^(GK|G)$|GOAL/.test(raw)?0:/^(D|CB|LB|RB|LWB|RWB|DF)$|DEF/.test(raw)?1:/^(M|CM|CDM|CAM|LM|RM|MF)$|MID/.test(raw)?2:/^(F|ST|CF|LW|RW|FW)$|FOR|ATT/.test(raw)?3:4};
+    const ordered=onPitch?[...items].sort((x,y)=>positionRank(x)-positionRank(y)):items;
+    if(onPitch&&ordered.length!==11)addText(section,'p',localized('عدد اللاعبين المتاح من المصدر: ','Players provided by source: ')+ordered.length,'lineup-muted');
+    let cursor=0;
+    for(const count of (onPitch&&ordered.length===11?rowSizes:[ordered.length])){
+      const row=document.createElement('div');row.className=onPitch?'pitch-row':'player-list-row';
+      for(const p of ordered.slice(cursor,cursor+count)){
+       const item=document.createElement('div');item.className=onPitch?'pitch-player':'player-item';
+       const number=p.jersey||p.athlete?.jersey||p.athlete?.jerseyNumber||'';
+       if(onPitch){
+        addText(item,'span',number||'⚽','pitch-shirt');
+        addText(item,'span',playerName(p),'pitch-name');
+       }else{
+        addText(item,'span',number?'#'+number:'⚽','player-number');
+        const info=document.createElement('div');addText(info,'strong',playerName(p));
+        const position=p.position?.abbreviation||p.athlete?.position?.abbreviation||p.position?.name||'';
+        if(position)addText(info,'small',position);item.append(info);
+       }
+       item.tabIndex=0;item.title=playerName(p);
+       const show=()=>{const old=section.querySelector('.player-detail');if(old)old.remove();const detail=document.createElement('div');detail.className='player-detail';addText(detail,'strong',playerName(p));const position=p.position?.displayName||p.position?.name||p.athlete?.position?.displayName||'';if(position)addText(detail,'p',localized('المركز: ','Position: ')+position);if(number)addText(detail,'p',localized('الرقم: ','Number: ')+number);section.append(detail)};
+       item.onclick=show;item.onkeydown=ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();show()}};
+       row.append(item);
+      }
+      list.append(row);cursor+=count;
+    }
     section.append(list);
    };
-   renderPlayers(localized('التشكيلة الأساسية','Starting XI'),starters);
+   renderPlayers(localized('التشكيلة الأساسية','Starting XI'),starters,true);
    renderPlayers(localized('الاحتياطي','Substitutes'),bench);
    const coach=roster.coach?.displayName||roster.coach?.name||roster.coaches?.[0]?.displayName||comps.find(x=>x.homeAway===sideInfo.homeAway)?.coach?.displayName;
    addText(section,'p',localized('المدرب: ','Coach: ')+(coach||localized('غير متاح','Unavailable')));

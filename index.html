@@ -500,7 +500,7 @@ loadStandings();
 fetchCrestMap().then(()=>{if(liveEvents.length){for(const e of liveEvents){e.homeLogo=resolveCrest(e.home,e.homeLogo);e.awayLogo=resolveCrest(e.away,e.awayLogo)}renderLive()}});
 updateSoundBell();
 refreshScores();
-const deepLink=new URLSearchParams(location.search);if(deepLink.has("match")&&deepLink.has("league")){const code=deepLink.get("league");const league=Object.keys(feeds).find(k=>feeds[k]===code);const eventId=deepLink.get("match");if(league&&/^\\d+$/.test(eventId)){openMatchCenter({eventId,league,home:deepLink.get("home")||"الفريق الأول",away:deepLink.get("away")||"الفريق الثاني",score:"—",status:""});}}
+const deepLink=new URLSearchParams(location.search);if(deepLink.has("match")&&deepLink.has("league")){const code=deepLink.get("league");const league=Object.keys(feeds).find(k=>feeds[k]===code);const eventId=deepLink.get("match");if(league&&/^[0-9]+$/.test(eventId)){openMatchCenter({eventId,league,home:deepLink.get("home")||"الفريق الأول",away:deepLink.get("away")||"الفريق الثاني",score:"—",status:""});}}
 setInterval(()=>{if(!document.hidden&&navigator.onLine&&dayOffset===0)refreshScores()},liveEvents.some(e=>e.live)?15000:30000);
 window.addEventListener('online',refreshScores);
 window.addEventListener('offline',updateNotice);

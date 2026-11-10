@@ -5,7 +5,7 @@ token=os.environ.get("FOOTBALL_DATA_API_KEY","").strip()
 if not token: raise SystemExit("FOOTBALL_DATA_API_KEY secret is missing")
 codes={"en":"PL","es":"PD","de":"BL1","it":"SA","fr":"FL1","cl":"CL"}
 today=datetime.now(timezone.utc).date()
-start=today.isoformat()
+start=(today-timedelta(days=14)).isoformat()
 end=(today+timedelta(days=15)).isoformat()
 out={"updated":datetime.now(timezone.utc).isoformat(),"matches":[],"errors":{}}
 for league,code in codes.items():
@@ -20,7 +20,10 @@ for league,code in codes.items():
             score=m.get("score") or {}
             full=score.get("fullTime") or {}
             hs,aw=full.get("home"),full.get("away")
-            out["matches"].append({"id":f"fd:{m.get('id')}","league":league,"home":home.get("shortName") or home["name"],"away":away.get("shortName") or away["name"],"homeLogo":home.get("crest") or "","awayLogo":away.get("crest") or "","date":m.get("utcDate"),"score":f"{hs} - {aw}" if hs is not None and aw is not None else "— : —","status":status,"live":status in ("IN_PLAY","PAUSED","EXTRA_TIME","PENALTY_SHOOTOUT"),"source":"football-data.org"})
+            events=m.get("goals") or []
+            if not isinstance(events,list): events=[]
+            details=[{"minute":g.get("minute"),"type":"goal","player":(g.get("scorer") or {}).get("name"),"team":(g.get("team") or {}).get("name")} for g in events if isinstance(g,dict)]
+            out["matches"].append({"events":details,"matchday":m.get("matchday"),"stage":m.get("stage"),"halfTime":score.get("halfTime"),"id":f"fd:{m.get('id')}","league":league,"home":home.get("shortName") or home["name"],"away":away.get("shortName") or away["name"],"homeLogo":home.get("crest") or "","awayLogo":away.get("crest") or "","date":m.get("utcDate"),"score":f"{hs} - {aw}" if hs is not None and aw is not None else "— : —","status":status,"live":status in ("IN_PLAY","PAUSED","EXTRA_TIME","PENALTY_SHOOTOUT"),"source":"football-data.org"})
     except (urllib.error.URLError,TimeoutError,ValueError) as e:out["errors"][league]=str(e)[:140]
     time.sleep(7)
 path=pathlib.Path("data/fixtures.json");path.parent.mkdir(exist_ok=True)

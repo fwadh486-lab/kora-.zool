@@ -133,6 +133,7 @@ select{border-radius:13px;background:#1b2b40;border-color:#40576f}
 .zoot-team{position:relative;min-width:0;flex:1;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}.zoot-team .team{min-width:0}.zoot-label{position:relative;display:block;white-space:nowrap;color:#20e39a;font-size:17px;font-weight:900;text-shadow:0 2px 7px #000;animation:zootPop .5s ease-out both;pointer-events:none}@keyframes zootPop{from{opacity:0;transform:translateY(12px) scale(.5)}to{opacity:1;transform:translateY(0) scale(1)}}
 .test-goal{position:absolute;top:54px;right:12px;z-index:3;background:#254c40;color:#e7fff4;border:1px solid #20e39a;border-radius:10px;padding:5px 9px;font-size:12px;cursor:pointer}
 
+.team-crest{display:block;width:35px;height:35px;object-fit:contain;margin:0 auto 5px}.match-card .team{overflow-wrap:anywhere}nav button{min-height:44px}button:focus-visible{outline:2px solid #20e39a;outline-offset:2px}
 /* Kora Zol branded interior backdrop */
 header{background:linear-gradient(90deg,#142238ee,#142238dd),url('./icon.svg?v=iconfix20261109c') center 30%/180px auto no-repeat,linear-gradient(145deg,#213a54,#142238)}
 body{background:radial-gradient(ellipse at 50% 0%,#224c48 0%,#101827 48%,#0c1422 100%)}
@@ -266,7 +267,7 @@ function renderStandings(){
  for(const row of rows){
   const tr=document.createElement("tr");
   for(const value of [row.rank,row.team,row.played,row.won,row.draw,row.lost,row.gd,row.points]){
-   const td=document.createElement("td");td.textContent=value??"—";tr.appendChild(td);
+   const td=document.createElement("td");if(value===row.team&&row.crest){const img=document.createElement("img");img.src=row.crest;img.alt="";img.loading="lazy";img.width=24;img.height=24;img.style.cssText="vertical-align:middle;object-fit:contain;margin-inline-end:8px";td.appendChild(img)}td.appendChild(document.createTextNode(String(value??"—")));tr.appendChild(td);
   }
   body.appendChild(tr);
  }
@@ -323,9 +324,9 @@ function renderLive(){
   const league=document.createElement("span");league.className="league";league.textContent=localized({es:"الدوري الإسباني",en:"الدوري الإنجليزي",sa:"الدوري السعودي"}[e.league],{es:"La Liga",en:"Premier League",sa:"Saudi Pro League"}[e.league]);
   const badge=document.createElement("span");badge.className="demo-tag";badge.textContent=e.live?localized("مباشر","LIVE"):e.status;top.append(league,badge);
   const match=document.createElement("div");match.className="match";
-  const home=document.createElement("div");home.className="team";home.textContent=e.home;
+  const home=document.createElement("div");home.className="team";if(e.homeLogo){const img=document.createElement("img");img.src=e.homeLogo;img.alt="";img.loading="lazy";img.className="team-crest";home.appendChild(img)}home.appendChild(document.createTextNode(e.home));
   const score=document.createElement("div");score.className="score";score.textContent=e.score;
-  const away=document.createElement("div");away.className="team";away.textContent=e.away;const homeWrap=document.createElement("div"),awayWrap=document.createElement("div");homeWrap.className="zoot-team";awayWrap.className="zoot-team";homeWrap.appendChild(home);awayWrap.appendChild(away);const zoot=zootEvents.get(e.id);if(zoot&&zoot.until>Date.now()){const label=document.createElement("div");label.className="zoot-label";label.textContent="⚽ زوووط!";(zoot.side==="home"?homeWrap:awayWrap).prepend(label)}match.append(homeWrap,score,awayWrap);
+  const away=document.createElement("div");away.className="team";if(e.awayLogo){const img=document.createElement("img");img.src=e.awayLogo;img.alt="";img.loading="lazy";img.className="team-crest";away.appendChild(img)}away.appendChild(document.createTextNode(e.away));const homeWrap=document.createElement("div"),awayWrap=document.createElement("div");homeWrap.className="zoot-team";awayWrap.className="zoot-team";homeWrap.appendChild(home);awayWrap.appendChild(away);const zoot=zootEvents.get(e.id);if(zoot&&zoot.until>Date.now()){const label=document.createElement("div");label.className="zoot-label";label.textContent="⚽ زوووط!";(zoot.side==="home"?homeWrap:awayWrap).prepend(label)}match.append(homeWrap,score,awayWrap);
   const bottom=document.createElement("div");bottom.className="card-bottom";
   const status=document.createElement("span");status.className="status";status.textContent=e.status;
   const fav=document.createElement("button");fav.className="fav-btn";fav.dataset.id=e.id;fav.textContent=getFavorites().includes(e.id)?"★":"☆";fav.setAttribute("aria-label",localized("المفضلة","Favorite"));fav.onclick=()=>toggleFavorite(fav);bottom.append(status,fav);card.append(top,match,bottom);if(e.eventId&&e.score!=="— : —"){const goals=document.createElement("div");goals.className="inline-details";goals.dataset.goalsFor=e.id;goals.textContent=localized("جاري تحميل أسماء المسجلين...","Loading scorers...");card.appendChild(goals);showMatchGoals(e,goals)}{const center=document.createElement("button");center.className="match-detail";center.type="button";center.textContent=localized("مركز المباراة ◀","Match center ▶");center.onclick=()=>openMatchCenter(e);card.appendChild(center)}if(e.detail){const detail=document.createElement("a");detail.className="match-detail";detail.href=e.detail;detail.target="_blank";detail.rel="noopener noreferrer";detail.textContent=localized("تفاصيل المباراة ↗","Match details ↗");card.appendChild(detail)}target.appendChild(card);
@@ -414,7 +415,7 @@ async function refreshScores(){
    const away=teams.find(t=>t.homeAway==="away")||teams[1]||{};
    const status=ev.status?.type?.shortDetail||ev.status?.type?.description||"";
    const state=ev.status?.type?.state;
-   return {id:league+":"+ev.id,eventId:ev.id,league,home:home.team?.displayName||"—",away:away.team?.displayName||"—",score:state==="pre"?"— : —":(home.score??"—")+" - "+(away.score??"—"),status,live:state==="in",detail:ev.links?.find(l=>l.rel?.includes("summary"))?.href||ev.links?.[0]?.href||null};
+   return {id:league+":"+ev.id,eventId:ev.id,league,home:home.team?.displayName||"—",away:away.team?.displayName||"—",homeLogo:home.team?.logo||"",awayLogo:away.team?.logo||"",score:state==="pre"?"— : —":(home.score??"—")+" - "+(away.score??"—"),status,live:state==="in",detail:ev.links?.find(l=>l.rel?.includes("summary"))?.href||ev.links?.[0]?.href||null};
   });
  }));
  if(sequence!==requestSequence)return;

@@ -210,6 +210,15 @@ body:has(#matches.active) nav button{padding:10px 3px!important;font-size:12px!i
 #matches #feedNotice[hidden]{display:none!important}
 #matches .reference-heading:first-child{margin-top:9px!important}
 #matches .reference-league{box-shadow:0 5px 16px #0002}
+/* Matches immediately on launch: controls after feed */
+#matches{padding-top:0!important}
+#matches #liveMatches{min-height:230px;margin-top:2px}
+#matches .match-filters{margin:20px 0 8px;border:1px solid #344b52;border-radius:13px;padding:10px;background:#1a2b33}
+#matches .match-filters summary{cursor:pointer;font-size:12px;font-weight:800;color:#b5f3d0;padding:6px}
+#matches .match-filters label{display:block!important;margin:12px 0 4px}
+#matches .match-filters #leagueFilter{display:block!important;width:100%}
+#matches .match-filters .date-controls{display:flex!important}
+.home-loading{padding:10px 0}.home-loading strong{font-size:18px}.home-loading p{color:#a9bbc2;font-size:12px}.home-skeleton{height:115px;border-radius:16px;margin:12px 0;background:linear-gradient(90deg,#1c2c33 20%,#2c4148 50%,#1c2c33 80%);background-size:200% 100%;animation:shimmer 1.7s linear infinite}@keyframes shimmer{to{background-position-x:-200%}}
 </style>
 </head>
 
@@ -238,14 +247,9 @@ body:has(#matches.active) nav button{padding:10px 3px!important;font-size:12px!i
 <section id="matches" class="active">
 
 <div class="notice" id="feedNotice" role="status" data-ar="جاري تحميل نتائج المباريات من المصدر المباشر..." data-en="Loading live match data from the provider..." hidden>جاري تحميل نتائج المباريات من المصدر المباشر...</div>
-<h2 data-ar="⚽ المباريات والنتائج" data-en="⚽ Matches & Scores">
-⚽ المباريات والنتائج</h2>
-
-<label for="leagueFilter" data-ar="تصفية حسب الدوري" data-en="Filter by league">تصفية حسب الدوري</label>
-<select id="leagueFilter" onchange="filterMatches()"><option value="all" data-ar="كل الدوريات" data-en="All leagues">كل الدوريات</option><option value="es" data-ar="الدوري الإسباني" data-en="La Liga">الدوري الإسباني</option><option value="en" data-ar="الدوري الإنجليزي" data-en="Premier League">الدوري الإنجليزي</option><option value="sa" data-ar="الدوري السعودي" data-en="Saudi Pro League">الدوري السعودي</option><option value="sd" data-ar="الدوري السوداني" data-en="Sudanese League">الدوري السوداني</option></select>
-
-<div class="date-controls"><button onclick="shiftDay(-1)" aria-label="Previous day">‹</button><span id="matchDate"></span><button onclick="shiftDay(1)" aria-label="Next day">›</button><button onclick="goToday()" data-ar="اليوم" data-en="Today">اليوم</button></div>
-<div id="liveMatches"></div>
+<div id="liveMatches"><div class="home-loading"><strong>⚽ المباريات الجاية</strong><div class="home-skeleton"></div><div class="home-skeleton"></div><p>جاري تحميل المباريات...</p></div></div>
+<details class="match-filters"><summary>⚙ تصفية المباريات حسب الدوري واليوم</summary><label for="leagueFilter" data-ar="تصفية حسب الدوري" data-en="Filter by league">تصفية حسب الدوري</label>
+<select id="leagueFilter" onchange="filterMatches()"><option value="all" data-ar="كل الدوريات" data-en="All leagues">كل الدوريات</option><option value="es" data-ar="الدوري الإسباني" data-en="La Liga">الدوري الإسباني</option><option value="en" data-ar="الدوري الإنجليزي" data-en="Premier League">الدوري الإنجليزي</option><option value="sa" data-ar="الدوري السعودي" data-en="Saudi Pro League">الدوري السعودي</option><option value="sd" data-ar="الدوري السوداني" data-en="Sudanese League">الدوري السوداني</option></select><div class="date-controls"><button onclick="shiftDay(-1)" aria-label="Previous day">‹</button><span id="matchDate"></span><button onclick="shiftDay(1)" aria-label="Next day">›</button><button onclick="goToday()" data-ar="اليوم" data-en="Today">اليوم</button></div></details>
 </section>
 
 <section id="fixtures"><h2 data-ar="📅 جدول المباريات الجاية" data-en="📅 Upcoming fixtures">📅 جدول المباريات الجاية</h2><iframe id="fixturesFrame" title="جدول المباريات الجاية" loading="lazy" style="width:100%;height:78vh;min-height:580px;border:0;border-radius:12px;background:#0e192a" data-src="./fixtures.html?embedded=1&design=20261108font1"></iframe></section>
@@ -610,7 +614,7 @@ window.addEventListener('online',refreshScores);
 window.addEventListener('offline',updateNotice);
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)refreshScores()});
 </script>
-<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=23').catch(e=>console.warn('PWA service worker:',e)));}</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=24').catch(e=>console.warn('PWA service worker:',e)));}</script>
 </body>
 </html>
 <!-- CORAZOL navigation fix v3 -->

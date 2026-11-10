@@ -192,6 +192,24 @@ header{background:linear-gradient(90deg,#142238ee,#142238dd),linear-gradient(145
 body{background:radial-gradient(ellipse at 50% 0%,#224c48 0%,#101827 48%,#0c1422 100%)}
 .upcoming-title{margin:12px 0;font-size:18px}.upcoming-scroll{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:5px 2px 17px;direction:rtl}.upcoming-card{scroll-snap-align:start;flex:0 0 220px;min-height:148px;border:1px solid #365668;border-radius:16px;background:#1b3144;color:#f2f8ff;text-align:right;padding:13px;display:flex;flex-direction:column;justify-content:space-between;gap:10px;font:inherit;cursor:pointer}.upcoming-card small{color:#a9f1c9}.upcoming-teams{display:flex;flex-direction:column;gap:8px}.upcoming-teams>span{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:800}.upcoming-teams img{width:25px;height:25px;object-fit:contain}.upcoming-card strong{font-size:12px;color:#a8d4e3}/* Compact reference-style results page */
 body{background:#10191e!important}header{background:#141f26!important;padding:14px 16px!important}header .subtitle{display:none}header .brand-image{width:62px!important;height:62px!important;object-fit:contain!important}nav{background:#141f26!important;box-shadow:none!important;border-bottom:1px solid #2d3e44!important}nav button.active{background:transparent!important;border-bottom:3px solid #20e39a;border-radius:0!important}main{padding:12px!important}#matches>h2{font-size:17px}#matches .date-controls{background:#1c2a31;padding:7px;border-radius:13px}.reference-heading{font-size:15px;font-weight:800;margin:21px 4px 12px;color:#f0f7f7}.reference-league{background:#16232a;border:1px solid #304149;border-radius:18px;overflow:hidden;margin-bottom:16px}.reference-league-title{background:#1d2c34;border-bottom:1px solid #32454d;padding:13px 15px;font-size:13px;font-weight:800}.reference-match{border-bottom:1px solid #2f4249}.reference-match:last-child{border:0}.reference-match-row{display:grid;grid-template-columns:minmax(0,1fr) 100px minmax(0,1fr);gap:3px;align-items:center;min-height:114px;padding:13px 6px 7px}.reference-team{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;min-width:0;background:none;color:#f5f9fa;border:0;font:700 12px Cairo,Arial,sans-serif;line-height:1.5;padding:3px}.reference-team img{width:45px;height:45px;object-fit:contain}.reference-team span{text-align:center;max-width:100%;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.reference-score{display:flex;flex-direction:column;align-items:center;gap:4px;background:none;border:0;color:#fff;padding:3px}.reference-score strong{font-size:23px;direction:ltr;white-space:nowrap}.reference-score small{font-size:10px;color:#aebfc7;white-space:nowrap}.reference-score .reference-live{color:#ff6872;font-weight:900}.reference-bottom{border-top:1px solid #2b3e46;padding:5px 13px 8px;display:flex;align-items:center;justify-content:space-between;color:#a9bac1;font-size:11px}.reference-fav{font-size:23px;color:#f1d075;background:none;padding:0 6px}.reference-team:focus-visible,.reference-score:focus-visible{outline:2px solid #20e39a}@media(max-width:380px){.reference-match-row{grid-template-columns:minmax(0,1fr) 83px minmax(0,1fr)}.reference-team{font-size:11px}.reference-team img{width:37px;height:37px}.reference-score strong{font-size:19px}}
+/* HOME COMPACT LAYOUT v23 - override legacy large logo */
+body:has(#matches.active) header{height:72px!important;min-height:72px!important;max-height:72px!important;padding:7px 68px 7px 80px!important;display:flex!important;align-items:center!important;justify-content:center!important;overflow:hidden!important;background:#131f26!important}
+body:has(#matches.active) header .logo{height:58px!important;max-height:58px!important;width:auto!important;max-width:140px!important;overflow:hidden!important;display:flex!important;align-items:center!important;justify-content:center!important}
+body:has(#matches.active) header .brand-image{display:block!important;max-width:66px!important;max-height:56px!important;width:56px!important;height:56px!important;object-fit:contain!important}
+body:has(#matches.active) header .legacy-brand{max-height:56px!important;font-size:13px!important}
+body:has(#matches.active) header .subtitle{display:none!important}
+body:has(#matches.active) header .sound-bell{top:13px!important;right:12px!important;width:42px!important;height:42px!important}
+body:has(#matches.active) header .lang{top:15px!important;left:12px!important;padding:8px!important;font-size:11px!important}
+body:has(#matches.active) header .test-goal{display:none!important}
+body:has(#matches.active) nav{position:sticky!important;top:0!important;padding:3px 0!important}
+body:has(#matches.active) nav button{padding:10px 3px!important;font-size:12px!important}
+#matches>h2{display:none!important}
+#matches>label{display:none!important}
+#matches #leagueFilter{max-width:100%!important;margin:4px 0 6px!important;padding:9px!important}
+#matches .date-controls{margin:2px 0 8px!important}
+#matches #feedNotice[hidden]{display:none!important}
+#matches .reference-heading:first-child{margin-top:9px!important}
+#matches .reference-league{box-shadow:0 5px 16px #0002}
 </style>
 </head>
 
@@ -561,7 +579,7 @@ function getFavorites(){try{const stored=JSON.parse(localStorage.getItem("corazo
 function toggleFavorite(button){const id=button.dataset.id;let favorites=getFavorites();favorites=favorites.includes(id)?favorites.filter(x=>x!==id):[...favorites,id];localStorage.setItem("corazol_favorites",JSON.stringify(favorites));renderFavorites();}
 function renderFavorites(){
  const favorites=getFavorites();
- document.querySelectorAll("#liveMatches .fav-btn").forEach(b=>{b.textContent=favorites.includes(b.dataset.id)?"★":"☆"});
+ document.querySelectorAll("#liveMatches .fav-btn, #liveMatches .reference-fav").forEach(b=>{b.textContent=favorites.includes(b.dataset.id)?"★":"☆"});
  const target=document.getElementById("favoriteMatches");target.replaceChildren();
  const matches=liveEvents.filter(e=>favorites.includes(e.id));
  if(!matches.length){const p=document.createElement("p");p.textContent=localized("ما عندك مباريات محفوظة ضمن نتائج اليوم.","No saved matches in today's results.");target.appendChild(p);return;}
@@ -592,7 +610,7 @@ window.addEventListener('online',refreshScores);
 window.addEventListener('offline',updateNotice);
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)refreshScores()});
 </script>
-<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=12').catch(e=>console.warn('PWA service worker:',e)));}</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=23').catch(e=>console.warn('PWA service worker:',e)));}</script>
 </body>
 </html>
 <!-- CORAZOL navigation fix v3 -->

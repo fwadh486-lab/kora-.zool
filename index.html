@@ -631,7 +631,7 @@ async function refreshScores(){
  if(result.some(r=>r.status==='fulfilled'))lastUpdated=new Date();updateNotice();renderLive();
 }
 let upcomingRequest=0;
-async function loadSnapshotFixtures(){const old=Array.isArray(window.upcomingEvents)?window.upcomingEvents:[];const merged=new Map(old.map(e=>[e.id,e]));let loaded=0;for(const file of ["fixtures.json"]){try{const res=await fetch("./data/"+file+"?v="+Math.floor(Date.now()/180000),{cache:"no-store"});if(!res.ok)continue;const data=await res.json();if(!Array.isArray(data.matches))continue;for(const e of data.matches){if(e.date&&new Date(e.date).getTime()>Date.now()-15*86400000){merged.set(e.id,e);loaded++}}}catch(e){console.warn("Snapshot unavailable:",file,e)}}if(loaded){window.upcomingEvents=[...merged.values()].sort((a,b)=>new Date(a.date)-new Date(b.date));localStorage.setItem("korazol_upcoming_v1",JSON.stringify(window.upcomingEvents));renderLive()}}
+async function loadSnapshotFixtures(){const old=Array.isArray(window.upcomingEvents)?window.upcomingEvents:[];const merged=new Map(old.map(e=>[e.id,e]));let loaded=0;for(const file of ["fixtures.json"]){try{const res=await fetch("./data/"+file+"?v="+Math.floor(Date.now()/180000),{cache:"no-store"});if(!res.ok)continue;const data=await res.json();if(!Array.isArray(data.matches))continue;for(const e of data.matches){if(e.date&&new Date(e.date).getTime()>Date.now()-120*86400000){merged.set(e.id,e);loaded++}}}catch(e){console.warn("Snapshot unavailable:",file,e)}}if(loaded){window.upcomingEvents=[...merged.values()].sort((a,b)=>new Date(a.date)-new Date(b.date));localStorage.setItem("korazol_upcoming_v1",JSON.stringify(window.upcomingEvents));renderLive()}}
 
 async function loadUpcoming(){
  const sequence=++upcomingRequest,now=new Date();
@@ -690,7 +690,7 @@ window.addEventListener('offline',()=>{updateNotice();updateDataHealth()});
 window.addEventListener('online',updateDataHealth);
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)refreshScores()});
 </script>
-<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=40').catch(e=>console.warn('PWA service worker:',e)));}</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=41').catch(e=>console.warn('PWA service worker:',e)));}</script>
 </body>
 </html>
 <!-- CORAZOL navigation fix v3 -->

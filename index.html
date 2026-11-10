@@ -286,7 +286,7 @@ function showDate(){const d=selectedDate();document.getElementById("matchDate").
 function localized(ar,en){return language==="ar"?ar:en}
 function updateNotice(){
  const n=document.getElementById("feedNotice");
- if(n){n.hidden=false;const offline=!navigator.onLine;n.textContent=localized(offline?'أنت غير متصل. يتم عرض آخر بيانات محفوظة.':'آخر تحديث: ','Offline: showing last saved scores.':'Last updated: ')+(lastUpdated?lastUpdated.toLocaleTimeString(language==='ar'?'ar-SA':'en-US',{hour:'2-digit',minute:'2-digit'}):localized('لا توجد بيانات محفوظة','No cached data'));}
+ if(n){n.hidden=false;const offline=!navigator.onLine;n.textContent=localized(offline?'أنت غير متصل. يتم عرض آخر بيانات محفوظة.':'آخر تحديث: ',offline?'Offline: showing last saved scores.':'Last updated: ')+(lastUpdated?lastUpdated.toLocaleTimeString(language==='ar'?'ar-SA':'en-US',{hour:'2-digit',minute:'2-digit'}):localized('لا توجد بيانات محفوظة','No cached data'));}
 }
 function renderLive(){
  const target=document.getElementById("liveMatches");target.replaceChildren();

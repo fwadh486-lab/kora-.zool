@@ -296,6 +296,10 @@ function changeLang(){
 }
 
 const feeds={es:"esp.1",en:"eng.1",sa:"ksa.1"};
+const crestLookup={};
+async function fetchCrestMap(){try{const response=await fetch("./data/standings.json",{cache:"no-cache"});if(!response.ok)return;const data=await response.json();for(const rows of Object.values(data.leagues||{})){for(const row of rows){if(row.team&&row.crest)crestLookup[normalizeTeam(row.team)]=row.crest;}}}catch(e){}}
+function normalizeTeam(name){return String(name||"").toLowerCase().normalize("NFKD").replace(/[\\u0300-\\u036f]/g,"").replace(/\\b(fc|cf|afc|sc|club|football|de|the)\\b/g,"").replace(/[^a-z0-9]/g,"");}
+function resolveCrest(name,logo){return logo||crestLookup[normalizeTeam(name)]||"";}
 let liveEvents=[],feedFailures=[],lastUpdated=null,dayOffset=0,requestSequence=0;
 const scoreCacheKey='korazol_scores_v2';
 function restoreCachedScores(){try{const saved=JSON.parse(localStorage.getItem(scoreCacheKey)||'null');if(saved&&Array.isArray(saved.events)){liveEvents=saved.events;lastUpdated=new Date(saved.updated);renderLive();}}catch(e){}}
@@ -327,9 +331,9 @@ function renderLive(){
   const league=document.createElement("span");league.className="league";league.textContent=localized({es:"الدوري الإسباني",en:"الدوري الإنجليزي",sa:"الدوري السعودي"}[e.league],{es:"La Liga",en:"Premier League",sa:"Saudi Pro League"}[e.league]);
   const badge=document.createElement("span");badge.className="demo-tag";badge.textContent=e.live?localized("مباشر","LIVE"):e.status;top.append(league,badge);
   const match=document.createElement("div");match.className="match";
-  const home=document.createElement("div");home.className="team";if(e.homeLogo){const img=document.createElement("img");img.src=e.homeLogo;img.alt="";img.loading="lazy";img.className="team-crest";home.appendChild(img)}home.appendChild(document.createTextNode(e.home));
+  const home=document.createElement("div");home.className="team";if(e.homeLogo){const img=document.createElement("img");img.src=e.homeLogo;img.alt="";img.loading="lazy";img.className="team-crest";img.onerror=()=>{img.style.display="none"};home.appendChild(img)}home.appendChild(document.createTextNode(e.home));
   const score=document.createElement("div");score.className="score";score.textContent=e.score;
-  const away=document.createElement("div");away.className="team";if(e.awayLogo){const img=document.createElement("img");img.src=e.awayLogo;img.alt="";img.loading="lazy";img.className="team-crest";away.appendChild(img)}away.appendChild(document.createTextNode(e.away));const homeWrap=document.createElement("div"),awayWrap=document.createElement("div");homeWrap.className="zoot-team";awayWrap.className="zoot-team";homeWrap.appendChild(home);awayWrap.appendChild(away);const zoot=zootEvents.get(e.id);if(zoot&&zoot.until>Date.now()){const label=document.createElement("div");label.className="zoot-label";label.textContent="⚽ زوووط!";(zoot.side==="home"?homeWrap:awayWrap).prepend(label)}match.append(homeWrap,score,awayWrap);
+  const away=document.createElement("div");away.className="team";if(e.awayLogo){const img=document.createElement("img");img.src=e.awayLogo;img.alt="";img.loading="lazy";img.className="team-crest";img.onerror=()=>{img.style.display="none"};away.appendChild(img)}away.appendChild(document.createTextNode(e.away));const homeWrap=document.createElement("div"),awayWrap=document.createElement("div");homeWrap.className="zoot-team";awayWrap.className="zoot-team";homeWrap.appendChild(home);awayWrap.appendChild(away);const zoot=zootEvents.get(e.id);if(zoot&&zoot.until>Date.now()){const label=document.createElement("div");label.className="zoot-label";label.textContent="⚽ زوووط!";(zoot.side==="home"?homeWrap:awayWrap).prepend(label)}match.append(homeWrap,score,awayWrap);
   const bottom=document.createElement("div");bottom.className="card-bottom";
   const status=document.createElement("span");status.className="status";status.textContent=e.status;
   const fav=document.createElement("button");fav.className="fav-btn";fav.dataset.id=e.id;fav.textContent=getFavorites().includes(e.id)?"★":"☆";fav.setAttribute("aria-label",localized("المفضلة","Favorite"));fav.onclick=()=>toggleFavorite(fav);bottom.append(status,fav);card.append(top,match,bottom);if(e.eventId&&e.score!=="— : —"){const goals=document.createElement("div");goals.className="inline-details";goals.dataset.goalsFor=e.id;goals.textContent=localized("جاري تحميل أسماء المسجلين...","Loading scorers...");card.appendChild(goals);showMatchGoals(e,goals)}{const center=document.createElement("button");center.className="match-detail";center.type="button";center.textContent=localized("مركز المباراة ◀","Match center ▶");center.onclick=()=>openMatchCenter(e);card.appendChild(center)}if(e.detail){const detail=document.createElement("a");detail.className="match-detail";detail.href=e.detail;detail.target="_blank";detail.rel="noopener noreferrer";detail.textContent=localized("تفاصيل المباراة ↗","Match details ↗");card.appendChild(detail)}target.appendChild(card);
@@ -418,7 +422,7 @@ async function refreshScores(){
    const away=teams.find(t=>t.homeAway==="away")||teams[1]||{};
    const status=ev.status?.type?.shortDetail||ev.status?.type?.description||"";
    const state=ev.status?.type?.state;
-   return {id:league+":"+ev.id,eventId:ev.id,league,home:home.team?.displayName||"—",away:away.team?.displayName||"—",homeLogo:home.team?.logo||"",awayLogo:away.team?.logo||"",score:state==="pre"?"— : —":(home.score??"—")+" - "+(away.score??"—"),status,live:state==="in",detail:ev.links?.find(l=>l.rel?.includes("summary"))?.href||ev.links?.[0]?.href||null};
+   return {id:league+":"+ev.id,eventId:ev.id,league,home:home.team?.displayName||"—",away:away.team?.displayName||"—",homeLogo:resolveCrest(home.team?.displayName,home.team?.logo||home.team?.logos?.[0]?.href),awayLogo:resolveCrest(away.team?.displayName,away.team?.logo||away.team?.logos?.[0]?.href),score:state==="pre"?"— : —":(home.score??"—")+" - "+(away.score??"—"),status,live:state==="in",detail:ev.links?.find(l=>l.rel?.includes("summary"))?.href||ev.links?.[0]?.href||null};
   });
  }));
  if(sequence!==requestSequence)return;
@@ -454,6 +458,7 @@ function showTab(id,button){
 applyLang();
 restoreCachedScores();
 loadStandings();
+fetchCrestMap().then(()=>{if(liveEvents.length){for(const e of liveEvents){e.homeLogo=resolveCrest(e.home,e.homeLogo);e.awayLogo=resolveCrest(e.away,e.awayLogo)}renderLive()}});
 updateSoundBell();
 refreshScores();
 setInterval(()=>{if(!document.hidden&&navigator.onLine&&dayOffset===0)refreshScores()},liveEvents.some(e=>e.live)?15000:30000);
@@ -461,7 +466,7 @@ window.addEventListener('online',refreshScores);
 window.addEventListener('offline',updateNotice);
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)refreshScores()});
 </script>
-<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=3').catch(e=>console.warn('PWA service worker:',e)));}</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=4').catch(e=>console.warn('PWA service worker:',e)));}</script>
 </body>
 </html>
 <!-- CORAZOL navigation fix v3 -->

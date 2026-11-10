@@ -213,6 +213,29 @@ data-en="Scores from external sources; standings via football-data.org when avai
 </footer>
 
 <script>
+/* Navigation stays usable even if the scores provider or another script fails. */
+document.addEventListener('click',function(event){
+ const button=event.target.closest('nav button');
+ if(!button)return;
+ const match=button.getAttribute('onclick')?.match(/showTab\('([^']+)'/);
+ if(!match)return;
+ event.preventDefault();
+ event.stopImmediatePropagation();
+ const id=match[1];
+ document.querySelectorAll('main > section').forEach(section=>section.classList.toggle('active',section.id===id));
+ document.querySelectorAll('nav button').forEach(tab=>tab.classList.toggle('active',tab===button));
+ if(id==='fixtures'){
+  const frame=document.getElementById('fixturesFrame');
+  if(frame&&!frame.getAttribute('src'))frame.src=frame.dataset.src;
+ }
+},true);
+window.addEventListener('error',function(event){
+ const notice=document.getElementById('feedNotice');
+ if(notice){notice.hidden=false;notice.textContent='تعذّر تشغيل جزء من التطبيق. التبويبات متاحة، وجاري معالجة الخطأ.';}
+ console.error('Kora Zol runtime error:',event.message);
+});
+</script>
+<script>
 let language=localStorage.getItem("corazol_lang")||"ar";
 
 const standingsSnapshot={leagues:{},updated:null,error:null};
@@ -407,7 +430,7 @@ window.addEventListener('online',refreshScores);
 window.addEventListener('offline',updateNotice);
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)refreshScores()});
 </script>
-<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=2').catch(e=>console.warn('PWA service worker:',e)));}</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=3').catch(e=>console.warn('PWA service worker:',e)));}</script>
 </body>
 </html>
-<!-- CORAZOL update -->
+<!-- CORAZOL navigation fix v3 -->

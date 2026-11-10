@@ -137,6 +137,7 @@ select{border-radius:13px;background:#1b2b40;border-color:#40576f}
 .brand-image{width:178px;height:178px;max-width:68vw;object-fit:contain;filter:drop-shadow(0 5px 14px #0006)}
 .brand-image[hidden],.legacy-brand[hidden]{display:none!important}
 .legacy-brand{display:flex;align-items:center;justify-content:center;gap:10px}
+.lineup-panel{display:grid;gap:14px}.lineup-team{display:block;background:#182b40;border:1px solid #36516c;border-radius:15px;padding:14px}.lineup-team h3{color:#20e39a}.lineup-team h4{margin:16px 0 8px}.player-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:8px}.player-item{display:flex;align-items:center;gap:9px;background:#263b52;border-radius:10px;padding:9px;font-size:12px}.player-item small{display:block;color:#b6c8db}.player-number{color:#20e39a;font-weight:900}.lineup-note,.lineup-muted{color:#bdcee0;line-height:1.8}.lineup-timeline{border-top:1px solid #456;padding-top:12px}.match-card .team[role="button"]{cursor:pointer;border-radius:9px;padding:6px}.match-card .team[role="button"]:focus-visible{outline:2px solid #20e39a}
 /* Kora Zol branded interior backdrop */
 header{background:linear-gradient(90deg,#142238ee,#142238dd),linear-gradient(145deg,#213a54,#142238)}
 body{background:radial-gradient(ellipse at 50% 0%,#224c48 0%,#101827 48%,#0c1422 100%)}
@@ -331,40 +332,78 @@ function renderLive(){
   const league=document.createElement("span");league.className="league";league.textContent=localized({es:"الدوري الإسباني",en:"الدوري الإنجليزي",sa:"الدوري السعودي"}[e.league],{es:"La Liga",en:"Premier League",sa:"Saudi Pro League"}[e.league]);
   const badge=document.createElement("span");badge.className="demo-tag";badge.textContent=e.live?localized("مباشر","LIVE"):e.status;top.append(league,badge);
   const match=document.createElement("div");match.className="match";
-  const home=document.createElement("div");home.className="team";if(e.homeLogo){const img=document.createElement("img");img.src=e.homeLogo;img.alt="";img.loading="lazy";img.className="team-crest";img.onerror=()=>{img.style.display="none"};home.appendChild(img)}home.appendChild(document.createTextNode(e.home));
+  const home=document.createElement("div");home.className="team";if(e.homeLogo){const img=document.createElement("img");img.src=e.homeLogo;img.alt="";img.loading="lazy";img.className="team-crest";img.onerror=()=>{img.style.display="none"};home.appendChild(img)}home.appendChild(document.createTextNode(e.home));home.setAttribute("role","button");home.tabIndex=0;home.setAttribute("aria-label","تشكيلة "+e.home);home.onclick=()=>openMatchCenter(e,"home");home.onkeydown=ev=>{if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();openMatchCenter(e,"home")}};
   const score=document.createElement("div");score.className="score";score.textContent=e.score;
-  const away=document.createElement("div");away.className="team";if(e.awayLogo){const img=document.createElement("img");img.src=e.awayLogo;img.alt="";img.loading="lazy";img.className="team-crest";img.onerror=()=>{img.style.display="none"};away.appendChild(img)}away.appendChild(document.createTextNode(e.away));const homeWrap=document.createElement("div"),awayWrap=document.createElement("div");homeWrap.className="zoot-team";awayWrap.className="zoot-team";homeWrap.appendChild(home);awayWrap.appendChild(away);const zoot=zootEvents.get(e.id);if(zoot&&zoot.until>Date.now()){const label=document.createElement("div");label.className="zoot-label";label.textContent="⚽ زوووط!";(zoot.side==="home"?homeWrap:awayWrap).prepend(label)}match.append(homeWrap,score,awayWrap);
+  const away=document.createElement("div");away.className="team";if(e.awayLogo){const img=document.createElement("img");img.src=e.awayLogo;img.alt="";img.loading="lazy";img.className="team-crest";img.onerror=()=>{img.style.display="none"};away.appendChild(img)}away.appendChild(document.createTextNode(e.away));away.setAttribute("role","button");away.tabIndex=0;away.setAttribute("aria-label","تشكيلة "+e.away);away.onclick=()=>openMatchCenter(e,"away");away.onkeydown=ev=>{if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();openMatchCenter(e,"away")}};const homeWrap=document.createElement("div"),awayWrap=document.createElement("div");homeWrap.className="zoot-team";awayWrap.className="zoot-team";homeWrap.appendChild(home);awayWrap.appendChild(away);const zoot=zootEvents.get(e.id);if(zoot&&zoot.until>Date.now()){const label=document.createElement("div");label.className="zoot-label";label.textContent="⚽ زوووط!";(zoot.side==="home"?homeWrap:awayWrap).prepend(label)}match.append(homeWrap,score,awayWrap);
   const bottom=document.createElement("div");bottom.className="card-bottom";
   const status=document.createElement("span");status.className="status";status.textContent=e.status;
   const fav=document.createElement("button");fav.className="fav-btn";fav.dataset.id=e.id;fav.textContent=getFavorites().includes(e.id)?"★":"☆";fav.setAttribute("aria-label",localized("المفضلة","Favorite"));fav.onclick=()=>toggleFavorite(fav);bottom.append(status,fav);card.append(top,match,bottom);if(e.eventId&&e.score!=="— : —"){const goals=document.createElement("div");goals.className="inline-details";goals.dataset.goalsFor=e.id;goals.textContent=localized("جاري تحميل أسماء المسجلين...","Loading scorers...");card.appendChild(goals);showMatchGoals(e,goals)}{const center=document.createElement("button");center.className="match-detail";center.type="button";center.textContent=localized("مركز المباراة ◀","Match center ▶");center.onclick=()=>openMatchCenter(e);card.appendChild(center)}if(e.detail){const detail=document.createElement("a");detail.className="match-detail";detail.href=e.detail;detail.target="_blank";detail.rel="noopener noreferrer";detail.textContent=localized("تفاصيل المباراة ↗","Match details ↗");card.appendChild(detail)}target.appendChild(card);
  });
  renderFavorites();
 }
-function openMatchCenter(e){
- const body=document.getElementById('matchCenterBody');
+function playerName(p){return p?.athlete?.displayName||p?.athlete?.fullName||p?.displayName||p?.name||'—'}
+function addText(parent,tag,value,cls){const el=document.createElement(tag);el.textContent=value;if(cls)el.className=cls;parent.append(el);return el}
+function openMatchCenter(e,side){
+ const body=document.getElementById('matchCenterBody');if(!body)return;
  body.replaceChildren();
- const title=document.createElement('h2');title.textContent=e.home+'  '+e.score+'  '+e.away;
- const status=document.createElement('p');status.textContent=e.status;
- const details=document.createElement('div');details.className='inline-details';details.textContent=localized('جاري تحميل أحداث المباراة...','Loading match events...');
- body.append(title,status,details);
+ addText(body,'h2',e.home+'  '+(e.score||'—')+'  '+e.away);
+ addText(body,'p',e.status||'');
+ const panel=document.createElement('div');panel.className='lineup-panel';body.append(panel);
  showTab('matchCenter',document.querySelector('nav button'));
- if(!e.eventId||!feeds[e.league]){details.textContent=localized('تفاصيل المباراة غير متاحة من المصدر.','Match details unavailable from provider.');return}
- fetch('https://site.api.espn.com/apis/site/v2/sports/soccer/'+feeds[e.league]+'/summary?event='+encodeURIComponent(e.eventId),{signal:AbortSignal.timeout(12000)})
- .then(response=>{if(!response.ok)throw Error('HTTP '+response.status);return response.json()})
+ if(!e.eventId||!feeds[e.league]){addText(panel,'p',localized('لا تتوفر بيانات لهذه المباراة.','Match data unavailable.'));return}
+ addText(panel,'p',localized('جاري تحميل التشكيلة والتفاصيل...','Loading lineups and details...'));
+ const requested=e.eventId;
+ fetch('https://site.api.espn.com/apis/site/v2/sports/soccer/'+feeds[e.league]+'/summary?event='+encodeURIComponent(requested),{signal:AbortSignal.timeout(12000)})
+ .then(r=>{if(!r.ok)throw Error('HTTP '+r.status);return r.json()})
  .then(data=>{
-  if(!details.isConnected)return;
-  details.replaceChildren();
+  if(!panel.isConnected||requested!==e.eventId)return;
+  panel.replaceChildren();
+  const lineups=data.rosters||data.lineups||[];
+  const comps=data.header?.competitions?.[0]?.competitors||[];
+  const sides=[{label:e.home,homeAway:'home'},{label:e.away,homeAway:'away'}];
+  const isUpcoming=String(e.score||'').includes('—')||data.header?.competitions?.[0]?.status?.type?.state==='pre';
+  if(isUpcoming)addText(panel,'p',localized('التشكيلة الرسمية لم تُعلن بعد. التشكيلة المتوقعة والغيابات تظهر فقط إذا وفرها مصدر موثوق؛ لا نعرض توقعات مفبركة.','Official lineup not announced. Predicted XI and absences appear only when verified data is available.'),'lineup-note');
+  for(let i=0;i<2;i++){
+   const sideInfo=sides[i],roster=lineups.find(x=>x.homeAway===sideInfo.homeAway||x.team?.displayName===sideInfo.label)||lineups[i]||{};
+   const section=document.createElement('section');section.className='lineup-team';
+   addText(section,'h3',sideInfo.label);
+   const formation=roster.formation||comps.find(x=>x.homeAway===sideInfo.homeAway)?.formation;
+   if(formation)addText(section,'p',localized('الخطة: ','Formation: ')+formation);
+   const entries=roster.roster||roster.athletes||roster.players||[];
+   const starters=entries.filter(x=>x.starter===true||x.starting===true||x.substitute===false);
+   const bench=entries.filter(x=>x.starter===false||x.starting===false||x.substitute===true);
+   const renderPlayers=(title,items)=>{
+    addText(section,'h4',title);
+    if(!items.length){addText(section,'p',localized('لم يوفر المصدر هذه البيانات بعد.','Not provided by data source.'),'lineup-muted');return}
+    const list=document.createElement('div');list.className='player-grid';
+    for(const p of items){const item=document.createElement('div');item.className='player-item';
+     const number=p.jersey||p.athlete?.jersey||p.athlete?.jerseyNumber||'';
+     addText(item,'span',number?'#'+number:'⚽','player-number');
+     const info=document.createElement('div');addText(info,'strong',playerName(p));
+     const position=p.position?.abbreviation||p.athlete?.position?.abbreviation||p.position?.name||'';
+     if(position)addText(info,'small',position);
+     item.append(info);list.append(item)}
+    section.append(list);
+   };
+   renderPlayers(localized('التشكيلة الأساسية','Starting XI'),starters);
+   renderPlayers(localized('الاحتياطي','Substitutes'),bench);
+   const coach=roster.coach?.displayName||roster.coach?.name||comps.find(x=>x.homeAway===sideInfo.homeAway)?.coach?.displayName;
+   addText(section,'p',localized('المدرب: ','Coach: ')+(coach||localized('غير متاح','Unavailable')));
+   panel.append(section);
+  }
   const competition=data.header?.competitions?.[0]||{};
   const events=competition.details||data.keyEvents||[];
-  if(!events.length){details.textContent=localized('لا توجد أحداث تفصيلية متاحة حالياً.','No detailed events available.');return}
-  for(const event of events){
-   const p=document.createElement('p');
-   const minute=event.clock?.displayValue||event.minute||'';
-   p.textContent=(minute?minute+'′ — ':'')+(event.text||event.shortText||event.description||event.type?.text||'Event');
-   details.appendChild(p);
-  }
+  const timeline=document.createElement('div');timeline.className='lineup-timeline';addText(timeline,'h3',localized('الأهداف والبطاقات والتبديلات','Goals, cards and substitutions'));
+  if(!events.length)addText(timeline,'p',localized('لا توجد أحداث متاحة بعد.','No events available yet.'));
+  for(const ev of events){const minute=ev.clock?.displayValue||ev.minute||'';addText(timeline,'p',(minute?minute+'′ — ':'')+(ev.text||ev.shortText||ev.description||ev.type?.text||localized('حدث','Event')))}
+  panel.append(timeline);
+  const absences=data.injuries||data.absences||[];
+  const missing=document.createElement('div');addText(missing,'h3',localized('الغيابات والإصابات','Absences and injuries'));
+  if(Array.isArray(absences)&&absences.length){for(const item of absences)addText(missing,'p',playerName(item)+' — '+(item.status||item.type||''))}
+  else addText(missing,'p',localized('لا تتوفر قائمة غيابات مؤكدة من مصدر البيانات، ولا يعني ذلك عدم وجود إصابات.','No verified absence list from this source; this does not mean there are no injuries.'),'lineup-muted');
+  panel.append(missing);
  })
- .catch(()=>{if(details.isConnected)details.textContent=localized('تعذر تحميل أحداث المباراة.','Could not load match events.')});
+ .catch(()=>{if(panel.isConnected){panel.replaceChildren();addText(panel,'p',localized('تعذر تحميل التشكيلة حالياً. جرّب مرة أخرى.','Could not load lineup. Please try again.'))}});
 }
 const goalCache=new Map();
 async function showMatchGoals(e,box){
@@ -461,6 +500,7 @@ loadStandings();
 fetchCrestMap().then(()=>{if(liveEvents.length){for(const e of liveEvents){e.homeLogo=resolveCrest(e.home,e.homeLogo);e.awayLogo=resolveCrest(e.away,e.awayLogo)}renderLive()}});
 updateSoundBell();
 refreshScores();
+const deepLink=new URLSearchParams(location.search);if(deepLink.has("match")&&deepLink.has("league")){const code=deepLink.get("league");const league=Object.keys(feeds).find(k=>feeds[k]===code);const eventId=deepLink.get("match");if(league&&/^\\d+$/.test(eventId)){openMatchCenter({eventId,league,home:deepLink.get("home")||"الفريق الأول",away:deepLink.get("away")||"الفريق الثاني",score:"—",status:""});}}
 setInterval(()=>{if(!document.hidden&&navigator.onLine&&dayOffset===0)refreshScores()},liveEvents.some(e=>e.live)?15000:30000);
 window.addEventListener('online',refreshScores);
 window.addEventListener('offline',updateNotice);

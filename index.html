@@ -220,6 +220,9 @@ body:has(#matches.active) nav button{padding:10px 3px!important;font-size:12px!i
 #matches .match-filters .date-controls{display:flex!important}
 .home-loading{padding:10px 0}.home-loading strong{font-size:18px}.home-loading p{color:#a9bbc2;font-size:12px}.home-skeleton{height:115px;border-radius:16px;margin:12px 0;background:linear-gradient(90deg,#1c2c33 20%,#2c4148 50%,#1c2c33 80%);background-size:200% 100%;animation:shimmer 1.7s linear infinite}@keyframes shimmer{to{background-position-x:-200%}}
 </style>
+<style id="korazol-ux-upgrade">
+.match-quickbar{display:flex;gap:8px;overflow-x:auto;padding:12px 2px 10px;scrollbar-width:none}.match-quickbar button{white-space:nowrap;border:1px solid #34475b;background:#142236;color:#e4edf8;border-radius:999px;padding:10px 15px;min-height:44px;font:inherit;font-weight:700}.match-quickbar button[aria-pressed="true"]{background:#18b782;color:#071b17;border-color:#18b782}.match-search{display:block;width:100%;box-sizing:border-box;background:#142236;color:#fff;border:1px solid #34475b;border-radius:12px;padding:13px 15px;font:inherit;min-height:46px}.match-search:focus{outline:2px solid #18b782;outline-offset:2px}.reference-match{transition:transform .16s ease,border-color .16s ease}.reference-match:focus-within{border-color:#18b782}.reference-fav{min-width:44px;min-height:44px}.match-count{color:#91a9bf;font-size:13px;padding:0 3px 9px}
+</style>
 </head>
 
 <body>
@@ -247,7 +250,7 @@ body:has(#matches.active) nav button{padding:10px 3px!important;font-size:12px!i
 <section id="matches" class="active">
 
 <div class="notice" id="feedNotice" role="status" data-ar="جاري تحميل نتائج المباريات من المصدر المباشر..." data-en="Loading live match data from the provider..." hidden>جاري تحميل نتائج المباريات من المصدر المباشر...</div>
-<div id="liveMatches"><div class="home-loading"><strong>⚽ المباريات الجاية</strong><div class="home-skeleton"></div><div class="home-skeleton"></div><p>جاري تحميل المباريات...</p></div></div>
+<div class="match-quickbar" role="group" aria-label="Match quick filters"><button type="button" data-match-view="all" aria-pressed="true" onclick="setMatchView('all')">⚽ الكل</button><button type="button" data-match-view="live" aria-pressed="false" onclick="setMatchView('live')">🔴 مباشر</button><button type="button" data-match-view="upcoming" aria-pressed="false" onclick="setMatchView('upcoming')">📅 القادمة</button><button type="button" data-match-view="results" aria-pressed="false" onclick="setMatchView('results')">🏁 النتائج</button><button type="button" data-match-view="favorites" aria-pressed="false" onclick="setMatchView('favorites')">★ المفضلة</button></div><input class="match-search" id="matchSearch" type="search" placeholder="ابحث عن فريق أو دوري..." aria-label="Search matches by team or league" oninput="renderLive()"><div id="matchCount" class="match-count" aria-live="polite"></div><div id="liveMatches"><div class="home-loading"><strong>⚽ المباريات الجاية</strong><div class="home-skeleton"></div><div class="home-skeleton"></div><p>جاري تحميل المباريات...</p></div></div>
 <details class="match-filters"><summary>⚙ تصفية المباريات حسب الدوري واليوم</summary><label for="leagueFilter" data-ar="تصفية حسب الدوري" data-en="Filter by league">تصفية حسب الدوري</label>
 <select id="leagueFilter" onchange="filterMatches()"><option value="all" data-ar="كل الدوريات" data-en="All leagues">كل الدوريات</option><option value="es" data-ar="الدوري الإسباني" data-en="La Liga">الدوري الإسباني</option><option value="en" data-ar="الدوري الإنجليزي" data-en="Premier League">الدوري الإنجليزي</option><option value="sa" data-ar="الدوري السعودي" data-en="Saudi Pro League">الدوري السعودي</option><option value="de" data-ar="الدوري الألماني" data-en="Bundesliga">الدوري الألماني</option><option value="it" data-ar="الدوري الإيطالي" data-en="Serie A">الدوري الإيطالي</option><option value="fr" data-ar="الدوري الفرنسي" data-en="Ligue 1">الدوري الفرنسي</option><option value="cl" data-ar="دوري أبطال أوروبا" data-en="Champions League">دوري أبطال أوروبا</option><option value="sd" data-ar="الدوري السوداني" data-en="Sudanese League">الدوري السوداني</option></select><div class="date-controls"><button onclick="shiftDay(-1)" aria-label="Previous day">‹</button><span id="matchDate"></span><button onclick="shiftDay(1)" aria-label="Next day">›</button><button onclick="goToday()" data-ar="اليوم" data-en="Today">اليوم</button></div></details>
 </section>
@@ -394,6 +397,8 @@ function updateNotice(){
  const n=document.getElementById("feedNotice");
  if(n){n.hidden=false;const offline=!navigator.onLine;n.textContent=localized(offline?'أنت غير متصل. يتم عرض آخر بيانات محفوظة.':'آخر تحديث: ',offline?'Offline: showing last saved scores.':'Last updated: ')+(lastUpdated?lastUpdated.toLocaleTimeString(language==='ar'?'ar-SA':'en-US',{hour:'2-digit',minute:'2-digit'}):localized('لا توجد بيانات محفوظة','No cached data'));}
 }
+let matchView="all";
+function setMatchView(view){matchView=view;document.querySelectorAll("[data-match-view]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.matchView===view)));renderLive()}
 function renderLive(){
  const target=document.getElementById("liveMatches");target.replaceChildren();
  const old=document.getElementById("upcomingMatches");if(old)old.remove();
@@ -413,10 +418,22 @@ function renderLive(){
  const snapshot=(window.upcomingEvents||[]).filter(e=>selected==="all"||e.league===selected);const future=snapshot.filter(e=>new Date(e.date)>new Date()&&e.score==="— : —");const past=snapshot.filter(e=>e.score!=="— : —"||e.status==="FINISHED");
  const upcomingMap=new Map([...today,...future].map(e=>[e.id,e]));
  const scheduled=[...upcomingMap.values()].sort((a,b)=>new Date(a.date||0)-new Date(b.date||0)).slice(0,90);
- group(live,localized("🔴 مباشر الآن","🔴 Live now"));
- group(scheduled,localized("قريباً — المباريات الجاية","Upcoming matches"));
- const pastMap=new Map([...finished,...past].map(e=>[e.id,e]));group([...pastMap.values()].sort((a,b)=>new Date(b.date||0)-new Date(a.date||0)).slice(0,80),localized("المباريات السابقة","Results"));
- if(!live.length&&!scheduled.length&&!past.length&&!finished.length){const p=document.createElement("p");p.className="notice";p.textContent=localized("جاري جلب المباريات القادمة، أو لا توجد مباريات متاحة للدوري المختار.","Loading fixtures, or no matches for the selected league.");target.append(p)}
+ const pastMap=new Map([...finished,...past].map(e=>[e.id,e]));
+ const results=[...pastMap.values()].sort((a,b)=>new Date(b.date||0)-new Date(a.date||0)).slice(0,80);
+ const query=(document.getElementById("matchSearch")?.value||"").trim().toLocaleLowerCase();
+ const favs=new Set(getFavorites());
+ const matchesQuery=e=>!query||[e.home,e.away,names[e.league],e.league].some(v=>String(v||"").toLocaleLowerCase().includes(query));
+ const sortFav=list=>list.filter(matchesQuery).sort((a,b)=>Number(favs.has(b.id))-Number(favs.has(a.id)));
+ const displayLive=sortFav(live),displayUpcoming=sortFav(scheduled),displayResults=sortFav(results);
+ const onlyFavorites=list=>matchView==="favorites"?list.filter(e=>favs.has(e.id)):list;
+ const visibleLive=onlyFavorites(displayLive),visibleUpcoming=onlyFavorites(displayUpcoming),visibleResults=onlyFavorites(displayResults);
+ if(matchView==="all"||matchView==="live"||matchView==="favorites")group(visibleLive,localized("🔴 مباشر الآن","🔴 Live now"));
+ if(matchView==="all"||matchView==="upcoming"||matchView==="favorites")group(visibleUpcoming,localized("قريباً — المباريات الجاية","Upcoming matches"));
+ if(matchView==="all"||matchView==="results"||matchView==="favorites")group(visibleResults,localized("المباريات السابقة","Results"));
+ const shown=(matchView==="live"?visibleLive.length:matchView==="upcoming"?visibleUpcoming.length:matchView==="results"?visibleResults.length:visibleLive.length+visibleUpcoming.length+visibleResults.length);
+ const count=document.getElementById("matchCount");if(count)count.textContent=localized("المباريات المعروضة: ","Matches shown: ")+shown;
+ if(!shown){const p=document.createElement("p");p.className="notice";p.textContent=matchView==="favorites"?localized("اضغط ☆ بجانب أي مباراة لإضافتها للمفضلة.","Tap ☆ beside a match to follow it."):localized("ما في مباريات مطابقة للتصفية الحالية.","No matches match your filters.");target.append(p)}
+
  renderFavorites();
 }
 function playerName(p){return p?.athlete?.displayName||p?.athlete?.fullName||p?.displayName||p?.name||'—'}
@@ -598,12 +615,12 @@ async function loadUpcoming(){
 try{window.upcomingEvents=JSON.parse(localStorage.getItem("korazol_upcoming_v1")||"[]")}catch{window.upcomingEvents=[]}
 function filterMatches(){renderLive();}
 function getFavorites(){try{const stored=JSON.parse(localStorage.getItem("corazol_favorites")||"[]");return Array.isArray(stored)?stored.filter(x=>typeof x==="string"):[]}catch(e){return []}}
-function toggleFavorite(button){const id=button.dataset.id;let favorites=getFavorites();favorites=favorites.includes(id)?favorites.filter(x=>x!==id):[...favorites,id];localStorage.setItem("corazol_favorites",JSON.stringify(favorites));renderFavorites();}
+function toggleFavorite(button){const id=button.dataset.id;let favorites=getFavorites();favorites=favorites.includes(id)?favorites.filter(x=>x!==id):[...favorites,id];localStorage.setItem("corazol_favorites",JSON.stringify(favorites));renderLive();}
 function renderFavorites(){
  const favorites=getFavorites();
  document.querySelectorAll("#liveMatches .fav-btn, #liveMatches .reference-fav").forEach(b=>{b.textContent=favorites.includes(b.dataset.id)?"★":"☆"});
  const target=document.getElementById("favoriteMatches");target.replaceChildren();
- const matches=liveEvents.filter(e=>favorites.includes(e.id));
+ const matches=[...liveEvents,...(window.upcomingEvents||[])].filter((e,i,a)=>favorites.includes(e.id)&&a.findIndex(x=>x.id===e.id)===i);
  if(!matches.length){const p=document.createElement("p");p.textContent=localized("ما عندك مباريات محفوظة ضمن نتائج اليوم.","No saved matches in today's results.");target.appendChild(p);return;}
  matches.forEach(e=>{const p=document.createElement("div");p.className="card";p.textContent=e.home+"  "+e.score+"  "+e.away+" — "+e.status;target.appendChild(p)});
 }
@@ -633,7 +650,7 @@ window.addEventListener('online',refreshScores);
 window.addEventListener('offline',updateNotice);
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)refreshScores()});
 </script>
-<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=31').catch(e=>console.warn('PWA service worker:',e)));}</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=34').catch(e=>console.warn('PWA service worker:',e)));}</script>
 </body>
 </html>
 <!-- CORAZOL navigation fix v3 -->

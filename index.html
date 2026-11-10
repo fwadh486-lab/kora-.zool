@@ -142,6 +142,22 @@ select{border-radius:13px;background:#1b2b40;border-color:#40576f}
 /* Modern match lineup v2 */
 .lineup-panel{display:grid;gap:18px}.lineup-team{display:block;background:#142438;border:1px solid #34495f;border-radius:22px;padding:13px;overflow:hidden;box-shadow:0 12px 30px #0003}.lineup-team h3{font-size:19px;margin:4px 3px 8px}.squad-block{margin:16px 0 0;background:#1b3045;border:1px solid #344e64;border-radius:17px;padding:12px}.squad-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px}.squad-heading h4{margin:0;font-size:15px;color:#e8f5ff}.squad-count{background:#31536a;border-radius:20px;padding:2px 9px;color:#a9f3ce;font-size:12px}.football-pitch{position:relative;isolation:isolate;min-height:580px;padding:20px 5px;display:flex;flex-direction:column;justify-content:space-around;gap:14px;overflow:hidden;border:1px solid #79c89e;border-radius:14px;background:repeating-linear-gradient(180deg,#17683f 0,#17683f 78px,#1b7447 78px,#1b7447 156px);box-shadow:inset 0 0 55px #053a2a}.pitch-markings{position:absolute;z-index:-1;inset:12px;border:1.5px solid #d4ffe65c;pointer-events:none}.pitch-markings:before{content:"";position:absolute;top:50%;left:0;right:0;border-top:1.5px solid #d4ffe65c}.pitch-markings:after{content:"";position:absolute;top:50%;left:50%;width:88px;height:88px;transform:translate(-50%,-50%);border:1.5px solid #d4ffe65c;border-radius:50%}.pitch-row{display:flex;justify-content:space-around;align-items:center;gap:2px;width:100%}.pitch-player{background:none;border:0;color:white;min-width:0;flex:1;padding:2px;display:flex;align-items:center;flex-direction:column;gap:5px;cursor:pointer}.player-avatar{position:relative;display:grid;place-items:center;width:52px;height:52px;flex-shrink:0;border-radius:50%;border:2px solid #c4f4d7;background:linear-gradient(145deg,#486d7b,#163e4a);box-shadow:0 4px 14px #0006;overflow:hidden}.player-avatar img{width:100%;height:100%;object-fit:cover;object-position:top center}.player-avatar:empty:before{content:"👤";font-size:23px;opacity:.75}.avatar-number{position:absolute;bottom:0;right:0;background:#101d2b;color:#fff;font-size:10px;padding:0 4px;border-radius:5px}.squad-player-info{display:flex;flex-direction:column;align-items:center;min-width:0;width:100%;line-height:1.25}.squad-player-info strong{font-size:10px;font-weight:800;text-align:center;overflow-wrap:anywhere;text-shadow:0 2px 5px #000}.squad-player-info small{color:#a9c1d4;font-size:11px}.squad-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.squad-player{background:#233c52;color:#fff;border:1px solid #3c5b6f;border-radius:13px;padding:9px 7px;display:flex;align-items:center;gap:9px;text-align:start;min-width:0}.squad-player .player-avatar{width:42px;height:42px}.squad-player .squad-player-info{align-items:flex-start;text-align:start}.squad-player .squad-player-info strong{font-size:12px;text-align:start;text-shadow:none}.absent-block{border-color:#6e4d56}.absence-row{display:flex;justify-content:space-between;gap:10px;border-top:1px solid #40576a;padding:10px 0;font-size:12px}.absence-row span{color:#e4b3ad}.player-detail{background:#233e55;border:1px solid #20e39a;border-radius:12px;padding:12px;margin-top:12px}.player-detail p{margin:4px 0}.pitch-player:focus-visible,.squad-player:focus-visible{outline:2px solid #fff;outline-offset:2px}@media(max-width:380px){.player-avatar{width:43px;height:43px}.squad-player-info strong{font-size:9px}.squad-list{grid-template-columns:1fr 1fr}.football-pitch{min-height:530px}}@media(min-width:500px){.player-avatar{width:61px;height:61px}.squad-player-info strong{font-size:12px}}
 
+/* Lineup visual refresh v3: full pitch even when provider has no lineup */
+#matchCenterBody{padding:14px;background:#101d2d;border:1px solid #304c60;border-radius:20px}
+#matchCenterBody>.lineup-panel{margin-top:14px}
+.lineup-team{background:#101d2d!important;border:0!important;padding:2px!important;box-shadow:none!important}
+.lineup-team>h3{font-size:21px!important;color:#f4fbff!important;padding:12px 5px 0}
+.squad-block{background:#17283b!important;border:1px solid #345269!important;border-radius:20px!important;padding:12px!important}
+.football-pitch{min-height:620px!important;background:repeating-linear-gradient(180deg,#147347 0px,#147347 80px,#1a8050 80px,#1a8050 160px)!important;border:2px solid #a1e7bc!important;border-radius:18px!important;box-shadow:inset 0 0 70px #063d2d,0 10px 24px #0004!important}
+.pitch-empty{position:relative;z-index:2;align-self:center;margin:auto 18px;padding:25px 16px;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;color:#fff;background:#063f31d9;border:1px solid #a6e3bd8a;border-radius:19px;backdrop-filter:blur(8px);box-shadow:0 12px 30px #0005}
+.pitch-empty-icon{font-size:36px}.pitch-empty strong{font-size:17px}.pitch-empty small{font-size:12px;line-height:1.8;color:#c7f4dd}
+.pitch-player{background:transparent!important;border:0!important;padding:2px!important;box-shadow:none!important}
+.pitch-player .player-avatar{width:54px;height:54px;border:2px solid #e1fbe7;background:#1c4f55;box-shadow:0 3px 12px #0008}
+.pitch-player .squad-player-info strong{font-size:11px;color:white;text-shadow:0 2px 5px #000}
+.squad-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.squad-list .squad-player{background:#21394c;border:1px solid #375d6c;border-radius:14px}
+.absent-block{background:#261f2d!important;border-color:#674656!important}
+
 /* Kora Zol branded interior backdrop */
 header{background:linear-gradient(90deg,#142238ee,#142238dd),linear-gradient(145deg,#213a54,#142238)}
 body{background:radial-gradient(ellipse at 50% 0%,#224c48 0%,#101827 48%,#0c1422 100%)}
@@ -379,16 +395,16 @@ function openMatchCenter(e,side){
    const renderPlayers=(title,items,onPitch=false)=>{
     const block=document.createElement('div');block.className='squad-block';
     const heading=document.createElement('div');heading.className='squad-heading';addText(heading,'h4',title);addText(heading,'span',items.length?String(items.length):'—','squad-count');block.append(heading);
-    if(!items.length){addText(block,'p',localized('البيانات غير متاحة من المصدر','Data not available from provider'),'lineup-muted');section.append(block);return}
+    if(!items.length&&!onPitch){addText(block,'p',localized('البيانات غير متاحة من المصدر','Data not available from provider'),'lineup-muted');section.append(block);return}
     const list=document.createElement('div');list.className=onPitch?'football-pitch':'squad-list';
-    if(onPitch){const marks=document.createElement('div');marks.className='pitch-markings';list.append(marks)}
+    if(onPitch){const marks=document.createElement('div');marks.className='pitch-markings';list.append(marks);if(!items.length){const empty=document.createElement('div');empty.className='pitch-empty';addText(empty,'span','⚽','pitch-empty-icon');addText(empty,'strong',localized('التشكيلة لم تُنشر بعد','Lineup not published yet'));addText(empty,'small',localized('سنظهر صور اللاعبين ومراكزهم بمجرد توفر التشكيلة الرسمية من المصدر.','Player photos and positions will appear once official lineup data is available.'));list.append(empty)}}
     const formationNumbers=String(formation||'').split('-').map(Number).filter(n=>Number.isInteger(n)&&n>0);
     const valid=formationNumbers.length>=2&&formationNumbers.reduce((x,y)=>x+y,0)===10;
     const rowSizes=valid?[1,...formationNumbers]:[1,4,3,3];
     const rank=p=>{const pos=String(p.position?.abbreviation||p.athlete?.position?.abbreviation||p.position?.name||'').toUpperCase();return /GK|GOAL/.test(pos)?0:/DEF|^(D|CB|LB|RB|DF)$/.test(pos)?1:/MID|^(M|CM|CDM|CAM|MF)$/.test(pos)?2:/ATT|FOR|^(F|ST|CF|LW|RW|FW)$/.test(pos)?3:4};
     const ordered=onPitch?[...items].sort((x,y)=>rank(x)-rank(y)):items;
-    if(onPitch&&ordered.length!==11)addText(block,'p',localized('المصدر وفر ','Source provided ')+ordered.length+localized(' لاعب فقط؛ العرض تقريبي.',' players; layout is approximate.'),'lineup-muted');
-    const playerPhoto=p=>{const a=p.athlete||p;const urls=[a.headshot?.href,a.headshot?.url,a.photo,a.image?.href,a.image,p.headshot?.href,p.photo,a.images?.[0]?.href];return urls.find(u=>typeof u==='string'&&u.startsWith('https://'))||''};
+    if(onPitch&&ordered.length>0&&ordered.length!==11)addText(block,'p',localized('المصدر وفر ','Source provided ')+ordered.length+localized(' لاعب فقط؛ العرض تقريبي.',' players; layout is approximate.'),'lineup-muted');
+    const playerPhoto=p=>{const a=p.athlete||p;const urls=[a.headshot?.href,a.headshot?.url,a.photo,a.image?.href,a.image,p.headshot?.href,p.photo,a.images?.[0]?.href];if(a.id&&/^[0-9]+$/.test(String(a.id)))urls.push('https://a.espncdn.com/i/headshots/soccer/players/full/'+a.id+'.png');return urls.find(u=>typeof u==='string'&&u.startsWith('https://'))||''};
     const makePlayer=p=>{
       const item=document.createElement('button');item.type='button';item.className=onPitch?'pitch-player':'squad-player';
       const avatar=document.createElement('span');avatar.className='player-avatar';
@@ -534,7 +550,7 @@ window.addEventListener('online',refreshScores);
 window.addEventListener('offline',updateNotice);
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)refreshScores()});
 </script>
-<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=6').catch(e=>console.warn('PWA service worker:',e)));}</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=7').catch(e=>console.warn('PWA service worker:',e)));}</script>
 </body>
 </html>
 <!-- CORAZOL navigation fix v3 -->

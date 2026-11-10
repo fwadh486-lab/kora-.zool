@@ -5,9 +5,10 @@ token=os.environ.get("FOOTBALL_DATA_API_KEY","").strip()
 if not token: raise SystemExit("FOOTBALL_DATA_API_KEY secret is missing")
 codes={"en":"PL","es":"PD","de":"BL1","it":"SA","fr":"FL1","cl":"CL"}
 today=datetime.now(timezone.utc).date()
-start=(today-timedelta(days=14)).isoformat()
+start=(today-timedelta(days=45)).isoformat()
 end=(today+timedelta(days=15)).isoformat()
-out={"updated":datetime.now(timezone.utc).isoformat(),"matches":[],"errors":{}}
+retention_start=(today-timedelta(days=120)).isoformat()
+out={"updated":datetime.now(timezone.utc).isoformat(),"matches":[],"errors":{},"coverage":{"history_days_requested":45,"future_days_requested":15,"retention_days":120}}
 for league,code in codes.items():
     url=f"https://api.football-data.org/v4/competitions/{code}/matches?dateFrom={start}&dateTo={end}"
     req=urllib.request.Request(url,headers={"X-Auth-Token":token,"Accept":"application/json","User-Agent":"KoraZol/1.0"})
@@ -30,8 +31,13 @@ path=pathlib.Path("data/fixtures.json");path.parent.mkdir(exist_ok=True)
 if path.exists():
     old=json.loads(path.read_text(encoding="utf-8"))
     seen={m["id"] for m in out["matches"]}
-    out["matches"] += [m for m in old.get("matches",[]) if m.get("id") not in seen and m.get("date","")>=start]
+    out["matches"] += [m for m in old.get("matches",[]) if m.get("id") not in seen and m.get("date","")[:10]>=retention_start]
+out["matches"]=[m for m in out["matches"] if m.get("date","")[:10]>=retention_start]
 out["matches"].sort(key=lambda m:m.get("date") or "")
+out["coverage"]["matches_total"]=len(out["matches"])
+out["coverage"]["matches_by_league"]={league:sum(m.get("league")==league for m in out["matches"]) for league in codes}
+out["coverage"]["oldest_match"]=out["matches"][0].get("date") if out["matches"] else None
+out["coverage"]["newest_match"]=out["matches"][-1].get("date") if out["matches"] else None
 if not out["matches"]:raise SystemExit("No fixtures retrieved; keeping previous snapshot")
 path.write_text(json.dumps(out,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
 print("Fixture count:",len(out["matches"]),"errors:",out["errors"])

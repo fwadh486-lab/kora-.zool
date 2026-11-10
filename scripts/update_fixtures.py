@@ -3,12 +3,12 @@ import json, os, pathlib, time, urllib.request, urllib.error
 from datetime import datetime, timedelta, timezone
 token=os.environ.get("FOOTBALL_DATA_API_KEY","").strip()
 if not token: raise SystemExit("FOOTBALL_DATA_API_KEY secret is missing")
-codes={"en":"PL","es":"PD","de":"BL1","it":"SA","fr":"FL1","cl":"CL"}
+codes={"en":"PL","es":"PD","de":"BL1","it":"SA","fr":"FL1","cl":"CL","br":"BSA","nl":"DED","pt":"PPL","eng2":"ELC"}
 today=datetime.now(timezone.utc).date()
 start=(today-timedelta(days=45)).isoformat()
-end=(today+timedelta(days=15)).isoformat()
+end=(today+timedelta(days=30)).isoformat()
 retention_start=(today-timedelta(days=120)).isoformat()
-out={"updated":datetime.now(timezone.utc).isoformat(),"matches":[],"errors":{},"coverage":{"history_days_requested":45,"future_days_requested":15,"retention_days":120}}
+out={"updated":datetime.now(timezone.utc).isoformat(),"matches":[],"errors":{},"coverage":{"history_days_requested":45,"future_days_requested":30,"retention_days":120}}
 for league,code in codes.items():
     url=f"https://api.football-data.org/v4/competitions/{code}/matches?dateFrom={start}&dateTo={end}"
     req=urllib.request.Request(url,headers={"X-Auth-Token":token,"Accept":"application/json","User-Agent":"KoraZol/1.0"})

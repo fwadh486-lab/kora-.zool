@@ -362,7 +362,7 @@ function openMatchCenter(e,side){
  .then(data=>{
   if(!panel.isConnected||requested!==e.eventId)return;
   panel.replaceChildren();
-  const rawLineups=data.rosters||data.lineups||[];const lineups=Array.isArray(rawLineups)?rawLineups:[];
+  const rawLineups=data.rosters||data.lineups||data.boxscore?.players||[];const lineups=Array.isArray(rawLineups)?rawLineups:[];
   const comps=data.header?.competitions?.[0]?.competitors||[];
   const sides=[{label:e.home,homeAway:'home'},{label:e.away,homeAway:'away'}];
   const isUpcoming=data.header?.competitions?.[0]?.status?.type?.state==='pre';
@@ -373,9 +373,9 @@ function openMatchCenter(e,side){
    addText(section,'h3',sideInfo.label);
    const formation=roster.formation||comps.find(x=>x.homeAway===sideInfo.homeAway)?.formation;
    if(formation)addText(section,'p',localized('الخطة: ','Formation: ')+formation);
-   const entries=Array.isArray(roster.roster)?roster.roster:Array.isArray(roster.athletes)?roster.athletes:Array.isArray(roster.players)?roster.players:[];
-   const starters=entries.filter(x=>x.starter===true||x.starting===true||x.substitute===false);
-   const bench=entries.filter(x=>x.starter===false||x.starting===false||x.substitute===true);
+   const entries=Array.isArray(roster.roster)?roster.roster:Array.isArray(roster.athletes)?roster.athletes:Array.isArray(roster.players)?roster.players.flatMap(x=>Array.isArray(x.athletes)?x.athletes:[x]):[];
+   const starters=entries.filter(x=>x.starter===true||x.starting===true||x.substitute===false||x.athlete?.starter===true);
+   const bench=entries.filter(x=>x.starter===false||x.starting===false||x.substitute===true||x.athlete?.starter===false);
    const renderPlayers=(title,items,onPitch=false)=>{
     const block=document.createElement('div');block.className='squad-block';
     const heading=document.createElement('div');heading.className='squad-heading';addText(heading,'h4',title);addText(heading,'span',items.length?String(items.length):'—','squad-count');block.append(heading);
@@ -388,7 +388,7 @@ function openMatchCenter(e,side){
     const rank=p=>{const pos=String(p.position?.abbreviation||p.athlete?.position?.abbreviation||p.position?.name||'').toUpperCase();return /GK|GOAL/.test(pos)?0:/DEF|^(D|CB|LB|RB|DF)$/.test(pos)?1:/MID|^(M|CM|CDM|CAM|MF)$/.test(pos)?2:/ATT|FOR|^(F|ST|CF|LW|RW|FW)$/.test(pos)?3:4};
     const ordered=onPitch?[...items].sort((x,y)=>rank(x)-rank(y)):items;
     if(onPitch&&ordered.length!==11)addText(block,'p',localized('المصدر وفر ','Source provided ')+ordered.length+localized(' لاعب فقط؛ العرض تقريبي.',' players; layout is approximate.'),'lineup-muted');
-    const playerPhoto=p=>{const a=p.athlete||p;const urls=[a.headshot?.href,a.headshot?.url,a.photo,a.image?.href,a.image,p.headshot?.href,p.photo];return urls.find(u=>typeof u==='string'&&u.startsWith('https://'))||''};
+    const playerPhoto=p=>{const a=p.athlete||p;const urls=[a.headshot?.href,a.headshot?.url,a.photo,a.image?.href,a.image,p.headshot?.href,p.photo,a.images?.[0]?.href];return urls.find(u=>typeof u==='string'&&u.startsWith('https://'))||''};
     const makePlayer=p=>{
       const item=document.createElement('button');item.type='button';item.className=onPitch?'pitch-player':'squad-player';
       const avatar=document.createElement('span');avatar.className='player-avatar';
@@ -534,7 +534,7 @@ window.addEventListener('online',refreshScores);
 window.addEventListener('offline',updateNotice);
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)refreshScores()});
 </script>
-<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=5').catch(e=>console.warn('PWA service worker:',e)));}</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=6').catch(e=>console.warn('PWA service worker:',e)));}</script>
 </body>
 </html>
 <!-- CORAZOL navigation fix v3 -->

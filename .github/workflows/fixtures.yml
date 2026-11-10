@@ -21,11 +21,15 @@ jobs:
         env:
           FOOTBALL_DATA_API_KEY: ${{ secrets.FOOTBALL_DATA_API_KEY }}
         run: python scripts/update_fixtures.py
+      - name: Fetch API-Football fixtures and last lineups
+        env:
+          API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
+        run: python scripts/update_api_football.py
       - name: Commit fixtures snapshot
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/fixtures.json
+          git add data/fixtures.json data/api-football.json
           if ! git diff --cached --quiet; then
             git commit -m "Refresh fixtures snapshot"
             git pull --rebase

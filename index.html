@@ -625,11 +625,13 @@ async function refreshScores(){
   });
  }));
  if(sequence!==requestSequence)return;
- const fresh=result.flatMap(r=>r.status==="fulfilled"?r.value:[]);
- if(result.some(r=>r.status==='fulfilled')){liveEvents=fresh;try{localStorage.setItem(scoreCacheKey,JSON.stringify({events:liveEvents,updated:new Date().toISOString()}));}catch(e){}}
+ const previousByLeague=new Map();for(const e of liveEvents){if(!previousByLeague.has(e.league))previousByLeague.set(e.league,[]);previousByLeague.get(e.league).push(e)}
+ const combined=[];const entries=Object.entries(feeds);let successCount=0;
+ result.forEach((r,i)=>{const league=entries[i][0];if(r.status==="fulfilled"){combined.push(...r.value);successCount++}else combined.push(...(previousByLeague.get(league)||[]))});
+ if(successCount){liveEvents=combined;try{localStorage.setItem(scoreCacheKey,JSON.stringify({events:liveEvents,updated:new Date().toISOString()}));}catch(e){}}
  checkGoals(liveEvents);
  feedFailures=result.map((r,i)=>r.status==="rejected"?Object.keys(feeds)[i]:null).filter(Boolean);
- if(result.some(r=>r.status==='fulfilled'))lastUpdated=new Date();updateNotice();renderLive();
+ if(successCount)lastUpdated=new Date();updateNotice();renderLive();
 }
 let upcomingRequest=0;
 async function loadSnapshotFixtures(){const old=Array.isArray(window.upcomingEvents)?window.upcomingEvents:[];const merged=new Map(old.map(e=>[e.id,e]));let loaded=0;for(const file of ["fixtures.json"]){try{const res=await fetch("./data/"+file+"?v="+Math.floor(Date.now()/180000),{cache:"no-store"});if(!res.ok)continue;const data=await res.json();if(!Array.isArray(data.matches))continue;for(const e of data.matches){if(e.date&&new Date(e.date).getTime()>Date.now()-120*86400000){merged.set(e.id,e);loaded++}}}catch(e){console.warn("Snapshot unavailable:",file,e)}}if(loaded){window.upcomingEvents=[...merged.values()].sort((a,b)=>new Date(a.date)-new Date(b.date));localStorage.setItem("korazol_upcoming_v1",JSON.stringify(window.upcomingEvents));renderLive()}}
@@ -689,13 +691,15 @@ refreshScores();
 loadSnapshotFixtures();
 loadUpcoming();
 const deepLink=new URLSearchParams(location.search);if(deepLink.has("team")){const requested=deepLink.get("team");if(requested&&requested.length<100){const input=document.getElementById("matchSearch");if(input){input.value=requested;setMatchView("all")}setTimeout(()=>openTeamProfile(requested),1400)}}if(deepLink.has("match")&&deepLink.has("league")){const code=deepLink.get("league");const league=Object.keys(feeds).find(k=>feeds[k]===code);const eventId=deepLink.get("match");if(league&&/^[0-9]+$/.test(eventId)){openMatchCenter({eventId,league,home:deepLink.get("home")||"الفريق الأول",away:deepLink.get("away")||"الفريق الثاني",score:"—",status:""});}}
-setInterval(()=>{if(!document.hidden&&navigator.onLine&&dayOffset===0)refreshScores()},liveEvents.some(e=>e.live)?15000:30000);
-window.addEventListener('online',refreshScores);
+let refreshTimer=null;
+function scheduleLiveRefresh(){if(refreshTimer)clearTimeout(refreshTimer);const active=liveEvents.some(e=>e.live);const delay=active?30000:180000;refreshTimer=setTimeout(async()=>{if(!document.hidden&&navigator.onLine&&dayOffset===0){try{await refreshScores()}catch(e){console.warn("Score refresh failed",e)}}scheduleLiveRefresh()},delay)}
+scheduleLiveRefresh();
+window.addEventListener('online',()=>{refreshScores();scheduleLiveRefresh()});
 window.addEventListener('offline',()=>{updateNotice();updateDataHealth()});
 window.addEventListener('online',updateDataHealth);
-document.addEventListener("visibilitychange",()=>{if(!document.hidden)refreshScores()});
+document.addEventListener("visibilitychange",()=>{if(!document.hidden&&navigator.onLine)refreshScores();scheduleLiveRefresh()});
 </script>
-<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=44').catch(e=>console.warn('PWA service worker:',e)));}</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=45').catch(e=>console.warn('PWA service worker:',e)));}</script>
 </body>
 </html>
 <!-- CORAZOL navigation fix v3 -->

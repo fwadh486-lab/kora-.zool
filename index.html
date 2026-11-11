@@ -402,7 +402,7 @@ const zootEvents=new Map();
 function playNetSound(){if(!soundEnabled||document.hidden)return;try{audioContext=audioContext||new (window.AudioContext||window.webkitAudioContext)();audioContext.resume();const ctx=audioContext,rate=ctx.sampleRate,len=Math.floor(rate*.85),buffer=ctx.createBuffer(1,len,rate),data=buffer.getChannelData(0);for(let i=0;i<len;i++){const t=i/rate;data[i]=(Math.random()*2-1)*Math.exp(-t*6)*(.6+.4*Math.sin(t*130))}const src=ctx.createBufferSource(),filter=ctx.createBiquadFilter(),gain=ctx.createGain();src.buffer=buffer;filter.type="lowpass";filter.frequency.setValueAtTime(3400,ctx.currentTime);filter.frequency.exponentialRampToValueAtTime(500,ctx.currentTime+.8);gain.gain.value=.38;src.connect(filter);filter.connect(gain);gain.connect(ctx.destination);src.start()}catch(e){}}
 function testZoot(){const selected=document.getElementById("leagueFilter").value;const e=liveEvents.find(x=>x.live&&(selected==="all"||x.league===selected))||liveEvents.find(x=>selected==="all"||x.league===selected);if(!e){alert("ما في مباراة ظاهرة للاختبار. اختار دوري فيه مباريات أولاً.");return}const until=Date.now()+5000;zootEvents.set(e.id,{side:"home",until});renderLive();playNetSound();setTimeout(()=>{const v=zootEvents.get(e.id);if(v&&v.until===until){zootEvents.delete(e.id);renderLive()}},5000)}
 function checkGoals(events){if(dayOffset!==0)return;const now=Date.now();for(const [id,v] of zootEvents){if(v.until<=now)zootEvents.delete(id)}for(const e of events){const previous=observedScores.get(e.id),current=e.score;if(e.live&&previous&&previous!==current&&/^\d+ - \d+$/.test(previous)&&/^\d+ - \d+$/.test(current)){const a=previous.split(" - ").map(Number),b=current.split(" - ").map(Number);const side=b[0]>a[0]&&b[1]===a[1]?"home":b[1]>a[1]&&b[0]===a[0]?"away":null;if(side){const until=Date.now()+5000;zootEvents.set(e.id,{side,until});playNetSound();setTimeout(()=>{const active=zootEvents.get(e.id);if(active&&active.until===until){zootEvents.delete(e.id);renderLive()}},5000)}}observedScores.set(e.id,current)}}
-function selectedDate(){const parts=new Intl.DateTimeFormat("en-US",{timeZone:"Asia/Riyadh",year:"numeric",month:"2-digit",day:"2-digit"}).formatToParts(new Date());const v=Object.fromEntries(parts.map(p=>[p.type,p.value]));const d=new Date(Date.UTC(+v.year,+v.month-1,+v.day+dayOffset));return d;}
+function selectedDate(){const now=new Date();return new Date(Date.UTC(now.getFullYear(),now.getMonth(),now.getDate()+dayOffset))}
 function shiftDay(n){dayOffset+=n;refreshScores()}
 function goToday(){dayOffset=0;refreshScores()}
 function showDate(){const d=selectedDate();document.getElementById("matchDate").textContent=d.toLocaleDateString(language==="ar"?"ar-SA":"en-GB",{timeZone:"UTC",weekday:"short",day:"numeric",month:"short"});}
@@ -699,7 +699,7 @@ window.addEventListener('offline',()=>{updateNotice();updateDataHealth()});
 window.addEventListener('online',updateDataHealth);
 document.addEventListener("visibilitychange",()=>{if(!document.hidden&&navigator.onLine)refreshScores();scheduleLiveRefresh()});
 </script>
-<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=45').catch(e=>console.warn('PWA service worker:',e)));}</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=46').catch(e=>console.warn('PWA service worker:',e)));}</script>
 </body>
 </html>
 <!-- CORAZOL navigation fix v3 -->

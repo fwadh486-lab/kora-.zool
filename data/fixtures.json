@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-10T21:40:07.229553+00:00",
+  "updated": "2026-11-11T00:58:42.106010+00:00",
   "matches": [
     {
       "events": [],
@@ -4157,7 +4157,7 @@
       "awayLogo": "https://crests.football-data.org/5533.png",
       "date": "2026-10-19T19:15:00Z",
       "score": "1 - 2",
-      "status": "2026-10-19 19:15:00Z",
+      "status": "FINISHED",
       "live": false,
       "source": "football-data.org"
     },
@@ -17440,6 +17440,106 @@
       "status": "SCHEDULED",
       "live": false,
       "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 13,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:565888",
+      "league": "de",
+      "home": "HSV",
+      "away": "Schalke",
+      "homeLogo": "https://crests.football-data.org/7.png",
+      "awayLogo": "https://crests.football-data.org/6.png",
+      "date": "2026-12-11T19:30:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 15,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:558491",
+      "league": "it",
+      "home": "Udinese",
+      "away": "Frosinone",
+      "homeLogo": "https://crests.football-data.org/115.png",
+      "awayLogo": "https://crests.football-data.org/470.png",
+      "date": "2026-12-11T19:45:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 14,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:559602",
+      "league": "fr",
+      "home": "Auxerre",
+      "away": "Toulouse",
+      "homeLogo": "https://crests.football-data.org/519.png",
+      "awayLogo": "https://crests.football-data.org/511.png",
+      "date": "2026-12-11T19:45:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 21,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:562006",
+      "league": "eng2",
+      "home": "Bolton",
+      "away": "Wrexham",
+      "homeLogo": "https://crests.football-data.org/60.png",
+      "awayLogo": "https://crests.football-data.org/404.png",
+      "date": "2026-12-11T20:00:00Z",
+      "score": "— : —",
+      "status": "SCHEDULED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 14,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:567375",
+      "league": "pt",
+      "home": "Acad. Viseu",
+      "away": "Arouca",
+      "homeLogo": "https://crests.football-data.org/5527.png",
+      "awayLogo": "https://crests.football-data.org/712.png",
+      "date": "2026-12-11T20:15:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
     }
   ],
   "errors": {},
@@ -17447,20 +17547,20 @@
     "history_days_requested": 45,
     "future_days_requested": 30,
     "retention_days": 120,
-    "matches_total": 872,
+    "matches_total": 877,
     "matches_by_league": {
       "en": 90,
       "es": 83,
-      "de": 72,
-      "it": 90,
-      "fr": 72,
+      "de": 73,
+      "it": 91,
+      "fr": 73,
       "cl": 90,
       "br": 103,
       "nl": 72,
-      "pt": 55,
-      "eng2": 145
+      "pt": 56,
+      "eng2": 146
     },
     "oldest_match": "2026-10-02T23:00:00Z",
-    "newest_match": "2026-12-09T20:00:00Z"
+    "newest_match": "2026-12-11T20:15:00Z"
   }
 }

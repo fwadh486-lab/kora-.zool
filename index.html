@@ -703,7 +703,7 @@ window.addEventListener('offline',()=>{updateNotice();updateDataHealth()});
 window.addEventListener('online',updateDataHealth);
 document.addEventListener("visibilitychange",()=>{if(!document.hidden&&navigator.onLine)refreshScores();scheduleLiveRefresh()});
 </script>
-<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=47').catch(e=>console.warn('PWA service worker:',e)));}</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=48').catch(e=>console.warn('PWA service worker:',e)));}</script>
 </body>
 </html>
 <!-- CORAZOL navigation fix v3 -->

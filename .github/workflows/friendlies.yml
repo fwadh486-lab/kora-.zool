@@ -1,0 +1,34 @@
+name: Update friendly matches
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '12,42 * * * *'
+permissions:
+  contents: write
+concurrency:
+  group: friendlies-refresh
+  cancel-in-progress: false
+jobs:
+  friendlies:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Fetch friendly fixtures securely
+        env:
+          API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
+        run: python scripts/update_friendlies.py
+      - name: Commit snapshot if changed
+        run: |
+          if [ ! -f data/friendlies.json ]; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/friendlies.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Refresh friendly match snapshot"
+            git pull --rebase
+            git push
+          fi

@@ -55,3 +55,16 @@ self.addEventListener('fetch',event=>{
   }catch(e){return Response.error()}
  })());
 });
+
+self.addEventListener('notificationclick',event=>{
+ event.notification.close();
+ const target=event.notification.data?.url||'./index.html';
+ event.waitUntil((async()=>{
+  const url=new URL(target,self.registration.scope);
+  if(url.origin!==self.location.origin)return;
+  const windows=await clients.matchAll({type:'window',includeUncontrolled:true});
+  const existing=windows.find(client=>client.url===url.href);
+  if(existing){await existing.focus();return}
+  await clients.openWindow(url.href);
+ })());
+});

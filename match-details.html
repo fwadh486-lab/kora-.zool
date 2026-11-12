@@ -35,6 +35,45 @@ header a{color:#fff!important;font-size:22px!important}header strong{font-size:1
 .reference-performance-game small.win{border-color:#1b995c}.reference-performance-game small.loss{border-color:#a84b55}
 .reference-players{padding:24px 15px;text-align:center;color:#b0bfc6;font-size:13px}
 @media(max-width:400px){.hero .team{font-size:14px!important}.hero .team img{width:62px!important;height:62px!important}.hero .score{font-size:28px!important}.reference-prediction-ring{width:62px;height:62px}}
+</style><style id="match-reference-compact-v2">
+/* Compact scale matching the supplied mobile reference without changing data or behavior. */
+header{height:58px!important;padding:8px 12px!important}
+header a{font-size:15px!important}header strong{font-size:12px!important}
+.hero{padding:2px 10px 12px!important}
+.hero .league{font-size:11px!important}
+.hero .scoreboard{min-height:142px!important;margin:6px 0 8px!important;grid-template-columns:minmax(0,1fr) minmax(90px,1fr) minmax(0,1fr)!important}
+.hero .team{font-size:13px!important;gap:6px!important;font-weight:600!important}
+.hero .team img{width:62px!important;height:62px!important}
+.hero .score{font-size:29px!important}
+.hero .time{font-size:12px!important;margin-top:5px!important}
+.hero .chip{font-size:11px!important;padding:3px 8px!important}
+.hero .badge{font-size:11px!important;margin:4px 0!important}
+.tabs{padding:7px 6px!important;gap:3px!important;margin-bottom:9px!important}
+.tabs button{font-size:12px!important;min-width:75px!important;padding:7px 9px!important;border-radius:18px!important}
+.tabs button.active{padding:5px 7px!important}
+.match-tools{gap:5px!important;margin:0 10px 9px!important}
+.match-tools button{font-size:11px!important;padding:5px 8px!important;min-height:34px!important;border-radius:8px!important}
+.match-tools span{font-size:10px!important}
+#content{padding:0 10px!important}
+.panel{border-radius:15px!important;margin:12px 0 18px!important}
+.panel h3{font-size:13px!important;padding:11px 13px!important}
+.panel>.item,.panel>.notice,.panel>.muted,.panel>.comparison-grid,.panel>.h2h-summary,.panel>.stat-row,.panel>.event-card{margin:8px 12px!important}
+.item{font-size:11px!important;padding:8px 0!important}
+.reference-prediction-title{font-size:15px!important;padding:13px 10px 2px!important}
+.reference-prediction-grid{gap:6px!important;padding:12px 9px!important}
+.reference-prediction-choice{gap:6px!important;font-size:11px!important}
+.reference-prediction-ring{width:57px!important;height:57px!important;border-width:4px!important;font-size:21px!important}
+.reference-prediction-ring img{padding:7px!important}
+.reference-prediction-note{font-size:10px!important;padding:0 10px 13px!important}
+.reference-performance{gap:6px!important;padding:12px 8px!important}
+.reference-performance-side{gap:7px!important;font-size:12px!important}
+.reference-performance-games{gap:3px!important}
+.reference-performance-game{font-size:10px!important;gap:3px!important}
+.reference-performance-game img{width:20px!important;height:20px!important}
+.reference-performance-game small{font-size:9px!important;padding:1px 3px!important}
+.reference-players{padding:15px 10px!important;font-size:11px!important}
+.stat-row{padding:9px 0!important}.stat-values{font-size:12px!important}
+@media(max-width:400px){.hero .team{font-size:12px!important}.hero .team img{width:54px!important;height:54px!important}.hero .score{font-size:25px!important}.reference-prediction-ring{width:51px!important;height:51px!important}.tabs button{min-width:69px!important;font-size:11px!important}}
 </style></head><body><header><a href="./index.html">↩ المباريات</a><strong id="matchHeaderTitle">تفاصيل المباراة</strong><span>⚽</span></header><main class="container"><section id="hero" class="hero loading">جاري تحميل تفاصيل المباراة...</section><div class="tabs" id="tabs"><button class="active" data-tab="details">التفاصيل</button><button data-tab="stats">الإحصائيات</button><button data-tab="events">الأحداث</button><button data-tab="form">الأداء</button><button data-tab="h2h">المواجهات</button><button data-tab="lineup">التشكيلة</button></div><div class="match-tools"><button id="matchFav" type="button" onclick="toggleMatchFavorite()">☆ حفظ المباراة</button><button type="button" onclick="shareMatch()">↗ مشاركة</button><button type="button" onclick="refreshMatchDetails()" id="refreshDetail">⟳ تحديث</button><span id="matchUpdated" role="status"></span></div><div id="content"></div></main><script>
 const $=id=>document.getElementById(id),q=new URLSearchParams(location.search),id=q.get("id"),leagueNames={en:"الدوري الإنجليزي الممتاز",es:"الدوري الإسباني",de:"الدوري الألماني",it:"الدوري الإيطالي",fr:"الدوري الفرنسي",cl:"دوري أبطال أوروبا",sa:"الدوري السعودي",friendly:"وديات المنتخبات",clubfriendly:"وديات الأندية",nonfifa:"وديات أخرى"},fmt=d=>new Date(d).toLocaleString("ar-SA",{weekday:"long",day:"numeric",month:"long",hour:"2-digit",minute:"2-digit"});
 let match=null,all=[],tab="details";

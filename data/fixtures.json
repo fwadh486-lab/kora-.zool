@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-13T13:02:42.921024+00:00",
+  "updated": "2026-11-13T15:49:14.242661+00:00",
   "matches": [
     {
       "events": [],
@@ -357,7 +357,7 @@
       "awayLogo": "https://crests.football-data.org/69.png",
       "date": "2026-10-09T19:00:00Z",
       "score": "1 - 1",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -417,7 +417,7 @@
       "awayLogo": "https://crests.football-data.org/332.png",
       "date": "2026-10-10T11:30:00Z",
       "score": "0 - 1",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -437,7 +437,7 @@
       "awayLogo": "https://crests.football-data.org/68.png",
       "date": "2026-10-10T11:30:00Z",
       "score": "2 - 1",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -457,7 +457,7 @@
       "awayLogo": "https://crests.football-data.org/387.png",
       "date": "2026-10-10T11:30:00Z",
       "score": "1 - 1",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -677,7 +677,7 @@
       "awayLogo": "https://crests.football-data.org/1126.png",
       "date": "2026-10-10T14:00:00Z",
       "score": "3 - 0",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -697,7 +697,7 @@
       "awayLogo": "https://crests.football-data.org/328.png",
       "date": "2026-10-10T14:00:00Z",
       "score": "0 - 4",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -717,7 +717,7 @@
       "awayLogo": "https://crests.football-data.org/404.png",
       "date": "2026-10-10T14:00:00Z",
       "score": "1 - 1",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -737,7 +737,7 @@
       "awayLogo": "https://crests.football-data.org/715.png",
       "date": "2026-10-10T14:00:00Z",
       "score": "2 - 1",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -757,7 +757,7 @@
       "awayLogo": "https://crests.football-data.org/70.png",
       "date": "2026-10-10T14:00:00Z",
       "score": "1 - 2",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -777,7 +777,7 @@
       "awayLogo": "https://crests.football-data.org/384.png",
       "date": "2026-10-10T14:00:00Z",
       "score": "0 - 1",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -797,7 +797,7 @@
       "awayLogo": "https://crests.football-data.org/76.png",
       "date": "2026-10-10T14:00:00Z",
       "score": "1 - 0",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -1277,7 +1277,7 @@
       "awayLogo": "https://crests.football-data.org/325.png",
       "date": "2026-10-11T11:00:00Z",
       "score": "1 - 0",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -2037,7 +2037,7 @@
       "awayLogo": "https://crests.football-data.org/60.png",
       "date": "2026-10-13T18:45:00Z",
       "score": "1 - 3",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -2057,7 +2057,7 @@
       "awayLogo": "https://crests.football-data.org/74.png",
       "date": "2026-10-13T18:45:00Z",
       "score": "1 - 2",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -2077,7 +2077,7 @@
       "awayLogo": "https://crests.football-data.org/72.png",
       "date": "2026-10-13T18:45:00Z",
       "score": "0 - 1",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -2097,7 +2097,7 @@
       "awayLogo": "https://crests.football-data.org/346.png",
       "date": "2026-10-13T18:45:00Z",
       "score": "5 - 1",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -2117,7 +2117,7 @@
       "awayLogo": "https://crests.football-data.org/348.png",
       "date": "2026-10-13T18:45:00Z",
       "score": "2 - 2",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -2137,7 +2137,7 @@
       "awayLogo": "https://crests.football-data.org/59.png",
       "date": "2026-10-13T18:45:00Z",
       "score": "0 - 1",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -2297,7 +2297,7 @@
       "awayLogo": "https://crests.football-data.org/1081.png",
       "date": "2026-10-13T19:00:00Z",
       "score": "4 - 0",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -2317,7 +2317,7 @@
       "awayLogo": "https://crests.football-data.org/343.png",
       "date": "2026-10-13T19:00:00Z",
       "score": "2 - 3",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -2377,7 +2377,7 @@
       "awayLogo": "https://crests.football-data.org/356.png",
       "date": "2026-10-14T18:45:00Z",
       "score": "3 - 2",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -2397,7 +2397,7 @@
       "awayLogo": "https://crests.football-data.org/340.png",
       "date": "2026-10-14T18:45:00Z",
       "score": "0 - 1",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -2417,7 +2417,7 @@
       "awayLogo": "https://crests.football-data.org/342.png",
       "date": "2026-10-14T18:45:00Z",
       "score": "4 - 1",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -2577,7 +2577,7 @@
       "awayLogo": "https://crests.football-data.org/563.png",
       "date": "2026-10-14T19:00:00Z",
       "score": "0 - 6",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -2697,7 +2697,7 @@
       "awayLogo": "https://crests.football-data.org/76.png",
       "date": "2026-10-16T19:00:00Z",
       "score": "1 - 2",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -2757,7 +2757,7 @@
       "awayLogo": "https://crests.football-data.org/1126.png",
       "date": "2026-10-17T11:30:00Z",
       "score": "2 - 2",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -2777,7 +2777,7 @@
       "awayLogo": "https://crests.football-data.org/715.png",
       "date": "2026-10-17T11:30:00Z",
       "score": "2 - 2",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -2797,7 +2797,7 @@
       "awayLogo": "https://crests.football-data.org/348.png",
       "date": "2026-10-17T11:30:00Z",
       "score": "2 - 0",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -3017,7 +3017,7 @@
       "awayLogo": "https://crests.football-data.org/325.png",
       "date": "2026-10-17T14:00:00Z",
       "score": "0 - 1",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -3037,7 +3037,7 @@
       "awayLogo": "https://crests.football-data.org/60.png",
       "date": "2026-10-17T14:00:00Z",
       "score": "0 - 0",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -3057,7 +3057,7 @@
       "awayLogo": "https://crests.football-data.org/356.png",
       "date": "2026-10-17T14:00:00Z",
       "score": "0 - 1",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -3077,7 +3077,7 @@
       "awayLogo": "https://crests.football-data.org/69.png",
       "date": "2026-10-17T14:00:00Z",
       "score": "3 - 0",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -3097,7 +3097,7 @@
       "awayLogo": "https://crests.football-data.org/70.png",
       "date": "2026-10-17T14:00:00Z",
       "score": "0 - 1",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -3117,7 +3117,7 @@
       "awayLogo": "https://crests.football-data.org/563.png",
       "date": "2026-10-17T14:00:00Z",
       "score": "0 - 1",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -3137,7 +3137,7 @@
       "awayLogo": "https://crests.football-data.org/59.png",
       "date": "2026-10-17T14:00:00Z",
       "score": "3 - 2",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -3157,7 +3157,7 @@
       "awayLogo": "https://crests.football-data.org/1081.png",
       "date": "2026-10-17T14:00:00Z",
       "score": "4 - 1",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -4237,7 +4237,7 @@
       "awayLogo": "https://crests.football-data.org/325.png",
       "date": "2026-10-20T18:45:00Z",
       "score": "1 - 1",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -4717,7 +4717,7 @@
       "awayLogo": "https://crests.football-data.org/343.png",
       "date": "2026-10-23T19:00:00Z",
       "score": "1 - 5",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -4797,7 +4797,7 @@
       "awayLogo": "https://crests.football-data.org/342.png",
       "date": "2026-10-24T11:30:00Z",
       "score": "1 - 1",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -4817,7 +4817,7 @@
       "awayLogo": "https://crests.football-data.org/68.png",
       "date": "2026-10-24T11:30:00Z",
       "score": "1 - 3",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -4837,7 +4837,7 @@
       "awayLogo": "https://crests.football-data.org/384.png",
       "date": "2026-10-24T11:30:00Z",
       "score": "2 - 1",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -5057,7 +5057,7 @@
       "awayLogo": "https://crests.football-data.org/332.png",
       "date": "2026-10-24T14:00:00Z",
       "score": "1 - 0",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -5077,7 +5077,7 @@
       "awayLogo": "https://crests.football-data.org/72.png",
       "date": "2026-10-24T14:00:00Z",
       "score": "5 - 0",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -5097,7 +5097,7 @@
       "awayLogo": "https://crests.football-data.org/387.png",
       "date": "2026-10-24T14:00:00Z",
       "score": "0 - 0",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -5117,7 +5117,7 @@
       "awayLogo": "https://crests.football-data.org/74.png",
       "date": "2026-10-24T14:00:00Z",
       "score": "1 - 1",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -5137,7 +5137,7 @@
       "awayLogo": "https://crests.football-data.org/328.png",
       "date": "2026-10-24T14:00:00Z",
       "score": "4 - 1",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -5157,7 +5157,7 @@
       "awayLogo": "https://crests.football-data.org/340.png",
       "date": "2026-10-24T14:00:00Z",
       "score": "2 - 3",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -5177,7 +5177,7 @@
       "awayLogo": "https://crests.football-data.org/404.png",
       "date": "2026-10-24T14:00:00Z",
       "score": "2 - 0",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -5197,7 +5197,7 @@
       "awayLogo": "https://crests.football-data.org/346.png",
       "date": "2026-10-24T14:00:00Z",
       "score": "1 - 0",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -6797,7 +6797,7 @@
       "awayLogo": "https://crests.football-data.org/404.png",
       "date": "2026-10-30T20:00:00Z",
       "score": "1 - 0",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -6897,7 +6897,7 @@
       "awayLogo": "https://crests.football-data.org/1081.png",
       "date": "2026-10-31T12:30:00Z",
       "score": "2 - 0",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -6917,7 +6917,7 @@
       "awayLogo": "https://crests.football-data.org/346.png",
       "date": "2026-10-31T12:30:00Z",
       "score": "3 - 2",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -6937,7 +6937,7 @@
       "awayLogo": "https://crests.football-data.org/332.png",
       "date": "2026-10-31T12:30:00Z",
       "score": "1 - 3",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -7197,7 +7197,7 @@
       "awayLogo": "https://crests.football-data.org/715.png",
       "date": "2026-10-31T15:00:00Z",
       "score": "3 - 0",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -7217,7 +7217,7 @@
       "awayLogo": "https://crests.football-data.org/74.png",
       "date": "2026-10-31T15:00:00Z",
       "score": "1 - 3",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -7237,7 +7237,7 @@
       "awayLogo": "https://crests.football-data.org/59.png",
       "date": "2026-10-31T15:00:00Z",
       "score": "4 - 0",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -7257,7 +7257,7 @@
       "awayLogo": "https://crests.football-data.org/387.png",
       "date": "2026-10-31T15:00:00Z",
       "score": "2 - 3",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -7277,7 +7277,7 @@
       "awayLogo": "https://crests.football-data.org/348.png",
       "date": "2026-10-31T15:00:00Z",
       "score": "3 - 0",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -7297,7 +7297,7 @@
       "awayLogo": "https://crests.football-data.org/325.png",
       "date": "2026-10-31T15:00:00Z",
       "score": "0 - 0",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -7317,7 +7317,7 @@
       "awayLogo": "https://crests.football-data.org/342.png",
       "date": "2026-10-31T15:00:00Z",
       "score": "4 - 1",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -7337,7 +7337,7 @@
       "awayLogo": "https://crests.football-data.org/69.png",
       "date": "2026-10-31T15:00:00Z",
       "score": "4 - 1",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -8377,7 +8377,7 @@
       "awayLogo": "https://crests.football-data.org/328.png",
       "date": "2026-11-03T19:45:00Z",
       "score": "1 - 1",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -8397,7 +8397,7 @@
       "awayLogo": "https://crests.football-data.org/68.png",
       "date": "2026-11-03T19:45:00Z",
       "score": "0 - 4",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -8417,7 +8417,7 @@
       "awayLogo": "https://crests.football-data.org/70.png",
       "date": "2026-11-03T19:45:00Z",
       "score": "1 - 2",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -8437,7 +8437,7 @@
       "awayLogo": "https://crests.football-data.org/1126.png",
       "date": "2026-11-03T19:45:00Z",
       "score": "1 - 0",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -8457,7 +8457,7 @@
       "awayLogo": "https://crests.football-data.org/60.png",
       "date": "2026-11-03T19:45:00Z",
       "score": "0 - 1",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -8477,7 +8477,7 @@
       "awayLogo": "https://crests.football-data.org/72.png",
       "date": "2026-11-03T19:45:00Z",
       "score": "3 - 1",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -8497,7 +8497,7 @@
       "awayLogo": "https://crests.football-data.org/356.png",
       "date": "2026-11-03T19:45:00Z",
       "score": "2 - 3",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -8657,7 +8657,7 @@
       "awayLogo": "https://crests.football-data.org/340.png",
       "date": "2026-11-03T20:00:00Z",
       "score": "1 - 1",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -8677,7 +8677,7 @@
       "awayLogo": "https://crests.football-data.org/384.png",
       "date": "2026-11-03T20:00:00Z",
       "score": "3 - 0",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -8777,7 +8777,7 @@
       "awayLogo": "https://crests.football-data.org/563.png",
       "date": "2026-11-04T19:45:00Z",
       "score": "3 - 3",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -8797,7 +8797,7 @@
       "awayLogo": "https://crests.football-data.org/343.png",
       "date": "2026-11-04T19:45:00Z",
       "score": "2 - 0",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -8957,7 +8957,7 @@
       "awayLogo": "https://crests.football-data.org/76.png",
       "date": "2026-11-04T20:00:00Z",
       "score": "1 - 2",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -9217,7 +9217,7 @@
       "awayLogo": "https://crests.football-data.org/60.png",
       "date": "2026-11-06T20:00:00Z",
       "score": "3 - 1",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -9297,7 +9297,7 @@
       "awayLogo": "https://crests.football-data.org/76.png",
       "date": "2026-11-07T12:30:00Z",
       "score": "1 - 1",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -9317,7 +9317,7 @@
       "awayLogo": "https://crests.football-data.org/70.png",
       "date": "2026-11-07T12:30:00Z",
       "score": "1 - 2",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -9337,7 +9337,7 @@
       "awayLogo": "https://crests.football-data.org/68.png",
       "date": "2026-11-07T12:30:00Z",
       "score": "0 - 5",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -9537,7 +9537,7 @@
       "awayLogo": "https://crests.football-data.org/1126.png",
       "date": "2026-11-07T15:00:00Z",
       "score": "2 - 1",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -9557,7 +9557,7 @@
       "awayLogo": "https://crests.football-data.org/328.png",
       "date": "2026-11-07T15:00:00Z",
       "score": "5 - 4",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -9577,7 +9577,7 @@
       "awayLogo": "https://crests.football-data.org/356.png",
       "date": "2026-11-07T15:00:00Z",
       "score": "2 - 1",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -9597,7 +9597,7 @@
       "awayLogo": "https://crests.football-data.org/343.png",
       "date": "2026-11-07T15:00:00Z",
       "score": "0 - 0",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -9617,7 +9617,7 @@
       "awayLogo": "https://crests.football-data.org/563.png",
       "date": "2026-11-07T15:00:00Z",
       "score": "2 - 1",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -9637,7 +9637,7 @@
       "awayLogo": "https://crests.football-data.org/384.png",
       "date": "2026-11-07T15:00:00Z",
       "score": "3 - 0",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -9657,7 +9657,7 @@
       "awayLogo": "https://crests.football-data.org/340.png",
       "date": "2026-11-07T15:00:00Z",
       "score": "1 - 0",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },
@@ -9677,7 +9677,7 @@
       "awayLogo": "https://crests.football-data.org/72.png",
       "date": "2026-11-07T15:00:00Z",
       "score": "2 - 1",
-      "status": "FINISHED",
+      "status": "POSTPONED",
       "live": false,
       "source": "football-data.org"
     },

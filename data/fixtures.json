@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-14T18:41:50.456372+00:00",
+  "updated": "2026-11-14T21:36:56.852080+00:00",
   "matches": [
     {
       "events": [],
@@ -10676,9 +10676,9 @@
       "homeLogo": "https://crests.football-data.org/4364.png",
       "awayLogo": "https://crests.football-data.org/1766.png",
       "date": "2026-11-14T21:30:00Z",
-      "score": "— : —",
-      "status": "TIMED",
-      "live": false,
+      "score": "0 - 0",
+      "status": "IN_PLAY",
+      "live": true,
       "source": "football-data.org"
     },
     {

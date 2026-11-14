@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-13T21:47:20.814774+00:00",
+  "updated": "2026-11-14T00:57:16.235087+00:00",
   "matches": [
     {
       "events": [],
@@ -18900,6 +18900,86 @@
       "status": "TIMED",
       "live": false,
       "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 15,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:558497",
+      "league": "it",
+      "home": "Atalanta",
+      "away": "Genoa",
+      "homeLogo": "https://crests.football-data.org/102.png",
+      "awayLogo": "https://crests.football-data.org/107.png",
+      "date": "2026-12-14T17:30:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 15,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:558496",
+      "league": "it",
+      "home": "Juventus",
+      "away": "Monza",
+      "homeLogo": "https://crests.football-data.org/109.png",
+      "awayLogo": "https://crests.football-data.org/5911.png",
+      "date": "2026-12-14T19:45:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 15,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:560684",
+      "league": "en",
+      "home": "Hull City",
+      "away": "Tottenham",
+      "homeLogo": "https://crests.football-data.org/322.png",
+      "awayLogo": "https://crests.football-data.org/73.png",
+      "date": "2026-12-14T20:00:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 14,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:567381",
+      "league": "pt",
+      "home": "SL Benfica",
+      "away": "Braga",
+      "homeLogo": "https://crests.football-data.org/1903.png",
+      "awayLogo": "https://crests.football-data.org/5613.png",
+      "date": "2026-12-14T20:15:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
     }
   ],
   "errors": {},
@@ -18907,20 +18987,20 @@
     "history_days_requested": 45,
     "future_days_requested": 30,
     "retention_days": 120,
-    "matches_total": 945,
+    "matches_total": 949,
     "matches_by_league": {
-      "en": 99,
+      "en": 100,
       "es": 93,
       "de": 81,
-      "it": 98,
+      "it": 100,
       "fr": 81,
       "cl": 90,
       "br": 103,
       "nl": 80,
-      "pt": 63,
+      "pt": 64,
       "eng2": 157
     },
     "oldest_match": "2026-10-02T23:00:00Z",
-    "newest_match": "2026-12-13T20:30:00Z"
+    "newest_match": "2026-12-14T20:15:00Z"
   }
 }

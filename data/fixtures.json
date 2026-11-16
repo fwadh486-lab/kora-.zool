@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-15T21:38:08.588733+00:00",
+  "updated": "2026-11-16T01:20:37.280383+00:00",
   "matches": [
     {
       "events": [],
@@ -10696,9 +10696,9 @@
       "homeLogo": "https://crests.football-data.org/1772_large.png",
       "awayLogo": "https://crests.football-data.org/1780.png",
       "date": "2026-11-14T23:30:00Z",
-      "score": "0 - 1",
-      "status": "IN_PLAY",
-      "live": true,
+      "score": "0 - 2",
+      "status": "FINISHED",
+      "live": false,
       "source": "football-data.org"
     },
     {
@@ -16289,26 +16289,6 @@
         "home": null,
         "away": null
       },
-      "id": "fd:564774",
-      "league": "es",
-      "home": "Getafe",
-      "away": "Valencia",
-      "homeLogo": "https://crests.football-data.org/82.png",
-      "awayLogo": "https://crests.football-data.org/95.png",
-      "date": "2026-12-06T00:00:00Z",
-      "score": "— : —",
-      "status": "SCHEDULED",
-      "live": false,
-      "source": "football-data.org"
-    },
-    {
-      "events": [],
-      "matchday": 15,
-      "stage": "REGULAR_SEASON",
-      "halfTime": {
-        "home": null,
-        "away": null
-      },
       "id": "fd:558815",
       "league": "nl",
       "home": "Heerenveen",
@@ -16676,6 +16656,26 @@
       "homeLogo": "https://crests.football-data.org/109.png",
       "awayLogo": "https://crests.football-data.org/115.png",
       "date": "2026-12-06T17:00:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 15,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:564774",
+      "league": "es",
+      "home": "Getafe",
+      "away": "Valencia",
+      "homeLogo": "https://crests.football-data.org/82.png",
+      "awayLogo": "https://crests.football-data.org/95.png",
+      "date": "2026-12-06T17:30:00Z",
       "score": "— : —",
       "status": "TIMED",
       "live": false,

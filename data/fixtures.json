@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-18T21:52:31.601511+00:00",
+  "updated": "2026-11-19T01:07:50.064688+00:00",
   "matches": [
     {
       "events": [],
@@ -10706,8 +10706,8 @@
       "matchday": 35,
       "stage": "REGULAR_SEASON",
       "halfTime": {
-        "home": null,
-        "away": null
+        "home": 0,
+        "away": 0
       },
       "id": "fd:555081",
       "league": "br",
@@ -10716,8 +10716,8 @@
       "homeLogo": "https://crests.football-data.org/4241.png",
       "awayLogo": "https://crests.football-data.org/6685.png",
       "date": "2026-11-18T22:30:00Z",
-      "score": "— : —",
-      "status": "TIMED",
+      "score": "0 - 1",
+      "status": "FINISHED",
       "live": false,
       "source": "football-data.org"
     },
@@ -10726,8 +10726,8 @@
       "matchday": 35,
       "stage": "REGULAR_SEASON",
       "halfTime": {
-        "home": null,
-        "away": null
+        "home": 2,
+        "away": 0
       },
       "id": "fd:555086",
       "league": "br",
@@ -10736,8 +10736,8 @@
       "homeLogo": "https://crests.football-data.org/4287.png",
       "awayLogo": "https://crests.football-data.org/1772_large.png",
       "date": "2026-11-18T23:00:00Z",
-      "score": "— : —",
-      "status": "TIMED",
+      "score": "2 - 0",
+      "status": "FINISHED",
       "live": false,
       "source": "football-data.org"
     },
@@ -10746,8 +10746,8 @@
       "matchday": 35,
       "stage": "REGULAR_SEASON",
       "halfTime": {
-        "home": null,
-        "away": null
+        "home": 0,
+        "away": 0
       },
       "id": "fd:555082",
       "league": "br",
@@ -10756,9 +10756,9 @@
       "homeLogo": "https://crests.football-data.org/1771.png",
       "awayLogo": "https://crests.football-data.org/1769.png",
       "date": "2026-11-18T23:30:00Z",
-      "score": "— : —",
-      "status": "TIMED",
-      "live": false,
+      "score": "0 - 1",
+      "status": "IN_PLAY",
+      "live": true,
       "source": "football-data.org"
     },
     {
@@ -10766,8 +10766,8 @@
       "matchday": 35,
       "stage": "REGULAR_SEASON",
       "halfTime": {
-        "home": null,
-        "away": null
+        "home": 2,
+        "away": 1
       },
       "id": "fd:555083",
       "league": "br",
@@ -10776,9 +10776,9 @@
       "homeLogo": "https://crests.football-data.org/1783.png",
       "awayLogo": "https://crests.football-data.org/1768.png",
       "date": "2026-11-18T23:30:00Z",
-      "score": "— : —",
-      "status": "TIMED",
-      "live": false,
+      "score": "2 - 1",
+      "status": "IN_PLAY",
+      "live": true,
       "source": "football-data.org"
     },
     {
@@ -10796,9 +10796,9 @@
       "homeLogo": "https://crests.football-data.org/1779.png",
       "awayLogo": "https://crests.football-data.org/1770.png",
       "date": "2026-11-19T00:30:00Z",
-      "score": "— : —",
-      "status": "TIMED",
-      "live": false,
+      "score": "1 - 0",
+      "status": "IN_PLAY",
+      "live": true,
       "source": "football-data.org"
     },
     {
@@ -10816,9 +10816,9 @@
       "homeLogo": "https://crests.football-data.org/1767.png",
       "awayLogo": "https://crests.football-data.org/1777.png",
       "date": "2026-11-19T00:30:00Z",
-      "score": "— : —",
-      "status": "TIMED",
-      "live": false,
+      "score": "0 - 0",
+      "status": "IN_PLAY",
+      "live": true,
       "source": "football-data.org"
     },
     {
@@ -19080,6 +19080,926 @@
       "status": "SCHEDULED",
       "live": false,
       "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 16,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:560695",
+      "league": "en",
+      "home": "Brentford",
+      "away": "Newcastle",
+      "homeLogo": "https://crests.football-data.org/402.png",
+      "awayLogo": "https://crests.football-data.org/67.png",
+      "date": "2026-12-19T12:30:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 22,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:562014",
+      "league": "eng2",
+      "home": "Bristol City",
+      "away": "Cardiff",
+      "homeLogo": "https://crests.football-data.org/387.png",
+      "awayLogo": "https://crests.football-data.org/715.png",
+      "date": "2026-12-19T12:30:00Z",
+      "score": "— : —",
+      "status": "SCHEDULED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 22,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:562016",
+      "league": "eng2",
+      "home": "Millwall",
+      "away": "Charlton",
+      "homeLogo": "https://crests.football-data.org/384.png",
+      "awayLogo": "https://crests.football-data.org/348.png",
+      "date": "2026-12-19T12:30:00Z",
+      "score": "— : —",
+      "status": "SCHEDULED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 22,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:562022",
+      "league": "eng2",
+      "home": "Birmingham",
+      "away": "West Ham",
+      "homeLogo": "https://crests.football-data.org/332.png",
+      "awayLogo": "https://crests.football-data.org/563.png",
+      "date": "2026-12-19T12:30:00Z",
+      "score": "— : —",
+      "status": "SCHEDULED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 22,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:562023",
+      "league": "eng2",
+      "home": "Swansea",
+      "away": "Preston NE",
+      "homeLogo": "https://crests.football-data.org/72.png",
+      "awayLogo": "https://crests.football-data.org/1081.png",
+      "date": "2026-12-19T12:30:00Z",
+      "score": "— : —",
+      "status": "SCHEDULED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 22,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:562024",
+      "league": "eng2",
+      "home": "Watford",
+      "away": "Bolton",
+      "homeLogo": "https://crests.football-data.org/346.png",
+      "awayLogo": "https://crests.football-data.org/60.png",
+      "date": "2026-12-19T12:30:00Z",
+      "score": "— : —",
+      "status": "SCHEDULED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 16,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:558480",
+      "league": "it",
+      "home": "Sassuolo",
+      "away": "Parma",
+      "homeLogo": "https://crests.football-data.org/471.png",
+      "awayLogo": "https://crests.football-data.org/112.png",
+      "date": "2026-12-19T14:00:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 14,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:565895",
+      "league": "de",
+      "home": "Elversberg",
+      "away": "HSV",
+      "homeLogo": "https://crests.football-data.org/719.png",
+      "awayLogo": "https://crests.football-data.org/7.png",
+      "date": "2026-12-19T14:30:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 14,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:565896",
+      "league": "de",
+      "home": "Leverkusen",
+      "away": "Frankfurt",
+      "homeLogo": "https://crests.football-data.org/3.png",
+      "awayLogo": "https://crests.football-data.org/19.png",
+      "date": "2026-12-19T14:30:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 14,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:565899",
+      "league": "de",
+      "home": "Mainz",
+      "away": "1. FC Köln",
+      "homeLogo": "https://crests.football-data.org/15.png",
+      "awayLogo": "https://crests.football-data.org/1.png",
+      "date": "2026-12-19T14:30:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 14,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:565901",
+      "league": "de",
+      "home": "Augsburg",
+      "away": "SC Paderborn",
+      "homeLogo": "https://crests.football-data.org/16.png",
+      "awayLogo": "https://crests.football-data.org/29.png",
+      "date": "2026-12-19T14:30:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 16,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:560692",
+      "league": "en",
+      "home": "Leeds United",
+      "away": "Fulham",
+      "homeLogo": "https://crests.football-data.org/341.png",
+      "awayLogo": "https://crests.football-data.org/63.png",
+      "date": "2026-12-19T15:00:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 16,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:560696",
+      "league": "en",
+      "home": "Man City",
+      "away": "Hull City",
+      "homeLogo": "https://crests.football-data.org/65.png",
+      "awayLogo": "https://crests.football-data.org/322.png",
+      "date": "2026-12-19T15:00:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 16,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:560698",
+      "league": "en",
+      "home": "Bournemouth",
+      "away": "Coventry City",
+      "homeLogo": "https://crests.football-data.org/bournemouth.png",
+      "awayLogo": "https://crests.football-data.org/1076.png",
+      "date": "2026-12-19T15:00:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 22,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:562013",
+      "league": "eng2",
+      "home": "Middlesbrough",
+      "away": "Portsmouth",
+      "homeLogo": "https://crests.football-data.org/343.png",
+      "awayLogo": "https://crests.football-data.org/325.png",
+      "date": "2026-12-19T15:00:00Z",
+      "score": "— : —",
+      "status": "SCHEDULED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 22,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:562015",
+      "league": "eng2",
+      "home": "Norwich",
+      "away": "Wolverhampton",
+      "homeLogo": "https://crests.football-data.org/68.png",
+      "awayLogo": "https://crests.football-data.org/76.png",
+      "date": "2026-12-19T15:00:00Z",
+      "score": "— : —",
+      "status": "SCHEDULED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 22,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:562017",
+      "league": "eng2",
+      "home": "Burnley",
+      "away": "Stoke",
+      "homeLogo": "https://crests.football-data.org/328.png",
+      "awayLogo": "https://crests.football-data.org/70.png",
+      "date": "2026-12-19T15:00:00Z",
+      "score": "— : —",
+      "status": "SCHEDULED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 22,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:562018",
+      "league": "eng2",
+      "home": "Derby County",
+      "away": "Lincoln City",
+      "homeLogo": "https://crests.football-data.org/342.png",
+      "awayLogo": "https://crests.football-data.org/1126.png",
+      "date": "2026-12-19T15:00:00Z",
+      "score": "— : —",
+      "status": "SCHEDULED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 22,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:562019",
+      "league": "eng2",
+      "home": "Wrexham",
+      "away": "QPR",
+      "homeLogo": "https://crests.football-data.org/404.png",
+      "awayLogo": "https://crests.football-data.org/69.png",
+      "date": "2026-12-19T15:00:00Z",
+      "score": "— : —",
+      "status": "SCHEDULED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 22,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:562020",
+      "league": "eng2",
+      "home": "Southampton",
+      "away": "Blackburn",
+      "homeLogo": "https://crests.football-data.org/340.png",
+      "awayLogo": "https://crests.football-data.org/59.png",
+      "date": "2026-12-19T15:00:00Z",
+      "score": "— : —",
+      "status": "SCHEDULED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 17,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:558800",
+      "league": "nl",
+      "home": "Excelsior",
+      "away": "AZ",
+      "homeLogo": "https://crests.football-data.org/670.png",
+      "awayLogo": "https://crests.football-data.org/682.png",
+      "date": "2026-12-19T15:30:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 16,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:558479",
+      "league": "it",
+      "home": "Milan",
+      "away": "Como 1907",
+      "homeLogo": "https://crests.football-data.org/98.png",
+      "awayLogo": "https://crests.football-data.org/7397.png",
+      "date": "2026-12-19T17:00:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 16,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:560700",
+      "league": "en",
+      "home": "Liverpool",
+      "away": "Tottenham",
+      "homeLogo": "https://crests.football-data.org/64.png",
+      "awayLogo": "https://crests.football-data.org/73.png",
+      "date": "2026-12-19T17:30:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 14,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:565898",
+      "league": "de",
+      "home": "RB Leipzig",
+      "away": "Dortmund",
+      "homeLogo": "https://crests.football-data.org/721.png",
+      "awayLogo": "https://crests.football-data.org/4.png",
+      "date": "2026-12-19T17:30:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 17,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:558793",
+      "league": "nl",
+      "home": "Sittard",
+      "away": "Sparta",
+      "homeLogo": "https://crests.football-data.org/1920.png",
+      "awayLogo": "https://crests.football-data.org/6806.png",
+      "date": "2026-12-19T17:45:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 16,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:558481",
+      "league": "it",
+      "home": "Roma",
+      "away": "Juventus",
+      "homeLogo": "https://crests.football-data.org/100.png",
+      "awayLogo": "https://crests.football-data.org/109.png",
+      "date": "2026-12-19T19:45:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 17,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:558799",
+      "league": "nl",
+      "home": "Utrecht",
+      "away": "Heerenveen",
+      "homeLogo": "https://crests.football-data.org/676.png",
+      "awayLogo": "https://crests.football-data.org/673.png",
+      "date": "2026-12-19T20:00:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 17,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:564788",
+      "league": "es",
+      "home": "Athletic",
+      "away": "Real Betis",
+      "homeLogo": "https://crests.football-data.org/77.png",
+      "awayLogo": "https://crests.football-data.org/90.png",
+      "date": "2026-12-20T00:00:00Z",
+      "score": "— : —",
+      "status": "SCHEDULED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 17,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:564789",
+      "league": "es",
+      "home": "Getafe",
+      "away": "Levante",
+      "homeLogo": "https://crests.football-data.org/82.png",
+      "awayLogo": "https://crests.football-data.org/88.png",
+      "date": "2026-12-20T00:00:00Z",
+      "score": "— : —",
+      "status": "SCHEDULED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 17,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:564790",
+      "league": "es",
+      "home": "Alavés",
+      "away": "Elche",
+      "homeLogo": "https://crests.football-data.org/263.png",
+      "awayLogo": "https://crests.football-data.org/285.png",
+      "date": "2026-12-20T00:00:00Z",
+      "score": "— : —",
+      "status": "SCHEDULED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 17,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:564791",
+      "league": "es",
+      "home": "Valencia",
+      "away": "Espanyol",
+      "homeLogo": "https://crests.football-data.org/95.png",
+      "awayLogo": "https://crests.football-data.org/80.png",
+      "date": "2026-12-20T00:00:00Z",
+      "score": "— : —",
+      "status": "SCHEDULED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 17,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:564792",
+      "league": "es",
+      "home": "Osasuna",
+      "away": "Villarreal",
+      "homeLogo": "https://crests.football-data.org/79.png",
+      "awayLogo": "https://crests.football-data.org/94.png",
+      "date": "2026-12-20T00:00:00Z",
+      "score": "— : —",
+      "status": "SCHEDULED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 17,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:564793",
+      "league": "es",
+      "home": "Barça",
+      "away": "Real Sociedad",
+      "homeLogo": "https://crests.football-data.org/81.png",
+      "awayLogo": "https://crests.football-data.org/92.png",
+      "date": "2026-12-20T00:00:00Z",
+      "score": "— : —",
+      "status": "SCHEDULED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 17,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:564794",
+      "league": "es",
+      "home": "Celta",
+      "away": "Atleti",
+      "homeLogo": "https://crests.football-data.org/558.png",
+      "awayLogo": "https://crests.football-data.org/78.png",
+      "date": "2026-12-20T00:00:00Z",
+      "score": "— : —",
+      "status": "SCHEDULED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 17,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:564795",
+      "league": "es",
+      "home": "Rayo Vallecano",
+      "away": "Málaga",
+      "homeLogo": "https://crests.football-data.org/87.png",
+      "awayLogo": "https://crests.football-data.org/84.png",
+      "date": "2026-12-20T00:00:00Z",
+      "score": "— : —",
+      "status": "SCHEDULED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 17,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:564796",
+      "league": "es",
+      "home": "Deportivo",
+      "away": "Real Madrid",
+      "homeLogo": "https://crests.football-data.org/560.png",
+      "awayLogo": "https://crests.football-data.org/86.png",
+      "date": "2026-12-20T00:00:00Z",
+      "score": "— : —",
+      "status": "SCHEDULED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 17,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:564797",
+      "league": "es",
+      "home": "Sevilla FC",
+      "away": "Santander",
+      "homeLogo": "https://crests.football-data.org/559.png",
+      "awayLogo": "https://crests.football-data.org/5335.png",
+      "date": "2026-12-20T00:00:00Z",
+      "score": "— : —",
+      "status": "SCHEDULED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 15,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:567383",
+      "league": "pt",
+      "home": "Rio Ave",
+      "away": "SL Benfica",
+      "homeLogo": "https://crests.football-data.org/496.png",
+      "awayLogo": "https://crests.football-data.org/1903.png",
+      "date": "2026-12-20T00:00:00Z",
+      "score": "— : —",
+      "status": "SCHEDULED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 15,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:567384",
+      "league": "pt",
+      "home": "Braga",
+      "away": "Acad. Viseu",
+      "homeLogo": "https://crests.football-data.org/5613.png",
+      "awayLogo": "https://crests.football-data.org/5527.png",
+      "date": "2026-12-20T00:00:00Z",
+      "score": "— : —",
+      "status": "SCHEDULED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 15,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:567385",
+      "league": "pt",
+      "home": "Sporting CP",
+      "away": "Estoril Praia",
+      "homeLogo": "https://crests.football-data.org/498.png",
+      "awayLogo": "https://crests.football-data.org/582.png",
+      "date": "2026-12-20T00:00:00Z",
+      "score": "— : —",
+      "status": "SCHEDULED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 15,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:567386",
+      "league": "pt",
+      "home": "Amadora",
+      "away": "Marítimo",
+      "homeLogo": "https://crests.football-data.org/9136.png",
+      "awayLogo": "https://crests.football-data.org/5575.png",
+      "date": "2026-12-20T00:00:00Z",
+      "score": "— : —",
+      "status": "SCHEDULED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 15,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:567387",
+      "league": "pt",
+      "home": "Famalicão",
+      "away": "Porto",
+      "homeLogo": "https://crests.football-data.org/5531.png",
+      "awayLogo": "https://crests.football-data.org/503.png",
+      "date": "2026-12-20T00:00:00Z",
+      "score": "— : —",
+      "status": "SCHEDULED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 15,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:567388",
+      "league": "pt",
+      "home": "Alverca",
+      "away": "Gil Vicente",
+      "homeLogo": "https://crests.football-data.org/7822.png",
+      "awayLogo": "https://crests.football-data.org/5533.png",
+      "date": "2026-12-20T00:00:00Z",
+      "score": "— : —",
+      "status": "SCHEDULED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 15,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:567389",
+      "league": "pt",
+      "home": "Santa Clara",
+      "away": "Vitória SC",
+      "homeLogo": "https://crests.football-data.org/5530.png",
+      "awayLogo": "https://crests.football-data.org/5543.png",
+      "date": "2026-12-20T00:00:00Z",
+      "score": "— : —",
+      "status": "SCHEDULED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 15,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:567390",
+      "league": "pt",
+      "home": "CD Nacional",
+      "away": "Moreirense",
+      "homeLogo": "https://crests.football-data.org/5529.png",
+      "awayLogo": "https://crests.football-data.org/583.png",
+      "date": "2026-12-20T00:00:00Z",
+      "score": "— : —",
+      "status": "SCHEDULED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 15,
+      "stage": "REGULAR_SEASON",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:567391",
+      "league": "pt",
+      "home": "Arouca",
+      "away": "Casa Pia",
+      "homeLogo": "https://crests.football-data.org/712.png",
+      "awayLogo": "https://crests.football-data.org/6618.png",
+      "date": "2026-12-20T00:00:00Z",
+      "score": "— : —",
+      "status": "SCHEDULED",
+      "live": false,
+      "source": "football-data.org"
     }
   ],
   "errors": {},
@@ -19087,20 +20007,20 @@
     "history_days_requested": 45,
     "future_days_requested": 30,
     "retention_days": 120,
-    "matches_total": 954,
+    "matches_total": 1000,
     "matches_by_league": {
-      "en": 100,
-      "es": 93,
-      "de": 82,
-      "it": 102,
+      "en": 105,
+      "es": 103,
+      "de": 87,
+      "it": 105,
       "fr": 81,
       "cl": 90,
       "br": 103,
-      "nl": 81,
-      "pt": 64,
-      "eng2": 158
+      "nl": 84,
+      "pt": 73,
+      "eng2": 169
     },
     "oldest_match": "2026-10-02T23:00:00Z",
-    "newest_match": "2026-12-18T20:00:00Z"
+    "newest_match": "2026-12-20T00:00:00Z"
   }
 }

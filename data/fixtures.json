@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-19T01:07:50.064688+00:00",
+  "updated": "2026-11-19T03:56:44.986248+00:00",
   "matches": [
     {
       "events": [],
@@ -8367,7 +8367,7 @@
       "stage": "REGULAR_SEASON",
       "halfTime": {
         "home": 0,
-        "away": 2
+        "away": 1
       },
       "id": "fd:561920",
       "league": "eng2",
@@ -10756,9 +10756,9 @@
       "homeLogo": "https://crests.football-data.org/1771.png",
       "awayLogo": "https://crests.football-data.org/1769.png",
       "date": "2026-11-18T23:30:00Z",
-      "score": "0 - 1",
-      "status": "IN_PLAY",
-      "live": true,
+      "score": "2 - 1",
+      "status": "FINISHED",
+      "live": false,
       "source": "football-data.org"
     },
     {
@@ -10777,8 +10777,8 @@
       "awayLogo": "https://crests.football-data.org/1768.png",
       "date": "2026-11-18T23:30:00Z",
       "score": "2 - 1",
-      "status": "IN_PLAY",
-      "live": true,
+      "status": "FINISHED",
+      "live": false,
       "source": "football-data.org"
     },
     {
@@ -10786,8 +10786,8 @@
       "matchday": 35,
       "stage": "REGULAR_SEASON",
       "halfTime": {
-        "home": null,
-        "away": null
+        "home": 2,
+        "away": 0
       },
       "id": "fd:555080",
       "league": "br",
@@ -10796,9 +10796,9 @@
       "homeLogo": "https://crests.football-data.org/1779.png",
       "awayLogo": "https://crests.football-data.org/1770.png",
       "date": "2026-11-19T00:30:00Z",
-      "score": "1 - 0",
-      "status": "IN_PLAY",
-      "live": true,
+      "score": "4 - 0",
+      "status": "FINISHED",
+      "live": false,
       "source": "football-data.org"
     },
     {
@@ -10806,8 +10806,8 @@
       "matchday": 35,
       "stage": "REGULAR_SEASON",
       "halfTime": {
-        "home": null,
-        "away": null
+        "home": 0,
+        "away": 0
       },
       "id": "fd:555084",
       "league": "br",
@@ -10817,8 +10817,8 @@
       "awayLogo": "https://crests.football-data.org/1777.png",
       "date": "2026-11-19T00:30:00Z",
       "score": "0 - 0",
-      "status": "IN_PLAY",
-      "live": true,
+      "status": "FINISHED",
+      "live": false,
       "source": "football-data.org"
     },
     {

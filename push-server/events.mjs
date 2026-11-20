@@ -81,7 +81,7 @@ export function notificationFor(event, language, appUrl) {
   const match = event.match, ar = language !== 'en';
   const score = match.homeScore === null || match.awayScore === null ? '' : ' ' + match.homeScore + ' - ' + match.awayScore + ' ';
   const card = event.card;
-  const body = match.home + (score || ' × ') + match.away + (card ? ' · '+card.player+' ('+card.team+')'+(card.minute!==null?' · '+card.minute+(card.extra?'+'+card.extra:'')+'′':'') : match.minute !== null && event.type.startsWith('goal') ? ' · ' + match.minute + '′' : '');
+  const body = match.home + (score || ' × ') + match.away + (card ? ' · '+card.player+' ('+card.team+')'+(card.minute!==null?' · '+card.minute+(card.extra?'+'+card.extra:'')+'′':'') : match.minute !== null && event.type.startsWith('goal') ? ' · ' + match.minute + '′' : '')+(match.source==='SportScore'?' · SportScore':'');
   const team = event.type === 'goal-home' ? match.home : match.away;
   const title = event.type.startsWith('goal') ? (ar ? '⚽ زوووط! هدف لـ ' : '⚽ GOAL! ') + team :
     event.type === 'kickoff' ? (ar ? '⚽ بداية المباراة' : '⚽ Kickoff') :

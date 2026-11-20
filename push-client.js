@@ -33,6 +33,7 @@
     if(test){test.disabled=busy||!on||!synced||!available;test.hidden=!on}
     document.querySelectorAll('[data-push-type]').forEach(input=>{input.checked=types().includes(input.dataset.pushType);input.disabled=busy});
     const allLive=$('pushAllLive');if(allLive){allLive.checked=get(ALL_LIVE)==='yes';allLive.disabled=busy;}
+    const feedStatus=$('liveFeedStatus');if(feedStatus){feedStatus.textContent=config?.liveEnabled?tr('● بيانات الأحداث الحية متصلة — تحديث كل دقيقة تقريباً','● Live events connected — checked about every minute'):tr('○ جاري انتظار اتصال مصدر الأحداث الحية','○ Waiting for the live event feed');feedStatus.style.color=config?.liveEnabled?'var(--accent, #1bca92)':'';}
     if(notice){status.textContent=notice;status.style.color=noticeError?'#ff9ca0':'';return}
     status.style.color='';
     if(!canUse)status.textContent=tr('افتح كورة زول في Chrome لتشغيل الإشعارات.','Open Kora Zol in Chrome to use background notifications.');

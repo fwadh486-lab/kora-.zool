@@ -99,3 +99,29 @@ test('provider rejection is reported without falsely claiming delivery',async()=
     assert.equal(status.state,'rejected');assert.equal(status.providerStatus,403);
   }finally{globalThis.fetch=realFetch}
 });
+test('free SportScore worker monitors actual match shape and sends later yellow card only once',async()=>{
+  const env={DB:makeDb(),SPORTSCORE_ENABLED:'true'};
+  const device=createECDH('prime256v1');device.generateKeys();
+  const sub={endpoint:'https://fcm.googleapis.com/fcm/send/free-provider-test',keys:{p256dh:device.getPublicKey().toString('base64url'),auth:randomBytes(16).toString('base64url')}};
+  const payload={token:randomUUID()+randomUUID(),subscription:sub,preferences:{teams:[],matches:[],allLive:true,types:['yellow','kickoff','goal','fulltime']}};
+  const request=(path,data)=>worker.fetch(new Request('https://push.example.org'+path,{method:data?'POST':'GET',headers:{origin:'https://fwadh486-lab.github.io','content-type':'application/json'},body:data?JSON.stringify(data):undefined}),env);
+  assert.equal((await request('/subscribe',payload)).status,200);
+  const original=globalThis.fetch;const now=Date.now();let incidents=[],sends=0;
+  const match={home:'Al Ahli SC',away:'Al Nassr',home_score:'1',away_score:'1',status:'live',status_text:'2nd half',time:new Date(now-65*60000).toISOString(),competition:'Saudi Professional League',url:'/football/match/al-nassr-fc-vs-al-ahli-sfc/pxwrxlhy4w35ryk/'};
+  globalThis.fetch=async url=>{
+    const u=new URL(url);
+    if(u.hostname==='fcm.googleapis.com'){sends++;return new Response(null,{status:201})}
+    if(u.pathname==='/api/v1/fixtures/')return Response.json({sport:'football',matches:u.searchParams.get('status')==='live'?[match]:[]});
+    if(u.pathname==='/api/widget/match/')return Response.json({sport:'football',match:{...match,incidents,live_minute:'65'}});
+    throw Error('unexpected endpoint');
+  };
+  async function tick(time){let pending;worker.scheduled({scheduledTime:time},env,{waitUntil:p=>{pending=p}});await pending}
+  try{
+    await tick(now+60000);assert.equal(sends,0);
+    const config=await (await request('/config')).json();assert.equal(config.liveEnabled,true);assert.equal(config.liveCount,1);assert.equal(config.liveDetailCount,1);
+    incidents.push({time:66,type:'Yellow card',type_id:3,is_card:true,side:'away',player:'Player One'});
+    await tick(now+120000);assert.equal(sends,1);
+    await tick(now+180000);assert.equal(sends,1);
+    const stored=await env.DB.prepare('SELECT event_json FROM events').first();assert.equal(JSON.parse(stored.event_json).card.player,'Player One');
+  }finally{globalThis.fetch=original}
+});

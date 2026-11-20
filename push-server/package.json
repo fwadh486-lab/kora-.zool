@@ -1,0 +1,16 @@
+{
+  "name": "korazol-push-server",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "check": "node --check worker.mjs && node --check events.mjs",
+    "deploy": "npx --yes wrangler@4.165.0 deploy",
+    "dev": "npx --yes wrangler@4.165.0 dev",
+    "setup-keys": "node setup-keys.mjs"
+  },
+  "dependencies": {
+    "@block65/webcrypto-web-push": "2.0.0"
+  },
+  "engines": { "node": ">=22" }
+}

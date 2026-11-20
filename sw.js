@@ -1,6 +1,6 @@
-const CACHE='korazol-shell-v10';
+const CACHE='korazol-shell-v11';
 const DATA_CACHE='korazol-data-v1';
-const SHELL=['./','./index.html','./fixtures.html','./match-details.html','./lineup-v2.html','./manifest.webmanifest','./kora-zol-icon-192.png','./kora-zol-icon-512.png'];
+const SHELL=['./','./push-client.js','./index.html','./fixtures.html','./match-details.html','./lineup-v2.html','./manifest.webmanifest','./kora-zol-icon-192.png','./kora-zol-icon-512.png'];
 self.addEventListener('install',event=>{
  event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(SHELL)));
  self.skipWaiting();
@@ -56,12 +56,31 @@ self.addEventListener('fetch',event=>{
  })());
 });
 
+
+// The browser starts this worker even when the installed PWA is closed.
+self.addEventListener('push',event=>{
+ event.waitUntil((async()=>{
+  let message={};
+  try{message=event.data?.json()||{}}catch{}
+  const title=typeof message.title==='string'?message.title.slice(0,160):'كورة زول';
+  const body=typeof message.body==='string'?message.body.slice(0,300):'عندك تنبيه جديد من كورة زول';
+  const scope=new URL(self.registration.scope);
+  let target=scope.href;
+  try{const url=new URL(message.url||scope.href,scope);if(url.origin===scope.origin&&url.pathname.startsWith(scope.pathname))target=url.href}catch{}
+  await self.registration.showNotification(title,{
+   body,icon:new URL('kora-zol-icon-192.png',scope).href,
+   tag:typeof message.tag==='string'?message.tag.slice(0,160):'korazol-alert',
+   data:{url:target},vibrate:[200,100,200],timestamp:Date.now()
+  });
+ })());
+});
+
 self.addEventListener('notificationclick',event=>{
  event.notification.close();
  const target=event.notification.data?.url||'./index.html';
  event.waitUntil((async()=>{
   const url=new URL(target,self.registration.scope);
-  if(url.origin!==self.location.origin)return;
+  if(url.origin!==self.location.origin||!url.pathname.startsWith(new URL(self.registration.scope).pathname))return;
   const windows=await clients.matchAll({type:'window',includeUncontrolled:true});
   const existing=windows.find(client=>client.url===url.href);
   if(existing){await existing.focus();return}

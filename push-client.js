@@ -4,11 +4,12 @@
   const PREFS_V2='korazol_push_types_v2', ALL_LIVE='korazol_push_all_live_v1', TYPES=['goal','kickoff','halftime','fulltime','yellow','red'];
   const $ = id => document.getElementById(id);
   const tr = (ar,en) => document.documentElement.lang === 'en' ? en : ar;
-  const get = key => { try { return localStorage.getItem(key); } catch { return null; } };
-  const set = (key,value) => { try { localStorage.setItem(key,value); } catch {} };
+  const memory = new Map();
+  const get = key => { if(memory.has(key))return memory.get(key);try { return localStorage.getItem(key); } catch { return null; } };
+  const set = (key,value) => { memory.set(key,value);try { localStorage.setItem(key,value); } catch {} };
   function readJson(key,fallback){try{return JSON.parse(get(key)||'null')??fallback}catch{return fallback}}
   const supported = () => 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window && window.isSecureContext;
-  let endpoint=null, config=null, busy=false, synced=false, fingerprint='', notice='', noticeError=false, syncTimer=null, syncInFlight=false, checkingTest=false;
+  let endpoint=null, config=null, busy=false, synced=false, fingerprint='', notice='', noticeError=false, syncTimer=null, syncInFlight=false, syncAgain=false, checkingTest=false, preferenceChanged=false;
   function notify(ar,en,error=false){notice=tr(ar,en);noticeError=error;render()}
   function types(){const legacy=readJson(PREFS,['goal','kickoff','fulltime']);const defaults=Array.isArray(legacy)&&['goal','kickoff','fulltime'].every(t=>legacy.includes(t))?TYPES:legacy;const existing=readJson(PREFS_V2,defaults);return TYPES.filter(x=>Array.isArray(existing)&&existing.includes(x))}
   function enabled(){return get(KEY)==='yes'}
@@ -34,6 +35,7 @@
     document.querySelectorAll('[data-push-type]').forEach(input=>{input.checked=types().includes(input.dataset.pushType);input.disabled=busy});
     const allLive=$('pushAllLive');if(allLive){allLive.checked=get(ALL_LIVE)==='yes';allLive.disabled=busy;}
     const feedStatus=$('liveFeedStatus');if(feedStatus){feedStatus.textContent=config?.liveEnabled?tr('● بيانات الأحداث الحية متصلة — تحديث كل دقيقة تقريباً','● Live events connected — checked about every minute'):tr('○ جاري انتظار اتصال مصدر الأحداث الحية','○ Waiting for the live event feed');feedStatus.style.color=config?.liveEnabled?'var(--accent, #1bca92)':'';}
+    const prefStatus=$('preferenceSyncStatus');if(prefStatus){const pending=on&&preferenceChanged;prefStatus.textContent=pending?(noticeError?tr('تعذر حفظ الخيارات على السيرفر؛ سنعيد المحاولة عند الاتصال.','Could not sync preferences; will retry when online.'):tr('جاري حفظ اختيارات الإشعارات…','Saving notification preferences…')):on&&synced?tr('✓ اختيارات الإشعارات محفوظة على السيرفر','✓ Notification preferences saved to server'):'';}
     if(notice){status.textContent=notice;status.style.color=noticeError?'#ff9ca0':'';return}
     status.style.color='';
     if(!canUse)status.textContent=tr('افتح كورة زول في Chrome لتشغيل الإشعارات.','Open Kora Zol in Chrome to use background notifications.');
@@ -44,7 +46,7 @@
     else status.textContent=tr('استلم تنبيهات المباريات حتى بعد إغلاق التطبيق.','Receive match notifications even when the app is closed.');
   }
   async function api(path,data){
-    const response=await fetch(endpoint+path,{method:data?'POST':'GET',headers:data?{'Content-Type':'application/json'}:undefined,body:data?JSON.stringify(data):undefined,cache:'no-store',signal:AbortSignal.timeout(15000)});
+    const response=await fetch(endpoint+path,{method:data?'POST':'GET',headers:data?{'Content-Type':'application/json'}:undefined,body:data?JSON.stringify(data):undefined,cache:'no-store',keepalive:path==='/subscribe',signal:AbortSignal.timeout(15000)});
     const value=await response.json();
     if(!response.ok)throw Error(value.error||'server_error');
     return value;
@@ -71,10 +73,12 @@
     const result=await api('/subscribe',{token:token(),subscription:sub.toJSON(),preferences:prefs});
     config.liveEnabled=Boolean(result.liveEnabled);synced=Boolean(result.subscribed);
     fingerprint=JSON.stringify(prefs);
+    if(synced&&fingerprint===JSON.stringify(preferenceData()))preferenceChanged=false;
     return result;
   }
   async function sync(){
-    if(!enabled()||!config?.enabled||!supported()||busy||syncInFlight)return;
+    if(!enabled()||!config?.enabled||!supported()||busy)return;
+    if(syncInFlight){syncAgain=true;return;}
     syncInFlight=true;
     try{
       if(Notification.permission!=='granted')throw Error('not_allowed');
@@ -85,9 +89,9 @@
       if(noticeError){notice='';noticeError=false}
       refreshTestStatus();
     }catch{synced=false;notify('تعذر مزامنة الإشعارات. افتح الإعدادات وأعد تفعيلها.','Could not sync pushes. Open Settings and re-enable.',true)}
-    finally{syncInFlight=false;render()}
+    finally{syncInFlight=false;render();if(syncAgain){syncAgain=false;scheduleSync()}}
   }
-  function scheduleSync(){if(syncTimer)clearTimeout(syncTimer);syncTimer=setTimeout(sync,350)}
+  function scheduleSync(){if(syncTimer)clearTimeout(syncTimer);syncTimer=setTimeout(sync,0)}
   async function toggle(){
     if(busy||!supported())return;
     notice='';busy=true;render();
@@ -148,10 +152,11 @@
     $('backgroundPushButton')?.addEventListener('click',toggle);
     $('backgroundPushTest')?.addEventListener('click',test);
     document.querySelectorAll('[data-push-type]').forEach(input=>input.addEventListener('change',()=>{
-      set(PREFS_V2,JSON.stringify([...document.querySelectorAll('[data-push-type]:checked')].map(x=>x.dataset.pushType)));
-      notice='';scheduleSync();render();
+      const next=new Set(types());if(input.checked)next.add(input.dataset.pushType);else next.delete(input.dataset.pushType);
+      set(PREFS_V2,JSON.stringify(TYPES.filter(type=>next.has(type))));
+      preferenceChanged=true;notice='';noticeError=false;render();scheduleSync();
     }));
-    $('pushAllLive')?.addEventListener('change',event=>{set(ALL_LIVE,event.target.checked?'yes':'no');notice='';scheduleSync();render()});
+    $('pushAllLive')?.addEventListener('change',event=>{set(ALL_LIVE,event.target.checked?'yes':'no');preferenceChanged=true;notice='';noticeError=false;render();scheduleSync()});
     window.addEventListener('online',()=>{if(!config?.enabled)loadConfig();else scheduleSync()});
     document.addEventListener('visibilitychange',()=>{if(!document.hidden){if(enabled())loadConfig();scheduleSync()}});
     setInterval(()=>{if(!document.hidden)refreshTestStatus()},10000);

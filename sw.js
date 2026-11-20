@@ -1,6 +1,6 @@
-const CACHE='korazol-shell-v14';
+const CACHE='korazol-shell-v15';
 const DATA_CACHE='korazol-data-v1';
-const SHELL=['./','./push-client.js','./index.html','./fixtures.html','./match-details.html','./lineup-v2.html','./manifest.webmanifest','./kora-zol-icon-192.png','./kora-zol-icon-512.png'];
+const SHELL=['./','./push-client-v4.js','./index.html','./fixtures.html','./match-details.html','./lineup-v2.html','./manifest.webmanifest','./kora-zol-icon-192.png','./kora-zol-icon-512.png'];
 self.addEventListener('install',event=>{
  event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(SHELL)));
  self.skipWaiting();
@@ -17,6 +17,16 @@ self.addEventListener('fetch',event=>{
  if(request.method!=='GET')return;
  const url=new URL(request.url);
  if(url.origin!==self.location.origin)return;
+ // Notification scripts and configuration must not be pinned to a stale shell.
+ if(/\/push-client(?:-v\d+)?\.js$/.test(url.pathname)||url.pathname.endsWith('/push-config.json')){
+  event.respondWith((async()=>{
+   const cache=await caches.open(CACHE);
+   try{const response=await fetch(request,{cache:'no-cache'});if(response.ok){event.waitUntil(cache.put(request,response.clone()));return response;}}
+   catch(e){}
+   return await cache.match(request)||Response.error();
+  })());
+  return;
+ }
  if(request.mode==='navigate'){
   event.respondWith((async()=>{
    try{

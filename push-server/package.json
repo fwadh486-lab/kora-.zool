@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "test": "node --test",
-    "check": "node --check worker.mjs && node --check events.mjs",
+    "check": "node --check worker.mjs && node --check events.mjs && node --check sportscore.mjs",
     "deploy": "npx --yes wrangler@4.165.0 deploy",
     "dev": "npx --yes wrangler@4.165.0 dev",
     "setup-keys": "node setup-keys.mjs"

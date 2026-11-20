@@ -1,6 +1,7 @@
 import {buildPushPayload} from '@block65/webcrypto-web-push';
 import {fromFixture, transitions, newCards, selectedBy, preferenceAllows, notificationFor} from './events.mjs';
 import {collectSportScore,publicFixtures,publicMatchDetails,publicPlayerPhoto} from './sportscore.mjs';
+import {nativeConfigured,sendNative} from './fcm.mjs';
 
 const MINUTE = 60000, EVENT_TTL = 10 * MINUTE;
 const eventTypes = ['goal','kickoff','halftime','fulltime','yellow','red'];
@@ -77,6 +78,7 @@ async function parseRequest(request) {
   return JSON.parse(new TextDecoder().decode(bytes));
 }
 async function sendPush(env, subscription, message) {
+  if(subscription?.nativeToken)return sendNative(env,subscription.nativeToken,message);
   let payload;
   try{
     payload=await buildPushPayload({data:JSON.stringify(message),options:{ttl:300,urgency:'high'}},subscription,{
@@ -110,7 +112,7 @@ async function route(request, env, ctx) {
   const url=new URL(request.url),path=url.pathname,origin=request.headers.get('origin');
   if(origin!==env.APP_ORIGIN) return json({error:'origin_not_allowed'},403);
   if(request.method==='OPTIONS') return new Response(null,{status:204});
-  if(path==='/config' && request.method==='GET') return json({enabled:configured(env),publicKey:configured(env)?env.VAPID_PUBLIC_KEY:null,...await feedStatus(env)});
+  if(path==='/config' && request.method==='GET') return json({enabled:configured(env),nativeEnabled:nativeConfigured(env),publicKey:configured(env)?env.VAPID_PUBLIC_KEY:null,...await feedStatus(env)});
   if(path==='/fixtures'&&request.method==='GET'&&env.SPORTSCORE_ENABLED==='true'){
     const date=url.searchParams.get('date')||'';
     const stamp=Date.parse(date+'T00:00:00Z');
@@ -130,9 +132,11 @@ async function route(request, env, ctx) {
   if(request.method!=='POST' || !['/subscribe','/unsubscribe','/test','/test-status'].includes(path)) return json({error:'not_found'},404);
   if(!configured(env)) return json({error:'not_configured'},503);
   let data;try{data=await parseRequest(request)}catch(e){return json({error:e.message==='too_large'?'too_large':'invalid_json'},400)}
-  if(!data || !tokenPattern.test(data.token||'') || !validSubscription(data.subscription)) return json({error:'invalid_subscription'},400);
-  const sub={endpoint:data.subscription.endpoint,expirationTime:null,keys:{p256dh:data.subscription.keys.p256dh,auth:data.subscription.keys.auth}};
-  const id=await digest(sub.endpoint),tokenHash=await digest(data.token);
+  const native=typeof data?.nativeToken==='string'&&data.nativeToken.length>=20&&data.nativeToken.length<=4096&&/^[A-Za-z0-9_:\-.]+$/.test(data.nativeToken);
+  if(!data || !tokenPattern.test(data.token||'') || (!native&&!validSubscription(data.subscription))) return json({error:'invalid_subscription'},400);
+  if(native&&path==='/subscribe'&&!nativeConfigured(env))return json({error:'native_not_configured'},503);
+  const sub=native?{nativeToken:data.nativeToken}:{endpoint:data.subscription.endpoint,expirationTime:null,keys:{p256dh:data.subscription.keys.p256dh,auth:data.subscription.keys.auth}};
+  const id=await digest(native?'native:'+data.token:sub.endpoint),tokenHash=await digest(data.token);
   const existing=await env.DB.prepare('SELECT token_hash, subscription, last_test, test_due FROM devices WHERE id=?').bind(id).first();
   if(existing && existing.token_hash!==tokenHash) return json({error:'device_conflict'},409);
   const now=Date.now();

@@ -22,7 +22,8 @@ test('dashboard-only Worker creates one stable signing key without exposing its 
   const results=await Promise.all([config(),config()]);
   const [a,b]=await Promise.all(results.map(r=>r.json()));
   assert.equal(a.enabled,true);assert.equal(a.publicKey.length,87);assert.equal(a.publicKey,b.publicKey);
-  assert.deepEqual(Object.keys(a).sort(),['enabled','liveEnabled','publicKey']);
+  assert.deepEqual(Object.keys(a).sort(),['enabled','liveEnabled','nativeEnabled','publicKey']);
+  assert.equal(a.nativeEnabled,false);
   const row=await env.DB.prepare('SELECT public_key,private_key FROM push_keys WHERE id=1').first();
   assert.equal(row.public_key,a.publicKey);assert.equal(row.private_key.length,43);
   assert.notEqual(row.private_key,a.publicKey);

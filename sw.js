@@ -1,6 +1,6 @@
-const CACHE='korazol-shell-v9';
+const CACHE='korazol-shell-v10';
 const DATA_CACHE='korazol-data-v1';
-const SHELL=['./','./index.html','./fixtures.html','./match-details.html','./manifest.webmanifest','./kora-zol-icon-192.png','./kora-zol-icon-512.png'];
+const SHELL=['./','./index.html','./fixtures.html','./match-details.html','./lineup-v2.html','./manifest.webmanifest','./kora-zol-icon-192.png','./kora-zol-icon-512.png'];
 self.addEventListener('install',event=>{
  event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(SHELL)));
  self.skipWaiting();
@@ -20,12 +20,12 @@ self.addEventListener('fetch',event=>{
  if(request.mode==='navigate'){
   event.respondWith((async()=>{
    try{
-    const response=await fetch(request);
-    if(response.ok){const cache=await caches.open(CACHE);event.waitUntil(cache.put(url.pathname.endsWith('/match-details.html')?'./match-details.html':url.pathname.endsWith('/fixtures.html')?'./fixtures.html':'./index.html',response.clone()));}
+    const response=await fetch(request,{cache:'no-cache'});
+    if(response.ok){const cache=await caches.open(CACHE);event.waitUntil(cache.put(url.pathname.endsWith('/match-details.html')?'./match-details.html':url.pathname.endsWith('/fixtures.html')?'./fixtures.html':url.pathname.endsWith('/lineup-v2.html')?'./lineup-v2.html':'./index.html',response.clone()));}
     return response;
    }catch(e){
     const cache=await caches.open(CACHE);
-    const page=url.pathname.endsWith('/match-details.html')?'./match-details.html':url.pathname.endsWith('/fixtures.html')?'./fixtures.html':'./index.html';
+    const page=url.pathname.endsWith('/match-details.html')?'./match-details.html':url.pathname.endsWith('/fixtures.html')?'./fixtures.html':url.pathname.endsWith('/lineup-v2.html')?'./lineup-v2.html':'./index.html';
     return await cache.match(page)||Response.error();
    }
   })());

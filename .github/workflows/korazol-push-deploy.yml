@@ -39,3 +39,5 @@ jobs:
 # Release: delivery status and fast test retry.
 
 # Release: use Cloudflare-supported manual redirect mode for Web Push.
+
+# Release: live cards and half-time transitions.

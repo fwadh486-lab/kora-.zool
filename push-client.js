@@ -1,6 +1,7 @@
 /* Background notifications for the installed Chrome PWA. */
 (() => {
   const KEY = 'korazol_background_push_v1', TOKEN = 'korazol_push_device_token', PREFS='korazol_push_types_v1', SAVED='korazol_push_saved_matches_v1', LAST_TEST='korazol_push_last_test_v2';
+  const PREFS_V2='korazol_push_types_v2', ALL_LIVE='korazol_push_all_live_v1', TYPES=['goal','kickoff','halftime','fulltime','yellow','red'];
   const $ = id => document.getElementById(id);
   const tr = (ar,en) => document.documentElement.lang === 'en' ? en : ar;
   const get = key => { try { return localStorage.getItem(key); } catch { return null; } };
@@ -9,7 +10,7 @@
   const supported = () => 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window && window.isSecureContext;
   let endpoint=null, config=null, busy=false, synced=false, fingerprint='', notice='', noticeError=false, syncTimer=null, syncInFlight=false, checkingTest=false;
   function notify(ar,en,error=false){notice=tr(ar,en);noticeError=error;render()}
-  function types(){const existing=readJson(PREFS,['goal','kickoff','fulltime']);return ['goal','kickoff','fulltime'].filter(x=>Array.isArray(existing)&&existing.includes(x))}
+  function types(){const legacy=readJson(PREFS,['goal','kickoff','fulltime']);const defaults=Array.isArray(legacy)&&['goal','kickoff','fulltime'].every(t=>legacy.includes(t))?TYPES:legacy;const existing=readJson(PREFS_V2,defaults);return TYPES.filter(x=>Array.isArray(existing)&&existing.includes(x))}
   function enabled(){return get(KEY)==='yes'}
   function token(){let value=get(TOKEN);if(!value){value=crypto.randomUUID()+crypto.randomUUID();set(TOKEN,value)}return value}
   function preferenceData(){
@@ -21,7 +22,7 @@
     for(const e of all)if(favoriteIds.has(e.id)&&e.date&&e.home&&e.away)matches.set(e.id,{id:e.id,home:e.home,away:e.away,date:e.date});
     const selected=[...matches.values()].sort((a,b)=>String(a.id).localeCompare(String(b.id))).slice(0,100);
     set(SAVED,JSON.stringify(selected));
-    return {teams:[...teams].sort(),matches:selected,types:types(),language:document.documentElement.lang==='en'?'en':'ar'};
+    return {teams:[...teams].sort(),matches:selected,types:types(),allLive:get(ALL_LIVE)==='yes',language:document.documentElement.lang==='en'?'en':'ar'};
   }
   function render(){
     const button=$('backgroundPushButton'),test=$('backgroundPushTest'),status=$('backgroundPushStatus');
@@ -31,13 +32,14 @@
     button.textContent=on?tr('🔕 إيقاف إشعارات الخلفية','🔕 Disable background push'):tr('🔔 تشغيل إشعارات الخلفية','🔔 Enable background push');
     if(test){test.disabled=busy||!on||!synced||!available;test.hidden=!on}
     document.querySelectorAll('[data-push-type]').forEach(input=>{input.checked=types().includes(input.dataset.pushType);input.disabled=busy});
+    const allLive=$('pushAllLive');if(allLive){allLive.checked=get(ALL_LIVE)==='yes';allLive.disabled=busy;}
     if(notice){status.textContent=notice;status.style.color=noticeError?'#ff9ca0':'';return}
     status.style.color='';
     if(!canUse)status.textContent=tr('افتح كورة زول في Chrome لتشغيل الإشعارات.','Open Kora Zol in Chrome to use background notifications.');
     else if(Notification.permission==='denied'&&!on)status.textContent=tr('الإشعارات محظورة. اسمح بها من إعدادات الموقع في Chrome.','Notifications are blocked. Allow them in Chrome site settings.');
     else if(!available)status.textContent=tr('سيرفر إشعارات الخلفية غير متصل حالياً. التنبيهات أثناء فتح التطبيق تظل متاحة.','The background notification server is not connected. In-app alerts are still available.');
     else if(on&&!synced)status.textContent=tr('جاري التحقق من اشتراك الجهاز…','Checking this device’s subscription…');
-    else if(on)status.textContent=config.liveEnabled?tr('الجهاز مشترك في إشعارات الخلفية. تابع فريقاً أو احفظ مباراة لبدء التنبيهات.','This device is subscribed. Follow a team or save a match to receive alerts.'):tr('الجهاز مشترك. يمكن تجربة الإشعار؛ مصدر نتائج المباريات للسيرفر غير متصل بعد.','This device is subscribed. Test push is available; the live match feed is not connected yet.');
+    else if(on)status.textContent=config.liveEnabled?tr('الجهاز مشترك ومصدر الأحداث الحية متصل. اختر كل المباريات أو تابع فريقاً أو احفظ مباراة.','Subscribed and live feed connected. Select all matches, follow a team or save a match.'):tr('الجهاز مشترك. الإشعارات التجريبية تعمل، لكن مصدر أحداث المباريات الحية غير متصل بعد.','Subscribed. Test push works, but the live match event feed is not connected yet.');
     else status.textContent=tr('استلم تنبيهات المباريات حتى بعد إغلاق التطبيق.','Receive match notifications even when the app is closed.');
   }
   async function api(path,data){
@@ -145,9 +147,10 @@
     $('backgroundPushButton')?.addEventListener('click',toggle);
     $('backgroundPushTest')?.addEventListener('click',test);
     document.querySelectorAll('[data-push-type]').forEach(input=>input.addEventListener('change',()=>{
-      set(PREFS,JSON.stringify([...document.querySelectorAll('[data-push-type]:checked')].map(x=>x.dataset.pushType)));
+      set(PREFS_V2,JSON.stringify([...document.querySelectorAll('[data-push-type]:checked')].map(x=>x.dataset.pushType)));
       notice='';scheduleSync();render();
     }));
+    $('pushAllLive')?.addEventListener('change',event=>{set(ALL_LIVE,event.target.checked?'yes':'no');notice='';scheduleSync();render()});
     window.addEventListener('online',()=>{if(!config?.enabled)loadConfig();else scheduleSync()});
     document.addEventListener('visibilitychange',()=>{if(!document.hidden){if(enabled())loadConfig();scheduleSync()}});
     setInterval(()=>{if(!document.hidden)refreshTestStatus()},10000);

@@ -1,4 +1,4 @@
-const CACHE='korazol-shell-v12';
+const CACHE='korazol-shell-v13';
 const DATA_CACHE='korazol-data-v1';
 const SHELL=['./','./push-client.js','./index.html','./fixtures.html','./match-details.html','./lineup-v2.html','./manifest.webmanifest','./kora-zol-icon-192.png','./kora-zol-icon-512.png'];
 self.addEventListener('install',event=>{

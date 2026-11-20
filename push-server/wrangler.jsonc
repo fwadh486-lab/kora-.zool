@@ -1,0 +1,13 @@
+{
+  "name": "korazol-push",
+  "main": "worker.mjs",
+  "compatibility_date": "2026-11-20",
+  "triggers": { "crons": ["* * * * *"] },
+  "vars": {
+    "APP_ORIGIN": "https://fwadh486-lab.github.io",
+    "APP_URL": "https://fwadh486-lab.github.io/kora-.zool/"
+  },
+  "d1_databases": [
+    { "binding": "DB", "database_name": "korazol-push", "database_id": "7757f101-9f4a-4c1b-b400-8c3876ff2614" }
+  ]
+}

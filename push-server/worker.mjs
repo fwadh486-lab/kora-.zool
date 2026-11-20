@@ -1,6 +1,6 @@
 import {buildPushPayload} from '@block65/webcrypto-web-push';
 import {fromFixture, transitions, newCards, selectedBy, preferenceAllows, notificationFor} from './events.mjs';
-import {collectSportScore,publicFixtures} from './sportscore.mjs';
+import {collectSportScore,publicFixtures,publicMatchDetails,publicPlayerPhoto} from './sportscore.mjs';
 
 const MINUTE = 60000, EVENT_TTL = 10 * MINUTE;
 const eventTypes = ['goal','kickoff','halftime','fulltime','yellow','red'];
@@ -116,6 +116,16 @@ async function route(request, env, ctx) {
     const stamp=Date.parse(date+'T00:00:00Z');
     if(!/^\d{4}-\d{2}-\d{2}$/.test(date)||!Number.isFinite(stamp)||new Date(stamp).toISOString().slice(0,10)!==date||Math.abs(Date.now()-stamp)>31*86400000)return json({error:'invalid_date'},400);
     try{return json(await publicFixtures(date))}catch{return json({error:'fixtures_unavailable'},503)}
+  }
+  if(path==='/match'&&request.method==='GET'&&env.SPORTSCORE_ENABLED==='true'){
+    const id=url.searchParams.get('id')||'',slug=url.searchParams.get('slug')||'';
+    if(!/^ss:[a-z0-9]{1,64}$/i.test(id)||!/^[a-z0-9-]{1,200}$/i.test(slug))return json({error:'invalid_match'},400);
+    try{return json(await publicMatchDetails(id,slug))}catch{return json({error:'match_details_unavailable'},503)}
+  }
+  if(path==='/player-photo'&&request.method==='GET'&&env.SPORTSCORE_ENABLED==='true'){
+    const name=url.searchParams.get('name')||'',team=url.searchParams.get('team')||'';
+    if(name.length<2||name.length>100||team.length<2||team.length>100)return json({error:'invalid_player'},400);
+    try{return json(await publicPlayerPhoto(name,team))}catch{return json({error:'player_photo_unavailable'},503)}
   }
   if(request.method!=='POST' || !['/subscribe','/unsubscribe','/test','/test-status'].includes(path)) return json({error:'not_found'},404);
   if(!configured(env)) return json({error:'not_configured'},503);

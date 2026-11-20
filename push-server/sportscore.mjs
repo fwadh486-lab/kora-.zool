@@ -74,6 +74,54 @@ export async function publicFixtures(date,now=Date.now()){
   const byId=new Map([...snapshots.matches,...liveResult.matches].filter(m=>m.league).map(m=>[m.id,m]));
   return {source:'SportScore',date,updated:snapshots.updated,partial:snapshots.partial||liveResult.partial,matches:[...byId.values()].map(toPublicMatch)};
 }
+export function normalizeMatchDetails(raw,updated){
+  const parsed=fromSportScore(raw);
+  if(!parsed)throw Error('invalid_match');
+  const match=toPublicMatch(parsed);
+  const events=Array.isArray(raw.incidents)?raw.incidents.flatMap(e=>{
+    const team=e.side==='home'?match.home:e.side==='away'?match.away:null;
+    if(!team||typeof e.type!=='string')return [];
+    return [{type:e.type,team,side:e.side,minute:integer(e.time),player:e.player||e.player_in||'',playerIn:e.player_in||'',playerOut:e.player_out||'',score:e.is_goal===true&&integer(e.home_score)!==null&&integer(e.away_score)!==null?e.home_score+' - '+e.away_score:null}];
+  }):[];
+  const stats=Array.isArray(raw.stats)?raw.stats.flatMap(s=>{
+    if(typeof s.label!=='string'||s.home==null||s.away==null||!Number.isFinite(Number(s.home))||!Number.isFinite(Number(s.away)))return [];
+    const suffix=s.suffix==='%'?'%':'';
+    return [{name:s.label,home:String(s.home)+suffix,away:String(s.away)+suffix}];
+  }):[];
+  const l=raw.lineups;
+  const players=list=>Array.isArray(list)?list.flatMap(p=>typeof p?.name==='string'&&p.name.trim()?[{name:p.name,number:integer(p.number),position:p.position||'',captain:p.captain===true,rating:Number(p.rating)>0&&Number(p.rating)<=10?Number(p.rating):null,photo:typeof p.photo==='string'&&p.photo.startsWith('https://')?p.photo:''}]:[]):[];
+  const verifiedLineups=l?.confirmed===true?['home','away'].flatMap(side=>{
+    const xi=players(l[side+'_xi']);
+    return xi.length?[{side,team:match[side],formation:l[side+'_formation']||'',coach:typeof l[side+'_coach']==='string'?l[side+'_coach']:'',players:xi,bench:players(l[side+'_subs'])}]:[];
+  }):[];
+  const htHome=integer(raw.home_ht_score),htAway=integer(raw.away_ht_score);
+  return {...match,events,stats,verifiedLineups,halfTime:htHome!==null&&htAway!==null?{home:htHome,away:htAway}:null,updated:typeof updated==='string'?updated:null};
+}
+export async function publicMatchDetails(id,slug){
+  if(!/^ss:[a-z0-9]{1,64}$/i.test(id)||!/^[a-z0-9-]{1,200}$/i.test(slug))throw Error('invalid_match');
+  return cacheRead('match-v1-'+id.slice(3)+'-'+slug,60,async()=>{
+    const data=await request('/api/widget/match/',{slug});
+    const result=normalizeMatchDetails(data.match,data.updated);
+    if(result.id!==id)throw Error('sportscore_fixture_mismatch');
+    return result;
+  });
+}
+export async function publicPlayerPhoto(name,team){
+  if(typeof name!=='string'||name.length<2||name.length>100||typeof team!=='string'||team.length<2||team.length>100)throw Error('invalid_player');
+  const key=encodeURIComponent(normalizedName(name))+'-'+encodeURIComponent(normalizedName(team));
+  return cacheRead('player-photo-v1-'+key,86400*7,async()=>{
+    const data=await request('/api/v1/search/',{q:name,limit:8});
+    const exact=(data.players||[]).filter(p=>normalizedName(p.name)===normalizedName(name)&&/^[a-z0-9-]{1,200}$/i.test(p.slug||''));
+    if(exact.length!==1)return {name,photo:null};
+    const candidate=exact[0];
+    const profile=await request('/api/widget/player/',{slug:candidate.slug});
+    const actualTeam=profile.stats?.team;
+    // Do not attach an unrelated player's image when a name is ambiguous.
+    if(normalizedName(profile.player?.name)!==normalizedName(name)||actualTeam&&normalizedName(actualTeam)!==normalizedName(team))return {name,photo:null};
+    const logo=profile.player?.logo||candidate.logo;
+    return {name,photo:typeof logo==='string'&&/^https:\/\/img\.thesports\.com\/football\/player\//.test(logo)?logo:null,source:'SportScore'};
+  });
+}
 async function detail(match){
   const data=await request('/api/widget/match/',{slug:match.slug});
   const parsed=fromSportScore(data.match);

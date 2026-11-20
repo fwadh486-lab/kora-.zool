@@ -53,3 +53,5 @@ jobs:
 # Release: native Firebase Android delivery with existing browser support.
 
 # Release: safe native credential diagnostics and normalise copied JSON.
+
+# Release: one-time validation-only Firebase authorization probe, distinct FCM failures.

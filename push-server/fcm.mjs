@@ -12,6 +12,26 @@ function readAccount(env){
 }
 export function nativeConfigStatus(env){return readAccount(env).status}
 export function nativeConfigured(env){return nativeConfigStatus(env)==='ready'}
+function rejectionReason(result){
+  const details=result?.error?.details||[];
+  if(details.some(d=>d.errorCode==='SENDER_ID_MISMATCH'))return 'sender_mismatch';
+  if(details.some(d=>d.reason==='SERVICE_DISABLED'))return 'api_disabled';
+  if(details.some(d=>d.reason==='IAM_PERMISSION_DENIED')||result?.error?.status==='PERMISSION_DENIED')return 'permission_denied';
+  return 'provider_rejected';
+}
+// Validation-only: Google checks authorization without sending a notification.
+export async function probeNativeAuthorization(env,expectedProject,expectedEmail){
+  const {status,account}=readAccount(env);
+  if(status!=='ready')return status;
+  if(account.project_id!==expectedProject)return 'project_mismatch';
+  if(account.client_email!==expectedEmail)return 'account_mismatch';
+  try{
+    const auth=await accessToken(env);
+    const response=await fetch('https://fcm.googleapis.com/v1/projects/'+auth.project+'/messages:send',{method:'POST',headers:{authorization:'Bearer '+auth.token,'content-type':'application/json'},body:JSON.stringify({validate_only:true,message:{topic:'korazol-validation-only',notification:{title:'Kora Zol validation',body:'Authorization check only'}}}),redirect:'manual',signal:AbortSignal.timeout(12000)});
+    if(response.ok)return 'authorized';
+    return rejectionReason(await response.json().catch(()=>null));
+  }catch{return 'authorization_unavailable'}
+}
 async function accessToken(env){
   const account=readAccount(env).account;
   if(cached?.email===account.client_email&&cached.expires>Date.now()+60000)return cached;
@@ -38,6 +58,7 @@ export async function sendNative(env,token,message){
     if(response.status===401)cached=null;
     const result=await response.json().catch(()=>null);
     const unregistered=result?.error?.details?.some(d=>d.errorCode==='UNREGISTERED');
+    if(response.status===403){const reason=rejectionReason(result);if(reason==='sender_mismatch')return 460;if(reason==='api_disabled')return 461;if(reason==='permission_denied')return 462;}
     return unregistered?410:response.status===404?593:response.status;
   }catch{return 592}
 }

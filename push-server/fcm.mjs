@@ -2,11 +2,18 @@ const encoder=new TextEncoder();
 const b64url=bytes=>btoa(String.fromCharCode(...new Uint8Array(bytes))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
 const encode=value=>b64url(encoder.encode(JSON.stringify(value)));
 let cached=null;
-export function nativeConfigured(env){
-  try{const a=JSON.parse(env.FCM_SERVICE_ACCOUNT||'null');return Boolean(a&&/^[a-z0-9-]+$/.test(a.project_id)&&a.client_email&&a.private_key?.includes('BEGIN PRIVATE KEY'))}catch{return false}
+function readAccount(env){
+  const raw=env.FCM_SERVICE_ACCOUNT;
+  if(typeof raw!=='string'||!raw.trim())return {status:'missing'};
+  let a;
+  try{a=JSON.parse(raw.trim());if(typeof a==='string')a=JSON.parse(a.trim())}catch{return {status:'invalid_json'}}
+  if(!a||typeof a!=='object'||typeof a.project_id!=='string'||!/^[a-z0-9-]+$/.test(a.project_id)||typeof a.client_email!=='string'||!a.client_email||typeof a.private_key!=='string'||!a.private_key.includes('BEGIN PRIVATE KEY'))return {status:'invalid_account'};
+  return {status:'ready',account:a};
 }
+export function nativeConfigStatus(env){return readAccount(env).status}
+export function nativeConfigured(env){return nativeConfigStatus(env)==='ready'}
 async function accessToken(env){
-  const account=JSON.parse(env.FCM_SERVICE_ACCOUNT);
+  const account=readAccount(env).account;
   if(cached?.email===account.client_email&&cached.expires>Date.now()+60000)return cached;
   const now=Math.floor(Date.now()/1000);
   const jwt=encode({alg:'RS256',typ:'JWT'})+'.'+encode({iss:account.client_email,scope:'https://www.googleapis.com/auth/firebase.messaging',aud:'https://oauth2.googleapis.com/token',iat:now,exp:now+3600});

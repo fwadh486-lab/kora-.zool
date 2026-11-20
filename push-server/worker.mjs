@@ -1,7 +1,7 @@
 import {buildPushPayload} from '@block65/webcrypto-web-push';
 import {fromFixture, transitions, newCards, selectedBy, preferenceAllows, notificationFor} from './events.mjs';
 import {collectSportScore,publicFixtures,publicMatchDetails,publicPlayerPhoto} from './sportscore.mjs';
-import {nativeConfigured,sendNative} from './fcm.mjs';
+import {nativeConfigured,nativeConfigStatus,sendNative} from './fcm.mjs';
 
 const MINUTE = 60000, EVENT_TTL = 10 * MINUTE;
 const eventTypes = ['goal','kickoff','halftime','fulltime','yellow','red'];
@@ -112,7 +112,7 @@ async function route(request, env, ctx) {
   const url=new URL(request.url),path=url.pathname,origin=request.headers.get('origin');
   if(origin!==env.APP_ORIGIN) return json({error:'origin_not_allowed'},403);
   if(request.method==='OPTIONS') return new Response(null,{status:204});
-  if(path==='/config' && request.method==='GET') return json({enabled:configured(env),nativeEnabled:nativeConfigured(env),publicKey:configured(env)?env.VAPID_PUBLIC_KEY:null,...await feedStatus(env)});
+  if(path==='/config' && request.method==='GET') return json({enabled:configured(env),nativeEnabled:nativeConfigured(env),...(url.searchParams.get('check')==='native'?{nativeStatus:nativeConfigStatus(env)}:{}),publicKey:configured(env)?env.VAPID_PUBLIC_KEY:null,...await feedStatus(env)});
   if(path==='/fixtures'&&request.method==='GET'&&env.SPORTSCORE_ENABLED==='true'){
     const date=url.searchParams.get('date')||'';
     const stamp=Date.parse(date+'T00:00:00Z');

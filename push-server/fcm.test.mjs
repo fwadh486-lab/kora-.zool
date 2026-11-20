@@ -1,12 +1,17 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {generateKeyPairSync} from 'node:crypto';
-import {nativeMessage,nativeConfigured,sendNative} from './fcm.mjs';
+import {nativeMessage,nativeConfigured,nativeConfigStatus,sendNative} from './fcm.mjs';
 
 test('FCM sends native Android channel payload and retains transient failures',async()=>{
   const {privateKey}=generateKeyPairSync('rsa',{modulusLength:2048});
   const env={FCM_SERVICE_ACCOUNT:JSON.stringify({project_id:'test-project',client_email:'sender@example.invalid',private_key:privateKey.export({format:'pem',type:'pkcs8'})})};
   assert.equal(nativeConfigured(env),true);assert.equal(nativeConfigured({}),false);
+  assert.equal(nativeConfigStatus({}),'missing');
+  assert.equal(nativeConfigStatus({FCM_SERVICE_ACCOUNT:'{'}),'invalid_json');
+  assert.equal(nativeConfigStatus({FCM_SERVICE_ACCOUNT:'{"project_info":{}}'}),'invalid_account');
+  assert.equal(nativeConfigStatus({FCM_SERVICE_ACCOUNT:'\uFEFF'+env.FCM_SERVICE_ACCOUNT}),'ready');
+  assert.equal(nativeConfigStatus({FCM_SERVICE_ACCOUNT:JSON.stringify(env.FCM_SERVICE_ACCOUNT)}),'ready');
   const message={title:'هدف',body:'1–0',url:'https://example.invalid/',tag:'goal-1'};
   assert.equal(nativeMessage('token',message).message.android.notification.channel_id,'korazol_matches');
   const original=globalThis.fetch;let code=200;let detail='';let authCalls=0;

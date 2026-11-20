@@ -10,6 +10,7 @@ const leagueCodes=new Map([
 const statusCodes=new Map([['not started','NS'],['delayed','NS'],['1st half','1H'],['half time','HT'],['2nd half','2H'],['extra time','ET'],['extra time half time','BT'],['penalties','P'],['finished','FT'],['after extra time','AET'],['after penalties','PEN'],['postponed','PST'],['cancelled','CANC'],['abandoned','ABD'],['interrupted','INT']]);
 const finals=new Set(['FT','AET','PEN','AWD','WO','CANC','ABD','PST']);
 const live=new Set(['1H','HT','2H','ET','BT','P','LIVE','INT']);
+const publicLeagues=['english-premier-league','spanish-la-liga','bundesliga','italian-serie-a','french-ligue-1','saudi-professional-league','uefa-champions-league','brazilian-serie-a','dutch-eredivisie','portuguese-primeira-liga','english-football-league-championship','sudan-premier-league'];
 function integer(value){return typeof value==='number'&&Number.isInteger(value)&&value>=0?value:typeof value==='string'&&/^\d+$/.test(value)?Number(value):null}
 function incidents(raw){
   if(!Array.isArray(raw.incidents))return null;
@@ -29,7 +30,8 @@ export function fromSportScore(raw){
   if(!status)return null;
   return {id:'ss:'+path[2],slug:path[1],source:'SportScore',home:raw.home,away:raw.away,
     league:leagueCodes.get(normalizedName(raw.competition))||'',homeScore:integer(raw.home_score),awayScore:integer(raw.away_score),
-    status,minute:integer(raw.live_minute),date:raw.time,cards:incidents(raw)};
+    status,minute:integer(raw.live_minute),date:raw.time,cards:incidents(raw),competition:raw.competition||'',
+    homeLogo:typeof raw.home_logo==='string'&&raw.home_logo.startsWith('https://')?raw.home_logo:'',awayLogo:typeof raw.away_logo==='string'&&raw.away_logo.startsWith('https://')?raw.away_logo:'',sourceUrl:'https://sportscore.com'+raw.url};
 }
 async function request(path,params){
   const url=new URL(path,'https://sportscore.com');
@@ -38,10 +40,39 @@ async function request(path,params){
   if(!response.ok)throw Error('sportscore_http_'+response.status);
   return response.json();
 }
-async function list(date,status){
-  const data=await request('/api/v1/fixtures/',{date,status,limit:200});
+async function list(date,status,competition){
+  const data=await request('/api/v1/fixtures/',{date,...(status?{status}:{}),...(competition?{competition}:{}),limit:200});
   if(!Array.isArray(data.matches)||data.sport!=='football')throw Error('sportscore_invalid_list');
   return data.matches.map(fromSportScore).filter(Boolean);
+}
+function toPublicMatch(match){
+  const phase=live.has(match.status)?'live':['FT','AET','PEN','AWD','WO'].includes(match.status)?'finished':match.status==='NS'?'upcoming':'other';
+  const score=phase==='upcoming'||match.homeScore===null||match.awayScore===null?'— : —':`${match.homeScore} - ${match.awayScore}`;
+  return {...match,phase,live:phase==='live',score,cards:undefined};
+}
+async function cacheRead(key,ttl,loader){
+  const cache=globalThis.caches?.default;
+  const cacheKey=new Request('https://korazol-push.fwadh486.workers.dev/__sports-cache/'+key);
+  if(cache){try{const saved=await cache.match(cacheKey);if(saved)return await saved.json()}catch{}}
+  const value=await loader();
+  if(cache&&!value.partial){try{await cache.put(cacheKey,Response.json(value,{headers:{'Cache-Control':`public, max-age=${ttl}`}}))}catch{}}
+  return value;
+}
+export async function publicFixtures(date,now=Date.now()){
+  const today=new Date(now).toISOString().slice(0,10),yesterday=new Date(now-86400000).toISOString().slice(0,10);
+  const recent=date===today||date===yesterday;
+  const snapshots=await cacheRead('fixtures-v1-'+date,recent?180:3600,async()=>{
+    // The global day response is capped at 200. A fixed competition allowlist
+    // prevents late matches being truncated and bounds requests and quota.
+    const responses=[];
+    for(let i=0;i<publicLeagues.length;i+=6)responses.push(...await Promise.allSettled(publicLeagues.slice(i,i+6).map(league=>list(date,null,league))));
+    if(responses.every(r=>r.status==='rejected'))throw Error('sportscore_fixtures_unavailable');
+    return {matches:responses.flatMap(r=>r.status==='fulfilled'?r.value:[]),partial:responses.some(r=>r.status==='rejected'),updated:new Date(now).toISOString()};
+  });
+  let liveResult={matches:[],partial:false};
+  if(recent)try{liveResult=await cacheRead('live-v1-'+date,60,async()=>({matches:await list(date,'live'),partial:false}))}catch{liveResult.partial=true}
+  const byId=new Map([...snapshots.matches,...liveResult.matches].filter(m=>m.league).map(m=>[m.id,m]));
+  return {source:'SportScore',date,updated:snapshots.updated,partial:snapshots.partial||liveResult.partial,matches:[...byId.values()].map(toPublicMatch)};
 }
 async function detail(match){
   const data=await request('/api/widget/match/',{slug:match.slug});

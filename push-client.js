@@ -1,0 +1,138 @@
+/* Background notifications for the installed Chrome PWA. */
+(() => {
+  const KEY = 'korazol_background_push_v1', TOKEN = 'korazol_push_device_token', PREFS='korazol_push_types_v1', SAVED='korazol_push_saved_matches_v1';
+  const $ = id => document.getElementById(id);
+  const tr = (ar,en) => document.documentElement.lang === 'en' ? en : ar;
+  const get = key => { try { return localStorage.getItem(key); } catch { return null; } };
+  const set = (key,value) => { try { localStorage.setItem(key,value); } catch {} };
+  function readJson(key,fallback){try{return JSON.parse(get(key)||'null')??fallback}catch{return fallback}}
+  const supported = () => 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window && window.isSecureContext;
+  let endpoint=null, config=null, busy=false, synced=false, fingerprint='', notice='', noticeError=false, syncTimer=null, syncInFlight=false;
+  function notify(ar,en,error=false){notice=tr(ar,en);noticeError=error;render()}
+  function types(){const existing=readJson(PREFS,['goal','kickoff','fulltime']);return ['goal','kickoff','fulltime'].filter(x=>Array.isArray(existing)&&existing.includes(x))}
+  function enabled(){return get(KEY)==='yes'}
+  function token(){let value=get(TOKEN);if(!value){value=crypto.randomUUID()+crypto.randomUUID();set(TOKEN,value)}return value}
+  function preferenceData(){
+    const teams=typeof getFollowedTeams==='function'?getFollowedTeams().slice(0,100):[];
+    const favoriteIds=new Set(typeof getFavorites==='function'?getFavorites():[]);
+    const old=readJson(SAVED,[]);
+    const matches=new Map((Array.isArray(old)?old:[]).filter(x=>favoriteIds.has(x.id)).map(x=>[x.id,x]));
+    const all=[...(typeof liveEvents!=='undefined'?liveEvents:[]),...(Array.isArray(window.upcomingEvents)?window.upcomingEvents:[])];
+    for(const e of all)if(favoriteIds.has(e.id)&&e.date&&e.home&&e.away)matches.set(e.id,{id:e.id,home:e.home,away:e.away,date:e.date});
+    const selected=[...matches.values()].sort((a,b)=>String(a.id).localeCompare(String(b.id))).slice(0,100);
+    set(SAVED,JSON.stringify(selected));
+    return {teams:[...teams].sort(),matches:selected,types:types(),language:document.documentElement.lang==='en'?'en':'ar'};
+  }
+  function render(){
+    const button=$('backgroundPushButton'),test=$('backgroundPushTest'),status=$('backgroundPushStatus');
+    if(!button||!status)return;
+    const canUse=supported(),available=Boolean(config?.enabled),on=enabled();
+    button.disabled=busy||!canUse||(!available&&!on);
+    button.textContent=on?tr('🔕 إيقاف إشعارات الخلفية','🔕 Disable background push'):tr('🔔 تشغيل إشعارات الخلفية','🔔 Enable background push');
+    if(test){test.disabled=busy||!on||!synced||!available;test.hidden=!on}
+    document.querySelectorAll('[data-push-type]').forEach(input=>{input.checked=types().includes(input.dataset.pushType);input.disabled=busy});
+    if(notice){status.textContent=notice;status.style.color=noticeError?'#ff9ca0':'';return}
+    status.style.color='';
+    if(!canUse)status.textContent=tr('افتح كورة زول في Chrome لتشغيل الإشعارات.','Open Kora Zol in Chrome to use background notifications.');
+    else if(Notification.permission==='denied'&&!on)status.textContent=tr('الإشعارات محظورة. اسمح بها من إعدادات الموقع في Chrome.','Notifications are blocked. Allow them in Chrome site settings.');
+    else if(!available)status.textContent=tr('سيرفر إشعارات الخلفية غير متصل حالياً. التنبيهات أثناء فتح التطبيق تظل متاحة.','The background notification server is not connected. In-app alerts are still available.');
+    else if(on&&!synced)status.textContent=tr('جاري التحقق من اشتراك الجهاز…','Checking this device’s subscription…');
+    else if(on)status.textContent=config.liveEnabled?tr('الجهاز مشترك في إشعارات الخلفية. تابع فريقاً أو احفظ مباراة لبدء التنبيهات.','This device is subscribed. Follow a team or save a match to receive alerts.'):tr('الجهاز مشترك. يمكن تجربة الإشعار؛ مصدر نتائج المباريات للسيرفر غير متصل بعد.','This device is subscribed. Test push is available; the live match feed is not connected yet.');
+    else status.textContent=tr('استلم تنبيهات المباريات حتى بعد إغلاق التطبيق.','Receive match notifications even when the app is closed.');
+  }
+  async function api(path,data){
+    const response=await fetch(endpoint+path,{method:data?'POST':'GET',headers:data?{'Content-Type':'application/json'}:undefined,body:data?JSON.stringify(data):undefined,cache:'no-store',signal:AbortSignal.timeout(15000)});
+    const value=await response.json();
+    if(!response.ok)throw Error(value.error||'server_error');
+    return value;
+  }
+  function applicationKey(value){
+    const decoded=atob(value.replace(/-/g,'+').replace(/_/g,'/')+'==='.slice((value.length+3)%4));
+    return Uint8Array.from(decoded,x=>x.charCodeAt(0));
+  }
+  function registration(){return Promise.race([navigator.serviceWorker.ready,new Promise((_,reject)=>setTimeout(()=>reject(Error('service_worker_timeout')),12000))])}
+  async function loadConfig(){
+    try{
+      const response=await fetch('./push-config.json',{cache:'no-store',signal:AbortSignal.timeout(7000)});
+      if(!response.ok)return;
+      const data=await response.json();
+      if(!data.endpoint)return;
+      const url=new URL(data.endpoint);
+      if(url.protocol!=='https:'||url.username||url.password)return;
+      endpoint=url.origin;
+      config=await api('/config');
+    }catch{config=null}
+    finally{render();if(enabled())scheduleSync()}
+  }
+  async function subscribeExisting(sub,prefs){
+    const result=await api('/subscribe',{token:token(),subscription:sub.toJSON(),preferences:prefs});
+    config.liveEnabled=Boolean(result.liveEnabled);synced=Boolean(result.subscribed);
+    fingerprint=JSON.stringify(prefs);
+    return result;
+  }
+  async function sync(){
+    if(!enabled()||!config?.enabled||!supported()||busy||syncInFlight)return;
+    syncInFlight=true;
+    try{
+      if(Notification.permission!=='granted')throw Error('not_allowed');
+      const reg=await registration(),sub=await reg.pushManager.getSubscription();
+      if(!sub)throw Error('subscription_expired');
+      const prefs=preferenceData();
+      if(synced&&fingerprint===JSON.stringify(prefs))return;
+      await subscribeExisting(sub,prefs);
+      if(noticeError){notice='';noticeError=false}
+    }catch{synced=false;notify('تعذر مزامنة الإشعارات. افتح الإعدادات وأعد تفعيلها.','Could not sync pushes. Open Settings and re-enable.',true)}
+    finally{syncInFlight=false;render()}
+  }
+  function scheduleSync(){if(syncTimer)clearTimeout(syncTimer);syncTimer=setTimeout(sync,350)}
+  async function toggle(){
+    if(busy||!supported())return;
+    notice='';busy=true;render();
+    try{
+      if(enabled()){
+        const reg=await registration(),sub=await reg.pushManager.getSubscription();
+        if(sub){if(config?.enabled)try{await api('/unsubscribe',{token:token(),subscription:sub.toJSON()})}catch{}await sub.unsubscribe()}
+        set(KEY,'no');synced=false;fingerprint='';
+        notify('تم إيقاف إشعارات الخلفية.','Background push disabled.');return;
+      }
+      if(!config?.enabled)throw Error('not_configured');
+      // Permission is only requested in the user's explicit button action.
+      const permission=Notification.permission==='granted'?'granted':await Notification.requestPermission();
+      if(permission!=='granted')throw Error('not_allowed');
+      const reg=await registration(),key=applicationKey(config.publicKey);
+      let sub=await reg.pushManager.getSubscription();
+      if(sub&&sub.options.applicationServerKey&&String(new Uint8Array(sub.options.applicationServerKey))!==String(key)){await sub.unsubscribe();sub=null}
+      if(!sub)sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:key});
+      await subscribeExisting(sub,preferenceData());
+      set(KEY,'yes');notice='';
+    }catch(e){synced=false;notify(e.message==='not_allowed'?'اسمح بالإشعارات في إعدادات Chrome أولاً.':'ما قدرنا نربط الجهاز. تأكد من الاتصال وحاول مرة أخرى.',e.message==='not_allowed'?'Allow notifications in Chrome first.':'Could not connect this device. Check the connection and try again.',true)}
+    finally{busy=false;render()}
+  }
+  async function test(){
+    if(busy||!synced||!enabled())return;
+    busy=true;notice='';render();
+    try{
+      const sub=await (await registration()).pushManager.getSubscription();
+      if(!sub)throw Error('subscription_expired');
+      const result=await api('/test',{token:token(),subscription:sub.toJSON()});
+      if(!result.scheduled)throw Error('server_error');
+      notify('تمت جدولة التجربة. اقفل التطبيق وانتظر الإشعار خلال دقيقة أو دقيقتين.','Test scheduled. Close the app and wait a minute or two for the notification.');
+    }catch(e){notify(e.message==='test_rate_limited'?'انتظر دقيقة قبل إعادة التجربة.':'تعذرت جدولة الإشعار التجريبي.',e.message==='test_rate_limited'?'Wait one minute before retrying.':'Could not schedule the test notification.',true)}
+    finally{busy=false;render()}
+  }
+  function onLanguage(){notice='';render();scheduleSync()}
+  function init(){
+    $('backgroundPushButton')?.addEventListener('click',toggle);
+    $('backgroundPushTest')?.addEventListener('click',test);
+    document.querySelectorAll('[data-push-type]').forEach(input=>input.addEventListener('change',()=>{
+      set(PREFS,JSON.stringify([...document.querySelectorAll('[data-push-type]:checked')].map(x=>x.dataset.pushType)));
+      notice='';scheduleSync();render();
+    }));
+    window.addEventListener('online',()=>{if(!config?.enabled)loadConfig();else scheduleSync()});
+    document.addEventListener('visibilitychange',()=>{if(!document.hidden){if(enabled())loadConfig();scheduleSync()}});
+    setInterval(()=>{if(enabled()&&!document.hidden)loadConfig()},120000);
+    render();loadConfig();
+  }
+  window.KoraPush={sync:scheduleSync,render:onLanguage,ownsLiveAlerts:()=>enabled()&&synced&&Boolean(config?.liveEnabled)};
+  init();
+})();

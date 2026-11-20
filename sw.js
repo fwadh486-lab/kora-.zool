@@ -1,4 +1,4 @@
-const CACHE='korazol-shell-v11';
+const CACHE='korazol-shell-v12';
 const DATA_CACHE='korazol-data-v1';
 const SHELL=['./','./push-client.js','./index.html','./fixtures.html','./match-details.html','./lineup-v2.html','./manifest.webmanifest','./kora-zol-icon-192.png','./kora-zol-icon-512.png'];
 self.addEventListener('install',event=>{
@@ -87,3 +87,4 @@ self.addEventListener('notificationclick',event=>{
   await clients.openWindow(url.href);
  })());
 });
+

@@ -41,6 +41,8 @@ test('register, authorized test, delayed encrypted push, live events and opt-out
   assert.equal((await request('/subscribe',{...payload,token:randomUUID()+randomUUID()})).status,409);
   assert.equal((await request('/test',payload)).status,202);
   assert.equal((await request('/test',payload)).status,429);
+  assert.equal((await (await request('/test-status',payload)).json()).state,'pending');
+  assert.equal((await request('/test-status',{...payload,token:randomUUID()+randomUUID()})).status,409);
   const sends=[];let fixtureStatus='NS',score=0;
   const realFetch=globalThis.fetch;
   globalThis.fetch=async(url,options)=>{
@@ -60,8 +62,10 @@ test('register, authorized test, delayed encrypted push, live events and opt-out
     await tick(now+70000);
     assert.equal(sends.length,1);
     assert.equal(sends[0].headers.get('content-encoding'),'aes128gcm');
+    assert.equal(sends[0].headers.get('urgency'),'high');
     assert.match(sends[0].headers.get('authorization'),/^vapid /);
     assert.equal(sends[0].length,4096);
+    assert.deepEqual((await (await request('/test-status',payload)).json()).state,'accepted');
     await tick(now+130000);assert.equal(sends.length,1);
     env.API_FOOTBALL_KEY='test-only-key';
     await tick(now+190000);assert.equal(sends.length,1);
@@ -71,5 +75,21 @@ test('register, authorized test, delayed encrypted push, live events and opt-out
     fixtureStatus='FT';await tick(now+430000);assert.equal(sends.length,4);
     assert.equal((await request('/unsubscribe',payload)).status,200);
     assert.equal((await request('/test',payload)).status,404);
+  }finally{globalThis.fetch=realFetch}
+});
+test('provider rejection is reported without falsely claiming delivery',async()=>{
+  const env={DB:makeDb()};
+  const device=createECDH('prime256v1');device.generateKeys();
+  const sub={endpoint:'https://fcm.googleapis.com/fcm/send/rejected-test',keys:{p256dh:device.getPublicKey().toString('base64url'),auth:randomBytes(16).toString('base64url')}};
+  const payload={token:randomUUID()+randomUUID(),subscription:sub,preferences:{types:[]}};
+  const request=path=>worker.fetch(new Request('https://push.example.org'+path,{method:'POST',headers:{origin:'https://fwadh486-lab.github.io','content-type':'application/json'},body:JSON.stringify(payload)}),env);
+  const realFetch=globalThis.fetch;
+  try{
+    globalThis.fetch=async()=>new Response(null,{status:403});
+    assert.equal((await request('/subscribe')).status,200);
+    assert.equal((await request('/test')).status,202);
+    let pending;worker.scheduled({scheduledTime:Date.now()+70000},env,{waitUntil:p=>{pending=p}});await pending;
+    const status=await (await request('/test-status')).json();
+    assert.equal(status.state,'rejected');assert.equal(status.providerStatus,403);
   }finally{globalThis.fetch=realFetch}
 });

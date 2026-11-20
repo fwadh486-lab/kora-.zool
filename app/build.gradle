@@ -1,16 +1,23 @@
 plugins { id 'com.android.application' }
 
+def generatedBrand = layout.buildDirectory.dir('generated/brand/res')
+def copyBrand = tasks.register('copyBrand', Copy) {
+    from(rootProject.file('kora-zol-icon-512.png'))
+    into(generatedBrand.map { it.dir('drawable-nodpi') })
+    rename { 'korazol_icon.png' }
+}
+
 android {
     namespace 'com.korazol.app'
     compileSdk 35
-
     defaultConfig {
         applicationId 'com.korazol.app'
         minSdk 24
         targetSdk 35
-        versionCode 3
-        versionName '0.3.0'
+        versionCode 4
+        versionName '0.4.0'
     }
+    sourceSets.main.res.srcDir(generatedBrand)
     signingConfigs {
         release {
             def storePath = System.getenv('KORAZOL_KEYSTORE_PATH')
@@ -25,9 +32,7 @@ android {
     buildTypes {
         release {
             minifyEnabled false
-            if (System.getenv('KORAZOL_KEYSTORE_PATH')) {
-                signingConfig signingConfigs.release
-            }
+            if (System.getenv('KORAZOL_KEYSTORE_PATH')) signingConfig signingConfigs.release
         }
     }
     compileOptions {
@@ -35,3 +40,4 @@ android {
         targetCompatibility JavaVersion.VERSION_17
     }
 }
+tasks.named('preBuild').configure { dependsOn(copyBrand) }

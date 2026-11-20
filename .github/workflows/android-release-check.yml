@@ -9,6 +9,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
@@ -18,25 +20,62 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.11'
-      - name: Build Android APK
-        run: gradle --no-daemon :app:assembleDebug
-      - name: Verify installable APK package
+      - name: Build APK with existing release signature if configured
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KORAZOL_KEYSTORE_BASE64 }}
+          KORAZOL_STORE_PASSWORD: ${{ secrets.KORAZOL_STORE_PASSWORD }}
+          KORAZOL_KEY_ALIAS: ${{ secrets.KORAZOL_KEY_ALIAS }}
+          KORAZOL_KEY_PASSWORD: ${{ secrets.KORAZOL_KEY_PASSWORD }}
         shell: bash
         run: |
           set -euo pipefail
-          APK=app/build/outputs/apk/debug/app-debug.apk
+          mkdir -p apk-dist
+          if [[ -n "$KEYSTORE_BASE64" && -n "$KORAZOL_STORE_PASSWORD" && -n "$KORAZOL_KEY_ALIAS" && -n "$KORAZOL_KEY_PASSWORD" ]]; then
+            export KORAZOL_KEYSTORE_PATH="$RUNNER_TEMP/korazol-upload.jks"
+            umask 077
+            printf '%s' "$KEYSTORE_BASE64" | base64 --decode > "$KORAZOL_KEYSTORE_PATH"
+            trap 'rm -f "$KORAZOL_KEYSTORE_PATH"' EXIT
+            gradle --no-daemon :app:lintRelease :app:assembleRelease
+            cp app/build/outputs/apk/release/app-release.apk apk-dist/KoraZol-0.4.0.apk
+            echo 'SIGNING_MODE=release' >> "$GITHUB_ENV"
+          else
+            gradle --no-daemon :app:lintDebug :app:assembleDebug
+            cp app/build/outputs/apk/debug/app-debug.apk apk-dist/KoraZol-0.4.0.apk
+            echo 'SIGNING_MODE=debug' >> "$GITHUB_ENV"
+          fi
+      - name: Verify package, launcher, signature and icon
+        shell: bash
+        run: |
+          set -euo pipefail
+          APK=apk-dist/KoraZol-0.4.0.apk
           test -s "$APK"
           unzip -t "$APK" >/dev/null
           BT="$(find "$ANDROID_HOME/build-tools" -mindepth 1 -maxdepth 1 -type d | sort -V | tail -n 1)"
-          "$BT/apksigner" verify --verbose "$APK"
+          "$BT/apksigner" verify --verbose --print-certs "$APK"
           "$BT/aapt" dump badging "$APK" | tee /tmp/korazol-badging.txt
           grep -q "package: name='com.korazol.app'" /tmp/korazol-badging.txt
+          grep -q "versionName='0.4.0'" /tmp/korazol-badging.txt
           grep -q "launchable-activity: name='com.korazol.app.MainActivity'" /tmp/korazol-badging.txt
+          grep -q 'application-icon' /tmp/korazol-badging.txt
+          echo "Signing: $SIGNING_MODE"
           echo "APK bytes: $(wc -c < "$APK")"
-          sha256sum "$APK"
+          (cd apk-dist && sha256sum KoraZol-0.4.0.apk > SHA256SUMS.txt)
       - uses: actions/upload-artifact@v4
         with:
           name: KoraZol-Android-APK
-          path: app/build/outputs/apk/debug/app-debug.apk
+          path: apk-dist/
           if-no-files-found: error
           retention-days: 30
+      - name: Publish verified APK for direct download
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          TAG="android-0.4.0-${GITHUB_RUN_ID}"
+          if [[ "$SIGNING_MODE" == debug ]]; then
+            NOTES='Test APK signed with a temporary debug key. Not a Play Store release. Background alerts still use the installed Chrome web app.'
+          else
+            NOTES='Test APK signed with the configured release key. Background alerts still use the installed Chrome web app.'
+          fi
+          gh release create "$TAG" apk-dist/KoraZol-0.4.0.apk apk-dist/SHA256SUMS.txt --target "$GITHUB_SHA" --title 'Kora Zol Android 0.4.0' --notes "$NOTES" --prerelease

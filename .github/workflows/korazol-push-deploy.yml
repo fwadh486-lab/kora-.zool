@@ -35,3 +35,5 @@ jobs:
       - name: Verify notification endpoint
         run: |
           node --input-type=module -e 'const r=await fetch("https://korazol-push.fwadh486.workers.dev/config",{headers:{Origin:"https://fwadh486-lab.github.io"}});const j=await r.json();if(!r.ok||!j.enabled||j.publicKey?.length!==87)throw Error("Push endpoint not ready");console.log("Push endpoint configured; live football feed: "+j.liveEnabled);'
+
+# Release: delivery status and fast test retry.

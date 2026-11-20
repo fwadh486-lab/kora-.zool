@@ -68,24 +68,45 @@ async function parseRequest(request) {
   return JSON.parse(new TextDecoder().decode(bytes));
 }
 async function sendPush(env, subscription, message) {
-  const payload = await buildPushPayload({data:JSON.stringify(message),options:{ttl:300}},subscription,{
-    subject:env.VAPID_SUBJECT,publicKey:env.VAPID_PUBLIC_KEY,privateKey:env.VAPID_PRIVATE_KEY
-  });
-  const response = await fetch(subscription.endpoint,{...payload,redirect:'error',signal:AbortSignal.timeout(12000)});
-  return response.status;
+  let payload;
+  try{
+    payload=await buildPushPayload({data:JSON.stringify(message),options:{ttl:300,urgency:'high'}},subscription,{
+      subject:env.VAPID_SUBJECT,publicKey:env.VAPID_PUBLIC_KEY,privateKey:env.VAPID_PRIVATE_KEY
+    });
+  }catch(error){console.warn('Push encryption failed: '+(error?.name||'Error'));return 591}
+  try{
+    // Workers derives Content-Length from the byte array; do not override it.
+    const headers=new Headers(payload.headers);headers.delete('content-length');
+    const response=await fetch(subscription.endpoint,{...payload,headers,method:'POST',redirect:'error',signal:AbortSignal.timeout(12000)});
+    return response.status;
+  }catch(error){console.warn('Push network request failed: '+(error?.name||'Error'));return 592}
 }
-async function route(request, env) {
+async function ensureTestResults(env){
+  await env.DB.prepare('CREATE TABLE IF NOT EXISTS push_test_results (id TEXT PRIMARY KEY, requested INTEGER NOT NULL, status INTEGER NOT NULL, updated INTEGER NOT NULL)').run();
+}
+async function recordTest(env,id,requested,status){
+  await env.DB.prepare('INSERT INTO push_test_results(id,requested,status,updated) VALUES(?,?,?,?) ON CONFLICT(id) DO UPDATE SET requested=excluded.requested,status=excluded.status,updated=excluded.updated WHERE push_test_results.requested<=excluded.requested').bind(id,requested,status,Date.now()).run();
+}
+function testState(status){
+  if(status===0)return 'pending';
+  if(status>=200&&status<300)return 'accepted';
+  if(status===404||status===410)return 'expired';
+  if(status===408)return 'timed_out';
+  if(status===400||status===401||status===403||status===413)return 'rejected';
+  return 'retrying';
+}
+async function route(request, env, ctx) {
   const url=new URL(request.url),path=url.pathname,origin=request.headers.get('origin');
   if(origin!==env.APP_ORIGIN) return json({error:'origin_not_allowed'},403);
   if(request.method==='OPTIONS') return new Response(null,{status:204});
   if(path==='/config' && request.method==='GET') return json({enabled:configured(env),publicKey:configured(env)?env.VAPID_PUBLIC_KEY:null,liveEnabled:await feedHealthy(env)});
-  if(request.method!=='POST' || !['/subscribe','/unsubscribe','/test'].includes(path)) return json({error:'not_found'},404);
+  if(request.method!=='POST' || !['/subscribe','/unsubscribe','/test','/test-status'].includes(path)) return json({error:'not_found'},404);
   if(!configured(env)) return json({error:'not_configured'},503);
   let data;try{data=await parseRequest(request)}catch(e){return json({error:e.message==='too_large'?'too_large':'invalid_json'},400)}
   if(!data || !tokenPattern.test(data.token||'') || !validSubscription(data.subscription)) return json({error:'invalid_subscription'},400);
   const sub={endpoint:data.subscription.endpoint,expirationTime:null,keys:{p256dh:data.subscription.keys.p256dh,auth:data.subscription.keys.auth}};
   const id=await digest(sub.endpoint),tokenHash=await digest(data.token);
-  const existing=await env.DB.prepare('SELECT token_hash, subscription, last_test FROM devices WHERE id=?').bind(id).first();
+  const existing=await env.DB.prepare('SELECT token_hash, subscription, last_test, test_due FROM devices WHERE id=?').bind(id).first();
   if(existing && existing.token_hash!==tokenHash) return json({error:'device_conflict'},409);
   const now=Date.now();
   if(path==='/subscribe'){
@@ -99,22 +120,42 @@ async function route(request, env) {
     return json({subscribed:false});
   }
   if(!existing) return json({error:'not_subscribed'},404);
-  const reserved=await env.DB.prepare('UPDATE devices SET last_test=?,test_due=? WHERE id=? AND token_hash=? AND last_test<?').bind(now,now+8000,id,tokenHash,now-MINUTE).run();
+  await ensureTestResults(env);
+  if(path==='/test-status'){
+    const result=await env.DB.prepare('SELECT requested,status,updated FROM push_test_results WHERE id=?').bind(id).first();
+    if(!result||result.requested!==existing.last_test)return json({state:existing.test_due?'pending':'unknown'});
+    return json({state:testState(result.status),providerStatus:result.status,requested:result.requested,updated:result.updated});
+  }
+  // Deliver after the HTTP response, independently of the first cron tick.
+  // Cron remains a durable fallback at one minute if the immediate attempt fails.
+  const due=now+MINUTE;
+  const reserved=await env.DB.prepare('UPDATE devices SET last_test=?,test_due=? WHERE id=? AND token_hash=? AND last_test<?').bind(now,due,id,tokenHash,now-MINUTE).run();
   if(!reserved.meta?.changes) return json({error:'test_rate_limited'},429);
-  return json({scheduled:true},202);
+  await recordTest(env,id,now,0);
+  if(ctx?.waitUntil)ctx.waitUntil((async()=>{
+    await new Promise(resolve=>setTimeout(resolve,8000));
+    const row=await env.DB.prepare('SELECT id,subscription,preferences,test_due,last_test FROM devices WHERE id=? AND test_due=?').bind(id,due).first();
+    if(row)await sendOneTest(env,row,Date.now());
+  })().catch(()=>console.warn('Immediate test attempt failed; cron will retry.')));
+  return json({scheduled:true,requested:now},202);
 }
-async function sendTests(env,now){
-  const {results}=await env.DB.prepare('SELECT id,subscription,preferences,test_due FROM devices WHERE test_due>0 AND test_due<=?').bind(now).all();
-  for(const row of results){
-    if(now-row.test_due>EVENT_TTL){await env.DB.prepare('UPDATE devices SET test_due=0 WHERE id=? AND test_due=?').bind(row.id,row.test_due).run();continue}
+async function sendOneTest(env,row,now){
+    if(now-row.test_due>EVENT_TTL){await recordTest(env,row.id,row.last_test,408);await env.DB.prepare('UPDATE devices SET test_due=0 WHERE id=? AND test_due=?').bind(row.id,row.test_due).run();return}
     const ar=JSON.parse(row.preferences).language!=='en';
     const message={title:ar?'⚽ كورة زول | تجربة الإشعار':'⚽ Kora Zol | Test notification',body:ar?'دا إشعار تجريبي من سيرفر كورة زول.':'This is a test notification from the Kora Zol server.',tag:'korazol-test-'+row.test_due,url:env.APP_URL};
+    let status=599;
     try{
-      const status=await sendPush(env,JSON.parse(row.subscription),message);
-      if(status>=200&&status<300)await env.DB.prepare('UPDATE devices SET test_due=0 WHERE id=? AND test_due=?').bind(row.id,row.test_due).run();
-      else if(status===404||status===410)await env.DB.prepare('DELETE FROM devices WHERE id=?').bind(row.id).run();
+      status=await sendPush(env,JSON.parse(row.subscription),message);
     }catch{console.warn('Test push not accepted; it will retry.')}
-  }
+    const state=testState(status);
+    await recordTest(env,row.id,row.last_test,status);
+    console.info('Test push provider status: '+status);
+    if(['accepted','expired','rejected'].includes(state))await env.DB.prepare('UPDATE devices SET test_due=0 WHERE id=? AND test_due=?').bind(row.id,row.test_due).run();
+}
+async function sendTests(env,now){
+  const {results}=await env.DB.prepare('SELECT id,subscription,preferences,test_due,last_test FROM devices WHERE test_due>0 AND test_due<=?').bind(now).all();
+  if(results.length)await ensureTestResults(env);
+  for(const row of results)await sendOneTest(env,row,now);
 }
 async function fixtures(env, day) {
   const url=new URL('https://v3.football.api-sports.io/fixtures');
@@ -171,10 +212,10 @@ async function pollMatches(env, now) {
   ]);
 }
 export default {
-  async fetch(request,env){
+  async fetch(request,env,ctx){
     env=withAppDefaults(env);
     let response;
-    try{if(request.headers.get('origin')===env.APP_ORIGIN && request.method!=='OPTIONS')env=await withSigningKeys(env);response=await route(request,env)}catch{response=json({error:'server_error'},500)}
+    try{if(request.headers.get('origin')===env.APP_ORIGIN && request.method!=='OPTIONS')env=await withSigningKeys(env);response=await route(request,env,ctx)}catch{response=json({error:'server_error'},500)}
     if(request.headers.get('origin')===env.APP_ORIGIN){
       response.headers.set('access-control-allow-origin',env.APP_ORIGIN);
       response.headers.set('access-control-allow-methods','GET, POST, OPTIONS');

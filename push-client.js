@@ -1,13 +1,13 @@
 /* Background notifications for the installed Chrome PWA. */
 (() => {
-  const KEY = 'korazol_background_push_v1', TOKEN = 'korazol_push_device_token', PREFS='korazol_push_types_v1', SAVED='korazol_push_saved_matches_v1';
+  const KEY = 'korazol_background_push_v1', TOKEN = 'korazol_push_device_token', PREFS='korazol_push_types_v1', SAVED='korazol_push_saved_matches_v1', LAST_TEST='korazol_push_last_test_v2';
   const $ = id => document.getElementById(id);
   const tr = (ar,en) => document.documentElement.lang === 'en' ? en : ar;
   const get = key => { try { return localStorage.getItem(key); } catch { return null; } };
   const set = (key,value) => { try { localStorage.setItem(key,value); } catch {} };
   function readJson(key,fallback){try{return JSON.parse(get(key)||'null')??fallback}catch{return fallback}}
   const supported = () => 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window && window.isSecureContext;
-  let endpoint=null, config=null, busy=false, synced=false, fingerprint='', notice='', noticeError=false, syncTimer=null, syncInFlight=false;
+  let endpoint=null, config=null, busy=false, synced=false, fingerprint='', notice='', noticeError=false, syncTimer=null, syncInFlight=false, checkingTest=false;
   function notify(ar,en,error=false){notice=tr(ar,en);noticeError=error;render()}
   function types(){const existing=readJson(PREFS,['goal','kickoff','fulltime']);return ['goal','kickoff','fulltime'].filter(x=>Array.isArray(existing)&&existing.includes(x))}
   function enabled(){return get(KEY)==='yes'}
@@ -78,9 +78,9 @@
       const reg=await registration(),sub=await reg.pushManager.getSubscription();
       if(!sub)throw Error('subscription_expired');
       const prefs=preferenceData();
-      if(synced&&fingerprint===JSON.stringify(prefs))return;
-      await subscribeExisting(sub,prefs);
+      if(!synced||fingerprint!==JSON.stringify(prefs))await subscribeExisting(sub,prefs);
       if(noticeError){notice='';noticeError=false}
+      refreshTestStatus();
     }catch{synced=false;notify('تعذر مزامنة الإشعارات. افتح الإعدادات وأعد تفعيلها.','Could not sync pushes. Open Settings and re-enable.',true)}
     finally{syncInFlight=false;render()}
   }
@@ -92,7 +92,7 @@
       if(enabled()){
         const reg=await registration(),sub=await reg.pushManager.getSubscription();
         if(sub){if(config?.enabled)try{await api('/unsubscribe',{token:token(),subscription:sub.toJSON()})}catch{}await sub.unsubscribe()}
-        set(KEY,'no');synced=false;fingerprint='';
+        set(KEY,'no');set(LAST_TEST,'0');synced=false;fingerprint='';
         notify('تم إيقاف إشعارات الخلفية.','Background push disabled.');return;
       }
       if(!config?.enabled)throw Error('not_configured');
@@ -116,9 +116,29 @@
       if(!sub)throw Error('subscription_expired');
       const result=await api('/test',{token:token(),subscription:sub.toJSON()});
       if(!result.scheduled)throw Error('server_error');
-      notify('تمت جدولة التجربة. اقفل التطبيق وانتظر الإشعار خلال دقيقة أو دقيقتين.','Test scheduled. Close the app and wait a minute or two for the notification.');
+      set(LAST_TEST,String(result.requested||Date.now()));
+      notify('تمت جدولة التجربة. اقفل التطبيق الآن وانتظر الإشعار؛ ويمكنك مراجعة نتيجة الإرسال هنا عند العودة.','Test scheduled. Close the app now and check the delivery result here when you return.');
     }catch(e){notify(e.message==='test_rate_limited'?'انتظر دقيقة قبل إعادة التجربة.':'تعذرت جدولة الإشعار التجريبي.',e.message==='test_rate_limited'?'Wait one minute before retrying.':'Could not schedule the test notification.',true)}
     finally{busy=false;render()}
+  }
+  async function refreshTestStatus(){
+    const last=Number(get(LAST_TEST)||0);
+    if(checkingTest||busy||!enabled()||!synced||!config?.enabled||!last||Date.now()-last>86400000)return;
+    checkingTest=true;
+    try{
+      const sub=await (await registration()).pushManager.getSubscription();
+      if(!sub)return;
+      const result=await api('/test-status',{token:token(),subscription:sub.toJSON()});
+      if(Number(get(LAST_TEST))!==last||result.requested&&result.requested<last)return;
+      switch(result.state){
+        case 'accepted':notify('السيرفر أرسل الإشعار وقبله مزود Chrome. لو ما ظهر، راجع سماح الإشعارات في إعدادات الجوال وChrome.','Push accepted by the browser notification provider. If it did not appear, check phone and browser notification settings.');break;
+        case 'expired':notify('اشتراك الإشعارات انتهى. أوقف إشعارات الخلفية وشغّلها من جديد.','The subscription expired. Disable and re-enable background push.',true);break;
+        case 'rejected':notify('مزود الإشعارات رفض الإرسال (رمز '+result.providerStatus+'). أرسل لنا الرمز للتشخيص.','The push provider rejected the message (code '+result.providerStatus+'). Share this code for diagnosis.',true);break;
+        case 'retrying':notify('السيرفر يحاول إرسال الإشعار مرة أخرى (رمز '+result.providerStatus+').','The server is retrying delivery (code '+result.providerStatus+').',true);break;
+        case 'timed_out':notify('انتهت مهلة التجربة. أرسل تجربة جديدة.','The test timed out. Send a new test.',true);break;
+        case 'pending':notify('التجربة قيد الإرسال. اقفل التطبيق وانتظر الإشعار.','The test is queued. Close the app and wait for the notification.');break;
+      }
+    }catch{}finally{checkingTest=false}
   }
   function onLanguage(){notice='';render();scheduleSync()}
   function init(){
@@ -130,6 +150,7 @@
     }));
     window.addEventListener('online',()=>{if(!config?.enabled)loadConfig();else scheduleSync()});
     document.addEventListener('visibilitychange',()=>{if(!document.hidden){if(enabled())loadConfig();scheduleSync()}});
+    setInterval(()=>{if(!document.hidden)refreshTestStatus()},10000);
     setInterval(()=>{if(enabled()&&!document.hidden)loadConfig()},120000);
     render();loadConfig();
   }

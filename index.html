@@ -778,7 +778,7 @@ window.addEventListener('offline',()=>{updateNotice();updateDataHealth()});
 window.addEventListener('online',updateDataHealth);
 document.addEventListener("visibilitychange",()=>{if(!document.hidden&&navigator.onLine)refreshScores();scheduleLiveRefresh()});
 </script>
-<script src="./push-client-v4.js"></script>
+<script src="./push-client-v5.js"></script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=push1').catch(e=>console.warn('PWA service worker:',e)));}</script>
 </body>
 </html>

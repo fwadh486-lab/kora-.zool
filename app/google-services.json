@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "177027984448",
+    "project_id": "kora-zol",
+    "storage_bucket": "kora-zol.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:177027984448:android:130d933a771ebe6a2343a5",
+        "android_client_info": {
+          "package_name": "com.korazol.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABiNQQvqOQryKL-WklHSRGMHx9nSTtAzs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

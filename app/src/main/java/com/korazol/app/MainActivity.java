@@ -1,7 +1,8 @@
 package com.korazol.app;
 
 import android.app.Activity;
-import android.app.AlertDialog;
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -12,6 +13,11 @@ import android.view.View;
 import android.view.WindowInsets;
 import android.webkit.*;
 import android.widget.*;
+import androidx.webkit.WebViewCompat;
+import androidx.webkit.WebViewFeature;
+import androidx.webkit.JavaScriptReplyProxy;
+import org.json.JSONObject;
+import java.util.Collections;
 
 public class MainActivity extends Activity {
     private static final String HOME = "https://fwadh486-lab.github.io/kora-.zool/";
@@ -21,9 +27,12 @@ public class MainActivity extends Activity {
     private ProgressBar progress;
     private LinearLayout errorPanel;
     private boolean pageFailed;
+    private Runnable permissionGranted;
+    private Runnable permissionDenied;
 
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        NativePush.createChannel(this);
         LinearLayout root = new LinearLayout(this);
         root.setOrientation(LinearLayout.VERTICAL);
         root.setBackgroundColor(BACKGROUND);
@@ -48,7 +57,7 @@ public class MainActivity extends Activity {
         title.setGravity(Gravity.CENTER_VERTICAL);
         Button alerts = new Button(this,null,android.R.attr.borderlessButtonStyle);
         alerts.setText("🔔 الإشعارات"); alerts.setTextColor(ACCENT); alerts.setTextSize(12);
-        alerts.setOnClickListener(v -> openBrowserAlerts());
+        alerts.setOnClickListener(v -> webView.loadUrl(HOME+"?settings=1"));
         toolbar.addView(alerts,new LinearLayout.LayoutParams(-2,dp(48)));
         root.addView(toolbar,new LinearLayout.LayoutParams(-1,dp(48)));
         progress = new ProgressBar(this,null,android.R.attr.progressBarStyleHorizontal);
@@ -65,7 +74,12 @@ public class MainActivity extends Activity {
         settings.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);
         settings.setAllowFileAccess(false);
         settings.setAllowContentAccess(false);
-        settings.setUserAgentString(settings.getUserAgentString()+" KoraZolAndroid/0.4.0");
+        settings.setUserAgentString(settings.getUserAgentString()+" KoraZolAndroid/0.5.0");
+        if(WebViewFeature.isFeatureSupported(WebViewFeature.WEB_MESSAGE_LISTENER)){
+            WebViewCompat.addWebMessageListener(webView,"KoraNative",Collections.singleton("https://fwadh486-lab.github.io"),(view,message,sourceOrigin,isMainFrame,reply)->{
+                if(isMainFrame&&isAppUrl(Uri.parse(view.getUrl()==null?HOME:view.getUrl())))handleNativeMessage(message.getData(),reply);
+            });
+        }
         if (Build.VERSION.SDK_INT >= 26) settings.setSafeBrowsingEnabled(true);
         webView.setWebViewClient(new WebViewClient() {
             @Override public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
@@ -102,7 +116,7 @@ public class MainActivity extends Activity {
         errorPanel.addView(retry,new LinearLayout.LayoutParams(-2,dp(52)));
         errorPanel.setVisibility(View.GONE);content.addView(errorPanel,new FrameLayout.LayoutParams(-1,-1));
         setContentView(root);
-        if (savedInstanceState==null || webView.restoreState(savedInstanceState)==null) webView.loadUrl(HOME);
+        if (savedInstanceState==null || webView.restoreState(savedInstanceState)==null) openLaunchUrl(getIntent());
     }
 
     private int dp(float value) {return Math.round(value*getResources().getDisplayMetrics().density);}
@@ -116,15 +130,22 @@ public class MainActivity extends Activity {
             Toast.makeText(this,"لا يوجد تطبيق لفتح الرابط",Toast.LENGTH_SHORT).show();
         }
     }
-    private void openBrowserAlerts() {
-        new AlertDialog.Builder(this).setTitle("إشعارات المباريات")
-            .setMessage("إشعارات الخلفية الحالية تعمل عبر Chrome. افتح إعدادات كورة زول في Chrome لإدارتها. النسخة المثبتة من APK لا تستلم إشعارات مستقلة بعد.")
-            .setPositiveButton("فتح الإعدادات",(dialog,which)->{
-                Uri uri=Uri.parse(HOME+"?settings=1");
-                Intent chrome=new Intent(Intent.ACTION_VIEW,uri).setPackage("com.android.chrome");
-                try{startActivity(chrome);}catch(Exception e){openExternal(uri);}
-            }).setNegativeButton("رجوع",null).show();
+    private void openLaunchUrl(Intent intent){String url=intent==null?null:intent.getStringExtra("url");webView.loadUrl(url!=null&&isAppUrl(Uri.parse(url))?url:HOME);}
+    @Override protected void onNewIntent(Intent intent){super.onNewIntent(intent);setIntent(intent);if(intent.getStringExtra("url")!=null)openLaunchUrl(intent);}
+    private void respond(JavaScriptReplyProxy reply,String id,JSONObject result){runOnUiThread(()->{try{if(!isFinishing()&&webView!=null)reply.postMessage(result.put("id",id).toString());}catch(Exception ignored){}});}
+    private void handleNativeMessage(String raw,JavaScriptReplyProxy reply){
+        if(raw==null||raw.length()>65536)return;
+        try {
+            JSONObject request=new JSONObject(raw);String id=request.getString("id"),command=request.getString("command");
+            if(id.length()>80)return;
+            Runnable work=()->NativePush.command(this,command,request.optJSONObject("preferences"),result->respond(reply,id,result));
+            if(command.equals("enable")&&Build.VERSION.SDK_INT>=33&&checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS)!=PackageManager.PERMISSION_GRANTED){
+                if(permissionGranted!=null){respond(reply,id,NativePush.error("busy"));return;}
+                permissionGranted=work;permissionDenied=()->respond(reply,id,NativePush.error("not_allowed"));requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS},71);
+            }else work.run();
+        }catch(Exception ignored){}
     }
+    @Override public void onRequestPermissionsResult(int code,String[] permissions,int[] results){super.onRequestPermissionsResult(code,permissions,results);if(code==71){Runnable next=results.length>0&&results[0]==PackageManager.PERMISSION_GRANTED?permissionGranted:permissionDenied;permissionGranted=null;permissionDenied=null;if(next!=null)next.run();}}
     @Override public void onBackPressed(){if(webView!=null&&webView.canGoBack())webView.goBack();else super.onBackPressed();}
     @Override protected void onSaveInstanceState(Bundle outState){if(webView!=null)webView.saveState(outState);super.onSaveInstanceState(outState);}
     @Override protected void onDestroy(){if(webView!=null){webView.destroy();webView=null;}super.onDestroy();}

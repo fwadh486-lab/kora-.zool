@@ -1,4 +1,7 @@
-plugins { id 'com.android.application' }
+plugins {
+    id 'com.android.application'
+    id 'com.google.gms.google-services'
+}
 
 def generatedBrand = layout.buildDirectory.dir('generated/brand/res')
 def copyBrand = tasks.register('copyBrand', Copy) {
@@ -14,8 +17,8 @@ android {
         applicationId 'com.korazol.app'
         minSdk 24
         targetSdk 35
-        versionCode 4
-        versionName '0.4.0'
+        versionCode 5
+        versionName '0.5.0'
     }
     sourceSets.main.res.srcDir(generatedBrand)
     signingConfigs {
@@ -41,3 +44,8 @@ android {
     }
 }
 tasks.named('preBuild').configure { dependsOn(copyBrand) }
+dependencies {
+    implementation platform('com.google.firebase:firebase-bom:34.14.1')
+    implementation 'com.google.firebase:firebase-messaging'
+    implementation 'androidx.webkit:webkit:1.12.1'
+}

@@ -1,0 +1,37 @@
+name: Deploy Kora Zol notification Worker
+on:
+  push:
+    branches: [feature/background-push]
+    paths: ['.github/workflows/korazol-push-deploy.yml']
+permissions:
+  contents: read
+concurrency:
+  group: korazol-push-deploy
+  cancel-in-progress: false
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    defaults:
+      run:
+        working-directory: push-server
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install and test
+        run: |
+          npm ci
+          npm test
+          npm run check
+      - name: Deploy existing Worker
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.KORAZOL_CF_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.KORAZOL_CF_DEPLOY_TOKEN }}
+        run: |
+          test -n "$CLOUDFLARE_ACCOUNT_ID" && test -n "$CLOUDFLARE_API_TOKEN"
+          npx --yes wrangler@4.165.0 deploy --keep-vars
+      - name: Verify notification endpoint
+        run: |
+          node --input-type=module -e 'const r=await fetch("https://korazol-push.fwadh486.workers.dev/config",{headers:{Origin:"https://fwadh486-lab.github.io"}});const j=await r.json();if(!r.ok||!j.enabled||j.publicKey?.length!==87)throw Error("Push endpoint not ready");console.log("Push endpoint configured; live football feed: "+j.liveEnabled);'

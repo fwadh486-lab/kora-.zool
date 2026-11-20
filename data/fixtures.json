@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-20T07:14:21.553740+00:00",
+  "updated": "2026-11-20T10:00:14.289659+00:00",
   "matches": [
     {
       "events": [],
@@ -10866,8 +10866,8 @@
       "matchday": 35,
       "stage": "REGULAR_SEASON",
       "halfTime": {
-        "home": 0,
-        "away": 1
+        "home": null,
+        "away": null
       },
       "id": "fd:555087",
       "league": "br",
@@ -10877,8 +10877,8 @@
       "awayLogo": "https://crests.football-data.org/1765.png",
       "date": "2026-11-20T00:30:00Z",
       "score": "0 - 1",
-      "status": "FINISHED",
-      "live": false,
+      "status": "IN_PLAY",
+      "live": true,
       "source": "football-data.org"
     },
     {

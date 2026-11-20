@@ -47,6 +47,7 @@ test('register, authorized test, delayed encrypted push, live events and opt-out
   const realFetch=globalThis.fetch;
   globalThis.fetch=async(url,options)=>{
     if(String(url).startsWith('https://fcm.googleapis.com/')){
+      assert.equal(options.redirect,'manual','Cloudflare Workers must not use unsupported redirect error mode or follow redirects');
       sends.push({headers:new Headers(options.headers),length:options.body.byteLength});
       return new Response(null,{status:201});
     }

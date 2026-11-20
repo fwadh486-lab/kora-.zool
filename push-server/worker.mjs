@@ -77,7 +77,9 @@ async function sendPush(env, subscription, message) {
   try{
     // Workers derives Content-Length from the byte array; do not override it.
     const headers=new Headers(payload.headers);headers.delete('content-length');
-    const response=await fetch(subscription.endpoint,{...payload,headers,method:'POST',redirect:'error',signal:AbortSignal.timeout(12000)});
+    // Cloudflare Workers supports manual and follow, not Fetch's error mode.
+    // Never follow a redirect carrying a device's encrypted push credentials.
+    const response=await fetch(subscription.endpoint,{...payload,headers,method:'POST',redirect:'manual',signal:AbortSignal.timeout(12000)});
     return response.status;
   }catch(error){console.warn('Push network request failed: '+(error?.name||'Error'));return 592}
 }
@@ -92,7 +94,7 @@ function testState(status){
   if(status>=200&&status<300)return 'accepted';
   if(status===404||status===410)return 'expired';
   if(status===408)return 'timed_out';
-  if(status===400||status===401||status===403||status===413)return 'rejected';
+  if((status>=300&&status<400)||status===400||status===401||status===403||status===413)return 'rejected';
   return 'retrying';
 }
 async function route(request, env, ctx) {

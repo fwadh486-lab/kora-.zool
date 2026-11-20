@@ -16,6 +16,17 @@ function makeDb(){
   });
   return {prepare:sql=>wrap(sql),batch:async stmts=>{db.exec('BEGIN');try{const results=[];for(const s of stmts)results.push(await s.run());db.exec('COMMIT');return results}catch(e){db.exec('ROLLBACK');throw e}}};
 }
+test('dashboard-only Worker creates one stable signing key without exposing its private key',async()=>{
+  const env={DB:makeDb()};
+  const config=()=>worker.fetch(new Request('https://push.example.org/config',{headers:{origin:'https://fwadh486-lab.github.io'}}),env);
+  const results=await Promise.all([config(),config()]);
+  const [a,b]=await Promise.all(results.map(r=>r.json()));
+  assert.equal(a.enabled,true);assert.equal(a.publicKey.length,87);assert.equal(a.publicKey,b.publicKey);
+  assert.deepEqual(Object.keys(a).sort(),['enabled','liveEnabled','publicKey']);
+  const row=await env.DB.prepare('SELECT public_key,private_key FROM push_keys WHERE id=1').first();
+  assert.equal(row.public_key,a.publicKey);assert.equal(row.private_key.length,43);
+  assert.notEqual(row.private_key,a.publicKey);
+});
 test('register, authorized test, delayed encrypted push, live events and opt-out',async()=>{
   const vapid=createECDH('prime256v1');vapid.generateKeys();
   const device=createECDH('prime256v1');device.generateKeys();

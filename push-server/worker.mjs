@@ -9,6 +9,27 @@ const pushHosts = new Set(['fcm.googleapis.com','updates.push.services.mozilla.c
 const encoder = new TextEncoder();
 const json = (body, status = 200) => new Response(JSON.stringify(body), {status, headers:{'content-type':'application/json; charset=utf-8','cache-control':'no-store'}});
 const configured = env => Boolean(env.VAPID_PUBLIC_KEY && env.VAPID_PRIVATE_KEY && env.VAPID_SUBJECT && env.DB);
+const appOrigin = 'https://fwadh486-lab.github.io';
+const appUrl = appOrigin+'/kora-.zool/';
+function withAppDefaults(env){return {...env,APP_ORIGIN:env.APP_ORIGIN||appOrigin,APP_URL:env.APP_URL||appUrl}}
+// The dashboard-only deployment cannot provision secrets from its code editor.
+// Generate the signing key once inside the Worker; store it only in the private D1 database.
+// Existing secret bindings always take precedence and are never rotated.
+async function withSigningKeys(env){
+  if(configured(env)||!env.DB)return env;
+  if(env.VAPID_PUBLIC_KEY||env.VAPID_PRIVATE_KEY)throw Error('partial_vapid_configuration');
+  await env.DB.prepare('CREATE TABLE IF NOT EXISTS push_keys (id INTEGER PRIMARY KEY CHECK(id=1), public_key TEXT NOT NULL, private_key TEXT NOT NULL)').run();
+  let row=await env.DB.prepare('SELECT public_key,private_key FROM push_keys WHERE id=1').first();
+  if(!row){
+    const pair=await crypto.subtle.generateKey({name:'ECDSA',namedCurve:'P-256'},true,['sign','verify']);
+    const raw=new Uint8Array(await crypto.subtle.exportKey('raw',pair.publicKey));
+    const publicKey=btoa(String.fromCharCode(...raw)).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+    const privateKey=(await crypto.subtle.exportKey('jwk',pair.privateKey)).d;
+    await env.DB.prepare('INSERT OR IGNORE INTO push_keys(id,public_key,private_key) VALUES(1,?,?)').bind(publicKey,privateKey).run();
+    row=await env.DB.prepare('SELECT public_key,private_key FROM push_keys WHERE id=1').first();
+  }
+  return {...env,VAPID_PUBLIC_KEY:row.public_key,VAPID_PRIVATE_KEY:row.private_key,VAPID_SUBJECT:env.VAPID_SUBJECT||env.APP_URL};
+}
 async function feedHealthy(env){
   if(!env.API_FOOTBALL_KEY||!env.DB)return false;
   const record=await env.DB.prepare("SELECT value FROM service_state WHERE key='last_success'").first();
@@ -151,8 +172,9 @@ async function pollMatches(env, now) {
 }
 export default {
   async fetch(request,env){
+    env=withAppDefaults(env);
     let response;
-    try{response=await route(request,env)}catch{response=json({error:'server_error'},500)}
+    try{if(request.headers.get('origin')===env.APP_ORIGIN && request.method!=='OPTIONS')env=await withSigningKeys(env);response=await route(request,env)}catch{response=json({error:'server_error'},500)}
     if(request.headers.get('origin')===env.APP_ORIGIN){
       response.headers.set('access-control-allow-origin',env.APP_ORIGIN);
       response.headers.set('access-control-allow-methods','GET, POST, OPTIONS');
@@ -161,5 +183,5 @@ export default {
     }
     return response;
   },
-  scheduled(controller,env,ctx){if(configured(env))ctx.waitUntil((async()=>{await sendTests(env,controller.scheduledTime);await pollMatches(env,controller.scheduledTime)})().catch(()=>console.error('Push poll failed; saved state retained.')));}
+  scheduled(controller,env,ctx){ctx.waitUntil((async()=>{env=await withSigningKeys(withAppDefaults(env));if(configured(env)){await sendTests(env,controller.scheduledTime);await pollMatches(env,controller.scheduledTime)}})().catch(()=>console.error('Push poll failed; saved state retained.')));}
 };

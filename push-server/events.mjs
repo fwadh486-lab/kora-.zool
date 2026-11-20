@@ -26,10 +26,23 @@ export function fromFixture(raw) {
     homeScore: Number.isInteger(goals.home) ? goals.home : null,
     awayScore: Number.isInteger(goals.away) ? goals.away : null,
     status, minute: Number.isInteger(f.status?.elapsed) ? f.status.elapsed : null,
-    date: f.date
+    date: f.date, cards: Array.isArray(raw.events) ? parseCards(raw.events) : null
   };
 }
+function parseCards(events) {
+  const counts = new Map();
+  return events.flatMap(event => {
+    const type = event?.type === 'Card' && ({'Yellow Card':'yellow','Red Card':'red'})[event.detail];
+    if (!type || !event.team?.name || !event.player?.name) return [];
+    const identity = JSON.stringify([type,event.team.id || normalizedName(event.team.name),event.player.id || normalizedName(event.player.name)]);
+    const count = (counts.get(identity)||0)+1; counts.set(identity,count);
+    return [{id:identity+':'+count,type,team:event.team.name,player:event.player.name,
+      minute:Number.isInteger(event.time?.elapsed)?event.time.elapsed:null,
+      extra:Number.isInteger(event.time?.extra)?event.time.extra:null}];
+  });
+}
 export function selectedBy(preferences, match) {
+  if (preferences.allLive && match.league) return true;
   const home = normalizedName(match.home), away = normalizedName(match.away);
   if (preferences.teams.some(team => [home, away].includes(normalizedName(team)))) return true;
   return preferences.matches.some(item => {
@@ -43,6 +56,8 @@ export function transitions(previous, current) {
   const result = [], wasLive = liveStatuses.has(previous.status), isLive = liveStatuses.has(current.status);
   const isFinal = finalStatuses.has(current.status), wasFinal = finalStatuses.has(previous.status);
   if (!wasLive && !wasFinal && previous.status === 'NS' && isLive) result.push('kickoff');
+  if (previous.status === '1H' && current.status === 'HT') result.push('halftime');
+  if (['1H','HT'].includes(previous.status) && current.status === '2H') result.push('secondhalf');
   // A provider's first appearance for a live match is a baseline, not a goal.
   // Score corrections are saved as the new baseline without creating a false goal.
   if ((wasLive || isLive) && (isLive || isFinal) &&
@@ -53,17 +68,27 @@ export function transitions(previous, current) {
   if (!wasFinal && isFinal && (wasLive || previous.status === 'NS')) result.push('fulltime');
   return result;
 }
+export function newCards(previous, current) {
+  if (!Array.isArray(previous?.cards) || !Array.isArray(current?.cards)) return [];
+  const known = new Set(previous.cards.map(card=>card.id));
+  return current.cards.filter(card=>!known.has(card.id));
+}
 export function preferenceAllows(preferences, event) {
-  const key = event.type.startsWith('goal') ? 'goal' : event.type;
+  const key = event.type.startsWith('goal') ? 'goal' : event.type === 'secondhalf' ? 'kickoff' : event.type;
   return preferences.types.includes(key) && selectedBy(preferences, event.match);
 }
 export function notificationFor(event, language, appUrl) {
   const match = event.match, ar = language !== 'en';
   const score = match.homeScore === null || match.awayScore === null ? '' : ' ' + match.homeScore + ' - ' + match.awayScore + ' ';
-  const body = match.home + (score || ' × ') + match.away + (match.minute !== null && event.type.startsWith('goal') ? ' · ' + match.minute + '′' : '');
+  const card = event.card;
+  const body = match.home + (score || ' × ') + match.away + (card ? ' · '+card.player+' ('+card.team+')'+(card.minute!==null?' · '+card.minute+(card.extra?'+'+card.extra:'')+'′':'') : match.minute !== null && event.type.startsWith('goal') ? ' · ' + match.minute + '′' : '');
   const team = event.type === 'goal-home' ? match.home : match.away;
   const title = event.type.startsWith('goal') ? (ar ? '⚽ زوووط! هدف لـ ' : '⚽ GOAL! ') + team :
-    event.type === 'kickoff' ? (ar ? '⚽ بداية المباراة' : '⚽ Kickoff') : (ar ? '🏁 نهاية المباراة' : '🏁 Full time');
+    event.type === 'kickoff' ? (ar ? '⚽ بداية المباراة' : '⚽ Kickoff') :
+    event.type === 'secondhalf' ? (ar ? '⏱ بداية الشوط الثاني' : '⏱ Second half') :
+    event.type === 'halftime' ? (ar ? '⏸ نهاية الشوط الأول' : '⏸ Half time') :
+    event.type === 'yellow' ? (ar ? '🟨 بطاقة صفراء' : '🟨 Yellow card') :
+    event.type === 'red' ? (ar ? '🟥 بطاقة حمراء' : '🟥 Red card') : (ar ? '🏁 نهاية المباراة' : '🏁 Full time');
   const url = new URL(appUrl);
   url.searchParams.set('team', match.home);
   return {title, body, tag:'korazol-' + event.id, url:url.href};

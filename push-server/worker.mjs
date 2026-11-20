@@ -1,8 +1,8 @@
 import {buildPushPayload} from '@block65/webcrypto-web-push';
-import {fromFixture, transitions, preferenceAllows, notificationFor} from './events.mjs';
+import {fromFixture, transitions, newCards, selectedBy, preferenceAllows, notificationFor} from './events.mjs';
 
 const MINUTE = 60000, EVENT_TTL = 10 * MINUTE;
-const eventTypes = ['goal','kickoff','fulltime'];
+const eventTypes = ['goal','kickoff','halftime','fulltime','yellow','red'];
 const tokenPattern = /^[a-f0-9-]{72}$/i;
 const base64Pattern = /^[A-Za-z0-9_-]+$/;
 const pushHosts = new Set(['fcm.googleapis.com','updates.push.services.mozilla.com','web.push.apple.com']);
@@ -53,7 +53,7 @@ function cleanPreferences(raw) {
     return id && home && away && Number.isFinite(Date.parse(date)) ? [{id,home,away,date}] : [];
   }) : [];
   const types = Array.isArray(raw?.types) ? eventTypes.filter(t=>raw.types.includes(t)) : [];
-  return {teams,matches,types,language:raw?.language === 'en'?'en':'ar'};
+  return {teams,matches,types,allLive:raw?.allLive===true,language:raw?.language === 'en'?'en':'ar'};
 }
 async function parseRequest(request) {
   const declared=Number(request.headers.get('content-length')||0);
@@ -161,7 +161,7 @@ async function sendTests(env,now){
 }
 async function fixtures(env, day) {
   const url=new URL('https://v3.football.api-sports.io/fixtures');
-  url.searchParams.set('date',day);url.searchParams.set('timezone','UTC');
+  url.searchParams.set(day==='live'?'live':'date',day==='live'?'all':day);url.searchParams.set('timezone','UTC');
   const response=await fetch(url,{headers:{'x-apisports-key':env.API_FOOTBALL_KEY,'Accept':'application/json'},signal:AbortSignal.timeout(20000)});
   if(!response.ok) throw Error('football_http_'+response.status);
   const data=await response.json();
@@ -170,26 +170,36 @@ async function fixtures(env, day) {
 }
 async function pollMatches(env, now) {
   const devices=await env.DB.prepare('SELECT id,subscription,preferences,updated FROM devices').all();
-  const active=devices.results.map(row=>({...row,preferences:JSON.parse(row.preferences)})).filter(d=>d.preferences.types.length&&(d.preferences.teams.length||d.preferences.matches.length));
+  const active=devices.results.map(row=>({...row,preferences:JSON.parse(row.preferences)})).filter(d=>d.preferences.types.length&&(d.preferences.allLive||d.preferences.teams.length||d.preferences.matches.length));
   if(!active.length) return;
   if(env.API_FOOTBALL_KEY){
     const current=new Date(now),dates=[current.toISOString().slice(0,10)];
     if(current.getUTCHours()<4)dates.push(new Date(now-86400000).toISOString().slice(0,10));
-    const results=await Promise.allSettled(dates.map(day=>fixtures(env,day)));
-    const matches=results.flatMap(r=>r.status==='fulfilled'?r.value:[]);
-    if(results.every(r=>r.status==='rejected'))console.warn('Football provider is unavailable; existing state retained.');
+    // Date queries include scheduled/final matches; the documented live query includes card events.
+    const results=await Promise.allSettled([...dates,'live'].map(day=>fixtures(env,day)));
+    const matches=new Map(results.flatMap(r=>r.status==='fulfilled'?r.value:[]).map(match=>[match.id,match]));
+    if(results.at(-1).status==='rejected')console.warn('Live football feed is unavailable; card history retained.');
     else await env.DB.prepare("INSERT INTO service_state(key,value) VALUES('last_success',?) ON CONFLICT(key) DO UPDATE SET value=excluded.value").bind(now).run();
     // Only monitor matches relevant to subscribers. Comparing the old state prevents
     // replaying historical scores on the first poll or after a long provider outage.
     const {results:previous}=await env.DB.prepare('SELECT fixture_id,match_json,revision,updated FROM match_state WHERE updated>?').bind(now-86400000).all();
     const old=new Map(previous.map(r=>[r.fixture_id,r]));
-    for(const match of matches){
-      if(!active.some(d=>preferenceAllows(d.preferences,{type:'goal-home',match})||preferenceAllows(d.preferences,{type:'kickoff',match})||preferenceAllows(d.preferences,{type:'fulltime',match})))continue;
+    for(const match of matches.values()){
+      if(!active.some(d=>selectedBy(d.preferences,match)))continue;
       const row=old.get(match.id),prior=row?JSON.parse(row.match_json):null;
-      const kinds=row&&now-row.updated<=EVENT_TTL?transitions(prior,match):[];
-      const revision=(row?.revision||0)+(kinds.length?1:0);
+      if(match.status==='NS'&&Date.parse(match.date)>now+30*MINUTE)continue;
+      if(['FT','AET','PEN','AWD','WO'].includes(match.status)&&(!prior||prior.status===match.status))continue;
+      const fresh=row&&now-row.updated<=EVENT_TTL;
+      const kinds=fresh?transitions(prior,match):[];
+      const hasCardData=Array.isArray(match.cards);
+      const cards=fresh&&now-(prior?.cardUpdated||0)<=EVENT_TTL?newCards(prior,match):[];
+      match.cardUpdated=hasCardData?now:prior?.cardUpdated||0;
+      if(match.cards===null)match.cards=prior?.cards??null;
+      else if(Array.isArray(prior?.cards))match.cards=[...new Map([...prior.cards,...match.cards].map(card=>[card.id,card])).values()];
+      const revision=(row?.revision||0)+(kinds.length||cards.length?1:0);
       const statements=[env.DB.prepare('INSERT INTO match_state(fixture_id,match_json,revision,updated) VALUES(?,?,?,?) ON CONFLICT(fixture_id) DO UPDATE SET match_json=excluded.match_json,revision=excluded.revision,updated=excluded.updated WHERE match_state.updated<excluded.updated').bind(match.id,JSON.stringify(match),revision,now)];
       for(const kind of kinds){const event={id:match.id+':'+revision+':'+kind,type:kind,match};statements.push(env.DB.prepare('INSERT OR IGNORE INTO events(id,event_json,created) VALUES(?,?,?)').bind(event.id,JSON.stringify(event),now))}
+      for(const card of cards){const event={id:match.id+':card:'+card.id,type:card.type,card,match};statements.push(env.DB.prepare('INSERT OR IGNORE INTO events(id,event_json,created) VALUES(?,?,?)').bind(event.id,JSON.stringify(event),now))}
       await env.DB.batch(statements);
     }
   }

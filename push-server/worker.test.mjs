@@ -32,7 +32,7 @@ test('register, authorized test, delayed encrypted push, live events and opt-out
   const device=createECDH('prime256v1');device.generateKeys();
   const env={DB:makeDb(),APP_ORIGIN:'https://fwadh486-lab.github.io',APP_URL:'https://fwadh486-lab.github.io/kora-.zool/',VAPID_SUBJECT:'mailto:admin@example.org',VAPID_PUBLIC_KEY:vapid.getPublicKey().toString('base64url'),VAPID_PRIVATE_KEY:vapid.getPrivateKey().toString('base64url')};
   const subscription={endpoint:'https://fcm.googleapis.com/fcm/send/test-device',expirationTime:null,keys:{p256dh:device.getPublicKey().toString('base64url'),auth:randomBytes(16).toString('base64url')}};
-  const token=randomUUID()+randomUUID(),payload={token,subscription,preferences:{teams:['Bayern'],matches:[],types:['kickoff','goal','fulltime'],language:'ar'}};
+  const token=randomUUID()+randomUUID(),payload={token,subscription,preferences:{teams:['Bayern'],matches:[],types:['kickoff','goal','fulltime','yellow','halftime'],language:'ar'}};
   const request=async(path,data,origin=env.APP_ORIGIN)=>worker.fetch(new Request('https://push.example.org'+path,{method:data?'POST':'GET',headers:{origin,'content-type':'application/json'},body:data?JSON.stringify(data):undefined}),env);
   const config=await request('/config');assert.equal(config.status,200);assert.equal((await config.json()).enabled,true);
   assert.equal((await request('/config',null,'https://bad.example')).status,403);
@@ -43,7 +43,7 @@ test('register, authorized test, delayed encrypted push, live events and opt-out
   assert.equal((await request('/test',payload)).status,429);
   assert.equal((await (await request('/test-status',payload)).json()).state,'pending');
   assert.equal((await request('/test-status',{...payload,token:randomUUID()+randomUUID()})).status,409);
-  const sends=[];let fixtureStatus='NS',score=0;
+  const sends=[];let fixtureStatus='NS',score=0,cards=[];
   const realFetch=globalThis.fetch;
   globalThis.fetch=async(url,options)=>{
     if(String(url).startsWith('https://fcm.googleapis.com/')){
@@ -53,7 +53,7 @@ test('register, authorized test, delayed encrypted push, live events and opt-out
     }
     if(String(url).startsWith('https://v3.football.api-sports.io/')){
       assert.equal(options.headers['x-apisports-key'],'test-only-key');
-      return Response.json({errors:[],response:[{fixture:{id:123,date:new Date().toISOString(),status:{short:fixtureStatus,elapsed:fixtureStatus==='FT'?90:15}},teams:{home:{name:'Bayern Munich'},away:{name:'FC Köln'}},goals:{home:score,away:0},league:{id:78}}]});
+      return Response.json({errors:[],response:[{fixture:{id:123,date:new Date().toISOString(),status:{short:fixtureStatus,elapsed:fixtureStatus==='FT'?90:15}},teams:{home:{name:'Bayern Munich'},away:{name:'FC Köln'}},goals:{home:score,away:0},league:{id:78},...(new URL(url).searchParams.has('live')?{events:cards}:{})}]});
     }
     throw Error('Unexpected outbound request');
   };
@@ -73,7 +73,12 @@ test('register, authorized test, delayed encrypted push, live events and opt-out
     fixtureStatus='1H';await tick(now+250000);assert.equal(sends.length,2);
     score=1;await tick(now+310000);assert.equal(sends.length,3);
     await tick(now+370000);assert.equal(sends.length,3);
-    fixtureStatus='FT';await tick(now+430000);assert.equal(sends.length,4);
+    cards=[{type:'Card',detail:'Yellow Card',time:{elapsed:22},team:{id:9,name:'Bayern Munich'},player:{id:8,name:'Player One'}}];
+    await tick(now+430000);assert.equal(sends.length,4);
+    await tick(now+490000);assert.equal(sends.length,4);
+    fixtureStatus='HT';await tick(now+550000);assert.equal(sends.length,5);
+    fixtureStatus='2H';await tick(now+610000);assert.equal(sends.length,6);
+    fixtureStatus='FT';await tick(now+670000);assert.equal(sends.length,7);
     assert.equal((await request('/unsubscribe',payload)).status,200);
     assert.equal((await request('/test',payload)).status,404);
   }finally{globalThis.fetch=realFetch}

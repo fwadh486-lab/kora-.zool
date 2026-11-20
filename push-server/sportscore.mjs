@@ -106,6 +106,22 @@ export async function publicMatchDetails(id,slug){
     return result;
   });
 }
+export async function publicPlayerPhoto(name,team){
+  if(typeof name!=='string'||name.length<2||name.length>100||typeof team!=='string'||team.length<2||team.length>100)throw Error('invalid_player');
+  const key=encodeURIComponent(normalizedName(name))+'-'+encodeURIComponent(normalizedName(team));
+  return cacheRead('player-photo-v1-'+key,86400*7,async()=>{
+    const data=await request('/api/v1/search/',{q:name,limit:8});
+    const exact=(data.players||[]).filter(p=>normalizedName(p.name)===normalizedName(name)&&/^[a-z0-9-]{1,200}$/i.test(p.slug||''));
+    if(exact.length!==1)return {name,photo:null};
+    const candidate=exact[0];
+    const profile=await request('/api/widget/player/',{slug:candidate.slug});
+    const actualTeam=profile.stats?.team;
+    // Do not attach an unrelated player's image when a name is ambiguous.
+    if(normalizedName(profile.player?.name)!==normalizedName(name)||actualTeam&&normalizedName(actualTeam)!==normalizedName(team))return {name,photo:null};
+    const logo=profile.player?.logo||candidate.logo;
+    return {name,photo:typeof logo==='string'&&/^https:\/\/img\.thesports\.com\/football\/player\//.test(logo)?logo:null,source:'SportScore'};
+  });
+}
 async function detail(match){
   const data=await request('/api/widget/match/',{slug:match.slug});
   const parsed=fromSportScore(data.match);

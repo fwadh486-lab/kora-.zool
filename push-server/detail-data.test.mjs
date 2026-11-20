@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {normalizeMatchDetails,publicMatchDetails} from './sportscore.mjs';
+import {normalizeMatchDetails,publicMatchDetails,publicPlayerPhoto} from './sportscore.mjs';
 const raw={home:'A',away:'B',home_score:'2',away_score:'1',time:'2026-11-20T17:30:00Z',competition:'English Premier League',url:'/football/match/a-vs-b/abc123/',status:'finished',status_text:'Finished',home_ht_score:1,away_ht_score:1,
 incidents:[{side:'away',type:'Goal',player:'Forward',time:14,is_goal:true,home_score:0,away_score:1},{side:'home',type:'Yellow card',player:'Defender',time:23},{side:'home',type:'Substitution',player_in:'New',player_out:'Old',time:78}],
 stats:[{label:'Ball Possession',home:49,away:51,suffix:'%'},{label:'Shots on Target',home:7,away:4}],lineups:{confirmed:true,home_formation:'4-3-3',home_xi:[{name:'Goalkeeper',number:1,position:'G',rating:'0.0'}],home_subs:[{name:'Reserve',number:12,position:'D'}],away_xi:[{name:'Forward',number:9,position:'F'}]}};
@@ -14,4 +14,9 @@ test('a different meeting of the same teams must never be returned',async()=>{
  const original=globalThis.fetch;
  globalThis.fetch=async()=>Response.json({match:raw});
  try{await assert.rejects(publicMatchDetails('ss:wrong','a-vs-b'),/fixture_mismatch/);assert.equal((await publicMatchDetails('ss:abc123','a-vs-b')).id,'ss:abc123')}finally{globalThis.fetch=original}
+});
+test('player photos use exact name and matching team, not a similar name',async()=>{
+ const original=globalThis.fetch;
+ globalThis.fetch=async url=>String(url).includes('/search/')?Response.json({players:[{name:'Cristiano Ronaldo',slug:'cristiano-ronaldo'},{name:'Cristiano Ronaldo Junior',slug:'ronaldo-junior'}]}):Response.json({player:{name:'Cristiano Ronaldo',logo:'https://img.thesports.com/football/player/real.png'},stats:{team:'Al Nassr'}});
+ try{assert.equal((await publicPlayerPhoto('Cristiano Ronaldo','Al Nassr')).photo,'https://img.thesports.com/football/player/real.png');assert.equal((await publicPlayerPhoto('Cristiano Ronaldo','Other Team')).photo,null)}finally{globalThis.fetch=original}
 });

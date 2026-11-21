@@ -106,7 +106,8 @@ export function notificationFor(event, language, appUrl) {
   const title=home+' - '+away;
   const body=[clock+label,score,actor].filter(Boolean).join(' · ');
   const image=notificationImage(incident?.photo)||notificationImage(side==='away'?match.awayLogo:match.homeLogo)||notificationImage(match.awayLogo);
-  const url = new URL(appUrl);
-  url.searchParams.set('team', match.home);
+  const supportedDetail=String(match.id).startsWith('ss:')&&/^[a-z0-9-]{1,200}$/i.test(match.slug||'');
+  const url=supportedDetail?new URL('match-details.html',appUrl):new URL(appUrl);
+  if(supportedDetail){url.searchParams.set('id',match.id);url.searchParams.set('sport',match.id);url.searchParams.set('slug',match.slug);if(Number.isFinite(Date.parse(match.date)))url.searchParams.set('date',new Date(match.date).toISOString().slice(0,10))}else url.searchParams.set('team',match.home);
   return {title,body,tag:'korazol-'+event.id,url:url.href,image,source:match.source||''};
 }

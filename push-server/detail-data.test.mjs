@@ -20,3 +20,8 @@ test('player photos use exact name and matching team, not a similar name',async(
  globalThis.fetch=async url=>String(url).includes('/search/')?Response.json({players:[{name:'Cristiano Ronaldo',slug:'cristiano-ronaldo'},{name:'Cristiano Ronaldo Junior',slug:'ronaldo-junior'}]}):Response.json({player:{name:'Cristiano Ronaldo',logo:'https://img.thesports.com/football/player/real.png'},stats:{team:'Al Nassr'}});
  try{assert.equal((await publicPlayerPhoto('Cristiano Ronaldo','Al Nassr')).photo,'https://img.thesports.com/football/player/real.png');assert.equal((await publicPlayerPhoto('Cristiano Ronaldo','Other Team')).photo,null)}finally{globalThis.fetch=original}
 });
+test('duplicate search rows for the same profile retain the verified photograph',async()=>{
+ const original=globalThis.fetch;let ambiguous=false;
+ globalThis.fetch=async url=>String(url).includes('/search/')?Response.json({players:[{name:'Dayot Upamecano',slug:'dayot-upamecano',logo:'https://img.thesports.com/football/player/real.png'},{name:'Dayot Upamecano',slug:ambiguous?'different-profile':'dayot-upamecano',logo:''}]}):Response.json({player:{name:'Dayot Upamecano',logo:'https://img.thesports.com/football/player/real.png'},stats:{team:'FC Bayern Munich'}});
+ try{assert.equal((await publicPlayerPhoto('Dayot Upamecano','FC Bayern Munich')).photo,'https://img.thesports.com/football/player/real.png');ambiguous=true;assert.equal((await publicPlayerPhoto('Dayot Upamecano','FC Bayern Munich')).photo,null)}finally{globalThis.fetch=original}
+});

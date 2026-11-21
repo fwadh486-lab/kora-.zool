@@ -59,4 +59,5 @@ test('rich match notifications select only the exact scorer, score and safe imag
   event.match.goals[0].homeScore=2;
   const fallback=notificationFor(event,'ar','https://example.com/');assert.doesNotMatch(fallback.body,/Nathaniel/);assert.equal(fallback.image,logo);
   assert.equal(notificationFor(event,'en','https://example.com/').title,'Bayern Munich - FC Köln');
+  event.match.id='ss:abc123';event.match.slug='bayern-vs-koln';const link=new URL(notificationFor(event,'ar','https://example.com/app/').url);assert.equal(link.pathname,'/app/match-details.html');assert.equal(link.searchParams.get('slug'),'bayern-vs-koln');assert.equal(link.searchParams.get('sport'),'ss:abc123');
 });

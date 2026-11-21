@@ -47,10 +47,10 @@ async function feedStatus(env){
 }
 async function diagnoseNativeOnce(env){
   if(!nativeConfigured(env)||!env.DB)return;
-  const prior=await env.DB.prepare("SELECT value FROM service_state WHERE key='native_auth_probe_v1'").first();
+  const prior=await env.DB.prepare("SELECT value FROM service_state WHERE key='native_auth_probe_v2'").first();
   if(prior)return;
   const status=await probeNativeAuthorization(env,'kora-zol','id-korazol-push-70@kora-zol.iam.gserviceaccount.com');
-  await env.DB.prepare("INSERT OR IGNORE INTO service_state(key,value) VALUES('native_auth_probe_v1',?)").bind(status).run();
+  await env.DB.prepare("INSERT OR IGNORE INTO service_state(key,value) VALUES('native_auth_probe_v2',?)").bind(status).run();
 }
 const digest = async value => Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',encoder.encode(value))), b=>b.toString(16).padStart(2,'0')).join('');
 function cleanText(value, max) { return typeof value === 'string' ? value.trim().slice(0,max) : ''; }
@@ -121,7 +121,7 @@ async function route(request, env, ctx) {
   if(request.method==='OPTIONS') return new Response(null,{status:204});
   if(path==='/config' && request.method==='GET') {
     const diagnostic=url.searchParams.get('check')==='native';
-    const probe=diagnostic&&env.DB?await env.DB.prepare("SELECT value FROM service_state WHERE key='native_auth_probe_v1'").first():null;
+    const probe=diagnostic&&env.DB?await env.DB.prepare("SELECT value FROM service_state WHERE key='native_auth_probe_v2'").first():null;
     return json({enabled:configured(env),nativeEnabled:nativeConfigured(env),...(diagnostic?{nativeStatus:nativeConfigStatus(env),nativeAuthorization:probe?.value||'pending'}:{}),publicKey:configured(env)?env.VAPID_PUBLIC_KEY:null,...await feedStatus(env)});
   }
   if(path==='/fixtures'&&request.method==='GET'&&env.SPORTSCORE_ENABLED==='true'){

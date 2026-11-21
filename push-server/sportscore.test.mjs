@@ -41,3 +41,6 @@ test('poll live details, reject an ambiguous slug, fetch a disappeared match to 
     assert.deepEqual(transitions(match,final.matches.get(match.id)),['fulltime']);
   }finally{globalThis.fetch=actualFetch}
 });
+
+
+test('normalize added competitions',()=>{for(const [name,code] of [['Sudanese Premier League','sd'],['Rwandan National League','rw'],['Qatar Stars League','qa'],['CAF Champions League','cafcl'],['UEFA Europa League','el'],['UEFA Nations League','nations'],['UEFA European Championship','euro']])assert.equal(fromSportScore({...base,competition:name}).league,code)});

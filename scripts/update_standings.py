@@ -2,6 +2,7 @@
 import json
 import os
 import pathlib
+import sys
 import time
 import urllib.error
 import urllib.request
@@ -9,9 +10,12 @@ from datetime import datetime, timezone
 
 TOKEN = os.environ.get("FOOTBALL_DATA_API_KEY", "").strip()
 LEAGUES = {"cl": "CL", "en": "PL", "es": "PD", "de": "BL1", "it": "SA", "fr": "FL1", "br": "BSA", "nl": "DED", "pt": "PPL", "eng2": "ELC"}
-SPORTSCORE = {"cl":"uefa-champions-league", "it":"italian-serie-a", "sa":"saudi-professional-league", "sd":"sudanese-premier-league", "rw":"rwandan-national-league", "qa":"qatar-stars-league", "el":"uefa-europa-league", "cafcl":"caf-champions-league", "nations":"uefa-nations-league", "euro":"uefa-european-championship"}
+SPORTSCORE = {"cl":"uefa-champions-league", "it":"italian-serie-a", "sa":"saudi-professional-league", "sd":"sudanese-premier-league", "rw":"rwandan-national-league", "qa":"qatar-stars-league", "el":"uefa-europa-league", "cafcl":"caf-champions-league", "nations":"uefa-nations-league", "euro":"uefa-european-championship", "en":"english-premier-league", "es":"spanish-la-liga", "de":"bundesliga", "fr":"french-ligue-1", "br":"brazilian-serie-a", "nl":"netherlands-eredivisie", "pt":"portuguese-primera-liga", "eng2":"english-football-league-championship"}
+path = pathlib.Path("data/standings.json")
+previous = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
+missing_only = "--missing" in sys.argv
 out = {"updated": datetime.now(timezone.utc).isoformat(), "leagues": {}, "groups": {}, "leagueUpdated": {}, "leagueSource": {}, "errors": {}}
-for code, competition in (LEAGUES.items() if TOKEN else []):
+for code, competition in (LEAGUES.items() if TOKEN and not missing_only else []):
     req = urllib.request.Request(
         f"https://api.football-data.org/v4/competitions/{competition}/standings",
         headers={"X-Auth-Token": TOKEN, "Accept": "application/json", "User-Agent": "KoraZol/1.0"},
@@ -46,6 +50,8 @@ for code, competition in (LEAGUES.items() if TOKEN else []):
 for code, slug in SPORTSCORE.items():
     if code in out["leagues"]:
         continue
+    if missing_only and (code in previous.get("leagues", {}) or code in previous.get("groups", {})):
+        continue
     try:
         req = urllib.request.Request(f"https://sportscore.com/api/widget/standings/?sport=football&slug={slug}&src=korazol", headers={"Accept":"application/json", "User-Agent":"KoraZol/1.0"})
         with urllib.request.urlopen(req, timeout=15) as response:
@@ -70,10 +76,8 @@ for code, slug in SPORTSCORE.items():
         out["errors"][code] = str(exc)[:160]
 if not out["leagues"] and not out["groups"]:
     raise SystemExit("No standings available: " + json.dumps(out["errors"]))
-path = pathlib.Path("data/standings.json")
 path.parent.mkdir(parents=True, exist_ok=True)
 if path.exists():
-    previous = json.loads(path.read_text(encoding="utf-8"))
     for kind in ("leagues", "groups"):
         for code, rows in previous.get(kind, {}).items():
             if code not in out["leagues"] and code not in out["groups"]:

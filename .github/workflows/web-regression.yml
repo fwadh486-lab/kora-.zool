@@ -1,0 +1,24 @@
+name: Kora Zol web regression checks
+on:
+  push:
+    branches: [main]
+    paths: ['index.html','match-details.html','match-feed-v2.js','match-detail-feed-v2.js','sw.js','web-tests/**','.github/workflows/web-regression.yml']
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify fixture history and match detail logic
+        run: node --test web-tests/history.test.cjs
+      - name: Install browser test runner
+        run: |
+          npm install --no-save --ignore-scripts playwright@1.62.1
+          npx playwright install --with-deps chromium
+      - name: Mobile browser regression
+        run: node web-tests/mobile-smoke.cjs

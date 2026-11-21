@@ -390,6 +390,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visi
 
 <main>
 <section id="matches" class="active">
+<a href="./champions.html" class="notice" style="display:block;text-decoration:none;color:inherit;margin:5px 0" data-ar="🏆 دوري أبطال أوروبا · الموسم والترتيب" data-en="🏆 Champions League · season and standings">🏆 دوري أبطال أوروبا · الموسم والترتيب</a>
 
 <div class="reference-top-tabs" role="group" aria-label="نتائج المباريات"><button type="button" id="tabMine" onclick="setHomeResultsTab('mine')" data-ar="نتائجي" data-en="My scores">نتائجي</button><button type="button" id="tabAll" class="selected" onclick="setHomeResultsTab('all')" data-ar="جميع النتائج" data-en="All scores">جميع النتائج</button></div><div class="home-day-controls"><button class="date-arrow" type="button" onclick="shiftDay(-1)" aria-label="Previous day">‹</button><div class="reference-daybar" id="referenceDaybar" aria-live="polite">اليوم</div><button class="date-arrow" type="button" onclick="shiftDay(1)" aria-label="Next day">›</button><button type="button" onclick="goToday()" data-ar="اليوم" data-en="Today">اليوم</button></div><div class="reference-follow-note" id="referenceFollowNote">قريباً - الفرق والمباريات الخاصة بي</div><div class="notice" id="feedNotice" role="status" data-ar="جاري تحميل نتائج المباريات من المصدر المباشر..." data-en="Loading live match data from the provider..." hidden>جاري تحميل نتائج المباريات من المصدر المباشر...</div>
 <div id="dataHealth" class="data-health" role="status"></div><p style="margin:4px 0 10px;font-size:11px;color:var(--muted);text-align:center"><a href="https://sportscore.com/" style="color:inherit">Powered by SportScore</a></p><div class="match-quickbar" role="group" aria-label="Match quick filters"><button type="button" data-match-view="all" aria-pressed="true" onclick="setMatchView('all')">⚽ الكل</button><button type="button" data-match-view="live" aria-pressed="false" onclick="setMatchView('live')">🔴 مباشر</button><button type="button" data-match-view="upcoming" aria-pressed="false" onclick="setMatchView('upcoming')">📅 القادمة</button><button type="button" data-match-view="results" aria-pressed="false" onclick="setMatchView('results')">🏁 النتائج</button><button type="button" data-match-view="favorites" aria-pressed="false" onclick="setMatchView('favorites')">★ المفضلة</button></div><details class="match-filters"><summary data-ar="⚙ الدوري والبحث" data-en="⚙ League and search">⚙ الدوري والبحث</summary><label for="leagueFilter" data-ar="تصفية حسب الدوري" data-en="Filter by league">تصفية حسب الدوري</label>
@@ -401,7 +402,8 @@ button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visi
 <section id="standings">
 <div class="notice" id="standingsInfo" role="status">جاري تحميل الترتيب الحقيقي...</div>
 <label for="standingsLeague" data-ar="اختر الدوري" data-en="Choose league">اختر الدوري</label>
-<select id="standingsLeague" onchange="renderStandings()"><option value="es" data-ar="الدوري الإسباني" data-en="La Liga">الدوري الإسباني</option><option value="en" data-ar="الدوري الإنجليزي" data-en="Premier League">الدوري الإنجليزي</option><option value="sa" data-ar="الدوري السعودي" data-en="Saudi Pro League">الدوري السعودي</option><option value="sd" data-ar="الدوري السوداني" data-en="Sudanese League">الدوري السوداني</option></select>
+<select id="standingsLeague" onchange="renderStandings()"><option value="es" data-ar="الدوري الإسباني" data-en="La Liga">الدوري الإسباني</option><option value="en" data-ar="الدوري الإنجليزي" data-en="Premier League">الدوري الإنجليزي</option><option value="cl" data-ar="دوري أبطال أوروبا" data-en="Champions League">دوري أبطال أوروبا</option><option value="sa" data-ar="الدوري السعودي" data-en="Saudi Pro League">الدوري السعودي</option><option value="sd" data-ar="الدوري السوداني" data-en="Sudanese League">الدوري السوداني</option></select>
+<a href="./champions.html" class="notice" style="display:block;text-decoration:none;color:inherit;margin:10px 0" data-ar="🏆 أبطال أوروبا — مباريات الموسم والترتيب" data-en="🏆 Champions League — season fixtures and standings">🏆 أبطال أوروبا — مباريات الموسم والترتيب</a>
 <h2 data-ar="🏆 ترتيب الدوري"
 data-en="🏆 League Standings">
 🏆 ترتيب الدوري</h2>
@@ -470,15 +472,17 @@ window.addEventListener('error',function(event){
 <script>
 let language=localStorage.getItem("corazol_lang")||"ar";
 
-const standingsSnapshot={leagues:{},updated:null,error:null};
+const extraLeagues={rw:["الدوري الرواندي","Rwandan National League","🇷🇼"],qa:["الدوري القطري","Qatar Stars League","🇶🇦"],el:["الدوري الأوروبي","UEFA Europa League","🏆"],cafcl:["دوري أبطال أفريقيا","CAF Champions League","🌍"],euro:["كأس أمم أوروبا","UEFA European Championship","🇪🇺"],nations:["دوري الأمم الأوروبية","UEFA Nations League","🇪🇺"],it:["الدوري الإيطالي","Serie A","🇮🇹"]};
+for(const id of ['leagueFilter','standingsLeague']){const select=document.getElementById(id);const seen=new Set();for(const option of [...select.options]){if(seen.has(option.value))option.remove();else seen.add(option.value)}for(const [code,[ar,en]] of Object.entries(extraLeagues)){if(seen.has(code))continue;const option=document.createElement('option');option.value=code;option.dataset.ar=ar;option.dataset.en=en;option.textContent=language==='ar'?ar:en;select.append(option)}}
+const standingsSnapshot={leagues:{},groups:{},updated:null,leagueUpdated:{},leagueSource:{},error:null};
 async function loadStandings(){
  try{
   const response=await fetch('./data/standings.json?v='+Math.floor(Date.now()/3600000),{cache:'no-cache'});
   if(!response.ok)throw new Error('Standings unavailable');
   const data=await response.json();
   if(!data||typeof data.leagues!=='object')throw new Error('Invalid standings data');
-  standingsSnapshot.leagues=data.leagues;
-  standingsSnapshot.updated=data.updated||null;
+  standingsSnapshot.leagues=data.leagues;standingsSnapshot.groups=data.groups||{};standingsSnapshot.leagueSource=data.leagueSource||{};
+  standingsSnapshot.updated=data.updated||null;standingsSnapshot.leagueUpdated=data.leagueUpdated||{};
   standingsSnapshot.error=null;
  }catch(error){standingsSnapshot.error=error.message;}
  renderStandings();
@@ -488,19 +492,20 @@ function renderStandings(){
  const body=document.getElementById("standingsBody");
  const info=document.getElementById("standingsInfo");
  body.replaceChildren();
- const rows=standingsSnapshot.leagues[key];
- if(!Array.isArray(rows)||!rows.length){
-  info.textContent=localized(key==="sa"||key==="sd"?"الترتيب غير متوفر من مزود البيانات المجاني لهذا الدوري.":"الترتيب غير متاح حالياً. سيتم تحديثه بعد تشغيل مزامنة GitHub Actions.",key==="sa"||key==="sd"?"This league is not covered by the connected free standings provider.":"Standings not available yet. Run the GitHub Actions sync.");
+ const tables=standingsSnapshot.groups[key]||[{group:'',rows:standingsSnapshot.leagues[key]}];
+ if(!tables.some(t=>Array.isArray(t.rows)&&t.rows.length)){
+  info.textContent=localized("الترتيب غير متاح حالياً من مزود البيانات.","Standings are currently unavailable from the provider.");
   return;
  }
- info.textContent=localized("آخر تحديث للترتيب: ","Standings updated: ")+(standingsSnapshot.updated?new Date(standingsSnapshot.updated).toLocaleString(language==="ar"?"ar-SA":"en-US"):"—");
- for(const row of rows){
-  const tr=document.createElement("tr");
+ const updated=standingsSnapshot.leagueUpdated[key]||standingsSnapshot.updated;info.textContent=localized("آخر تحديث للترتيب: ","Standings updated: ")+(updated?new Date(updated).toLocaleString(language==="ar"?"ar-SA":"en-US"):"—");
+ if(standingsSnapshot.leagueSource[key]==='SportScore'){const link=document.createElement('a');link.href='https://sportscore.com/';link.textContent=' · Powered by SportScore';info.append(link)}
+ for(const [index,table] of tables.entries()){const rows=table.rows||[];if(tables.length>1){const heading=document.createElement('tr'),cell=document.createElement('th');cell.colSpan=8;cell.textContent=(table.group||localized('مجموعة','Group'))+' · '+(index+1);heading.append(cell);body.append(heading)}for(const row of rows){
+  const tr=document.createElement("tr");if((key==="cl"||key==="el")&&rows.length===36){const rank=Number(row.rank);tr.style.borderInlineStart="4px solid "+(rank<=8?"#42d784":rank<=24?"#dda94d":"#d85f65")}
   for(const value of [row.rank,row.team,row.played,row.won,row.draw,row.lost,row.gd,row.points]){
    const td=document.createElement("td");if(value===row.team&&row.crest){const img=document.createElement("img");img.src=row.crest;img.alt="";img.loading="lazy";img.width=24;img.height=24;img.style.cssText="vertical-align:middle;object-fit:contain;margin-inline-end:8px";td.appendChild(img)}td.appendChild(document.createTextNode(String(value??"—")));tr.appendChild(td);
   }
   body.appendChild(tr);
- }
+ }}
 }
 function applyLang(){
  document.documentElement.lang=language;
@@ -567,6 +572,7 @@ let matchView="all";
 function setMatchView(view){matchView=view;document.querySelectorAll("[data-match-view]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.matchView===view)));renderLive();if(view==="results"&&dayOffset===0)loadResultHistory()}
 function normalizeTeamSearch(value){return String(value||"").toLocaleLowerCase().normalize("NFKD").replace(/[ً-ٰٟ]/g,"").replace(/[أإآ]/g,"ا").replace(/ة/g,"ه").replace(/ى/g,"ي").replace(/[^\p{L}\p{N}]/gu,"")}
 const teamArabicAliases={
+"المريخ":["al merreikh","al merrikh","al merikh"],"الهلال السوداني":["al hilal omdurman","al hilal sc","al hilal sudan"],
 "ارسنال":["arsenal"],"ليفربول":["liverpool"],"مانشستر سيتي":["manchester city","man city"],"مان سيتي":["manchester city","man city"],"مانشستر يونايتد":["manchester united","man united"],"مان يونايتد":["manchester united","man united"],"تشيلسي":["chelsea"],"توتنهام":["tottenham","spurs"],"نيوكاسل":["newcastle"],"استون فيلا":["aston villa"],"برايتون":["brighton"],"ايفرتون":["everton"],"وست هام":["west ham"],"فولهام":["fulham"],"نوتنغهام":["nottingham"],"برينتفورد":["brentford"],"بورنموث":["bournemouth"],"وولفرهامبتون":["wolves","wolverhampton"],"ليدز":["leeds"],"سندرلاند":["sunderland"],"برشلونة":["barcelona"],"برشلونه":["barcelona"],"ريال مدريد":["real madrid"],"اتلتيكو مدريد":["atletico madrid"],"اتليتكو مدريد":["atletico madrid"],"اشبيلية":["sevilla"],"اشبيليه":["sevilla"],"فالنسيا":["valencia"],"فياريال":["villarreal"],"ريال بيتيس":["real betis","betis"],"اتلتيك بلباو":["athletic club","athletic bilbao"],"ريال سوسيداد":["real sociedad"],"جيرونا":["girona"],"بايرن ميونخ":["bayern"],"بوروسيا دورتموند":["dortmund"],"دورتموند":["dortmund"],"باير ليفركوزن":["leverkusen"],"لايبزيغ":["leipzig"],"لايبزيج":["leipzig"],"شتوتغارت":["stuttgart"],"اينتراخت فرانكفورت":["frankfurt"],"يوفنتوس":["juventus"],"انتر ميلان":["inter milan","internazionale","inter"],"ميلان":["ac milan","milan"],"نابولي":["napoli"],"روما":["roma"],"لاتسيو":["lazio"],"اتالانتا":["atalanta"],"فيورنتينا":["fiorentina"],"باريس سان جيرمان":["paris saint-germain","psg"],"باريس":["paris saint-germain","psg"],"مارسيليا":["marseille"],"موناكو":["monaco"],"ليون":["lyon"],"ليل":["lille"],"الهلال":["al hilal","al-hilal","al hilal saudi"],"النصر":["al nassr","al-nassr"],"الاتحاد":["al ittihad","al-ittihad"],"الاهلي":["al ahli","al-ahli"],"الشباب":["al shabab"],"القادسية":["al qadsiah"],"التعاون":["al taawoun"],"الفتح":["al fateh"],"الفيحاء":["al fayha"],"ضمك":["damac"],"الخليج":["al khaleej"],"الرياض":["al riyadh"]
 };
 function searchTerms(value){const normalized=normalizeTeamSearch(value);const values=[normalized];for(const [arabic,english] of Object.entries(teamArabicAliases)){if(normalizeTeamSearch(arabic).includes(normalized)||normalized.includes(normalizeTeamSearch(arabic)))values.push(...english.map(normalizeTeamSearch))}return values.filter(Boolean)}
@@ -605,7 +611,8 @@ function renderLive(){updateReferenceDaybar();
   function team(n,logo,side){const b=document.createElement("button");b.type="button";b.className="reference-team";b.setAttribute("aria-label",localized("تفاصيل الفريق ","Team details ")+n);if(logo){const im=document.createElement("img");im.src=logo;im.alt="";im.loading="lazy";im.onerror=()=>im.remove();b.append(im)}const label=document.createElement("span");label.textContent=n;b.append(label);b.onclick=()=>{try{sessionStorage.setItem("korazol_match_details",JSON.stringify(e))}catch{}location.href=KoraMatchFeed.teamUrl(e,side)};return b}
   row.append(team(e.home,e.homeLogo,"home"));const score=document.createElement("button");score.type="button";score.className="reference-score";const val=document.createElement("strong");val.textContent=e.score==="— : —"&&e.date?new Date(e.date).toLocaleTimeString(language==="ar"?"ar-SA":"en-US",{hour:"2-digit",minute:"2-digit"}):e.score;score.append(val);const sub=document.createElement("small");const phase=KoraMatchFeed.phaseOf(e);sub.textContent=phase==="live"?localized("● مباشر","● LIVE")+(e.status==="HT"?localized(" · استراحة"," · HT"):e.minute!=null?" · "+e.minute+"′":e.status?" · "+e.status:""):phase==="finished"?localized("انتهت","FT")+(KoraMatchFeed.localDay(e.date)!==selectedDayKey?" · "+new Date(e.date).toLocaleDateString(language==="ar"?"ar-SA-u-ca-gregory":"en-US",{day:"numeric",month:"short"}):""):e.date&&e.score==="— : —"?new Date(e.date).toLocaleDateString(language==="ar"?"ar-SA-u-ca-gregory":"en-US",{weekday:"short",day:"numeric",month:"short"}):e.status;sub.className=e.live?"reference-live":"";score.append(sub);score.onclick=()=>{openReferenceMatch(e)};row.append(score,team(e.away,e.awayLogo,"away"));c.append(row);
   const bottom=document.createElement("div");bottom.className="reference-bottom";const status=document.createElement("span");status.textContent=e.live?localized("المباراة جارية","Match live"):e.date&&e.score==="— : —"?localized("الموعد بتوقيت جهازك","Your local time"):e.status;bottom.append(status);const fav=document.createElement("button");fav.className="reference-fav";fav.dataset.id=e.id;fav.textContent=getFavorites().includes(e.id)?"★":"☆";fav.setAttribute("aria-label",localized("المفضلة","Favorite"));fav.setAttribute("aria-pressed",String(getFavorites().includes(e.id)));fav.onclick=()=>toggleFavorite(fav);bottom.append(fav);c.append(bottom);return c}
- const leaguePriority=["cl","en","es","sa","sd","it","de","fr","nations","friendly","br","nl","pt","eng2","nonfifa","clubfriendly"];
+ for(const [code,[ar,en,icon]] of Object.entries(extraLeagues)){names[code]=localized(ar,en);icons[code]=icon}
+ const leaguePriority=["cl","sd","rw","cafcl","sa","qa","el","euro","nations","it","en","es","de","fr","friendly","br","nl","pt","eng2","nonfifa","clubfriendly"];
  const leagueRank=league=>{const rank=leaguePriority.indexOf(league);return rank<0?leaguePriority.length:rank};
  const localDay=date=>{const d=new Date(date);return Number.isNaN(d.getTime())?"":d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
  const todayKey=localDay(new Date());
@@ -716,7 +723,7 @@ async function refreshScores(){
  if(successCount)lastUpdated=new Date();updateNotice();renderLive();
 }
 let upcomingRequest=0;
-async function loadSnapshotFixtures(){const old=Array.isArray(window.upcomingEvents)?window.upcomingEvents:[];const merged=new Map(old.map(e=>[e.id,e]));let loaded=0;for(const file of ["fixtures.json"]){try{const res=await fetch("./data/"+file+"?v="+Math.floor(Date.now()/180000),{cache:"no-store"});if(!res.ok)continue;const data=await res.json();if(!Array.isArray(data.matches))continue;for(const e of data.matches){if(e.date&&new Date(e.date).getTime()>Date.now()-120*86400000){merged.set(e.id,e);loaded++}}}catch(e){console.warn("Snapshot unavailable:",file,e)}}if(loaded){window.upcomingEvents=[...merged.values()].sort((a,b)=>new Date(a.date)-new Date(b.date));localStorage.setItem("korazol_upcoming_v1",JSON.stringify(window.upcomingEvents));renderLive()}}
+async function loadSnapshotFixtures(){const old=Array.isArray(window.upcomingEvents)?window.upcomingEvents:[];const merged=new Map(old.map(e=>[e.id,e]));let loaded=0;for(const file of ["fixtures.json","sportscore-fixtures.json"]){try{const res=await fetch("./data/"+file+"?v="+Math.floor(Date.now()/180000),{cache:"no-store"});if(!res.ok)continue;const data=await res.json();if(!Array.isArray(data.matches))continue;for(const e of data.matches){if(e.date&&new Date(e.date).getTime()>Date.now()-120*86400000){merged.set(e.id,e);loaded++}}}catch(e){console.warn("Snapshot unavailable:",file,e)}}if(loaded){window.upcomingEvents=[...merged.values()].sort((a,b)=>new Date(a.date)-new Date(b.date));localStorage.setItem("korazol_upcoming_v1",JSON.stringify(window.upcomingEvents));renderLive()}}
 
 async function loadUpcoming(){
  const sequence=++upcomingRequest,now=new Date();

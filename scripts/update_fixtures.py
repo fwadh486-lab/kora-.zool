@@ -8,9 +8,16 @@ today=datetime.now(timezone.utc).date()
 start=(today-timedelta(days=45)).isoformat()
 end=(today+timedelta(days=30)).isoformat()
 retention_start=(today-timedelta(days=120)).isoformat()
+champions_season=today.year if today.month>=7 else today.year-1
+champions_start=f"{champions_season}-07-01"
+champions_end=f"{champions_season+1}-06-30"
+def retain_match(match):
+    day=match.get("date","")[:10]
+    return champions_start<=day<=champions_end if match.get("league")=="cl" else day>=retention_start
 out={"updated":datetime.now(timezone.utc).isoformat(),"matches":[],"errors":{},"coverage":{"history_days_requested":45,"future_days_requested":30,"retention_days":120}}
 for league,code in codes.items():
-    url=f"https://api.football-data.org/v4/competitions/{code}/matches?dateFrom={start}&dateTo={end}"
+    query=f"season={champions_season}" if league=="cl" else f"dateFrom={start}&dateTo={end}"
+    url=f"https://api.football-data.org/v4/competitions/{code}/matches?{query}"
     req=urllib.request.Request(url,headers={"X-Auth-Token":token,"Accept":"application/json","User-Agent":"KoraZol/1.0"})
     try:
         with urllib.request.urlopen(req,timeout=22) as res: data=json.load(res)
@@ -31,10 +38,11 @@ path=pathlib.Path("data/fixtures.json");path.parent.mkdir(exist_ok=True)
 if path.exists():
     old=json.loads(path.read_text(encoding="utf-8"))
     seen={m["id"] for m in out["matches"]}
-    out["matches"] += [m for m in old.get("matches",[]) if m.get("id") not in seen and m.get("date","")[:10]>=retention_start]
-out["matches"]=[m for m in out["matches"] if m.get("date","")[:10]>=retention_start]
+    out["matches"] += [m for m in old.get("matches",[]) if m.get("id") not in seen and retain_match(m)]
+out["matches"]=[m for m in out["matches"] if retain_match(m)]
 out["matches"].sort(key=lambda m:m.get("date") or "")
 out["coverage"]["matches_total"]=len(out["matches"])
+out["coverage"]["champions_season"]=champions_season
 out["coverage"]["matches_by_league"]={league:sum(m.get("league")==league for m in out["matches"]) for league in codes}
 out["coverage"]["oldest_match"]=out["matches"][0].get("date") if out["matches"] else None
 out["coverage"]["newest_match"]=out["matches"][-1].get("date") if out["matches"] else None

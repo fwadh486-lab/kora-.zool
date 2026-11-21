@@ -1,7 +1,7 @@
-const CACHE='korazol-shell-v21';
+const CACHE='korazol-shell-v23';
 const DATA_CACHE='korazol-data-v1';
-const SHELL=['./','./push-client-v5.js','./match-feed-v2.js','./match-detail-feed-v2.js','./team-feed-v1.js','./index.html','./fixtures.html','./match-details.html','./team-details.html','./lineup-v2.html','./manifest.webmanifest','./kora-zol-icon-192.png','./kora-zol-icon-512.png'];
-const shellPage=path=>['match-details.html','team-details.html','fixtures.html','lineup-v2.html'].find(page=>path.endsWith('/'+page))||'index.html';
+const SHELL=['./','./push-client-v5.js','./match-feed-v2.js','./match-detail-feed-v2.js','./team-feed-v1.js','./index.html','./fixtures.html','./match-details.html','./team-details.html','./champions.html','./lineup-v2.html','./manifest.webmanifest','./kora-zol-icon-192.png','./kora-zol-icon-512.png'];
+const shellPage=path=>['match-details.html','team-details.html','champions.html','fixtures.html','lineup-v2.html'].find(page=>path.endsWith('/'+page))||'index.html';
 self.addEventListener('install',event=>{
  event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(SHELL)));
  self.skipWaiting();

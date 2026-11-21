@@ -5,12 +5,13 @@ const leagueCodes=new Map([
   ['englishpremierleague','en'],['premierleague','en'],['englishfootballleaguechampionship','eng2'],['englishchampionship','eng2'],['eflchampionship','eng2'],
   ['spanishlaliga','es'],['laliga','es'],['bundesliga','de'],['germanbundesliga','de'],['italianseriea','it'],['seriea','it'],['frenchligue1','fr'],['ligue1','fr'],
   ['saudiprofessionalleague','sa'],['saudiproleague','sa'],['roshnsaudileague','sa'],['uefachampionsleague','cl'],['brazilianseriea','br'],
-  ['dutcheredivisie','nl'],['eredivisie','nl'],['portugueseprimeraliga','pt'],['portugueseliga','pt'],['ligaportugal','pt'],['sudanpremierleague','sd'],['sudanesepremierleague','sd'],['sudaneseleague','sd'],['internationalfriendly','friendly'],['internationalfriendlies','friendly']
+  ['dutcheredivisie','nl'],['eredivisie','nl'],['portugueseprimeraliga','pt'],['portugueseliga','pt'],['ligaportugal','pt'],['sudanpremierleague','sd'],['sudanesepremierleague','sd'],['sudaneseleague','sd'],['internationalfriendly','friendly'],['internationalfriendlies','friendly'],
+  ['rwandannationalleague','rw'],['rwandapremierleague','rw'],['qatarstarsleague','qa'],['qataristarsleague','qa'],['cafchampionsleague','cafcl'],['uefaeuropaleague','el'],['uefanationsleague','nations'],['uefaeuropeanchampionship','euro']
 ]);
 const statusCodes=new Map([['not started','NS'],['delayed','NS'],['1st half','1H'],['half time','HT'],['2nd half','2H'],['extra time','ET'],['extra time half time','BT'],['penalties','P'],['finished','FT'],['after extra time','AET'],['after penalties','PEN'],['postponed','PST'],['cancelled','CANC'],['abandoned','ABD'],['interrupted','INT']]);
 const finals=new Set(['FT','AET','PEN','AWD','WO','CANC','ABD','PST']);
 const live=new Set(['1H','HT','2H','ET','BT','P','LIVE','INT']);
-const publicLeagues=['english-premier-league','spanish-la-liga','bundesliga','italian-serie-a','french-ligue-1','saudi-professional-league','uefa-champions-league','brazilian-serie-a','dutch-eredivisie','portuguese-primeira-liga','english-football-league-championship','sudan-premier-league'];
+const publicLeagues=['english-premier-league','spanish-la-liga','bundesliga','italian-serie-a','french-ligue-1','saudi-professional-league','uefa-champions-league','brazilian-serie-a','dutch-eredivisie','portuguese-primeira-liga','english-football-league-championship','sudanese-premier-league','rwandan-national-league','qatar-stars-league','caf-champions-league','uefa-europa-league','uefa-nations-league','uefa-european-championship'];
 function integer(value){return typeof value==='number'&&Number.isInteger(value)&&value>=0?value:typeof value==='string'&&/^\d+$/.test(value)?Number(value):null}
 function incidents(raw){
   if(!Array.isArray(raw.incidents))return null;
@@ -61,7 +62,7 @@ async function cacheRead(key,ttl,loader){
 export async function publicFixtures(date,now=Date.now()){
   const today=new Date(now).toISOString().slice(0,10),yesterday=new Date(now-86400000).toISOString().slice(0,10);
   const recent=date===today||date===yesterday;
-  const snapshots=await cacheRead('fixtures-v1-'+date,recent?180:3600,async()=>{
+  const snapshots=await cacheRead('fixtures-v2-'+date,recent?300:3600,async()=>{
     // The global day response is capped at 200. A fixed competition allowlist
     // prevents late matches being truncated and bounds requests and quota.
     const responses=[];

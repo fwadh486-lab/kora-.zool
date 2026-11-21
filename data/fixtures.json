@@ -1,6 +1,366 @@
 {
-  "updated": "2026-11-21T09:47:41.786305+00:00",
+  "updated": "2026-11-21T11:51:36.155249+00:00",
   "matches": [
+    {
+      "events": [],
+      "matchday": 1,
+      "stage": "LEAGUE_STAGE",
+      "halfTime": {
+        "home": 1,
+        "away": 3
+      },
+      "id": "fd:575323",
+      "league": "cl",
+      "home": "Club Brugge",
+      "away": "Aston Villa",
+      "homeLogo": "https://crests.football-data.org/851.png",
+      "awayLogo": "https://crests.football-data.org/58.png",
+      "date": "2026-09-08T16:45:00Z",
+      "score": "2 - 3",
+      "status": "FINISHED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 1,
+      "stage": "LEAGUE_STAGE",
+      "halfTime": {
+        "home": 1,
+        "away": 0
+      },
+      "id": "fd:575324",
+      "league": "cl",
+      "home": "PAE AEK",
+      "away": "LASK",
+      "homeLogo": "https://crests.football-data.org/1899.png",
+      "awayLogo": "https://crests.football-data.org/2016.png",
+      "date": "2026-09-08T16:45:00Z",
+      "score": "1 - 0",
+      "status": "FINISHED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 1,
+      "stage": "LEAGUE_STAGE",
+      "halfTime": {
+        "home": 2,
+        "away": 0
+      },
+      "id": "fd:575325",
+      "league": "cl",
+      "home": "Real Madrid",
+      "away": "Inter",
+      "homeLogo": "https://crests.football-data.org/86.png",
+      "awayLogo": "https://crests.football-data.org/108.png",
+      "date": "2026-09-08T19:00:00Z",
+      "score": "2 - 1",
+      "status": "FINISHED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 1,
+      "stage": "LEAGUE_STAGE",
+      "halfTime": {
+        "home": 0,
+        "away": 0
+      },
+      "id": "fd:575326",
+      "league": "cl",
+      "home": "Porto",
+      "away": "Man City",
+      "homeLogo": "https://crests.football-data.org/503.png",
+      "awayLogo": "https://crests.football-data.org/65.png",
+      "date": "2026-09-08T19:00:00Z",
+      "score": "0 - 2",
+      "status": "FINISHED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 1,
+      "stage": "LEAGUE_STAGE",
+      "halfTime": {
+        "home": 0,
+        "away": 0
+      },
+      "id": "fd:575327",
+      "league": "cl",
+      "home": "Dortmund",
+      "away": "Villarreal",
+      "homeLogo": "https://crests.football-data.org/4.png",
+      "awayLogo": "https://crests.football-data.org/94.png",
+      "date": "2026-09-08T19:00:00Z",
+      "score": "3 - 2",
+      "status": "FINISHED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 1,
+      "stage": "LEAGUE_STAGE",
+      "halfTime": {
+        "home": 2,
+        "away": 1
+      },
+      "id": "fd:575328",
+      "league": "cl",
+      "home": "Lille",
+      "away": "Real Betis",
+      "homeLogo": "https://crests.football-data.org/521.png",
+      "awayLogo": "https://crests.football-data.org/90.png",
+      "date": "2026-09-08T19:00:00Z",
+      "score": "2 - 3",
+      "status": "FINISHED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 1,
+      "stage": "LEAGUE_STAGE",
+      "halfTime": {
+        "home": 2,
+        "away": 0
+      },
+      "id": "fd:575329",
+      "league": "cl",
+      "home": "Barça",
+      "away": "Feyenoord",
+      "homeLogo": "https://crests.football-data.org/81.png",
+      "awayLogo": "https://crests.football-data.org/675.png",
+      "date": "2026-09-09T16:45:00Z",
+      "score": "5 - 1",
+      "status": "FINISHED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 1,
+      "stage": "LEAGUE_STAGE",
+      "halfTime": {
+        "home": 3,
+        "away": 1
+      },
+      "id": "fd:575330",
+      "league": "cl",
+      "home": "Stuttgart",
+      "away": "Viking",
+      "homeLogo": "https://crests.football-data.org/10.png",
+      "awayLogo": "https://crests.football-data.org/5720.png",
+      "date": "2026-09-09T16:45:00Z",
+      "score": "3 - 1",
+      "status": "FINISHED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 1,
+      "stage": "LEAGUE_STAGE",
+      "halfTime": {
+        "home": 1,
+        "away": 1
+      },
+      "id": "fd:575331",
+      "league": "cl",
+      "home": "Liverpool",
+      "away": "Atleti",
+      "homeLogo": "https://crests.football-data.org/64.png",
+      "awayLogo": "https://crests.football-data.org/78.png",
+      "date": "2026-09-09T19:00:00Z",
+      "score": "2 - 1",
+      "status": "FINISHED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 1,
+      "stage": "LEAGUE_STAGE",
+      "halfTime": {
+        "home": 3,
+        "away": 0
+      },
+      "id": "fd:575332",
+      "league": "cl",
+      "home": "PSG",
+      "away": "Sl. Bratislava",
+      "homeLogo": "https://crests.football-data.org/524.png",
+      "awayLogo": "https://crests.football-data.org/7509.png",
+      "date": "2026-09-09T19:00:00Z",
+      "score": "6 - 1",
+      "status": "FINISHED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 1,
+      "stage": "LEAGUE_STAGE",
+      "halfTime": {
+        "home": 0,
+        "away": 0
+      },
+      "id": "fd:575333",
+      "league": "cl",
+      "home": "Napoli",
+      "away": "Arsenal",
+      "homeLogo": "https://crests.football-data.org/113.png",
+      "awayLogo": "https://crests.football-data.org/57.png",
+      "date": "2026-09-09T19:00:00Z",
+      "score": "0 - 1",
+      "status": "FINISHED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 1,
+      "stage": "LEAGUE_STAGE",
+      "halfTime": {
+        "home": 1,
+        "away": 1
+      },
+      "id": "fd:575334",
+      "league": "cl",
+      "home": "Sporting CP",
+      "away": "Galatasaray",
+      "homeLogo": "https://crests.football-data.org/498.png",
+      "awayLogo": "https://crests.football-data.org/610.png",
+      "date": "2026-09-09T19:00:00Z",
+      "score": "3 - 1",
+      "status": "FINISHED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 1,
+      "stage": "LEAGUE_STAGE",
+      "halfTime": {
+        "home": 0,
+        "away": 1
+      },
+      "id": "fd:575335",
+      "league": "cl",
+      "home": "Fenerbahçe",
+      "away": "Roma",
+      "homeLogo": "https://crests.football-data.org/613.png",
+      "awayLogo": "https://crests.football-data.org/100.png",
+      "date": "2026-09-10T16:45:00Z",
+      "score": "1 - 1",
+      "status": "FINISHED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 1,
+      "stage": "LEAGUE_STAGE",
+      "halfTime": {
+        "home": 0,
+        "away": 1
+      },
+      "id": "fd:575336",
+      "league": "cl",
+      "home": "PSV",
+      "away": "Shaktar",
+      "homeLogo": "https://crests.football-data.org/674.png",
+      "awayLogo": "https://crests.football-data.org/1887.png",
+      "date": "2026-09-10T16:45:00Z",
+      "score": "1 - 1",
+      "status": "FINISHED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 1,
+      "stage": "LEAGUE_STAGE",
+      "halfTime": {
+        "home": 0,
+        "away": 0
+      },
+      "id": "fd:575337",
+      "league": "cl",
+      "home": "Bayern",
+      "away": "Bodø/Glimt",
+      "homeLogo": "https://crests.football-data.org/5.png",
+      "awayLogo": "https://crests.football-data.org/5721.png",
+      "date": "2026-09-10T19:00:00Z",
+      "score": "5 - 0",
+      "status": "FINISHED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 1,
+      "stage": "LEAGUE_STAGE",
+      "halfTime": {
+        "home": 3,
+        "away": 0
+      },
+      "id": "fd:575338",
+      "league": "cl",
+      "home": "Man United",
+      "away": "Sabah FK",
+      "homeLogo": "https://crests.football-data.org/66.png",
+      "awayLogo": "https://crests.football-data.org/10233.png",
+      "date": "2026-09-10T19:00:00Z",
+      "score": "4 - 0",
+      "status": "FINISHED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 1,
+      "stage": "LEAGUE_STAGE",
+      "halfTime": {
+        "home": 2,
+        "away": 0
+      },
+      "id": "fd:575339",
+      "league": "cl",
+      "home": "Como 1907",
+      "away": "RB Leipzig",
+      "homeLogo": "https://crests.football-data.org/7397.png",
+      "awayLogo": "https://crests.football-data.org/721.png",
+      "date": "2026-09-10T19:00:00Z",
+      "score": "4 - 1",
+      "status": "FINISHED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 1,
+      "stage": "LEAGUE_STAGE",
+      "halfTime": {
+        "home": 0,
+        "away": 0
+      },
+      "id": "fd:575340",
+      "league": "cl",
+      "home": "Slavia Praha",
+      "away": "RC Lens",
+      "homeLogo": "https://crests.football-data.org/930.png",
+      "awayLogo": "https://crests.football-data.org/546.png",
+      "date": "2026-09-10T19:00:00Z",
+      "score": "2 - 3",
+      "status": "FINISHED",
+      "live": false,
+      "source": "football-data.org"
+    },
     {
       "events": [],
       "matchday": 21,
@@ -20360,6 +20720,726 @@
       "status": "TIMED",
       "live": false,
       "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 7,
+      "stage": "LEAGUE_STAGE",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:575292",
+      "league": "cl",
+      "home": "Bodø/Glimt",
+      "away": "Atleti",
+      "homeLogo": "https://crests.football-data.org/5721.png",
+      "awayLogo": "https://crests.football-data.org/78.png",
+      "date": "2027-01-19T17:45:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 7,
+      "stage": "LEAGUE_STAGE",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:575318",
+      "league": "cl",
+      "home": "Galatasaray",
+      "away": "Feyenoord",
+      "homeLogo": "https://crests.football-data.org/610.png",
+      "awayLogo": "https://crests.football-data.org/675.png",
+      "date": "2027-01-19T17:45:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 7,
+      "stage": "LEAGUE_STAGE",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:575282",
+      "league": "cl",
+      "home": "Real Madrid",
+      "away": "LASK",
+      "homeLogo": "https://crests.football-data.org/86.png",
+      "awayLogo": "https://crests.football-data.org/2016.png",
+      "date": "2027-01-19T20:00:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 7,
+      "stage": "LEAGUE_STAGE",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:575285",
+      "league": "cl",
+      "home": "Inter",
+      "away": "Liverpool",
+      "homeLogo": "https://crests.football-data.org/108.png",
+      "awayLogo": "https://crests.football-data.org/64.png",
+      "date": "2027-01-19T20:00:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 7,
+      "stage": "LEAGUE_STAGE",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:575302",
+      "league": "cl",
+      "home": "Stuttgart",
+      "away": "Club Brugge",
+      "homeLogo": "https://crests.football-data.org/10.png",
+      "awayLogo": "https://crests.football-data.org/851.png",
+      "date": "2027-01-19T20:00:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 7,
+      "stage": "LEAGUE_STAGE",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:575303",
+      "league": "cl",
+      "home": "Aston Villa",
+      "away": "Dortmund",
+      "homeLogo": "https://crests.football-data.org/58.png",
+      "awayLogo": "https://crests.football-data.org/4.png",
+      "date": "2027-01-19T20:00:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 7,
+      "stage": "LEAGUE_STAGE",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:575307",
+      "league": "cl",
+      "home": "PAE AEK",
+      "away": "Roma",
+      "homeLogo": "https://crests.football-data.org/1899.png",
+      "awayLogo": "https://crests.football-data.org/100.png",
+      "date": "2027-01-19T20:00:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 7,
+      "stage": "LEAGUE_STAGE",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:575308",
+      "league": "cl",
+      "home": "Porto",
+      "away": "Slavia Praha",
+      "homeLogo": "https://crests.football-data.org/503.png",
+      "awayLogo": "https://crests.football-data.org/930.png",
+      "date": "2027-01-19T20:00:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 7,
+      "stage": "LEAGUE_STAGE",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:575321",
+      "league": "cl",
+      "home": "Lille",
+      "away": "Sl. Bratislava",
+      "homeLogo": "https://crests.football-data.org/521.png",
+      "awayLogo": "https://crests.football-data.org/7509.png",
+      "date": "2027-01-19T20:00:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 7,
+      "stage": "LEAGUE_STAGE",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:575314",
+      "league": "cl",
+      "home": "Fenerbahçe",
+      "away": "Villarreal",
+      "homeLogo": "https://crests.football-data.org/613.png",
+      "awayLogo": "https://crests.football-data.org/94.png",
+      "date": "2027-01-20T17:45:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 7,
+      "stage": "LEAGUE_STAGE",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:575320",
+      "league": "cl",
+      "home": "Sabah FK",
+      "away": "Napoli",
+      "homeLogo": "https://crests.football-data.org/10233.png",
+      "awayLogo": "https://crests.football-data.org/113.png",
+      "date": "2027-01-20T17:45:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 7,
+      "stage": "LEAGUE_STAGE",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:575284",
+      "league": "cl",
+      "home": "RC Lens",
+      "away": "Man City",
+      "homeLogo": "https://crests.football-data.org/546.png",
+      "awayLogo": "https://crests.football-data.org/65.png",
+      "date": "2027-01-20T20:00:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 7,
+      "stage": "LEAGUE_STAGE",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:575288",
+      "league": "cl",
+      "home": "Sporting CP",
+      "away": "Barça",
+      "homeLogo": "https://crests.football-data.org/498.png",
+      "awayLogo": "https://crests.football-data.org/81.png",
+      "date": "2027-01-20T20:00:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 7,
+      "stage": "LEAGUE_STAGE",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:575294",
+      "league": "cl",
+      "home": "Como 1907",
+      "away": "PSG",
+      "homeLogo": "https://crests.football-data.org/7397.png",
+      "awayLogo": "https://crests.football-data.org/524.png",
+      "date": "2027-01-20T20:00:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 7,
+      "stage": "LEAGUE_STAGE",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:575297",
+      "league": "cl",
+      "home": "Real Betis",
+      "away": "Arsenal",
+      "homeLogo": "https://crests.football-data.org/90.png",
+      "awayLogo": "https://crests.football-data.org/57.png",
+      "date": "2027-01-20T20:00:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 7,
+      "stage": "LEAGUE_STAGE",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:575300",
+      "league": "cl",
+      "home": "Man United",
+      "away": "Bayern",
+      "homeLogo": "https://crests.football-data.org/66.png",
+      "awayLogo": "https://crests.football-data.org/5.png",
+      "date": "2027-01-20T20:00:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 7,
+      "stage": "LEAGUE_STAGE",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:575312",
+      "league": "cl",
+      "home": "Viking",
+      "away": "PSV",
+      "homeLogo": "https://crests.football-data.org/5720.png",
+      "awayLogo": "https://crests.football-data.org/674.png",
+      "date": "2027-01-20T20:00:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 7,
+      "stage": "LEAGUE_STAGE",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:575313",
+      "league": "cl",
+      "home": "RB Leipzig",
+      "away": "Shaktar",
+      "homeLogo": "https://crests.football-data.org/721.png",
+      "awayLogo": "https://crests.football-data.org/1887.png",
+      "date": "2027-01-20T20:00:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 8,
+      "stage": "LEAGUE_STAGE",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:575281",
+      "league": "cl",
+      "home": "Shaktar",
+      "away": "Real Madrid",
+      "homeLogo": "https://crests.football-data.org/1887.png",
+      "awayLogo": "https://crests.football-data.org/86.png",
+      "date": "2027-01-27T20:00:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 8,
+      "stage": "LEAGUE_STAGE",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:575283",
+      "league": "cl",
+      "home": "Man City",
+      "away": "Sporting CP",
+      "homeLogo": "https://crests.football-data.org/65.png",
+      "awayLogo": "https://crests.football-data.org/498.png",
+      "date": "2027-01-27T20:00:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 8,
+      "stage": "LEAGUE_STAGE",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:575287",
+      "league": "cl",
+      "home": "Sl. Bratislava",
+      "away": "Inter",
+      "homeLogo": "https://crests.football-data.org/7509.png",
+      "awayLogo": "https://crests.football-data.org/108.png",
+      "date": "2027-01-27T20:00:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 8,
+      "stage": "LEAGUE_STAGE",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:575289",
+      "league": "cl",
+      "home": "Barça",
+      "away": "Como 1907",
+      "homeLogo": "https://crests.football-data.org/81.png",
+      "awayLogo": "https://crests.football-data.org/7397.png",
+      "date": "2027-01-27T20:00:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 8,
+      "stage": "LEAGUE_STAGE",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:575291",
+      "league": "cl",
+      "home": "Atleti",
+      "away": "Fenerbahçe",
+      "homeLogo": "https://crests.football-data.org/78.png",
+      "awayLogo": "https://crests.football-data.org/613.png",
+      "date": "2027-01-27T20:00:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 8,
+      "stage": "LEAGUE_STAGE",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:575293",
+      "league": "cl",
+      "home": "PSG",
+      "away": "Galatasaray",
+      "homeLogo": "https://crests.football-data.org/524.png",
+      "awayLogo": "https://crests.football-data.org/610.png",
+      "date": "2027-01-27T20:00:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 8,
+      "stage": "LEAGUE_STAGE",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:575296",
+      "league": "cl",
+      "home": "Liverpool",
+      "away": "RC Lens",
+      "homeLogo": "https://crests.football-data.org/64.png",
+      "awayLogo": "https://crests.football-data.org/546.png",
+      "date": "2027-01-27T20:00:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 8,
+      "stage": "LEAGUE_STAGE",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:575298",
+      "league": "cl",
+      "home": "Arsenal",
+      "away": "Sabah FK",
+      "homeLogo": "https://crests.football-data.org/57.png",
+      "awayLogo": "https://crests.football-data.org/10233.png",
+      "date": "2027-01-27T20:00:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 8,
+      "stage": "LEAGUE_STAGE",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:575299",
+      "league": "cl",
+      "home": "Bayern",
+      "away": "Real Betis",
+      "homeLogo": "https://crests.football-data.org/5.png",
+      "awayLogo": "https://crests.football-data.org/90.png",
+      "date": "2027-01-27T20:00:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 8,
+      "stage": "LEAGUE_STAGE",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:575301",
+      "league": "cl",
+      "home": "Club Brugge",
+      "away": "Bodø/Glimt",
+      "homeLogo": "https://crests.football-data.org/851.png",
+      "awayLogo": "https://crests.football-data.org/5721.png",
+      "date": "2027-01-27T20:00:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 8,
+      "stage": "LEAGUE_STAGE",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:575304",
+      "league": "cl",
+      "home": "Dortmund",
+      "away": "PAE AEK",
+      "homeLogo": "https://crests.football-data.org/4.png",
+      "awayLogo": "https://crests.football-data.org/1899.png",
+      "date": "2027-01-27T20:00:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 8,
+      "stage": "LEAGUE_STAGE",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:575305",
+      "league": "cl",
+      "home": "Slavia Praha",
+      "away": "Aston Villa",
+      "homeLogo": "https://crests.football-data.org/930.png",
+      "awayLogo": "https://crests.football-data.org/58.png",
+      "date": "2027-01-27T20:00:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 8,
+      "stage": "LEAGUE_STAGE",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:575306",
+      "league": "cl",
+      "home": "Roma",
+      "away": "Lille",
+      "homeLogo": "https://crests.football-data.org/100.png",
+      "awayLogo": "https://crests.football-data.org/521.png",
+      "date": "2027-01-27T20:00:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 8,
+      "stage": "LEAGUE_STAGE",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:575309",
+      "league": "cl",
+      "home": "LASK",
+      "away": "Porto",
+      "homeLogo": "https://crests.football-data.org/2016.png",
+      "awayLogo": "https://crests.football-data.org/503.png",
+      "date": "2027-01-27T20:00:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 8,
+      "stage": "LEAGUE_STAGE",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:575310",
+      "league": "cl",
+      "home": "Villarreal",
+      "away": "Man United",
+      "homeLogo": "https://crests.football-data.org/94.png",
+      "awayLogo": "https://crests.football-data.org/66.png",
+      "date": "2027-01-27T20:00:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 8,
+      "stage": "LEAGUE_STAGE",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:575311",
+      "league": "cl",
+      "home": "PSV",
+      "away": "Stuttgart",
+      "homeLogo": "https://crests.football-data.org/674.png",
+      "awayLogo": "https://crests.football-data.org/10.png",
+      "date": "2027-01-27T20:00:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 8,
+      "stage": "LEAGUE_STAGE",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:575316",
+      "league": "cl",
+      "home": "Feyenoord",
+      "away": "RB Leipzig",
+      "homeLogo": "https://crests.football-data.org/675.png",
+      "awayLogo": "https://crests.football-data.org/721.png",
+      "date": "2027-01-27T20:00:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
+    },
+    {
+      "events": [],
+      "matchday": 8,
+      "stage": "LEAGUE_STAGE",
+      "halfTime": {
+        "home": null,
+        "away": null
+      },
+      "id": "fd:575319",
+      "league": "cl",
+      "home": "Napoli",
+      "away": "Viking",
+      "homeLogo": "https://crests.football-data.org/113.png",
+      "awayLogo": "https://crests.football-data.org/5720.png",
+      "date": "2027-01-27T20:00:00Z",
+      "score": "— : —",
+      "status": "TIMED",
+      "live": false,
+      "source": "football-data.org"
     }
   ],
   "errors": {},
@@ -20367,20 +21447,21 @@
     "history_days_requested": 45,
     "future_days_requested": 30,
     "retention_days": 120,
-    "matches_total": 1018,
+    "matches_total": 1072,
+    "champions_season": 2026,
     "matches_by_league": {
       "en": 110,
       "es": 103,
       "de": 90,
       "it": 110,
       "fr": 81,
-      "cl": 90,
+      "cl": 144,
       "br": 103,
       "nl": 89,
       "pt": 73,
       "eng2": 169
     },
-    "oldest_match": "2026-10-02T23:00:00Z",
-    "newest_match": "2026-12-21T20:00:00Z"
+    "oldest_match": "2026-09-08T16:45:00Z",
+    "newest_match": "2027-01-27T20:00:00Z"
   }
 }

@@ -20,6 +20,13 @@ test('a cached scheduled match cannot overwrite a final result; historical link 
   const merged=feed.mergeMatches([old],[{...old,score:'— : —',phase:'upcoming',status:'NS',live:false}]);assert.equal(merged[0].score,'1 - 1');assert.equal(merged[0].phase,'finished');
   assert.match(feed.detailUrl(old),/sport=ss%3Aone&slug=koln-bayern/);
 });
+test('real provider aliases do not create duplicate results or remove distinct fixtures',()=>{
+  const pairs=[['Bayern','1. FC Köln','FC Bayern Munich','FC Köln','de'],['Troyes','Le Havre','Troyes','Havre Athletic Club','fr'],['Vitória','Bragantino','Vitória - BA','Red Bull Bragantino','br'],['Vasco da Gama','Internacional','Vasco da Gama Saf - RJ','Internacional - RS','br'],['São Paulo','Fluminense','São Paulo - SP','Fluminense - RJ','br'],['Corinthians','Botafogo','Corinthians - SP','Botafogo - RJ','br'],['Grêmio','Bahia','Grêmio - RS','Bahia - BA','br']];
+  const fixtures=pairs.flatMap(([h,a,x,y,league],i)=>[{...old,id:league+':'+i,home:h,away:a,league},{...old,id:'ss:alias'+i,home:x,away:y,league}]);
+  const results=feed.completedResults(fixtures,feed.resultDays(now,3));
+  assert.equal(results.length,pairs.length);assert.ok(results.every(m=>m.sportScoreId));
+  assert.equal(feed.completedResults([...fixtures,{...fixtures[0],id:'de:later',date:'2026-11-19T19:30:00Z'}],feed.resultDays(now,3)).length,pairs.length+1);
+});
 test('verified lineups merge separately by team, preserving 11 players and enriching only exact identities',()=>{
   const lineup=Array.from({length:11},(_,i)=>({name:'Player '+i,number:i+1,position:i===0?'GK':i<5?'D':i<9?'DM':'F'}));
   const main=[{side:'home',team:'Bayern Munich',players:lineup,bench:[]}];

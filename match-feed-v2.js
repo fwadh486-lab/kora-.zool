@@ -22,12 +22,13 @@
     return isToday && age >= 0 && (phase === 'live' && age <= 8*hour || phase === 'finished' && age <= 12*hour);
   }
   const aliases = {
-    bayernmunich:'bayernmuenchen',bayernmunchen:'bayernmuenchen',
+    bayern:'bayernmuenchen',bayernmunich:'bayernmuenchen',bayernmunchen:'bayernmuenchen',
     cologne:'koln',koeln:'koln',athleticbilbao:'athleticbilbao',athletic:'athleticbilbao',
-    espanyoldebarcelona:'espanyol',rcdespanyol:'espanyol',ahlijeddah:'alahli',ahlisaudi:'alahli',alahlijeddah:'alahli',alahlisaudi:'alahli'
+    espanyoldebarcelona:'espanyol',rcdespanyol:'espanyol',ahlijeddah:'alahli',ahlisaudi:'alahli',alahlijeddah:'alahli',alahlisaudi:'alahli',
+    havreathletic:'lehavre',havre:'lehavre',redbullbragantino:'bragantino',vascodagamasaf:'vascodagama',clubedoremo:'remo',athleticparanaense:'paranaense',athleticoparanaense:'paranaense'
   };
   function teamKey(name) {
-    const key = String(name || '').toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g,'').replace(/\b(fc|cf|afc|sc|club|football|rcd|1)\b/g,'').replace(/[^a-z0-9\u0600-\u06ff]/g,'');
+    const key = String(name || '').toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g,'').replace(/\s+-\s+(ac|al|ap|am|ba|ce|df|es|go|ma|mt|ms|mg|pa|pb|pr|pe|pi|rj|rn|rs|ro|rr|sc|sp|se|to)$/,'').replace(/\b(fc|cf|afc|sc|club|football|rcd|saf|1)\b/g,'').replace(/[^a-z0-9\u0600-\u06ff]/g,'');
     return aliases[key] || key;
   }
   function mergeMatches(base, incoming, preserveId = true) {

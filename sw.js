@@ -1,4 +1,4 @@
-const CACHE='korazol-shell-v18';
+const CACHE='korazol-shell-v19';
 const DATA_CACHE='korazol-data-v1';
 const SHELL=['./','./push-client-v5.js','./match-feed-v1.js','./match-detail-feed-v1.js','./index.html','./fixtures.html','./match-details.html','./lineup-v2.html','./manifest.webmanifest','./kora-zol-icon-192.png','./kora-zol-icon-512.png'];
 self.addEventListener('install',event=>{
@@ -78,7 +78,7 @@ self.addEventListener('push',event=>{
   let target=scope.href;
   try{const url=new URL(message.url||scope.href,scope);if(url.origin===scope.origin&&url.pathname.startsWith(scope.pathname))target=url.href}catch{}
   await self.registration.showNotification(title,{
-   body,icon:new URL('kora-zol-icon-192.png',scope).href,
+   body,icon:typeof message.image==='string'&&message.image.length<=400&&/^https:\/\/img\.thesports\.com\/football\/(?:player|team)\/[a-z0-9._/%-]+$/i.test(message.image)?message.image:new URL('kora-zol-icon-192.png',scope).href,
    tag:typeof message.tag==='string'?message.tag.slice(0,160):'korazol-alert',
    data:{url:target},vibrate:[200,100,200],timestamp:Date.now()
   });

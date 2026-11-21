@@ -50,7 +50,7 @@ final class NativePush {
             return result;
         } finally {connection.disconnect();}
     }
-    private static JSONObject body(SharedPreferences p,String token) throws Exception {return new JSONObject().put("token",secret(p)).put("nativeToken",token);}
+    private static JSONObject body(SharedPreferences p,String token) throws Exception {return new JSONObject().put("token",secret(p)).put("nativeToken",token).put("richNotifications",true);}
     static JSONObject error(String code) {JSONObject r=new JSONObject();try{r.put("ok",false).put("error",code);}catch(Exception ignored){}return r;}
     static void command(Context context,String action,JSONObject preferences,Result callback) {
         Context app=context.getApplicationContext();

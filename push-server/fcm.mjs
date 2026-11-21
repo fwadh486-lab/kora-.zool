@@ -46,14 +46,18 @@ async function accessToken(env){
   cached={email:account.client_email,token:data.access_token,project:account.project_id,expires:Date.now()+Math.min(Number(data.expires_in)||3600,3600)*1000};
   return cached;
 }
-export function nativeMessage(token,message){
-  return {message:{token,notification:{title:String(message.title).slice(0,180),body:String(message.body).slice(0,500)},data:{url:String(message.url||''),tag:String(message.tag||'korazol')},android:{priority:'HIGH',ttl:'300s',notification:{channel_id:'korazol_matches',icon:'ic_notification',sound:'default',tag:String(message.tag||'korazol')}}}};
+export function nativeMessage(token,message,rich=false){
+  const title=String(message.title).slice(0,180),body=String(message.body).slice(0,500);
+  const data={url:String(message.url||''),tag:String(message.tag||'korazol')};
+  // Existing APKs continue to receive the system-rendered notification.
+  if(rich)return {message:{token,data:{...data,title,body,image:String(message.image||'').slice(0,400)},android:{priority:'HIGH',ttl:'300s'}}};
+  return {message:{token,notification:{title,body},data,android:{priority:'HIGH',ttl:'300s',notification:{channel_id:'korazol_matches',icon:'ic_notification',sound:'default',tag:String(message.tag||'korazol')}}}};
 }
-export async function sendNative(env,token,message){
+export async function sendNative(env,token,message,rich=false){
   if(!nativeConfigured(env))return 503;
   try{
     const auth=await accessToken(env);
-    const response=await fetch('https://fcm.googleapis.com/v1/projects/'+auth.project+'/messages:send',{method:'POST',headers:{authorization:'Bearer '+auth.token,'content-type':'application/json'},body:JSON.stringify(nativeMessage(token,message)),redirect:'manual',signal:AbortSignal.timeout(12000)});
+    const response=await fetch('https://fcm.googleapis.com/v1/projects/'+auth.project+'/messages:send',{method:'POST',headers:{authorization:'Bearer '+auth.token,'content-type':'application/json'},body:JSON.stringify(nativeMessage(token,message,rich)),redirect:'manual',signal:AbortSignal.timeout(12000)});
     if(response.ok)return response.status;
     if(response.status===401)cached=null;
     const result=await response.json().catch(()=>null);

@@ -57,3 +57,5 @@ jobs:
 # Release: one-time validation-only Firebase authorization probe, distinct FCM failures.
 
 # Release: revalidate Firebase authorization following credential replacement.
+
+# Release: match-first Arabic notification text and opt-in Android rich icons.

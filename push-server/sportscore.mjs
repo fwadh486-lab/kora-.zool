@@ -1,4 +1,4 @@
-import {normalizedName, selectedBy} from './events.mjs';
+import {normalizedName, selectedBy, notificationImage} from './events.mjs';
 
 const MINUTE=60000;
 const leagueCodes=new Map([
@@ -12,6 +12,20 @@ const finals=new Set(['FT','AET','PEN','AWD','WO','CANC','ABD','PST']);
 const live=new Set(['1H','HT','2H','ET','BT','P','LIVE','INT']);
 const publicLeagues=['english-premier-league','spanish-la-liga','bundesliga','italian-serie-a','french-ligue-1','saudi-professional-league','uefa-champions-league','brazilian-serie-a','dutch-eredivisie','portuguese-primeira-liga','english-football-league-championship','sudan-premier-league'];
 function integer(value){return typeof value==='number'&&Number.isInteger(value)&&value>=0?value:typeof value==='string'&&/^\d+$/.test(value)?Number(value):null}
+function incidentPhoto(raw,event){
+  if(!['home','away'].includes(event.side)||!event.player)return '';
+  const lineup=raw.lineups;
+  const candidates=[...(Array.isArray(lineup?.[event.side+'_xi'])?lineup[event.side+'_xi']:[]),...(Array.isArray(lineup?.[event.side+'_subs'])?lineup[event.side+'_subs']:[])].filter(p=>normalizedName(p.name)===normalizedName(event.player));
+  return candidates.length===1?notificationImage(candidates[0].photo):'';
+}
+function goals(raw){
+  if(!Array.isArray(raw.incidents))return null;
+  return raw.incidents.flatMap(e=>{
+    const homeScore=integer(e.home_score),awayScore=integer(e.away_score);
+    if(e.is_goal!==true||!['home','away'].includes(e.side)||!e.player||homeScore===null||awayScore===null)return [];
+    return [{side:e.side,player:e.player,homeScore,awayScore,minute:integer(e.time),photo:incidentPhoto(raw,e)}];
+  });
+}
 function incidents(raw){
   if(!Array.isArray(raw.incidents))return null;
   const counts=new Map();
@@ -20,7 +34,7 @@ function incidents(raw){
     const team=event.side==='home'?raw.home:event.side==='away'?raw.away:null;
     if(!type||!team||!event.player)return [];
     const key=JSON.stringify([type,event.side,normalizedName(event.player)]),count=(counts.get(key)||0)+1;counts.set(key,count);
-    return [{id:key+':'+count,type,team,player:event.player,minute:integer(event.time),extra:null}];
+    return [{id:key+':'+count,type,team,player:event.player,minute:integer(event.time),extra:null,photo:incidentPhoto(raw,event)}];
   });
 }
 export function fromSportScore(raw){
@@ -30,7 +44,7 @@ export function fromSportScore(raw){
   if(!status)return null;
   return {id:'ss:'+path[2],slug:path[1],source:'SportScore',home:raw.home,away:raw.away,
     league:leagueCodes.get(normalizedName(raw.competition))||'',homeScore:integer(raw.home_score),awayScore:integer(raw.away_score),
-    status,minute:integer(raw.live_minute),date:raw.time,cards:incidents(raw),competition:raw.competition||'',
+    status,minute:integer(raw.live_minute),date:raw.time,cards:incidents(raw),goals:goals(raw),competition:raw.competition||'',
     homeLogo:typeof raw.home_logo==='string'&&raw.home_logo.startsWith('https://')?raw.home_logo:'',awayLogo:typeof raw.away_logo==='string'&&raw.away_logo.startsWith('https://')?raw.away_logo:'',sourceUrl:'https://sportscore.com'+raw.url};
 }
 async function request(path,params){
@@ -48,7 +62,7 @@ async function list(date,status,competition){
 function toPublicMatch(match){
   const phase=live.has(match.status)?'live':['FT','AET','PEN','AWD','WO'].includes(match.status)?'finished':match.status==='NS'?'upcoming':'other';
   const score=phase==='upcoming'||match.homeScore===null||match.awayScore===null?'— : —':`${match.homeScore} - ${match.awayScore}`;
-  return {...match,phase,live:phase==='live',score,cards:undefined};
+  return {...match,phase,live:phase==='live',score,cards:undefined,goals:undefined};
 }
 async function cacheRead(key,ttl,loader){
   const cache=globalThis.caches?.default;
@@ -149,7 +163,9 @@ export async function collectSportScore(now,old,active){
   // At most five calls/minute; together with list calls this stays below 10k/day.
   // Rotate through older details first, prioritizing games that disappeared from live.
   const age=match=>{const row=old.get(match.id);return row?JSON.parse(row.match_json).cardUpdated||0:0};
-  const target=[...candidates.values()].sort((a,b)=>(Number(!visible.has(b.id))-Number(!visible.has(a.id)))||age(a)-age(b)).slice(0,5);
+  const changed=match=>{const row=old.get(match.id);if(!row)return false;const prior=JSON.parse(row.match_json);return Number.isInteger(prior.homeScore)&&Number.isInteger(prior.awayScore)&&(match.homeScore>prior.homeScore||match.awayScore>prior.awayScore)};
+  const ordered=[...candidates.values()].sort((a,b)=>(Number(!visible.has(b.id))-Number(!visible.has(a.id)))||Number(changed(b))-Number(changed(a))||age(a)-age(b));
+  const target=ordered.slice(0,ordered.some(changed)?3:5);
   // A healthy connection can be verified even before anyone selects a match.
   if(!target.length){const sample=allLive.find(match=>match.league);if(sample)target.push(sample)}
   const results=await Promise.allSettled(target.map(detail));
@@ -162,8 +178,19 @@ export async function collectSportScore(now,old,active){
     if(summary){
       // Summary and details are cached independently. Use the summary's score/status
       // when they disagree rather than creating a false reversal or a second goal.
-      visible.set(match.id,{...summary,cards:match.cards,minute:summary.status===match.status?match.minute:null});
+      visible.set(match.id,{...summary,cards:match.cards,goals:summary.homeScore===match.homeScore&&summary.awayScore===match.awayScore?match.goals:null,minute:summary.status===match.status?match.minute:summary.minute});
     }else if(finals.has(match.status)||live.has(match.status))visible.set(match.id,match);
+  }
+  // Reserve at most two provider requests for one verified player's portrait.
+  // Search + profile are cached; the total per poll remains five requests.
+  if(target.length<=3){
+    for(const match of visible.values()){
+      if(!changed(match)||!Array.isArray(match.goals))continue;
+      const scorer=match.goals.find(g=>g.homeScore===match.homeScore&&g.awayScore===match.awayScore&&!g.photo);
+      if(!scorer)continue;
+      try{const result=await publicPlayerPhoto(scorer.player,match[scorer.side]);scorer.photo=notificationImage(result.photo)}catch{}
+      break;
+    }
   }
   return {matches:visible,liveCount:allLive.length,detailCount};
 }

@@ -14,6 +14,8 @@ test('FCM sends native Android channel payload and retains transient failures',a
   assert.equal(nativeConfigStatus({FCM_SERVICE_ACCOUNT:JSON.stringify(env.FCM_SERVICE_ACCOUNT)}),'ready');
   const message={title:'هدف',body:'1–0',url:'https://example.invalid/',tag:'goal-1'};
   assert.equal(nativeMessage('token',message).message.android.notification.channel_id,'korazol_matches');
+  const rich=nativeMessage('token',{...message,image:'https://img.thesports.com/football/player/p.png'},true).message;
+  assert.equal(rich.notification,undefined);assert.equal(rich.data.title,'هدف');assert.match(rich.data.image,/player\/p.png$/);assert.equal(rich.android.priority,'HIGH');
   const original=globalThis.fetch;let code=200;let detail='';let authCalls=0;
   globalThis.fetch=async(url,options)=>{
     if(String(url).includes('oauth2.googleapis.com')){authCalls++;assert.ok(options.body.get('assertion').split('.').length===3);return Response.json({access_token:'mock',expires_in:3600});}

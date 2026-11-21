@@ -77,19 +77,36 @@ export function preferenceAllows(preferences, event) {
   const key = event.type.startsWith('goal') ? 'goal' : event.type === 'secondhalf' ? 'kickoff' : event.type;
   return preferences.types.includes(key) && selectedBy(preferences, event.match);
 }
+const arabicTeams=new Map(Object.entries({
+  bayernmunich:'بايرن ميونخ',cologne:'كولن',arsenal:'أرسنال',liverpool:'ليفربول',manchestercity:'مانشستر سيتي',manchesterunited:'مانشستر يونايتد',chelsea:'تشيلسي',tottenhamhotspur:'توتنهام',newcastleunited:'نيوكاسل',astonvilla:'أستون فيلا',brightonandhovealbion:'برايتون',fulham:'فولهام',brentford:'برينتفورد',everton:'إيفرتون',nottinghamforest:'نوتنغهام فورست',wolverhamptonwanderers:'وولفرهامبتون',westhamunited:'وست هام',crystalpalace:'كريستال بالاس',realmadrid:'ريال مدريد',barcelona:'برشلونة',atleticomadrid:'أتلتيكو مدريد',athleticclub:'أتلتيك بلباو',espanyol:'إسبانيول',espanyoldebarcelona:'إسبانيول',celta:'سيلتا فيغو',celtavigo:'سيلتا فيغو',sevilla:'إشبيلية',valencia:'فالنسيا',realbetis:'ريال بيتيس',realsociedad:'ريال سوسيداد',villarreal:'فياريال',borussiadortmund:'بوروسيا دورتموند',bayerleverkusen:'باير ليفركوزن',rbleipzig:'لايبزيغ',juventus:'يوفنتوس',intermilan:'إنتر ميلان',milan:'ميلان',napoli:'نابولي',roma:'روما',lazio:'لاتسيو',torino:'تورينو',atalanta:'أتالانتا',parissaintgermain:'باريس سان جيرمان',marseille:'مارسيليا',lyon:'ليون',monaco:'موناكو',troyes:'تروا',havreathleticclub:'لوهافر',lehavre:'لوهافر',alnassr:'النصر',alhilal:'الهلال',alittihad:'الاتحاد',alahli:'الأهلي',alahlishaudi:'الأهلي',alshabab:'الشباب',alettifaq:'الاتفاق',alqadsiah:'القادسية',altaawoun:'التعاون',alhilalomdurman:'الهلال السوداني',almerreikh:'المريخ',sudan:'السودان',spain:'إسبانيا',qatar:'قطر',portugal:'البرتغال',england:'إنجلترا',france:'فرنسا',germany:'ألمانيا',brazil:'البرازيل',argentina:'الأرجنتين',saudiarabia:'السعودية'
+}));
+export function displayTeam(name,ar){
+  if(!ar)return name;
+  const age=String(name).match(/\s+U(\d{2})$/i);
+  const key=normalizedName(age?name.slice(0,age.index):name).replace(/^(?:rcd|ssc|as)(?=espanyol|napoli|roma)/,'');
+  const translated=arabicTeams.get(key);
+  return translated?translated+(age?' تحت '+age[1]:''):name;
+}
+export function notificationImage(value){
+  return typeof value==='string'&&value.length<=400&&/^https:\/\/img\.thesports\.com\/football\/(?:player|team)\/[a-z0-9._/%-]+$/i.test(value)?value:'';
+}
 export function notificationFor(event, language, appUrl) {
-  const match = event.match, ar = language !== 'en';
-  const score = match.homeScore === null || match.awayScore === null ? '' : ' ' + match.homeScore + ' - ' + match.awayScore + ' ';
-  const card = event.card;
-  const body = match.home + (score || ' × ') + match.away + (card ? ' · '+card.player+' ('+card.team+')'+(card.minute!==null?' · '+card.minute+(card.extra?'+'+card.extra:'')+'′':'') : match.minute !== null && event.type.startsWith('goal') ? ' · ' + match.minute + '′' : '')+(match.source==='SportScore'?' · SportScore':'');
-  const team = event.type === 'goal-home' ? match.home : match.away;
-  const title = event.type.startsWith('goal') ? (ar ? '⚽ زوووط! هدف لـ ' : '⚽ GOAL! ') + team :
-    event.type === 'kickoff' ? (ar ? '⚽ بداية المباراة' : '⚽ Kickoff') :
-    event.type === 'secondhalf' ? (ar ? '⏱ بداية الشوط الثاني' : '⏱ Second half') :
-    event.type === 'halftime' ? (ar ? '⏸ نهاية الشوط الأول' : '⏸ Half time') :
-    event.type === 'yellow' ? (ar ? '🟨 بطاقة صفراء' : '🟨 Yellow card') :
-    event.type === 'red' ? (ar ? '🟥 بطاقة حمراء' : '🟥 Red card') : (ar ? '🏁 نهاية المباراة' : '🏁 Full time');
+  const match=event.match, ar=language!=='en', goal=event.type.startsWith('goal'), card=event.card;
+  const home=displayTeam(match.home,ar),away=displayTeam(match.away,ar);
+  const side=event.type==='goal-home'?'home':event.type==='goal-away'?'away':card?(normalizedName(card.team)===normalizedName(match.home)?'home':'away'):null;
+  // Only use a scorer whose incident is for this exact side and exact score.
+  const scorer=goal&&Array.isArray(match.goals)?match.goals.find(g=>g.side===side&&g.homeScore===match.homeScore&&g.awayScore===match.awayScore):null;
+  const incident=card||scorer;
+  const score=Number.isInteger(match.homeScore)&&Number.isInteger(match.awayScore)?'\u2066'+match.homeScore+' - '+match.awayScore+'\u2069':'';
+  const minute=incident?.minute??match.minute;
+  const clock=Number.isInteger(minute)&&(goal||card)?minute+(incident?.extra?'+'+incident.extra:'')+'′ ':'';
+  const label=goal?(ar?'⚽ هدف!':'⚽ Goal!'):event.type==='kickoff'?(ar?'⚽ بداية المباراة':'⚽ Kickoff'):event.type==='secondhalf'?(ar?'⏱ بداية الشوط الثاني':'⏱ Second half'):event.type==='halftime'?(ar?'⏸ نهاية الشوط الأول':'⏸ Half time'):event.type==='yellow'?(ar?'🟨 بطاقة صفراء':'🟨 Yellow card'):event.type==='red'?(ar?'🟥 بطاقة حمراء':'🟥 Red card'):(ar?'🏁 نهاية المباراة':'🏁 Full time');
+  const player=incident?.player||'';
+  const actor=player||(goal?(side==='home'?home:away):'');
+  const title=home+' - '+away;
+  const body=[clock+label,score,actor].filter(Boolean).join(' · ');
+  const image=notificationImage(incident?.photo)||notificationImage(side==='away'?match.awayLogo:match.homeLogo)||notificationImage(match.awayLogo);
   const url = new URL(appUrl);
   url.searchParams.set('team', match.home);
-  return {title, body, tag:'korazol-' + event.id, url:url.href};
+  return {title,body,tag:'korazol-'+event.id,url:url.href,image,source:match.source||''};
 }

@@ -85,7 +85,7 @@ async function parseRequest(request) {
   return JSON.parse(new TextDecoder().decode(bytes));
 }
 async function sendPush(env, subscription, message) {
-  if(subscription?.nativeToken)return sendNative(env,subscription.nativeToken,message);
+  if(subscription?.nativeToken)return sendNative(env,subscription.nativeToken,message,subscription.richNotifications===true);
   let payload;
   try{
     payload=await buildPushPayload({data:JSON.stringify(message),options:{ttl:300,urgency:'high'}},subscription,{
@@ -146,7 +146,7 @@ async function route(request, env, ctx) {
   const native=typeof data?.nativeToken==='string'&&data.nativeToken.length>=20&&data.nativeToken.length<=4096&&/^[A-Za-z0-9_:\-.]+$/.test(data.nativeToken);
   if(!data || !tokenPattern.test(data.token||'') || (!native&&!validSubscription(data.subscription))) return json({error:'invalid_subscription'},400);
   if(native&&path==='/subscribe'&&!nativeConfigured(env))return json({error:'native_not_configured'},503);
-  const sub=native?{nativeToken:data.nativeToken}:{endpoint:data.subscription.endpoint,expirationTime:null,keys:{p256dh:data.subscription.keys.p256dh,auth:data.subscription.keys.auth}};
+  const sub=native?{nativeToken:data.nativeToken,richNotifications:data.richNotifications===true}:{endpoint:data.subscription.endpoint,expirationTime:null,keys:{p256dh:data.subscription.keys.p256dh,auth:data.subscription.keys.auth}};
   const id=await digest(native?'native:'+data.token:sub.endpoint),tokenHash=await digest(data.token);
   const existing=await env.DB.prepare('SELECT token_hash, subscription, last_test, test_due FROM devices WHERE id=?').bind(id).first();
   if(existing && existing.token_hash!==tokenHash) return json({error:'device_conflict'},409);

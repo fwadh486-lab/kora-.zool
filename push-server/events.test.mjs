@@ -22,7 +22,8 @@ test('preferences and Arabic / English payload',()=>{
   assert.equal(preferenceAllows({teams:['Bayern'],matches:[],types:['goal']},event),true);
   assert.equal(preferenceAllows({teams:['Bayern'],matches:[],types:['fulltime']},event),false);
   const message=notificationFor(event,'ar','https://fwadh486-lab.github.io/kora-.zool/');
-  assert.match(message.title,/زوووط/);
+  assert.equal(message.title,'بايرن ميونخ - كولن');
+  assert.match(message.body,/هدف/);
   assert.match(message.body,/1 - 0/);
   assert.match(message.url,/team=Bayern\+Munich/);
 });
@@ -48,5 +49,14 @@ test('new card identity ignores time corrections and distinguishes cards for dif
   assert.equal(newCards(first,next).length,1);
   const card=newCards(first,next)[0];
   const notification=notificationFor({id:'card',type:card.type,card,match:next},'ar','https://example.com/');
-  assert.match(notification.title,/بطاقة صفراء/);assert.match(notification.body,/Player Two/);
+  assert.match(notification.body,/بطاقة صفراء/);assert.match(notification.body,/Player Two/);
+});
+test('rich match notifications select only the exact scorer, score and safe image',()=>{
+  const logo='https://img.thesports.com/football/team/club.png',photo='https://img.thesports.com/football/player/player.png';
+  const event={id:'goal',type:'goal-home',match:{...match,homeScore:1,awayScore:0,homeLogo:logo,goals:[{side:'home',homeScore:1,awayScore:0,player:'Nathaniel Brown',minute:37,photo}]}};
+  const message=notificationFor(event,'ar','https://example.com/');
+  assert.equal(message.title,'بايرن ميونخ - كولن');assert.match(message.body,/37′.*هدف.*1 - 0.*Nathaniel Brown/);assert.equal(message.image,photo);
+  event.match.goals[0].homeScore=2;
+  const fallback=notificationFor(event,'ar','https://example.com/');assert.doesNotMatch(fallback.body,/Nathaniel/);assert.equal(fallback.image,logo);
+  assert.equal(notificationFor(event,'en','https://example.com/').title,'Bayern Munich - FC Köln');
 });

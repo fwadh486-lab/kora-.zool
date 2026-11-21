@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {fromSportScore,collectSportScore} from './sportscore.mjs';
+import {fromSportScore,collectSportScore,verifiedAssist} from './sportscore.mjs';
 import {newCards,transitions,notificationFor,isFreshSportScoreKickoff} from './events.mjs';
 
 const now=Date.parse('2026-11-20T18:30:00Z');
@@ -49,7 +49,18 @@ test('goal incident and exact same-team lineup photo are preserved',()=>{
   const photo='https://img.thesports.com/football/player/p.png';
   const raw={...base,home_score:'2',incidents:[{side:'home',player:'Player One',is_goal:true,home_score:2,away_score:1,time:55}],lineups:{home_xi:[{name:'Player One',photo}],away_xi:[{name:'Player One',photo:'https://img.thesports.com/football/player/wrong.png'}]}};
   const match=fromSportScore(raw);assert.equal(match.goals[0].photo,photo);
-  const message=notificationFor({id:'goal',type:'goal-home',match},'ar','https://example.org/');assert.match(message.body,/55′.*Player One/);assert.equal(message.image,photo);
+  const message=notificationFor({id:'goal',type:'goal-home',match},'ar','https://example.org/');assert.match(message.body,/55′.*\nالمسجل: Player One/);assert.equal(message.image,photo);
+});
+
+test('assist enrichment requires the same team, exact score, minute, scorer and explicit assist',()=>{
+  const match={home:'Manchester City',away:'Fulham',homeScore:0,awayScore:1};
+  const goal={side:'away',player:'Rodrigo Muniz',minute:16};
+  const summary={header:{competitions:[{competitors:[{id:'370',homeAway:'away',team:{displayName:'Fulham'}}]}]},keyEvents:[{scoringPlay:true,team:{id:'370'},clock:{displayValue:"16'"},type:{text:'Goal'},text:'Goal! Manchester City 0, Fulham 1. Rodrigo Muniz (Fulham) shot. Assisted by Oscar Bobb.',participants:[{athlete:{displayName:'Rodrigo Muniz'}},{athlete:{displayName:'Oscar Bobb'}}]}]};
+  assert.equal(verifiedAssist(summary,match,goal),'Oscar Bobb');
+  assert.equal(verifiedAssist(summary,{...match,awayScore:2},goal),'');
+  assert.equal(verifiedAssist(summary,match,{...goal,minute:17}),'');
+  assert.equal(verifiedAssist(summary,match,{...goal,player:'Other player'}),'');
+  summary.keyEvents[0].text=summary.keyEvents[0].text.replace(' Assisted by Oscar Bobb.','');assert.equal(verifiedAssist(summary,match,goal),'');
 });
 
 test('poll live details, reject an ambiguous slug, fetch a disappeared match to confirm full time',async()=>{
@@ -72,3 +83,4 @@ test('poll live details, reject an ambiguous slug, fetch a disappeared match to 
 
 
 test('normalize added competitions',()=>{for(const [name,code] of [['Sudanese Premier League','sd'],['Rwandan National League','rw'],['Qatar Stars League','qa'],['CAF Champions League','cafcl'],['UEFA Europa League','el'],['UEFA Nations League','nations'],['UEFA European Championship','euro']])assert.equal(fromSportScore({...base,competition:name}).league,code)});
+

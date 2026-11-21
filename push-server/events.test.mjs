@@ -55,9 +55,12 @@ test('rich match notifications select only the exact scorer, score and safe imag
   const logo='https://img.thesports.com/football/team/club.png',photo='https://img.thesports.com/football/player/player.png';
   const event={id:'goal',type:'goal-home',match:{...match,homeScore:1,awayScore:0,homeLogo:logo,goals:[{side:'home',homeScore:1,awayScore:0,player:'Nathaniel Brown',minute:37,photo}]}};
   const message=notificationFor(event,'ar','https://example.com/');
-  assert.equal(message.title,'بايرن ميونخ - كولن');assert.match(message.body,/37′.*هدف.*1 - 0.*Nathaniel Brown/);assert.equal(message.image,photo);
+  assert.equal(message.title,'بايرن ميونخ - كولن');assert.match(message.body,/37′.*هدف.*1 - 0.*\nالمسجل: Nathaniel Brown\nالصانع: غير متاح حالياً/);assert.equal(message.image,photo);
+  event.match.goals[0].assist='Player Two';assert.match(notificationFor(event,'ar','https://example.com/').body,/الصانع: Player Two/);
+  assert.match(notificationFor(event,'en','https://example.com/').body,/Scorer: Nathaniel Brown\nAssist: Player Two/);
   event.match.goals[0].homeScore=2;
   const fallback=notificationFor(event,'ar','https://example.com/');assert.doesNotMatch(fallback.body,/Nathaniel/);assert.equal(fallback.image,logo);
   assert.equal(notificationFor(event,'en','https://example.com/').title,'Bayern Munich - FC Köln');
   event.match.id='ss:abc123';event.match.slug='bayern-vs-koln';const link=new URL(notificationFor(event,'ar','https://example.com/app/').url);assert.equal(link.pathname,'/app/match-details.html');assert.equal(link.searchParams.get('slug'),'bayern-vs-koln');assert.equal(link.searchParams.get('sport'),'ss:abc123');
 });
+

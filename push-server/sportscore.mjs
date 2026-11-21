@@ -24,7 +24,7 @@ function goals(raw){
   return raw.incidents.flatMap(e=>{
     const homeScore=integer(e.home_score),awayScore=integer(e.away_score);
     if(e.is_goal!==true||!['home','away'].includes(e.side)||!e.player||homeScore===null||awayScore===null)return [];
-    return [{side:e.side,player:e.player,homeScore,awayScore,minute:integer(e.time),photo:incidentPhoto(raw,e)}];
+    return [{side:e.side,player:e.player,homeScore,awayScore,minute:integer(e.time),photo:incidentPhoto(raw,e),assist:typeof e.assist==='string'?e.assist.trim():''}];
   });
 }
 function incidents(raw){
@@ -149,6 +149,34 @@ async function detail(match){
   if(data.updated&&Date.now()-Date.parse(data.updated)>10*MINUTE)throw Error('sportscore_stale_detail');
   return parsed;
 }
+const espnLeagues={en:'eng.1',es:'esp.1',de:'ger.1',it:'ita.1',fr:'fra.1',sa:'ksa.1',cl:'uefa.champions',br:'bra.1',nl:'ned.1',pt:'por.1',eng2:'eng.2',nations:'uefa.nations',friendly:'fifa.friendly'};
+function espnTeamMatches(team,name){return [team?.displayName,team?.shortDisplayName,team?.name,team?.location].some(value=>value&&normalizedName(value)===normalizedName(name))}
+export function verifiedAssist(summary,match,scorer){
+  const competition=summary?.header?.competitions?.[0],team=competition?.competitors?.find(c=>c.homeAway===scorer.side);
+  if(!team||!espnTeamMatches(team.team,match[scorer.side]))return '';
+  const candidates=(Array.isArray(summary.keyEvents)?summary.keyEvents:[]).filter(e=>e.scoringPlay===true&&!e.shootout&&String(e.team?.id)===String(team.id)&&!/(disallowed|overturned|ruled out|own goal|penalty)/i.test(String(e.type?.text)+' '+String(e.text))&&(/^\d+/.exec(e.clock?.displayValue||'')?.[0]===String(scorer.minute))&&normalizedName(e.participants?.[0]?.athlete?.displayName)===normalizedName(scorer.player));
+  const assists=new Set();
+  for(const e of candidates){
+    const score=String(e.text||'').match(/^Goal!\s+(.+?)\s+(\d+),\s+(.+?)\s+(\d+)\./i);
+    if(!score||normalizedName(score[1])!==normalizedName(match.home)||normalizedName(score[3])!==normalizedName(match.away)||Number(score[2])!==match.homeScore||Number(score[4])!==match.awayScore)continue;
+    const assist=String(e.text||'').match(/\bAssisted by (.+?)\.(?:\s|$)/i)?.[1]?.trim();
+    const known=e.participants?.slice(1).find(p=>normalizedName(p.athlete?.displayName)===normalizedName(assist));
+    if(assist&&known)assists.add(known.athlete.displayName);
+  }
+  return assists.size===1?[...assists][0]:'';
+}
+async function enrichAssist(match,scorer){
+  const league=espnLeagues[match.league];if(!league||!Number.isInteger(scorer.minute))return;
+  const base='https://site.api.espn.com/apis/site/v2/sports/soccer/'+league;
+  const get=async url=>{const r=await fetch(url,{headers:{Accept:'application/json'},redirect:'manual',signal:AbortSignal.timeout(5000)});if(!r.ok)throw Error('detail_unavailable');return r.json()};
+  const date=new Date(match.date).toISOString().slice(0,10).replaceAll('-','');
+  const data=await get(base+'/scoreboard?dates='+date);
+  const candidates=(data.events||[]).filter(e=>Math.abs(Date.parse(e.date)-Date.parse(match.date))<=15*MINUTE&&['home','away'].every(side=>espnTeamMatches(e.competitions?.[0]?.competitors?.find(c=>c.homeAway===side)?.team,match[side])));
+  if(candidates.length!==1||!/^\d+$/.test(String(candidates[0].id)))return;
+  const summary=await get(base+'/summary?event='+candidates[0].id);
+  if(String(summary.header?.id)!==String(candidates[0].id))return;
+  scorer.assist=verifiedAssist(summary,match,scorer);
+}
 export async function collectSportScore(now,old,active){
   const date=new Date(now),days=[date.toISOString().slice(0,10)];
   if(date.getUTCHours()<4)days.push(new Date(now-86400000).toISOString().slice(0,10));
@@ -203,6 +231,14 @@ export async function collectSportScore(now,old,active){
     }else if(finals.has(match.status)||live.has(match.status))visible.set(match.id,match);
   }
   // Reserve at most two provider requests for one verified player's portrait.
+  // Enrich at most one newly scored goal using the app's existing ESPN detail source.
+  for(const match of visible.values()){
+    if(!changed(match)||!Array.isArray(match.goals))continue;
+    const scorer=match.goals.find(g=>g.homeScore===match.homeScore&&g.awayScore===match.awayScore&&!g.assist);
+    if(!scorer)continue;
+    try{await enrichAssist(match,scorer)}catch{}
+    break;
+  }
   // Search + profile are cached; the total per poll remains five requests.
   if(days.length+leagues.length+target.length<=5&&date.getUTCMinutes()%5!==0){
     for(const match of visible.values()){
@@ -215,3 +251,4 @@ export async function collectSportScore(now,old,active){
   }
   return {matches:visible,liveCount:allLive.length,detailCount};
 }
+

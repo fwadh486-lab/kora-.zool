@@ -110,10 +110,12 @@ export function notificationFor(event, language, appUrl) {
   const player=incident?.player||'';
   const actor=player||(goal?(side==='home'?home:away):'');
   const title=home+' - '+away;
-  const body=[clock+label,score,actor].filter(Boolean).join(' · ');
+  const summary=[clock+label,score,goal?(side==='home'?home:away):actor].filter(Boolean).join(' · ');
+  const body=goal&&player?[summary,(ar?'المسجل: ':'Scorer: ')+player,(ar?'الصانع: ':'Assist: ')+(scorer?.assist||(ar?'غير متاح حالياً':'Not available yet'))].join('\n'):summary;
   const image=notificationImage(incident?.photo)||notificationImage(side==='away'?match.awayLogo:match.homeLogo)||notificationImage(match.awayLogo);
   const supportedDetail=String(match.id).startsWith('ss:')&&/^[a-z0-9-]{1,200}$/i.test(match.slug||'');
   const url=supportedDetail?new URL('match-details.html',appUrl):new URL(appUrl);
   if(supportedDetail){url.searchParams.set('id',match.id);url.searchParams.set('sport',match.id);url.searchParams.set('slug',match.slug);if(Number.isFinite(Date.parse(match.date)))url.searchParams.set('date',new Date(match.date).toISOString().slice(0,10))}else url.searchParams.set('team',match.home);
   return {title,body,tag:'korazol-'+event.id,url:url.href,image,source:match.source||''};
 }
+

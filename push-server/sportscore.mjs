@@ -152,11 +152,26 @@ async function detail(match){
 export async function collectSportScore(now,old,active){
   const date=new Date(now),days=[date.toISOString().slice(0,10)];
   if(date.getUTCHours()<4)days.push(new Date(now-86400000).toISOString().slice(0,10));
-  const lists=await Promise.allSettled(days.map(day=>list(day,'live')));
+  // A global live response is capped at 200. Scan the Premier League on
+  // every poll and rotate two other supported leagues in the same budget.
+  // Full-date snapshots capture upcoming, half-time and finished fixtures.
+  const rotating=publicLeagues.slice(1);
+  const offset=Math.floor(now/MINUTE)*2%rotating.length;
+  const leagues=[publicLeagues[0],rotating[offset],rotating[(offset+1)%rotating.length]];
+  const lists=await Promise.allSettled([...days.map(day=>list(day,'live')),...leagues.map(league=>list(days[0],null,league))]);
   if(lists.every(result=>result.status==='rejected'))throw Error('sportscore_live_unavailable');
-  const allLive=lists.flatMap(result=>result.status==='fulfilled'?result.value:[]);
+  const globalLive=lists.slice(0,days.length).flatMap(result=>result.status==='fulfilled'?result.value:[]);
+  const snapshots=lists.slice(days.length).flatMap(result=>result.status==='fulfilled'?result.value:[]);
+  const observed=new Map(globalLive.map(match=>[match.id,match]));
+  for(const match of snapshots){
+    const existing=observed.get(match.id),row=old.get(match.id);
+    const prior=row?JSON.parse(row.match_json):null;
+    if(match.status==='NS'&&(live.has(existing?.status)||live.has(prior?.status)||finals.has(prior?.status)))continue;
+    if(live.has(match.status)||(match.status==='NS'&&Date.parse(match.date)>=now-10*MINUTE&&Date.parse(match.date)<=now+30*MINUTE)||(finals.has(match.status)&&old.has(match.id)))observed.set(match.id,match);
+  }
+  const allLive=[...observed.values()].filter(match=>live.has(match.status));
   const selected=match=>active.some(device=>selectedBy(device.preferences,match));
-  const visible=new Map(allLive.filter(selected).map(match=>[match.id,match]));
+  const visible=new Map([...observed.values()].filter(selected).map(match=>[match.id,match]));
   const upcoming=date.getUTCMinutes()%5===0&&active.length?await list(days[0],'upcoming').catch(()=>[]):[];
   for(const match of upcoming)if(match.status==='NS'&&Date.parse(match.date)>=now-10*MINUTE&&Date.parse(match.date)<=now+30*MINUTE&&selected(match)&&!visible.has(match.id))visible.set(match.id,match);
   const candidates=new Map([...visible].filter(([,match])=>live.has(match.status)));
@@ -165,12 +180,13 @@ export async function collectSportScore(now,old,active){
     const match=JSON.parse(row.match_json);
     if(match.source==='SportScore'&&live.has(match.status)&&selected(match))candidates.set(id,match);
   }
-  // At most five calls/minute; together with list calls this stays below 10k/day.
+  // Share a fixed request budget between league coverage and match details.
   // Rotate through older details first, prioritizing games that disappeared from live.
   const age=match=>{const row=old.get(match.id);return row?JSON.parse(row.match_json).cardUpdated||0:0};
   const changed=match=>{const row=old.get(match.id);if(!row)return false;const prior=JSON.parse(row.match_json);return Number.isInteger(prior.homeScore)&&Number.isInteger(prior.awayScore)&&(match.homeScore>prior.homeScore||match.awayScore>prior.awayScore)};
   const ordered=[...candidates.values()].sort((a,b)=>(Number(!visible.has(b.id))-Number(!visible.has(a.id)))||Number(changed(b))-Number(changed(a))||age(a)-age(b));
-  const target=ordered.slice(0,ordered.some(changed)?3:5);
+  const detailBudget=6-days.length-leagues.length;
+  const target=ordered.slice(0,ordered.some(changed)?Math.max(1,detailBudget-1):detailBudget);
   // A healthy connection can be verified even before anyone selects a match.
   if(!target.length){const sample=allLive.find(match=>match.league);if(sample)target.push(sample)}
   const results=await Promise.allSettled(target.map(detail));
@@ -183,12 +199,12 @@ export async function collectSportScore(now,old,active){
     if(summary){
       // Summary and details are cached independently. Use the summary's score/status
       // when they disagree rather than creating a false reversal or a second goal.
-      visible.set(match.id,{...summary,cards:match.cards,goals:summary.homeScore===match.homeScore&&summary.awayScore===match.awayScore?match.goals:null,minute:summary.status===match.status?match.minute:summary.minute});
+      visible.set(match.id,{...summary,cards:match.cards,goals:summary.homeScore===match.homeScore&&summary.awayScore===match.awayScore?match.goals:null,minute:summary.status===match.status?(match.minute??summary.minute):summary.minute});
     }else if(finals.has(match.status)||live.has(match.status))visible.set(match.id,match);
   }
   // Reserve at most two provider requests for one verified player's portrait.
   // Search + profile are cached; the total per poll remains five requests.
-  if(target.length<=3){
+  if(days.length+leagues.length+target.length<=5&&date.getUTCMinutes()%5!==0){
     for(const match of visible.values()){
       if(!changed(match)||!Array.isArray(match.goals))continue;
       const scorer=match.goals.find(g=>g.homeScore===match.homeScore&&g.awayScore===match.awayScore&&!g.photo);

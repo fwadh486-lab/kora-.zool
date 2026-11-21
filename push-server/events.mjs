@@ -56,7 +56,7 @@ export function transitions(previous, current) {
   const result = [], wasLive = liveStatuses.has(previous.status), isLive = liveStatuses.has(current.status);
   const isFinal = finalStatuses.has(current.status), wasFinal = finalStatuses.has(previous.status);
   if (!wasLive && !wasFinal && previous.status === 'NS' && isLive) result.push('kickoff');
-  if (previous.status === '1H' && current.status === 'HT') result.push('halftime');
+  if (['1H','LIVE'].includes(previous.status) && current.status === 'HT') result.push('halftime');
   if (['1H','HT'].includes(previous.status) && current.status === '2H') result.push('secondhalf');
   // A provider's first appearance for a live match is a baseline, not a goal.
   // Score corrections are saved as the new baseline without creating a false goal.
@@ -67,6 +67,12 @@ export function transitions(previous, current) {
   }
   if (!wasFinal && isFinal && (wasLive || previous.status === 'NS')) result.push('fulltime');
   return result;
+}
+export function isFreshSportScoreKickoff(match,now,lastSuccess){
+  if(match.status!=='1H'||!Number.isFinite(lastSuccess)||now-lastSuccess<0||now-lastSuccess>180000)return false;
+  const elapsed=now-Date.parse(match.date);
+  if(!Number.isFinite(elapsed)||elapsed<0)return false;
+  return Number.isInteger(match.minute)?match.minute<=3&&elapsed<=600000:elapsed<=180000;
 }
 export function newCards(previous, current) {
   if (!Array.isArray(previous?.cards) || !Array.isArray(current?.cards)) return [];

@@ -1,5 +1,5 @@
 import {buildPushPayload} from '@block65/webcrypto-web-push';
-import {fromFixture, transitions, newCards, selectedBy, preferenceAllows, notificationFor} from './events.mjs';
+import {fromFixture, transitions, newCards, selectedBy, preferenceAllows, notificationFor, isFreshSportScoreKickoff} from './events.mjs';
 import {collectSportScore,publicFixtures,publicMatchDetails,publicPlayerPhoto} from './sportscore.mjs';
 import {nativeConfigured,nativeConfigStatus,probeNativeAuthorization,sendNative} from './fcm.mjs';
 
@@ -244,7 +244,7 @@ async function pollMatches(env, now) {
       const kinds=fresh?transitions(prior,match):[];
       // A new fixture can appear after the upcoming list was truncated. Only report
       // a kickoff if a healthy previous poll and the provider's actual clock confirm it.
-      if(useFree&&!row&&priorFeed&&now-priorFeed.value<=3*MINUTE&&match.status==='1H'&&Number.isInteger(match.minute)&&match.minute<=3&&Math.abs(now-Date.parse(match.date))<=10*MINUTE)kinds.push('kickoff');
+      if(useFree&&!row&&priorFeed&&isFreshSportScoreKickoff(match,now,Number(priorFeed.value)))kinds.push('kickoff');
       const hasCardData=Array.isArray(match.cards);
       const cards=fresh&&now-(prior?.cardUpdated||0)<=EVENT_TTL?newCards(prior,match):[];
       match.cardUpdated=hasCardData?now:prior?.cardUpdated||0;

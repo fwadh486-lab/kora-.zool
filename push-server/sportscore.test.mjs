@@ -1,12 +1,40 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {fromSportScore,collectSportScore} from './sportscore.mjs';
-import {newCards,transitions,notificationFor} from './events.mjs';
+import {newCards,transitions,notificationFor,isFreshSportScoreKickoff} from './events.mjs';
 
 const now=Date.parse('2026-11-20T18:30:00Z');
 const base={home:'Al Ahli SC',away:'Al Nassr',home_score:'1',away_score:'1',status:'live',status_text:'Half time',time:'2026-11-20T17:30:00Z',competition:'Saudi Professional League',url:'/football/match/al-nassr-fc-vs-al-ahli-sfc/pxwrxlhy4w35ryk/'};
 const card={time:23,type:'Yellow card',type_id:3,side:'home',player:'Eduard Spertsyan',is_card:true};
 const preferences={teams:[],matches:[],types:['goal','kickoff','yellow'],allLive:true};
+
+test('Premier League phases are detected even when missing from the capped global feed and live clock',async()=>{
+  const actual=globalThis.fetch;
+  let phase='Not started';
+  const fixture={...base,home:'Manchester City',away:'Fulham',competition:'English Premier League',url:'/football/match/manchester-city-fulham/city123/',time:new Date(now).toISOString(),home_score:0,away_score:0};
+  let calls=[];
+  globalThis.fetch=async url=>{
+    const u=new URL(url);calls.push(u);
+    if(u.pathname!=='/api/v1/fixtures/')return Response.json({match:{...fixture,status_text:phase}});
+    const competition=u.searchParams.get('competition');
+    return Response.json({sport:'football',matches:competition==='english-premier-league'?[{...fixture,status_text:phase}]:!competition&&u.searchParams.get('status')==='live'?[base]:[]});
+  };
+  try{
+    let previous=null;
+    for(const [i,[status,event]] of [['Not started',null],['1st half','kickoff'],['Half time','halftime'],['2nd half','secondhalf'],['Finished','fulltime']].entries()){
+      phase=status;calls=[];
+      const old=previous?new Map([[previous.id,{match_json:JSON.stringify(previous),updated:now+(i-1)*60000}]]):new Map();
+      const result=await collectSportScore(now+i*60000,old,[{preferences}]);
+      const current=result.matches.get('ss:city123');assert.ok(current);assert.equal(current.minute,null);
+      if(event)assert.ok(transitions(previous,current).includes(event));
+      assert.ok(calls.length<=7);previous=current;
+    }
+    const started=fromSportScore({...fixture,status_text:'1st half'});
+    assert.ok(isFreshSportScoreKickoff(started,now+60000,now));
+    assert.equal(isFreshSportScoreKickoff(started,now+600000,now+540000),false);
+    assert.equal(isFreshSportScoreKickoff({...started,status:'NS'},now+60000,now),false);
+  }finally{globalThis.fetch=actual}
+});
 
 test('normalize verified provider shape with card, phase, score and stable ID',()=>{
   const match=fromSportScore({...base,incidents:[card]});

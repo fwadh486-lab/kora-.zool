@@ -1,6 +1,7 @@
-const CACHE='korazol-shell-v20';
+const CACHE='korazol-shell-v21';
 const DATA_CACHE='korazol-data-v1';
-const SHELL=['./','./push-client-v5.js','./match-feed-v2.js','./match-detail-feed-v2.js','./index.html','./fixtures.html','./match-details.html','./lineup-v2.html','./manifest.webmanifest','./kora-zol-icon-192.png','./kora-zol-icon-512.png'];
+const SHELL=['./','./push-client-v5.js','./match-feed-v2.js','./match-detail-feed-v2.js','./team-feed-v1.js','./index.html','./fixtures.html','./match-details.html','./team-details.html','./lineup-v2.html','./manifest.webmanifest','./kora-zol-icon-192.png','./kora-zol-icon-512.png'];
+const shellPage=path=>['match-details.html','team-details.html','fixtures.html','lineup-v2.html'].find(page=>path.endsWith('/'+page))||'index.html';
 self.addEventListener('install',event=>{
  event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(SHELL)));
  self.skipWaiting();
@@ -18,7 +19,7 @@ self.addEventListener('fetch',event=>{
  const url=new URL(request.url);
  if(url.origin!==self.location.origin)return;
  // Notification scripts and configuration must not be pinned to a stale shell.
- if(/\/(?:push-client|match-feed|match-detail-feed)(?:-v\d+)?\.js$/.test(url.pathname)||url.pathname.endsWith('/push-config.json')){
+  if(/\/(?:push-client|match-feed|match-detail-feed|team-feed)(?:-v\d+)?\.js$/.test(url.pathname)||url.pathname.endsWith('/push-config.json')){
   event.respondWith((async()=>{
    const cache=await caches.open(CACHE);
    try{const response=await fetch(request,{cache:'no-cache'});if(response.ok){event.waitUntil(cache.put(request,response.clone()));return response;}}
@@ -31,11 +32,11 @@ self.addEventListener('fetch',event=>{
   event.respondWith((async()=>{
    try{
     const response=await fetch(request,{cache:'no-cache'});
-    if(response.ok){const cache=await caches.open(CACHE);event.waitUntil(cache.put(url.pathname.endsWith('/match-details.html')?'./match-details.html':url.pathname.endsWith('/fixtures.html')?'./fixtures.html':url.pathname.endsWith('/lineup-v2.html')?'./lineup-v2.html':'./index.html',response.clone()));}
+    if(response.ok){const cache=await caches.open(CACHE);event.waitUntil(cache.put('./'+shellPage(url.pathname),response.clone()));}
     return response;
    }catch(e){
     const cache=await caches.open(CACHE);
-    const page=url.pathname.endsWith('/match-details.html')?'./match-details.html':url.pathname.endsWith('/fixtures.html')?'./fixtures.html':url.pathname.endsWith('/lineup-v2.html')?'./lineup-v2.html':'./index.html';
+    const page='./'+shellPage(url.pathname);
     return await cache.match(page)||Response.error();
    }
   })());

@@ -10,8 +10,8 @@ from datetime import datetime, timezone
 TOKEN = os.environ.get("FOOTBALL_DATA_API_KEY", "").strip()
 if not TOKEN:
     raise SystemExit("FOOTBALL_DATA_API_KEY secret is missing")
-LEAGUES = {"en": "PL", "es": "PD"}
-out = {"updated": datetime.now(timezone.utc).isoformat(), "leagues": {}, "errors": {}}
+LEAGUES = {"en": "PL", "es": "PD", "de": "BL1", "it": "SA", "fr": "FL1", "br": "BSA", "nl": "DED", "pt": "PPL", "eng2": "ELC"}
+out = {"updated": datetime.now(timezone.utc).isoformat(), "leagues": {}, "leagueUpdated": {}, "errors": {}}
 for code, competition in LEAGUES.items():
     req = urllib.request.Request(
         f"https://api.football-data.org/v4/competitions/{competition}/standings",
@@ -40,6 +40,8 @@ for code, competition in LEAGUES.items():
         ]
     except (urllib.error.URLError, ValueError, KeyError, TimeoutError) as exc:
         out["errors"][code] = str(exc)[:160]
+    else:
+        out["leagueUpdated"][code] = out["updated"]
     time.sleep(7)
 if not out["leagues"]:
     raise SystemExit("No standings available: " + json.dumps(out["errors"]))
@@ -49,5 +51,6 @@ if path.exists():
     previous = json.loads(path.read_text(encoding="utf-8"))
     for code, rows in previous.get("leagues", {}).items():
         out["leagues"].setdefault(code, rows)
+        out["leagueUpdated"].setdefault(code, previous.get("leagueUpdated", {}).get(code, previous.get("updated")))
 path.write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 print("Updated:", ", ".join(out["leagues"]), "Errors:", out["errors"])

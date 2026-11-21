@@ -100,6 +100,11 @@
     if(options.tab)p.set('tab',options.tab);if(options.side)p.set('side',options.side);
     return './match-details.html?'+p.toString();
   }
-  root.KoraMatchFeed = {localDay,phaseOf,visibleOnDay,mergeMatches,fixtureDays,fetchFixtures,resultDays,completedResults,fetchResultHistory,detailUrl};
+  function teamUrl(match,side){
+    const p=new URLSearchParams({team:String(match[side]||''),league:String(match.league||'')});
+    const logo=match[side+'Logo'];if(typeof logo==='string'&&/^https:\/\//.test(logo))p.set('crest',logo);
+    return './team-details.html?'+p.toString();
+  }
+  root.KoraMatchFeed = {localDay,phaseOf,visibleOnDay,mergeMatches,fixtureDays,fetchFixtures,resultDays,completedResults,fetchResultHistory,detailUrl,teamKey,teamUrl};
 })(globalThis);
 

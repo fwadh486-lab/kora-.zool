@@ -31,12 +31,15 @@
     return aliases[key] || key;
   }
   function mergeMatches(base, incoming, preserveId = true) {
-    const result = [...base];
+    const result = [...base], byId=new Map(), byTeams=new Map();
+    const pairKey=m=>{const home=teamKey(m.home),away=teamKey(m.away);return home&&away?JSON.stringify([m.league,home,away]):null};
+    const index=(m,i)=>{if(m.id!=null)byId.set(String(m.id),i);const key=pairKey(m);if(key){if(!byTeams.has(key))byTeams.set(key,new Set());byTeams.get(key).add(i)}};
+    result.forEach(index);
     for (const fresh of incoming) {
-      const i = result.findIndex(old => old.id === fresh.id || old.league === fresh.league &&
-        teamKey(old.home) && teamKey(old.home) === teamKey(fresh.home) && teamKey(old.away) === teamKey(fresh.away) &&
-        Math.abs(Date.parse(old.date)-Date.parse(fresh.date)) <= 3*hour);
-      if (i < 0) {result.push(fresh);continue;}
+      const pair=pairKey(fresh), stamp=Date.parse(fresh.date);
+      let i=fresh.id!=null?byId.get(String(fresh.id)):undefined;
+      if(i===undefined&&pair&&Number.isFinite(stamp))i=[...(byTeams.get(pair)||[])].find(j=>pairKey(result[j])===pair&&Math.abs(Date.parse(result[j].date)-stamp)<=3*hour);
+      if(i===undefined){index(fresh,result.length);result.push(fresh);continue;}
       const old = result[i], chosen = preserveId ? old : fresh;
       const protect = (phaseOf(old)==='finished'&&phaseOf(fresh)!=='finished')||(phaseOf(old)==='live'&&phaseOf(fresh)==='upcoming');
       const scoreState=protect?{score:old.score,status:old.status,live:old.live,phase:phaseOf(old),minute:old.minute,homeScore:old.homeScore,awayScore:old.awayScore}:{phase:phaseOf(fresh)};
@@ -44,6 +47,7 @@
         homeLogo:fresh.homeLogo || old.homeLogo,awayLogo:fresh.awayLogo || old.awayLogo,
         sportScoreId:String(fresh.id||'').startsWith('ss:') ? fresh.id : fresh.sportScoreId || old.sportScoreId,
         slug:fresh.slug||old.slug};
+      index(result[i],i);if(fresh.id!=null)byId.set(String(fresh.id),i);
     }
     return result;
   }

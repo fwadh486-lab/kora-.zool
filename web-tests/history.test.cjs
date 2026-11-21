@@ -33,3 +33,25 @@ test('verified lineups merge separately by team, preserving 11 players and enric
   const secondary=[{side:'home',team:'Bayern Munich',formation:'4-4-2',players:[{name:'Player 1',id:123,photo:'https://example.com/real.png'},{name:'Player 10 Junior',photo:'https://example.com/wrong.png'}],bench:[{name:'Sub'}]},{side:'away',team:'FC Köln',players:[{name:'Away player'}]}];
   const merged=detail.mergeLineups(main,secondary);assert.equal(merged.length,2);assert.equal(merged[0].players.length,11);assert.equal(merged[0].players[1].photo,'https://example.com/real.png');assert.equal(merged[0].players[10].photo,undefined);assert.equal(merged[0].bench[0].name,'Sub');assert.deepEqual(detail.groups(merged[0].players,merged[0].formation).map(x=>x.length),[1,4,4,2]);
 });
+test('verified tactical data replaces broad positions and puts each player into the correct formation row',()=>{
+ const names=['Jonas Urbig','Jonathan Tah','Dayot Upamecano','Josip Stanišić','Konrad Laimer','Lennart Karl','Aleksandar Pavlović','Joshua Kimmich','Harry Kane','Nathaniel Brown','Michael Olise'];
+ const pos=['G','CD-L','CD-R','LB','RB','AM','LM','RM','F','AM-L','AM-R'];
+ const primary=names.map((name,i)=>({name,number:i+1,position:i===0?'G':i<5?'D':i===8?'F':'M'}));
+ const secondary=names.map((name,i)=>({name:name.normalize('NFD').replace(/[\u0300-\u036f]/g,''),number:String(i+1),position:pos[i],formationPlace:String(i+1)}));
+ const merged=detail.mergeLineups([{side:'home',players:primary}],[{side:'home',players:secondary,formation:'4-2-3-1'}])[0];
+ assert.equal(merged.formation,'4-2-3-1');
+ assert.deepEqual(detail.groups(merged.players,merged.formation).map(row=>row.map(p=>p.position)),[['G'],['LB','CD-L','CD-R','RB'],['LM','RM'],['AM-L','AM','AM-R'],['F']]);
+});
+test('portrait renderer verifies name and team, displays the real resource, and uses match jersey if unavailable',async()=>{
+ const originalFetch=global.fetch,originalDocument=global.document;
+ const portrait='https://img.thesports.com/football/player/player.png',jersey='https://stitcher.espn.com/sports/soccer/leagues/esp.1/events/42/athletes/9/jersey.png?darkMode=false';
+ const calls=[];global.fetch=async url=>{const u=new URL(url);if(u.hostname==='www.wikidata.org')return{ok:true,json:async()=>({search:[]})};calls.push([u.searchParams.get('name'),u.searchParams.get('team')]);return{ok:true,json:async()=>u.searchParams.get('name')==='Confirmed Player'?{source:'SportScore',photo:portrait,teamVerified:true}:{photo:null}}};
+ global.document={createElement(){return{style:{},dataset:{},set src(value){this.url=value;queueMicrotask(()=>this.onload())},remove(){}}}};
+ const face=()=>({isConnected:true,dataset:{},children:[],append(img){this.children.push(img)}});
+ try{const first=face(),second=face(),f1={hidden:false},f2={hidden:false};detail.mountPhoto(first,{name:'Confirmed Player',photo:'https://old-club.invalid/old.png',jerseyPhoto:jersey},'Current Club',f1);detail.mountPhoto(second,{name:'No Photo',jerseyPhoto:jersey},'Current Club',f2);await new Promise(resolve=>setImmediate(resolve));assert.deepEqual(calls,[['Confirmed Player','Current Club'],['No Photo','Current Club']]);assert.equal(first.children[0].url,portrait);assert.equal(second.children[0].url,jersey);assert.equal(first.dataset.imageKind,'portrait');assert.equal(second.dataset.imageKind,'jersey');assert.equal(f1.hidden,true);assert.equal(f2.hidden,true)}finally{global.fetch=originalFetch;global.document=originalDocument}
+});
+test('Commons fallback requires exact footballer identity and a reusable attributed photo',async()=>{
+ const original=global.fetch,claim=value=>({mainsnak:{datavalue:{value}}});
+ global.fetch=async url=>{const u=new URL(url),action=u.searchParams.get('action');let body={};if(action==='wbsearchentities'){const name=u.searchParams.get('search');body={search:[{id:'Q123',label:name,description:'German footballer'},...(name==='Ambiguous Name'?[{id:'Q456',label:name,description:'Brazilian footballer'}]:[])]}}else if(action==='wbgetentities')body={entities:{Q123:{claims:{P31:[claim({id:'Q5'})],P106:[claim({id:'Q937857'})],P18:[claim('Player.jpg')]}}}};else body={query:{pages:[{imageinfo:[{thumburl:'https://thumb.wikimedia.org/wikipedia/commons/thumb/Player.jpg',descriptionurl:'https://commons.wikimedia.org/wiki/File:Player.jpg',extmetadata:{LicenseShortName:{value:'CC BY-SA 4.0'},Artist:{value:'<a>Photo Author</a>'}}}]}]}};return{ok:true,json:async()=>body}};
+ try{const result=await detail.commonsPortrait('Example Footballer');assert.equal(result.author,'Photo Author');assert.equal(result.license,'CC BY-SA 4.0');assert.equal(result.source,'Wikimedia Commons');assert.equal(await detail.commonsPortrait('Ambiguous Name'),null)}finally{global.fetch=original}
+});

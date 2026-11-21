@@ -20,3 +20,8 @@ test('player photos use exact name and matching team, not a similar name',async(
  globalThis.fetch=async url=>String(url).includes('/search/')?Response.json({players:[{name:'Cristiano Ronaldo',slug:'cristiano-ronaldo'},{name:'Cristiano Ronaldo Junior',slug:'ronaldo-junior'}]}):Response.json({player:{name:'Cristiano Ronaldo',logo:'https://img.thesports.com/football/player/real.png'},stats:{team:'Al Nassr'}});
  try{assert.equal((await publicPlayerPhoto('Cristiano Ronaldo','Al Nassr')).photo,'https://img.thesports.com/football/player/real.png');assert.equal((await publicPlayerPhoto('Cristiano Ronaldo','Other Team')).photo,null)}finally{globalThis.fetch=original}
 });
+test('duplicate search entries are resolved by the canonical profile, and no unverified or conflicting photo escapes',async()=>{
+ const original=globalThis.fetch;let team='Real Madrid',logo='https://img.thesports.com/football/player/verified.png';
+ globalThis.fetch=async url=>String(url).includes('/search/')?Response.json({players:[{name:'Example Player',slug:'example-player',logo:'https://img.thesports.com/football/player/old.png'},{name:'Example Player',slug:'example-player',logo:''}]}):Response.json({player:{name:'Example Player',logo},stats:{team}});
+ try{const photo=await publicPlayerPhoto('Example Player','Real Madrid');assert.equal(photo.photo,logo);assert.equal(photo.teamVerified,true);assert.equal(photo.kitVerified,false);team='Former Club';assert.equal((await publicPlayerPhoto('Example Player','Real Madrid')).photo,null);team='';assert.equal((await publicPlayerPhoto('Example Player','Real Madrid')).photo,null);team='Real Madrid';logo='';assert.equal((await publicPlayerPhoto('Example Player','Real Madrid')).photo,null)}finally{globalThis.fetch=original}
+});

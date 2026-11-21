@@ -110,17 +110,24 @@ export async function publicMatchDetails(id,slug){
 export async function publicPlayerPhoto(name,team){
   if(typeof name!=='string'||name.length<2||name.length>100||typeof team!=='string'||team.length<2||team.length>100)throw Error('invalid_player');
   const key=encodeURIComponent(normalizedName(name))+'-'+encodeURIComponent(normalizedName(team));
-  return cacheRead('player-photo-v1-'+key,86400*7,async()=>{
+  return cacheRead('player-photo-v3-'+key,86400,async()=>{
     const data=await request('/api/v1/search/',{q:name,limit:8});
     const exact=(data.players||[]).filter(p=>normalizedName(p.name)===normalizedName(name)&&/^[a-z0-9-]{1,200}$/i.test(p.slug||''));
-    if(exact.length!==1)return {name,photo:null};
-    const candidate=exact[0];
-    const profile=await request('/api/widget/player/',{slug:candidate.slug});
-    const actualTeam=profile.stats?.team;
-    // Do not attach an unrelated player's image when a name is ambiguous.
-    if(normalizedName(profile.player?.name)!==normalizedName(name)||actualTeam&&normalizedName(actualTeam)!==normalizedName(team))return {name,photo:null};
-    const logo=profile.player?.logo||candidate.logo;
-    return {name,photo:typeof logo==='string'&&/^https:\/\/img\.thesports\.com\/football\/player\//.test(logo)?logo:null,source:'SportScore'};
+    // Search may contain duplicate records for one canonical profile. Only the
+    // profile itself can confirm identity and current club, never a search logo.
+    const slugs=[...new Set(exact.map(p=>p.slug))].slice(0,4);
+    const matches=[];
+    for(const slug of slugs){
+      const profile=await request('/api/widget/player/',{slug});
+      const actualTeam=profile.stats?.team;
+      if(normalizedName(profile.player?.name)!==normalizedName(name)||!actualTeam||normalizedName(actualTeam)!==normalizedName(team))continue;
+      const logo=profile.player?.logo;
+      if(typeof logo==='string'&&/^https:\/\/img\.thesports\.com\/football\/player\/[a-z0-9._/%-]+$/i.test(logo))matches.push(logo);
+    }
+    const photos=[...new Set(matches)];
+    // A missing or ambiguous image must not be cached for a week or replaced
+    // with a different player's portrait. The provider does not certify kits.
+    return photos.length===1?{name,photo:photos[0],source:'SportScore',teamVerified:true,kitVerified:false}:{name,photo:null,partial:true};
   });
 }
 async function detail(match){

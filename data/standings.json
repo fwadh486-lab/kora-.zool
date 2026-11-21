@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-20T19:14:52.092360+00:00",
+  "updated": "2026-11-21T01:27:04.253859+00:00",
   "leagues": {
     "en": [
       {
@@ -320,11 +320,11 @@
         "rank": 7,
         "team": "Athletic Club",
         "crest": "https://crests.football-data.org/77.png",
-        "played": 11,
+        "played": 12,
         "won": 4,
         "draw": 4,
-        "lost": 3,
-        "gd": 4,
+        "lost": 4,
+        "gd": 3,
         "points": 16,
         "form": null
       },
@@ -354,6 +354,18 @@
       },
       {
         "rank": 10,
+        "team": "RCD Espanyol de Barcelona",
+        "crest": "https://crests.football-data.org/80.png",
+        "played": 13,
+        "won": 4,
+        "draw": 3,
+        "lost": 6,
+        "gd": 0,
+        "points": 15,
+        "form": null
+      },
+      {
+        "rank": 11,
         "team": "Real Racing Club de Santander",
         "crest": "https://crests.football-data.org/5335.png",
         "played": 12,
@@ -365,7 +377,7 @@
         "form": null
       },
       {
-        "rank": 11,
+        "rank": 12,
         "team": "RC Celta de Vigo",
         "crest": "https://crests.football-data.org/558.png",
         "played": 12,
@@ -377,7 +389,7 @@
         "form": null
       },
       {
-        "rank": 12,
+        "rank": 13,
         "team": "Deportivo Alavés",
         "crest": "https://crests.football-data.org/263.png",
         "played": 12,
@@ -386,18 +398,6 @@
         "lost": 5,
         "gd": -2,
         "points": 13,
-        "form": null
-      },
-      {
-        "rank": 13,
-        "team": "RCD Espanyol de Barcelona",
-        "crest": "https://crests.football-data.org/80.png",
-        "played": 12,
-        "won": 3,
-        "draw": 3,
-        "lost": 6,
-        "gd": -1,
-        "points": 12,
         "form": null
       },
       {

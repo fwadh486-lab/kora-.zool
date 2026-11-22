@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-22T09:47:58.924521+00:00",
+  "updated": "2026-11-22T12:51:45.901881+00:00",
   "matches": [
     {
       "events": [],
@@ -12226,8 +12226,8 @@
       "matchday": 12,
       "stage": "REGULAR_SEASON",
       "halfTime": {
-        "home": null,
-        "away": null
+        "home": 0,
+        "away": 0
       },
       "id": "fd:558521",
       "league": "it",
@@ -12236,9 +12236,9 @@
       "homeLogo": "https://crests.football-data.org/109.png",
       "awayLogo": "https://crests.football-data.org/454.png",
       "date": "2026-11-22T11:30:00Z",
-      "score": "— : —",
-      "status": "TIMED",
-      "live": false,
+      "score": "2 - 0",
+      "status": "IN_PLAY",
+      "live": true,
       "source": "football-data.org"
     },
     {
@@ -12256,9 +12256,9 @@
       "homeLogo": "https://crests.football-data.org/328.png",
       "awayLogo": "https://crests.football-data.org/59.png",
       "date": "2026-11-22T12:00:00Z",
-      "score": "— : —",
-      "status": "SCHEDULED",
-      "live": false,
+      "score": "1 - 1",
+      "status": "IN_PLAY",
+      "live": true,
       "source": "football-data.org"
     },
     {

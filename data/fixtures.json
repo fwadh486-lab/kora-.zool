@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-22T18:46:32.769576+00:00",
+  "updated": "2026-11-22T21:41:51.730488+00:00",
   "matches": [
     {
       "events": [],
@@ -12196,9 +12196,9 @@
       "homeLogo": "https://crests.football-data.org/1772_large.png",
       "awayLogo": "https://crests.football-data.org/1771.png",
       "date": "2026-11-22T00:00:00Z",
-      "score": "1 - 2",
-      "status": "FINISHED",
-      "live": false,
+      "score": "0 - 0",
+      "status": "IN_PLAY",
+      "live": true,
       "source": "football-data.org"
     },
     {
@@ -12537,8 +12537,8 @@
       "awayLogo": "https://crests.football-data.org/470.png",
       "date": "2026-11-22T17:00:00Z",
       "score": "5 - 1",
-      "status": "IN_PLAY",
-      "live": true,
+      "status": "FINISHED",
+      "live": false,
       "source": "football-data.org"
     },
     {
@@ -12557,8 +12557,8 @@
       "awayLogo": "https://crests.football-data.org/84.png",
       "date": "2026-11-22T17:30:00Z",
       "score": "1 - 0",
-      "status": "IN_PLAY",
-      "live": true,
+      "status": "FINISHED",
+      "live": false,
       "source": "football-data.org"
     },
     {
@@ -12586,8 +12586,8 @@
       "matchday": 12,
       "stage": "REGULAR_SEASON",
       "halfTime": {
-        "home": null,
-        "away": null
+        "home": 1,
+        "away": 2
       },
       "id": "fd:558520",
       "league": "it",
@@ -12596,9 +12596,9 @@
       "homeLogo": "https://crests.football-data.org/102.png",
       "awayLogo": "https://crests.football-data.org/108.png",
       "date": "2026-11-22T19:45:00Z",
-      "score": "— : —",
-      "status": "TIMED",
-      "live": false,
+      "score": "4 - 4",
+      "status": "IN_PLAY",
+      "live": true,
       "source": "football-data.org"
     },
     {
@@ -12606,8 +12606,8 @@
       "matchday": 11,
       "stage": "REGULAR_SEASON",
       "halfTime": {
-        "home": null,
-        "away": null
+        "home": 2,
+        "away": 0
       },
       "id": "fd:559629",
       "league": "fr",
@@ -12616,9 +12616,9 @@
       "homeLogo": "https://crests.football-data.org/516.png",
       "awayLogo": "https://crests.football-data.org/535.png",
       "date": "2026-11-22T19:45:00Z",
-      "score": "— : —",
-      "status": "TIMED",
-      "live": false,
+      "score": "2 - 2",
+      "status": "IN_PLAY",
+      "live": true,
       "source": "football-data.org"
     },
     {
@@ -12626,8 +12626,8 @@
       "matchday": 13,
       "stage": "REGULAR_SEASON",
       "halfTime": {
-        "home": null,
-        "away": null
+        "home": 0,
+        "away": 2
       },
       "id": "fd:564753",
       "league": "es",
@@ -12636,9 +12636,9 @@
       "homeLogo": "https://crests.football-data.org/82.png",
       "awayLogo": "https://crests.football-data.org/78.png",
       "date": "2026-11-22T20:00:00Z",
-      "score": "— : —",
-      "status": "TIMED",
-      "live": false,
+      "score": "0 - 2",
+      "status": "IN_PLAY",
+      "live": true,
       "source": "football-data.org"
     },
     {

@@ -15,3 +15,5 @@ test('Firebase sign-in interface and account restore controls exist',()=>{
  assert.match(html,/account-v1\.js/);
  assert.match(html,/notifications-custom-v1\.js/);
 });
+
+test('account writes pending device changes synchronously before upload and restores them safely',()=>{const account=fs.readFileSync(require.resolve('../account-v1.js'),'utf8');assert.match(account,/korazol_account_pending_v1_/);assert.match(account,/store\(pendingKey\(current\.uid\),JSON\.stringify\(snapshot\(\)\)\)/);assert.match(account,/await account\('PUT',local\)/);assert.match(account,/if\(read\(pendingKey\(uid\)\)===fingerprint\)/);});

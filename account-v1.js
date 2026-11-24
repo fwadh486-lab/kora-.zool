@@ -7,6 +7,7 @@ const ACCOUNT_KEY='korazol_account_refresh_v1',BASE='https://korazol-push.fwadh4
 const $=id=>document.getElementById(id),tr=(ar,en)=>document.documentElement.lang==='en'?en:ar;
 const current={idToken:'',refreshToken:'',expires:0,uid:'',email:''};
 let config=null,busy=false,restoring=false,timer=0,lastUploaded='',activeUid='';
+const pendingKey=uid=>'korazol_account_pending_v1_'+uid;
 function read(key){try{return localStorage.getItem(key)}catch{return null}}
 function store(key,value){try{if(value==null)localStorage.removeItem(key);else localStorage.setItem(key,value);return true}catch{return false}}
 function list(key,limit){try{const v=JSON.parse(read(key)||'[]');return Array.isArray(v)?[...new Set(v.filter(x=>typeof x==='string'&&x.trim()&&x.length<=100))].slice(0,limit):[]}catch{return []}}
@@ -123,7 +124,17 @@ function apply(data){
 }
 async function restore(show=true){
  if(!current.uid)return;
+ clearTimeout(timer);
  const uid=current.uid;
+ const pending=read(pendingKey(uid));
+ // Preserve preferences changed just before the user closed the app.
+ // Upload the exact pending snapshot first, then restore the authoritative copy.
+ if(pending){
+   let local;try{local=JSON.parse(pending)}catch{throw Error('invalid_pending_backup')}
+   await account('PUT',local);
+   if(current.uid!==uid)return;
+   store(pendingKey(uid),null);
+ }
  const result=await account('GET');
  if(current.uid!==uid)return;
  if(result.found&&result.data){
@@ -139,12 +150,15 @@ async function save(show=false){
  await account('PUT',data);
  if(current.uid!==uid)return;
  lastUploaded=fingerprint;
+ if(read(pendingKey(uid))===fingerprint)store(pendingKey(uid),null);
  if(show)status('✓ حفظنا الفرق والبطولات والمفضلات واختيارات الإشعارات في حسابك.','✓ Teams, leagues, favorites and notification choices saved to your account.');
 }
 function schedule(){
  if(!current.uid||restoring)return;
+ // An offline or interrupted upload must not be overwritten by an older cloud copy.
+ store(pendingKey(current.uid),JSON.stringify(snapshot()));
  clearTimeout(timer);
- timer=setTimeout(()=>save(false).catch(()=>status('تعذرت مزامنة المفضلات؛ افتح الحساب واضغط حفظ لمحاولة جديدة.','Favorites could not sync; tap Back up to retry.',true)),2200);
+ timer=setTimeout(()=>save(false).catch(()=>status('تعذرت مزامنة المفضلات؛ هنعيد المحاولة عند فتح الحساب.','Favorites are kept on this device. We will retry the cloud sync.',true)),1100);
 }
 function signout(){
  clearTimeout(timer);lastUploaded='';

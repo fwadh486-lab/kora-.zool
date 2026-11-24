@@ -2,6 +2,7 @@ import {buildPushPayload} from '@block65/webcrypto-web-push';
 import {fromFixture, transitions, newCards, selectedBy, preferenceAllows, notificationFor, isFreshSportScoreKickoff, attachVerifiedScorer, verifiedGoalScorer} from './events.mjs';
 import {collectSportScore,publicFixtures,publicMatchDetails,publicPlayerPhoto,verifiedGoalDetails} from './sportscore.mjs';
 import {nativeConfigured,nativeConfigStatus,probeNativeAuthorization,sendNative} from './fcm.mjs';
+import {accountRoute} from './account.mjs';
 
 const MINUTE = 60000, EVENT_TTL = 10 * MINUTE;
 const eventTypes = ['goal','kickoff','halftime','fulltime','yellow','red'];
@@ -70,7 +71,9 @@ function cleanPreferences(raw) {
     return id && home && away && Number.isFinite(Date.parse(date)) ? [{id,home,away,date}] : [];
   }) : [];
   const types = Array.isArray(raw?.types) ? eventTypes.filter(t=>raw.types.includes(t)) : [];
-  return {teams,matches,types,allLive:raw?.allLive===true,language:raw?.language === 'en'?'en':'ar'};
+  const validLeagues=new Set(['en','es','sa','sd','de','it','fr','cl','afcelite','eng2','pt','nl','br','rw','qa','el','cafcl','euro','nations','friendly','clubfriendly','nonfifa']);
+  const leagues=Array.isArray(raw?.leagues)?[...new Set(raw.leagues.filter(v=>validLeagues.has(v)))].slice(0,60):[];
+  return {teams,matches,leagues,selectionRule:raw?.selectionRule==='both'?'both':'any',types,allLive:raw?.allLive===true,language:raw?.language==='en'?'en':'ar'};
 }
 async function parseRequest(request) {
   const declared=Number(request.headers.get('content-length')||0);
@@ -119,6 +122,7 @@ async function route(request, env, ctx) {
   const url=new URL(request.url),path=url.pathname,origin=request.headers.get('origin');
   if(origin!==env.APP_ORIGIN) return json({error:'origin_not_allowed'},403);
   if(request.method==='OPTIONS') return new Response(null,{status:204});
+  if(path==='/account'&&['GET','PUT','DELETE'].includes(request.method))return accountRoute(request,env,parseRequest);
   if(path==='/config' && request.method==='GET') {
     const diagnostic=url.searchParams.get('check')==='native';
     const probe=diagnostic&&env.DB?await env.DB.prepare("SELECT value FROM service_state WHERE key='native_auth_probe_v2'").first():null;
@@ -298,8 +302,8 @@ export default {
     try{if(request.headers.get('origin')===env.APP_ORIGIN && request.method!=='OPTIONS')env=await withSigningKeys(env);response=await route(request,env,ctx)}catch{response=json({error:'server_error'},500)}
     if(request.headers.get('origin')===env.APP_ORIGIN){
       response.headers.set('access-control-allow-origin',env.APP_ORIGIN);
-      response.headers.set('access-control-allow-methods','GET, POST, OPTIONS');
-      response.headers.set('access-control-allow-headers','content-type');
+      response.headers.set('access-control-allow-methods','GET, POST, PUT, DELETE, OPTIONS');
+      response.headers.set('access-control-allow-headers','content-type, authorization');
       response.headers.set('vary','Origin');
     }
     return response;

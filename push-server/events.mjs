@@ -44,8 +44,12 @@ function parseCards(events) {
 export function selectedBy(preferences, match) {
   if (preferences.allLive && match.league) return true;
   const home = normalizedName(match.home), away = normalizedName(match.away);
-  if (preferences.teams.some(team => [home, away].includes(normalizedName(team)))) return true;
-  return preferences.matches.some(item => {
+  const teamSelected=Array.isArray(preferences.teams)&&preferences.teams.some(team=>[home,away].includes(normalizedName(team)));
+  const leagueSelected=Array.isArray(preferences.leagues)&&preferences.leagues.includes(match.league);
+  if(preferences.selectionRule==='both'){
+    if(teamSelected&&leagueSelected)return true;
+  }else if(teamSelected||leagueSelected)return true;
+  return (preferences.matches||[]).some(item => {
     if (item.id === 'af:' + match.id || item.id === 'apif:' + match.id) return true;
     return normalizedName(item.home) === home && normalizedName(item.away) === away &&
       Math.abs(Date.parse(item.date) - Date.parse(match.date)) <= 3 * 3600000;

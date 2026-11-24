@@ -2,7 +2,7 @@ name: Kora Zol web regression checks
 on:
   push:
     branches: [main]
-    paths: ['index.html','match-details.html','team-details.html','champions.html','league-details.html','league-feed-v1.js','team-feed-v1.js','match-feed-v2.js','match-detail-feed-v2.js','match-pulse-v1.js','sw.js','web-tests/**','.github/workflows/web-regression.yml']
+    paths: ['index.html','match-details.html','team-details.html','champions.html','league-details.html','league-feed-v1.js','team-feed-v1.js','match-feed-v2.js','match-detail-feed-v2.js','match-pulse-v1.js','match-center-v1.js','sw.js','web-tests/**','.github/workflows/web-regression.yml']
 permissions:
   contents: read
 jobs:
@@ -15,7 +15,7 @@ jobs:
         with:
           node-version: '22'
       - name: Verify fixture history and match detail logic
-        run: node --test web-tests/history.test.cjs web-tests/team.test.cjs web-tests/league.test.cjs web-tests/extras.test.cjs web-tests/pulse.test.cjs
+        run: node --test web-tests/history.test.cjs web-tests/team.test.cjs web-tests/league.test.cjs web-tests/extras.test.cjs web-tests/pulse.test.cjs web-tests/center.test.cjs
       - name: Install browser test runner
         run: |
           npm install --no-save --ignore-scripts playwright@1.62.1

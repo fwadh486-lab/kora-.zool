@@ -84,3 +84,5 @@ jobs:
 # Release: verified Firebase user accounts and per-league/team intersection match notification filters.
 
 # Release: verified account-backed favorites and custom competition notifications.
+
+# Compatibility: verify Firebase public keys without unsupported redirect modes in Workers.

@@ -13,7 +13,7 @@ function decode(value){
 function parsePart(s){return JSON.parse(new TextDecoder().decode(decode(s)))}
 async function remoteKeys(){
  if(keyCache&&keyCache.until>Date.now())return keyCache.keys;
- const res=await fetch(KEY_URL,{signal:AbortSignal.timeout(8000),redirect:'error'});
+ const res=await fetch(KEY_URL,{signal:AbortSignal.timeout(8000),redirect:'manual'});
  if(!res.ok)throw Error('auth_keys_unavailable');
  const data=await res.json();if(!Array.isArray(data.keys))throw Error('auth_keys_unavailable');
  const cacheControl=res.headers.get('cache-control')||'';

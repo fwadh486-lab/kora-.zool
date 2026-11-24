@@ -1,7 +1,6 @@
 package com.korazol.app;
 
 import android.Manifest;
-import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -27,9 +26,7 @@ final class NativePush {
         return (Build.VERSION.SDK_INT < 33 || context.checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS)==PackageManager.PERMISSION_GRANTED)
             && context.getSystemService(NotificationManager.class).areNotificationsEnabled();
     }
-    static void createChannel(Context context) {
-        if (Build.VERSION.SDK_INT>=26) context.getSystemService(NotificationManager.class).createNotificationChannel(new NotificationChannel(CHANNEL,"إشعارات المباريات",NotificationManager.IMPORTANCE_HIGH));
-    }
+    static void createChannel(Context context) { NotificationSounds.installChannels(context); }
     private static String secret(SharedPreferences p) {
         String secret=p.getString("secret",null);
         if(secret==null){secret=UUID.randomUUID().toString()+UUID.randomUUID();p.edit().putString("secret",secret).commit();}

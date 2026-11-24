@@ -74,7 +74,7 @@ public class MainActivity extends Activity {
         settings.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);
         settings.setAllowFileAccess(false);
         settings.setAllowContentAccess(false);
-        settings.setUserAgentString(settings.getUserAgentString()+" KoraZolAndroid/0.5.0");
+        settings.setUserAgentString(settings.getUserAgentString()+" KoraZolAndroid/0.7.0");
         if(WebViewFeature.isFeatureSupported(WebViewFeature.WEB_MESSAGE_LISTENER)){
             WebViewCompat.addWebMessageListener(webView,"KoraNative",Collections.singleton("https://fwadh486-lab.github.io"),(view,message,sourceOrigin,isMainFrame,reply)->{
                 if(isMainFrame&&isAppUrl(Uri.parse(view.getUrl()==null?HOME:view.getUrl())))handleNativeMessage(message.getData(),reply);
@@ -138,6 +138,22 @@ public class MainActivity extends Activity {
         try {
             JSONObject request=new JSONObject(raw);String id=request.getString("id"),command=request.getString("command");
             if(id.length()>80)return;
+            if ("preview-sound".equals(command)) {
+                JSONObject options=request.optJSONObject("preferences");
+                String kind=options==null?"":options.optString("sound","");
+                runOnUiThread(()->{
+                    if(!NotificationSounds.isPreviewable(kind)) {
+                        respond(reply,id,NativePush.error("invalid_sound"));
+                        return;
+                    }
+                    boolean played=NotificationSounds.preview(this,kind);
+                    JSONObject result=new JSONObject();
+                    try { result.put("ok",played); } catch(Exception ignored) { }
+                    if(!played)result=NativePush.error("sound_unavailable");
+                    respond(reply,id,result);
+                });
+                return;
+            }
             Runnable work=()->NativePush.command(this,command,request.optJSONObject("preferences"),result->respond(reply,id,result));
             if(command.equals("enable")&&Build.VERSION.SDK_INT>=33&&checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS)!=PackageManager.PERMISSION_GRANTED){
                 if(permissionGranted!=null){respond(reply,id,NativePush.error("busy"));return;}

@@ -153,7 +153,24 @@
     }catch{}finally{checkingTest=false}
   }
   function onLanguage(){notice='';render();scheduleSync()}
+  function soundPreview(){
+    const section=$('nativeSoundPreview');
+    if(!section)return;
+    section.hidden=!native;
+    if(!native)return;
+    section.querySelectorAll('[data-sound-preview]').forEach(button=>button.addEventListener('click',async()=>{
+      const status=$('nativeSoundStatus');
+      button.disabled=true;
+      try{
+        await bridge('preview-sound',{sound:button.dataset.soundPreview});
+        if(status)status.textContent=tr('✓ تم تشغيل الصوت. لو ما سمعت، راجع وضع الصامت ومستوى صوت الإشعارات.','✓ Tone played. If silent, check notification volume and silent mode.');
+      }catch{
+        if(status)status.textContent=tr('تعذّر تشغيل الصوت. تأكد إنك ثبّت أحدث APK لكورة زول.','Could not play tone. Install the latest Kora Zol APK.');
+      }finally{button.disabled=false}
+    }));
+  }
   function init(){
+    soundPreview();
     $('backgroundPushButton')?.addEventListener('click',toggle);
     $('backgroundPushTest')?.addEventListener('click',test);
     document.querySelectorAll('[data-push-type]').forEach(input=>input.addEventListener('change',()=>{

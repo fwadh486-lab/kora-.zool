@@ -36,30 +36,30 @@ jobs:
             printf '%s' "$KEYSTORE_BASE64" | base64 --decode > "$KORAZOL_KEYSTORE_PATH"
             trap 'rm -f "$KORAZOL_KEYSTORE_PATH"' EXIT
             gradle --no-daemon :app:lintRelease :app:assembleRelease
-            cp app/build/outputs/apk/release/app-release.apk apk-dist/KoraZol-0.6.0.apk
+            cp app/build/outputs/apk/release/app-release.apk apk-dist/KoraZol-0.7.0.apk
             echo 'SIGNING_MODE=release' >> "$GITHUB_ENV"
           else
             gradle --no-daemon :app:lintDebug :app:assembleDebug
-            cp app/build/outputs/apk/debug/app-debug.apk apk-dist/KoraZol-0.6.0.apk
+            cp app/build/outputs/apk/debug/app-debug.apk apk-dist/KoraZol-0.7.0.apk
             echo 'SIGNING_MODE=debug' >> "$GITHUB_ENV"
           fi
       - name: Verify package, launcher, signature and icon
         shell: bash
         run: |
           set -euo pipefail
-          APK=apk-dist/KoraZol-0.6.0.apk
+          APK=apk-dist/KoraZol-0.7.0.apk
           test -s "$APK"
           unzip -t "$APK" >/dev/null
           BT="$(find "$ANDROID_HOME/build-tools" -mindepth 1 -maxdepth 1 -type d | sort -V | tail -n 1)"
           "$BT/apksigner" verify --verbose --print-certs "$APK"
           "$BT/aapt" dump badging "$APK" | tee /tmp/korazol-badging.txt
           grep -q "package: name='com.korazol.app'" /tmp/korazol-badging.txt
-          grep -q "versionName='0.6.0'" /tmp/korazol-badging.txt
+          grep -q "versionName='0.7.0'" /tmp/korazol-badging.txt
           grep -q "launchable-activity: name='com.korazol.app.MainActivity'" /tmp/korazol-badging.txt
           grep -q 'application-icon' /tmp/korazol-badging.txt
           echo "Signing: $SIGNING_MODE"
           echo "APK bytes: $(wc -c < "$APK")"
-          (cd apk-dist && sha256sum KoraZol-0.6.0.apk > SHA256SUMS.txt)
+          (cd apk-dist && sha256sum KoraZol-0.7.0.apk > SHA256SUMS.txt)
       - uses: actions/upload-artifact@v4
         with:
           name: KoraZol-Android-APK
@@ -72,10 +72,10 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          TAG="android-0.6.0-${GITHUB_RUN_ID}"
+          TAG="android-0.7.0-${GITHUB_RUN_ID}"
           if [[ "$SIGNING_MODE" == debug ]]; then
             NOTES='Test APK signed with a temporary debug key. Not a Play Store release. Native Firebase notifications require server configuration and an on-device test.'
           else
             NOTES='Test APK signed with the configured release key. Native Firebase notifications require server configuration and an on-device test.'
           fi
-          gh release create "$TAG" apk-dist/KoraZol-0.6.0.apk apk-dist/SHA256SUMS.txt --target "$GITHUB_SHA" --title 'Kora Zol Android 0.6.0' --notes "$NOTES" --prerelease
+          gh release create "$TAG" apk-dist/KoraZol-0.7.0.apk apk-dist/SHA256SUMS.txt --target "$GITHUB_SHA" --title 'Kora Zol Android 0.7.0' --notes "$NOTES" --prerelease

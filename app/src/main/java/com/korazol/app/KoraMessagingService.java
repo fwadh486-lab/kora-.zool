@@ -30,11 +30,16 @@ public class KoraMessagingService extends FirebaseMessagingService {
         String tag=message.getData().get("tag");if(tag==null)tag="korazol";
         Intent launch=new Intent(this,MainActivity.class).putExtra("url",message.getData().get("url")).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
         PendingIntent pending=PendingIntent.getActivity(this,tag.hashCode(),launch,PendingIntent.FLAG_UPDATE_CURRENT|PendingIntent.FLAG_IMMUTABLE);
-        Notification.Builder builder=Build.VERSION.SDK_INT>=26?new Notification.Builder(this,NativePush.CHANNEL):new Notification.Builder(this);
+        String eventType=data.get("type");
+        Notification.Builder builder=Build.VERSION.SDK_INT>=26
+            ?new Notification.Builder(this,NotificationSounds.channelId(eventType))
+            :new Notification.Builder(this);
         builder.setSmallIcon(R.drawable.ic_notification).setContentTitle(title).setContentText(body).setStyle(new Notification.BigTextStyle().bigText(body)).setContentIntent(pending).setAutoCancel(true).setCategory(Notification.CATEGORY_EVENT).setColor(0xff14c78b);
         Bitmap image=fetchIcon(data.get("image"));
         if(image!=null)builder.setLargeIcon(image);
-        if(Build.VERSION.SDK_INT<26)builder.setDefaults(Notification.DEFAULT_ALL).setPriority(Notification.PRIORITY_HIGH);
+        if(Build.VERSION.SDK_INT<26)builder.setSound(NotificationSounds.soundUri(this,eventType))
+            .setDefaults(Notification.DEFAULT_VIBRATE|Notification.DEFAULT_LIGHTS)
+            .setPriority(Notification.PRIORITY_HIGH);
         getSystemService(NotificationManager.class).notify(tag,1,builder.build());
     }
     // A missing or slow portrait must never stop an alert from appearing.

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {fromFixture,transitions,newCards,selectedBy,preferenceAllows,notificationFor,displayTeam,arabicScript} from './events.mjs';
+import {fromFixture,transitions,newCards,selectedBy,preferenceAllows,notificationFor,displayTeam,arabicScript,verifiedGoalScorer,attachVerifiedScorer} from './events.mjs';
 const match = {id:'123',home:'Bayern Munich',away:'FC Köln',date:'2026-11-20T19:30:00Z',status:'1H',homeScore:0,awayScore:0,minute:18};
 test('no initial or repeated alert; detect kickoff, goal and final',()=>{
   assert.deepEqual(transitions(null,match),[]);
@@ -98,4 +98,30 @@ test('FCM and browser payload share the same Arabic team and scorer names; Engli
  assert.equal(en.title,'Real Madrid - FC Barcelona');
  assert.match(en.body,/Scorer: Harry Kane/);
  assert.match(en.body,/Assist: Mohamed Salah/);
+});
+
+test('delayed verified scorer enriches the original 0-1 alert after score reaches 0-2',()=>{
+ const oldMatch={...match,id:'ss:fixture',home:'Bugesera',away:'Rayon Sports FC',homeScore:0,awayScore:1,goals:null};
+ const event={id:'ss:fixture:score:0:1:goal-away',type:'goal-away',match:oldMatch};
+ const newer={...oldMatch,awayScore:2,goals:[
+  {side:'away',player:'Scorer One',minute:35,homeScore:0,awayScore:1},
+  {side:'away',player:'Scorer Two',minute:42,homeScore:0,awayScore:2}
+ ]};
+ assert.equal(verifiedGoalScorer(event),null);
+ const merged=attachVerifiedScorer(event,newer);
+ assert.equal(verifiedGoalScorer(merged).player,'Scorer One');
+ const body=notificationFor(merged,'ar','https://example.com/').body;
+ assert.match(body,/المسجل: .*الأول/);
+ assert.doesNotMatch(body,/المسجل: .*الثاني/);
+ assert.equal(merged.match.awayScore,1);
+ assert.equal(event.match.goals,null);
+ const next={id:'ss:fixture:score:0:2:goal-away',type:'goal-away',match:{...oldMatch,awayScore:2}};
+ assert.equal(verifiedGoalScorer(attachVerifiedScorer(next,newer)).player,'Scorer Two');
+});
+test('reject cross-match goals, mismatched teams, incomplete score and ambiguous identity',()=>{
+ const ev={id:'goal',type:'goal-home',match:{...match,homeScore:1,awayScore:0,goals:null}};
+ const base={...match,homeScore:1,awayScore:0,goals:[{side:'home',player:'Player One',homeScore:1,awayScore:0}]};
+ for(const fake of [{...base,id:'wrong'},{...base,home:'Another Club'},{...base,homeScore:0},{...base,date:'2026-12-20T10:00:00Z'}])assert.equal(attachVerifiedScorer(ev,fake),ev);
+ assert.equal(verifiedGoalScorer(attachVerifiedScorer(ev,{...base,goals:[...base.goals,{...base.goals[0],player:'Player Two'}]})),null);
+ assert.equal(verifiedGoalScorer({type:'goal-home',match:{...match,goals:[]}}),null);
 });

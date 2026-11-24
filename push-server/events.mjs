@@ -150,6 +150,26 @@ export function displayTeam(name,ar){
   const translated=arabicTeams.get(key)||extendedArabicTeams.get(key)||arabicScript(base);
   return translated+(suffix?' تحت '+suffix[1]:'')+(female?' للسيدات':'');
 }
+
+/* Find a scorer by the exact goal score and side, never by the latest
+ * scoreboard alone. An event at 0-1 must not inherit the 0-2 scorer. */
+export function verifiedGoalScorer(event) {
+  const match=event?.match,side=event?.type==='goal-home'?'home':event?.type==='goal-away'?'away':null;
+  if(!side||!match||!Number.isInteger(match.homeScore)||!Number.isInteger(match.awayScore))return null;
+  const choices=(Array.isArray(match.goals)?match.goals:[]).filter(g=>g&&g.side===side&&Number(g.homeScore)===match.homeScore&&Number(g.awayScore)===match.awayScore&&typeof g.player==='string'&&g.player.trim());
+  const players=new Set(choices.map(g=>normalizedName(g.player)));
+  return players.size===1&&choices.length===1?choices[0]:null;
+}
+export function attachVerifiedScorer(event,latest) {
+  if(!event?.type?.startsWith('goal')||!event.match||!latest||String(latest.id)!==String(event.match.id))return event;
+  if(normalizedName(event.match.home)!==normalizedName(latest.home)||normalizedName(event.match.away)!==normalizedName(latest.away))return event;
+  if(Number.isFinite(Date.parse(event.match.date))&&Number.isFinite(Date.parse(latest.date))&&Math.abs(Date.parse(event.match.date)-Date.parse(latest.date))>15*60000)return event;
+  if(!Number.isInteger(latest.homeScore)||!Number.isInteger(latest.awayScore)||latest.homeScore<event.match.homeScore||latest.awayScore<event.match.awayScore)return event;
+  if(verifiedGoalScorer(event))return event;
+  const enriched={...event,match:{...event.match,goals:Array.isArray(latest.goals)?latest.goals:[]}};
+  return verifiedGoalScorer(enriched)?enriched:event;
+}
+
 export function notificationImage(value){
   return typeof value==='string'&&value.length<=400&&/^https:\/\/img\.thesports\.com\/football\/(?:player|team)\/[a-z0-9._/%-]+$/i.test(value)?value:'';
 }
@@ -158,7 +178,7 @@ export function notificationFor(event, language, appUrl) {
   const home=displayTeam(match.home,ar),away=displayTeam(match.away,ar);
   const side=event.type==='goal-home'?'home':event.type==='goal-away'?'away':card?(normalizedName(card.team)===normalizedName(match.home)?'home':'away'):null;
   // Only use a scorer whose incident is for this exact side and exact score.
-  const scorer=goal&&Array.isArray(match.goals)?match.goals.find(g=>g.side===side&&g.homeScore===match.homeScore&&g.awayScore===match.awayScore):null;
+  const scorer=goal?verifiedGoalScorer(event):null;
   const incident=card||scorer;
   const score=Number.isInteger(match.homeScore)&&Number.isInteger(match.awayScore)?'\u2066'+match.homeScore+' - '+match.awayScore+'\u2069':'';
   const minute=incident?.minute??match.minute;

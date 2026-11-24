@@ -1,6 +1,6 @@
 import {buildPushPayload} from '@block65/webcrypto-web-push';
-import {fromFixture, transitions, newCards, selectedBy, preferenceAllows, notificationFor, isFreshSportScoreKickoff} from './events.mjs';
-import {collectSportScore,publicFixtures,publicMatchDetails,publicPlayerPhoto} from './sportscore.mjs';
+import {fromFixture, transitions, newCards, selectedBy, preferenceAllows, notificationFor, isFreshSportScoreKickoff, attachVerifiedScorer, verifiedGoalScorer} from './events.mjs';
+import {collectSportScore,publicFixtures,publicMatchDetails,publicPlayerPhoto,verifiedGoalDetails} from './sportscore.mjs';
 import {nativeConfigured,nativeConfigStatus,probeNativeAuthorization,sendNative} from './fcm.mjs';
 
 const MINUTE = 60000, EVENT_TTL = 10 * MINUTE;
@@ -213,6 +213,7 @@ async function pollMatches(env, now) {
   const active=devices.results.map(row=>({...row,preferences:JSON.parse(row.preferences)})).filter(d=>d.preferences.types.length&&(d.preferences.allLive||d.preferences.teams.length||d.preferences.matches.length));
   const useFree=env.SPORTSCORE_ENABLED==='true';
   if(!active.length&&!useFree) return;
+  let freshMatches=new Map();
   if(env.API_FOOTBALL_KEY||useFree){
     const {results:previous}=await env.DB.prepare('SELECT fixture_id,match_json,revision,updated FROM match_state WHERE updated>?').bind(now-86400000).all();
     const old=new Map(previous.map(r=>[r.fixture_id,r]));
@@ -233,6 +234,7 @@ async function pollMatches(env, now) {
     if(results.at(-1).status==='rejected')console.warn('Live football feed is unavailable; card history retained.');
     else await env.DB.prepare("INSERT INTO service_state(key,value) VALUES('last_success',?) ON CONFLICT(key) DO UPDATE SET value=excluded.value").bind(now).run();
     }
+    freshMatches=matches;
     // Only monitor matches relevant to subscribers. Comparing the old state prevents
     // replaying historical scores on the first poll or after a long provider outage.
     for(const match of matches.values()){
@@ -259,8 +261,19 @@ async function pollMatches(env, now) {
   }
   if(!active.length)return;
   const {results:events}=await env.DB.prepare('SELECT id,event_json,created FROM events WHERE created>? ORDER BY created').bind(now-EVENT_TTL).all();
+  let goalDetailAttempted=false;
   for(const row of events){
-    const event=JSON.parse(row.event_json);
+    let event=JSON.parse(row.event_json);
+    if(event.match?.source==='SportScore'&&event.type.startsWith('goal')){
+      event=attachVerifiedScorer(event,freshMatches.get(event.match.id));
+      if(!verifiedGoalScorer(event)&&!goalDetailAttempted&&now-row.created>=35000&&now-row.created<=150000){
+        goalDetailAttempted=true;
+        try{event=attachVerifiedScorer(event,await verifiedGoalDetails(event.match))}catch{}
+      }
+      // Give the official goal incident one polling cycle to arrive. Without
+      // a verified scorer, the score alert still goes out after this window.
+      if(!verifiedGoalScorer(event)&&now-row.created<45000)continue;
+    }
     const {results:sent}=await env.DB.prepare('SELECT device_id FROM deliveries WHERE event_id=?').bind(row.id).all();
     const delivered=new Set(sent.map(d=>d.device_id));
     for(const d of active){

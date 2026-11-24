@@ -149,6 +149,12 @@ async function detail(match){
   if(data.updated&&Date.now()-Date.parse(data.updated)>10*MINUTE)throw Error('sportscore_stale_detail');
   return parsed;
 }
+export async function verifiedGoalDetails(match){
+  if(!match||match.source!=='SportScore'||!/^ss:[a-z0-9]{1,64}$/i.test(match.id||'')||!/^[a-z0-9-]{1,200}$/i.test(match.slug||''))return null;
+  const fresh=await detail(match);
+  if(normalizedName(fresh.home)!==normalizedName(match.home)||normalizedName(fresh.away)!==normalizedName(match.away)||Math.abs(Date.parse(fresh.date)-Date.parse(match.date))>15*MINUTE)throw Error('sportscore_detail_team_mismatch');
+  return fresh;
+}
 const espnLeagues={en:'eng.1',es:'esp.1',de:'ger.1',it:'ita.1',fr:'fra.1',sa:'ksa.1',cl:'uefa.champions',br:'bra.1',nl:'ned.1',pt:'por.1',eng2:'eng.2',nations:'uefa.nations',friendly:'fifa.friendly'};
 function espnTeamMatches(team,name){return [team?.displayName,team?.shortDisplayName,team?.name,team?.location].some(value=>value&&normalizedName(value)===normalizedName(name))}
 export function verifiedAssist(summary,match,scorer){

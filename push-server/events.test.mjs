@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {fromFixture,transitions,newCards,selectedBy,preferenceAllows,notificationFor,displayTeam,arabicScript,verifiedGoalScorer,attachVerifiedScorer,selectedBy} from './events.mjs';
+import {fromFixture,transitions,newCards,selectedBy,preferenceAllows,notificationFor,displayTeam,arabicScript,verifiedGoalScorer,attachVerifiedScorer} from './events.mjs';
 const match = {id:'123',home:'Bayern Munich',away:'FC Köln',date:'2026-11-20T19:30:00Z',status:'1H',homeScore:0,awayScore:0,minute:18};
 test('no initial or repeated alert; detect kickoff, goal and final',()=>{
   assert.deepEqual(transitions(null,match),[]);

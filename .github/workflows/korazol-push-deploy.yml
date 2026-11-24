@@ -82,3 +82,5 @@ jobs:
 # Release: add category field to Android FCM data messages for original per-event notification sounds.
 
 # Release: verified Firebase user accounts and per-league/team intersection match notification filters.
+
+# Release: verified account-backed favorites and custom competition notifications.

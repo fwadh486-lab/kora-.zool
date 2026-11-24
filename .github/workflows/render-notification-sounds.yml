@@ -1,0 +1,45 @@
+name: Render licensed football notification sounds
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'assets/notification-audio/**'
+      - 'scripts/generate_notification_sounds.py'
+      - '.github/workflows/render-notification-sounds.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Audio renderer prerequisites
+        run: |
+          python3 --version
+          ffmpeg -version | head -1
+      - name: Render realistic football notification pack
+        run: python3 scripts/generate_notification_sounds.py
+      - name: Check generated WAV files
+        shell: bash
+        run: |
+          set -euo pipefail
+          for sound in goal kickoff secondhalf halftime fulltime yellow red general; do
+            file="app/src/main/res/raw/korazol_$sound.wav"
+            test -s "$file"
+            ffprobe -v error -show_entries stream=codec_name,sample_rate,channels -of csv=p=0 "$file"
+          done
+      - name: Save mastered audio to main
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add app/src/main/res/raw/korazol_*.wav
+          if ! git diff --cached --quiet; then
+            git commit -m 'Render studio-balanced real football notification sounds'
+            git push origin HEAD:main
+          fi

@@ -6,12 +6,12 @@ const leagueCodes=new Map([
   ['spanishlaliga','es'],['laliga','es'],['bundesliga','de'],['germanbundesliga','de'],['italianseriea','it'],['seriea','it'],['frenchligue1','fr'],['ligue1','fr'],
   ['saudiprofessionalleague','sa'],['saudiproleague','sa'],['roshnsaudileague','sa'],['uefachampionsleague','cl'],['brazilianseriea','br'],
   ['dutcheredivisie','nl'],['eredivisie','nl'],['portugueseprimeraliga','pt'],['portugueseliga','pt'],['ligaportugal','pt'],['sudanpremierleague','sd'],['sudanesepremierleague','sd'],['sudaneseleague','sd'],['internationalfriendly','friendly'],['internationalfriendlies','friendly'],
-  ['rwandannationalleague','rw'],['rwandapremierleague','rw'],['qatarstarsleague','qa'],['qataristarsleague','qa'],['cafchampionsleague','cafcl'],['uefaeuropaleague','el'],['uefanationsleague','nations'],['uefaeuropeanchampionship','euro']
+  ['rwandannationalleague','rw'],['rwandapremierleague','rw'],['qatarstarsleague','qa'],['qataristarsleague','qa'],['cafchampionsleague','cafcl'],['afcchampionsleagueelite','afcelite'],['afcchampionsleague','afcelite'],['uefaeuropaleague','el'],['uefanationsleague','nations'],['uefaeuropeanchampionship','euro']
 ]);
 const statusCodes=new Map([['not started','NS'],['delayed','NS'],['1st half','1H'],['half time','HT'],['2nd half','2H'],['extra time','ET'],['extra time half time','BT'],['penalties','P'],['finished','FT'],['after extra time','AET'],['after penalties','PEN'],['postponed','PST'],['cancelled','CANC'],['abandoned','ABD'],['interrupted','INT']]);
 const finals=new Set(['FT','AET','PEN','AWD','WO','CANC','ABD','PST']);
 const live=new Set(['1H','HT','2H','ET','BT','P','LIVE','INT']);
-const publicLeagues=['english-premier-league','spanish-la-liga','bundesliga','italian-serie-a','french-ligue-1','saudi-professional-league','uefa-champions-league','brazilian-serie-a','dutch-eredivisie','portuguese-primeira-liga','english-football-league-championship','sudanese-premier-league','rwandan-national-league','qatar-stars-league','caf-champions-league','uefa-europa-league','uefa-nations-league','uefa-european-championship'];
+const publicLeagues=['english-premier-league','spanish-la-liga','bundesliga','italian-serie-a','french-ligue-1','saudi-professional-league','afc-champions-league-elite','uefa-champions-league','brazilian-serie-a','dutch-eredivisie','portuguese-primeira-liga','english-football-league-championship','sudanese-premier-league','rwandan-national-league','qatar-stars-league','caf-champions-league','uefa-europa-league','uefa-nations-league','uefa-european-championship'];
 function integer(value){return typeof value==='number'&&Number.isInteger(value)&&value>=0?value:typeof value==='string'&&/^\d+$/.test(value)?Number(value):null}
 function incidentPhoto(raw,event){
   if(!['home','away'].includes(event.side)||!event.player)return '';
@@ -155,7 +155,7 @@ export async function verifiedGoalDetails(match){
   if(normalizedName(fresh.home)!==normalizedName(match.home)||normalizedName(fresh.away)!==normalizedName(match.away)||Math.abs(Date.parse(fresh.date)-Date.parse(match.date))>15*MINUTE)throw Error('sportscore_detail_team_mismatch');
   return fresh;
 }
-const espnLeagues={en:'eng.1',es:'esp.1',de:'ger.1',it:'ita.1',fr:'fra.1',sa:'ksa.1',cl:'uefa.champions',br:'bra.1',nl:'ned.1',pt:'por.1',eng2:'eng.2',nations:'uefa.nations',friendly:'fifa.friendly'};
+const espnLeagues={en:'eng.1',es:'esp.1',de:'ger.1',it:'ita.1',fr:'fra.1',sa:'ksa.1',cl:'uefa.champions',afcelite:'afc.champions',br:'bra.1',nl:'ned.1',pt:'por.1',eng2:'eng.2',nations:'uefa.nations',friendly:'fifa.friendly'};
 function espnTeamMatches(team,name){return [team?.displayName,team?.shortDisplayName,team?.name,team?.location].some(value=>value&&normalizedName(value)===normalizedName(name))}
 export function verifiedAssist(summary,match,scorer){
   const competition=summary?.header?.competitions?.[0],team=competition?.competitors?.find(c=>c.homeAway===scorer.side);

@@ -84,3 +84,14 @@ test('poll live details, reject an ambiguous slug, fetch a disappeared match to 
 
 test('normalize added competitions',()=>{for(const [name,code] of [['Sudanese Premier League','sd'],['Rwandan National League','rw'],['Qatar Stars League','qa'],['CAF Champions League','cafcl'],['UEFA Europa League','el'],['UEFA Nations League','nations'],['UEFA European Championship','euro']])assert.equal(fromSportScore({...base,competition:name}).league,code)});
 
+
+test('AFC Champions League Elite fixtures stay distinct from AFC Champions League Two',()=>{
+  const elite=fromSportScore({...base,competition:'AFC Champions League Elite'});
+  assert.equal(elite?.league,'afcelite');
+  assert.equal(fromSportScore({...base,competition:'AFC Champions League'}).league,'afcelite');
+  const lower=fromSportScore({...base,competition:'AFC Champions League Two'});
+  assert.equal(lower.league,'');
+  const asian=fromSportScore({...base,competition:'AFC Champions League Elite',home:'Al Hilal',away:'Al Ain FC'});
+  assert.equal(asian.home,'Al Hilal');
+  assert.equal(asian.away,'Al Ain FC');
+});

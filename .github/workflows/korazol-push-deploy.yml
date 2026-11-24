@@ -74,3 +74,5 @@ jobs:
 # Release: late goal-scorer matching by verified event score, then transparent missing-name fallback.
 
 # Release: exact Arabic names for Bugesera and Rayon Sports in Rwandan match alerts.
+
+# Release: subscribe AFC Champions League Elite live feed and match events, exclude AFC Champions League Two.

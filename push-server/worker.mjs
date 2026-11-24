@@ -184,7 +184,7 @@ async function route(request, env, ctx) {
 async function sendOneTest(env,row,now){
     if(now-row.test_due>EVENT_TTL){await recordTest(env,row.id,row.last_test,408);await env.DB.prepare('UPDATE devices SET test_due=0 WHERE id=? AND test_due=?').bind(row.id,row.test_due).run();return}
     const ar=JSON.parse(row.preferences).language!=='en';
-    const message={title:ar?'⚽ كورة زول | تجربة الإشعار':'⚽ Kora Zol | Test notification',body:ar?'دا إشعار تجريبي من سيرفر كورة زول.':'This is a test notification from the Kora Zol server.',tag:'korazol-test-'+row.test_due,url:env.APP_URL};
+    const message={title:ar?'⚽ كورة زول | تجربة الإشعار':'⚽ Kora Zol | Test notification',body:ar?'دا إشعار تجريبي من سيرفر كورة زول.':'This is a test notification from the Kora Zol server.',tag:'korazol-test-'+row.test_due,url:env.APP_URL,type:'test'};
     let status=599;
     try{
       status=await sendPush(env,JSON.parse(row.subscription),message);

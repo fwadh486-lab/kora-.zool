@@ -46,9 +46,13 @@ async function accessToken(env){
   cached={email:account.client_email,token:data.access_token,project:account.project_id,expires:Date.now()+Math.min(Number(data.expires_in)||3600,3600)*1000};
   return cached;
 }
+const EVENT_TYPES=new Set(['goal-home','goal-away','kickoff','secondhalf','halftime','fulltime','yellow','red','test']);
 export function nativeMessage(token,message,rich=false){
   const title=String(message.title).slice(0,180),body=String(message.body).slice(0,500);
-  const data={url:String(message.url||''),tag:String(message.tag||'korazol')};
+  // Deliver a trusted event category to the Android native notification channel
+  // selector. Unknown and historical payloads use a quiet-capable general channel.
+  const type=EVENT_TYPES.has(message.type)?message.type:'general';
+  const data={url:String(message.url||''),tag:String(message.tag||'korazol'),type};
   // Existing APKs continue to receive the system-rendered notification.
   if(rich)return {message:{token,data:{...data,title,body,image:String(message.image||'').slice(0,400)},android:{priority:'HIGH',ttl:'300s'}}};
   return {message:{token,notification:{title,body},data,android:{priority:'HIGH',ttl:'300s',notification:{channel_id:'korazol_matches',icon:'ic_notification',sound:'default',tag:String(message.tag||'korazol')}}}};

@@ -27,7 +27,7 @@
     for(const e of all)if(favoriteIds.has(e.id)&&e.date&&e.home&&e.away)matches.set(e.id,{id:e.id,home:e.home,away:e.away,date:e.date});
     const selected=[...matches.values()].sort((a,b)=>String(a.id).localeCompare(String(b.id))).slice(0,100);
     set(SAVED,JSON.stringify(selected));
-    return {teams:[...teams].sort(),matches:selected,leagues:window.KoraNotifications?.leagues?.()||[],selectionRule:window.KoraNotifications?.rule?.()||'any',types:types(),allLive:get(ALL_LIVE)==='yes',language:document.documentElement.lang==='en'?'en':'ar'};
+    return {teams:[...teams].sort(),matches:selected,leagues:window.KoraNotifications?.leagues?.()||[],selectionRule:window.KoraNotifications?.rule?.()||'any',favoriteMatchesEnabled:window.KoraNotifications?.favoriteMatchesEnabled?.()!==false,types:types(),allLive:get(ALL_LIVE)==='yes',language:document.documentElement.lang==='en'?'en':'ar'};
   }
   function render(){
     const button=$('backgroundPushButton'),test=$('backgroundPushTest'),status=$('backgroundPushStatus');

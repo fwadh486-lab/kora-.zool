@@ -2,7 +2,7 @@
    Explicit "all" is optional, and a saved match can still notify its owner. */
 (()=>{
 'use strict';
-const TEAM='korazol_notify_teams_v1',LEAGUES='korazol_notify_leagues_v1',RULE='korazol_notify_rule_v1',ALL='korazol_push_all_live_v1';
+const TEAM='korazol_notify_teams_v1',LEAGUES='korazol_notify_leagues_v1',RULE='korazol_notify_rule_v1',ALL='korazol_push_all_live_v1',FAV='korazol_notify_favorite_matches_v1';
 const ids=new Set(['en','es','sa','sd','de','it','fr','cl','afcelite','eng2','pt','nl','br','rw','qa','el','cafcl','euro','nations','friendly','clubfriendly','nonfifa']);
 const $=id=>document.getElementById(id),lang=()=>document.documentElement.lang==='en';
 function read(key){try{return localStorage.getItem(key)}catch{return null}}
@@ -30,6 +30,7 @@ function render(){
  const all=read(ALL)==='yes',selected=leagues(),chosen=teams();
  panel.querySelectorAll('input[name=notifyScope]').forEach(x=>x.checked=(x.value==='all')===all);
  panel.querySelectorAll('input[name=notifyRule]').forEach(x=>x.checked=x.value===rule());
+ const fav=$('notifyFavoriteMatches');if(fav)fav.checked=read(FAV)!=='no';
  list.replaceChildren();
  const picker=$('leagueFilter');
  if(picker)for(const option of picker.options){
@@ -58,6 +59,7 @@ function init(){
  const container=$('notifyCustomCard');if(!container)return;
  container.querySelectorAll('input[name=notifyScope]').forEach(input=>input.onchange=()=>set(ALL,input.value==='all'?'yes':'no'));
  container.querySelectorAll('input[name=notifyRule]').forEach(input=>input.onchange=()=>set(RULE,input.value==='both'?'both':'any'));
+ const favorite=$('notifyFavoriteMatches');if(favorite)favorite.onchange=()=>set(FAV,favorite.checked?'yes':'no');
  const input=$('notifyTeamInput');
  const add=()=>{
   const name=String(input?.value||'').trim().replace(/\s+/g,' ');
@@ -74,6 +76,6 @@ function init(){
  document.addEventListener('korazol:language-changed',render);
  render();
 }
-window.KoraNotifications={render,teams,leagues,rule};
+window.KoraNotifications={render,teams,leagues,rule,favoriteMatchesEnabled:()=>read(FAV)!=='no'};
 init();
 })();

@@ -18,7 +18,7 @@ function snapshot(){
   followedLeagues:list('korazol_followed_leagues_v1',60),notificationLeagues:list('korazol_notify_leagues_v1',60),
   notificationTeams:read('korazol_notify_teams_v1')===null?list('korazol_followed_teams_v1',100):list('korazol_notify_teams_v1',100),
   savedMatches:saved,alertTypes:read('korazol_push_types_v2')===null?['goal','kickoff','halftime','fulltime','yellow','red']:types,
-  alertAllLive:read('korazol_push_all_live_v1')==='yes',alertRule:read('korazol_notify_rule_v1')==='both'?'both':'any'
+  alertAllLive:read('korazol_push_all_live_v1')==='yes',alertFavoriteMatchesEnabled:read('korazol_notify_favorite_matches_v1')!=='no',alertRule:read('korazol_notify_rule_v1')==='both'?'both':'any'
  };
 }
 function status(ar,en,error=false){
@@ -112,6 +112,7 @@ function apply(data){
  try{
   for(const [key,storage] of Object.entries(fields))if(Array.isArray(data[key]))store(storage,JSON.stringify(data[key]));
   store('korazol_push_all_live_v1',data.alertAllLive?'yes':'no');
+  store('korazol_notify_favorite_matches_v1',data.alertFavoriteMatchesEnabled===false?'no':'yes');
   store('korazol_notify_rule_v1',data.alertRule==='both'?'both':'any');
   if(typeof renderLive==='function')renderLive();
   if(typeof renderFavorites==='function')renderFavorites();

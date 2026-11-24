@@ -15,7 +15,7 @@ jobs:
         with:
           node-version: '22'
       - name: Verify fixture history and match detail logic
-        run: node --test web-tests/history.test.cjs web-tests/team.test.cjs web-tests/league.test.cjs
+        run: node --test web-tests/history.test.cjs web-tests/team.test.cjs web-tests/league.test.cjs web-tests/extras.test.cjs
       - name: Install browser test runner
         run: |
           npm install --no-save --ignore-scripts playwright@1.62.1

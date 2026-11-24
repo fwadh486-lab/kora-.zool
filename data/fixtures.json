@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-24T16:28:57.628759+00:00",
+  "updated": "2026-11-24T18:58:47.238215+00:00",
   "matches": [
     {
       "events": [],
@@ -12796,9 +12796,9 @@
       "homeLogo": "https://crests.football-data.org/6685.png",
       "awayLogo": "https://crests.football-data.org/1767.png",
       "date": "2026-11-24T00:00:00Z",
-      "score": "0 - 2",
-      "status": "FINISHED",
-      "live": false,
+      "score": "0 - 1",
+      "status": "PAUSED",
+      "live": true,
       "source": "football-data.org"
     },
     {
@@ -12806,8 +12806,8 @@
       "matchday": 5,
       "stage": "LEAGUE_STAGE",
       "halfTime": {
-        "home": null,
-        "away": null
+        "home": 0,
+        "away": 0
       },
       "id": "fd:575395",
       "league": "cl",
@@ -12816,9 +12816,9 @@
       "homeLogo": "https://crests.football-data.org/610.png",
       "awayLogo": "https://crests.football-data.org/58.png",
       "date": "2026-11-24T17:45:00Z",
-      "score": "— : —",
-      "status": "TIMED",
-      "live": false,
+      "score": "0 - 0",
+      "status": "IN_PLAY",
+      "live": true,
       "source": "football-data.org"
     },
     {
@@ -12836,9 +12836,9 @@
       "homeLogo": "https://crests.football-data.org/5721.png",
       "awayLogo": "https://crests.football-data.org/2016.png",
       "date": "2026-11-24T17:45:00Z",
-      "score": "— : —",
-      "status": "TIMED",
-      "live": false,
+      "score": "0 - 0",
+      "status": "IN_PLAY",
+      "live": true,
       "source": "football-data.org"
     },
     {

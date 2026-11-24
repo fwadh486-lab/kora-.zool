@@ -68,3 +68,5 @@ jobs:
 
 # Release: verified goal scorer and assist in expandable notifications.
 
+
+# Release: Arabic club names and safe phonetic fallback for push alerts, including native Firebase.

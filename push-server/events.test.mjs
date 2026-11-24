@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {fromFixture,transitions,newCards,selectedBy,preferenceAllows,notificationFor} from './events.mjs';
+import {fromFixture,transitions,newCards,selectedBy,preferenceAllows,notificationFor,displayTeam,arabicScript} from './events.mjs';
 const match = {id:'123',home:'Bayern Munich',away:'FC Köln',date:'2026-11-20T19:30:00Z',status:'1H',homeScore:0,awayScore:0,minute:18};
 test('no initial or repeated alert; detect kickoff, goal and final',()=>{
   assert.deepEqual(transitions(null,match),[]);
@@ -49,14 +49,14 @@ test('new card identity ignores time corrections and distinguishes cards for dif
   assert.equal(newCards(first,next).length,1);
   const card=newCards(first,next)[0];
   const notification=notificationFor({id:'card',type:card.type,card,match:next},'ar','https://example.com/');
-  assert.match(notification.body,/بطاقة صفراء/);assert.match(notification.body,/Player Two/);
+  assert.match(notification.body,/بطاقة صفراء/);assert.match(notification.body,/لاعب الثاني/);
 });
 test('rich match notifications select only the exact scorer, score and safe image',()=>{
   const logo='https://img.thesports.com/football/team/club.png',photo='https://img.thesports.com/football/player/player.png';
   const event={id:'goal',type:'goal-home',match:{...match,homeScore:1,awayScore:0,homeLogo:logo,goals:[{side:'home',homeScore:1,awayScore:0,player:'Nathaniel Brown',minute:37,photo}]}};
   const message=notificationFor(event,'ar','https://example.com/');
-  assert.equal(message.title,'بايرن ميونخ - كولن');assert.match(message.body,/37′.*هدف.*1 - 0.*\nالمسجل: Nathaniel Brown\nالصانع: غير متاح حالياً/);assert.equal(message.image,photo);
-  event.match.goals[0].assist='Player Two';assert.match(notificationFor(event,'ar','https://example.com/').body,/الصانع: Player Two/);
+  assert.equal(message.title,'بايرن ميونخ - كولن');assert.match(message.body,/37′.*هدف.*1 - 0.*\nالمسجل: ناثانييل براون\nالصانع: غير متاح حالياً/);assert.equal(message.image,photo);
+  event.match.goals[0].assist='Player Two';assert.match(notificationFor(event,'ar','https://example.com/').body,/الصانع: لاعب الثاني/);
   assert.match(notificationFor(event,'en','https://example.com/').body,/Scorer: Nathaniel Brown\nAssist: Player Two/);
   event.match.goals[0].homeScore=2;
   const fallback=notificationFor(event,'ar','https://example.com/');assert.doesNotMatch(fallback.body,/Nathaniel/);assert.equal(fallback.image,logo);
@@ -64,3 +64,38 @@ test('rich match notifications select only the exact scorer, score and safe imag
   event.match.id='ss:abc123';event.match.slug='bayern-vs-koln';const link=new URL(notificationFor(event,'ar','https://example.com/app/').url);assert.equal(link.pathname,'/app/match-details.html');assert.equal(link.searchParams.get('slug'),'bayern-vs-koln');assert.equal(link.searchParams.get('sport'),'ss:abc123');
 });
 
+
+test('Arabic match notification localizes well-known teams from top leagues and Sudan',()=>{
+  const pairs=[
+   ['Real Madrid','ريال مدريد'],['FC Barcelona','برشلونة'],['Man City','مانشستر سيتي'],
+   ['Bayern München','بايرن ميونخ'],['Borussia Mönchengladbach','بوروسيا مونشنغلادباخ'],
+   ['Al Hilal Omdurman','الهلال السوداني'],['Al-Nassr','النصر'],['AFC Bournemouth','بورنموث'],
+   ['Botafogo','بوتافوغو'],['FC Köln','كولن'],['Sudan','السودان'],
+   ['Al Ahli Shendi','الأهلي شندي'],['PSV Eindhoven','آيندهوفن'],['Japan','اليابان']
+  ];
+  for(const [source,expected] of pairs)assert.equal(displayTeam(source,true),expected,source);
+  for(const [source] of pairs)assert.equal(displayTeam(source,false),source);
+  assert.equal(displayTeam('Real Madrid U21',true),'ريال مدريد تحت 21');
+  assert.equal(displayTeam('FC Barcelona Women',true),'برشلونة للسيدات');
+});
+test('Unknown club names are legibly Arabic-script without changing exact identity in links',()=>{
+  const unknown='Southwood Rangers FC';
+  const ar=displayTeam(unknown,true);
+  assert.match(ar,/[ء-ي]/u);assert.doesNotMatch(ar,/[a-z]/i);
+  assert.equal(displayTeam('Al Najma',true),'النجمة');
+  assert.equal(arabicScript('Nathaniel Brown'),'ناثانييل براون');
+  const alert=notificationFor({id:'next',type:'goal-home',match:{...match,home:unknown,away:'Real Madrid',homeScore:2,awayScore:0}},'ar','https://example.com/app/');
+  assert.match(alert.title,/ريال مدريد/);assert.doesNotMatch(alert.title,/[a-z]/i);
+  assert.doesNotMatch(alert.body,/[a-z]/i);
+  assert.equal(new URL(alert.url).searchParams.get('team'),unknown);
+});
+test('FCM and browser payload share the same Arabic team and scorer names; English remains unchanged',()=>{
+ const event={id:'fixture',type:'goal-away',match:{...match,home:'Real Madrid',away:'FC Barcelona',homeScore:0,awayScore:1,goals:[{side:'away',homeScore:0,awayScore:1,player:'Harry Kane',assist:'Mohamed Salah',minute:56}]}};
+ const ar=notificationFor(event,'ar','https://example.com/app/'),en=notificationFor(event,'en','https://example.com/app/');
+ assert.equal(ar.title,'ريال مدريد - برشلونة');
+ assert.match(ar.body,/المسجل: هاري كين/);
+ assert.match(ar.body,/الصانع: محمد صلاح/);
+ assert.equal(en.title,'Real Madrid - FC Barcelona');
+ assert.match(en.body,/Scorer: Harry Kane/);
+ assert.match(en.body,/Assist: Mohamed Salah/);
+});

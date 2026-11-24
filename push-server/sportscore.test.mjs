@@ -43,13 +43,13 @@ test('normalize verified provider shape with card, phase, score and stable ID',(
   const second=fromSportScore({...base,status_text:'2nd half',live_minute:'46',incidents:[card]});
   assert.deepEqual(transitions(match,second),['secondhalf']);assert.deepEqual(newCards(match,second),[]);
   const message=notificationFor({id:'card',type:'yellow',card:match.cards[0],match},'ar','https://example.org/');assert.equal(message.source,'SportScore');
-  assert.match(message.body,/Eduard Spertsyan/);
+  assert.match(message.body,/[ء-ي]/u);assert.doesNotMatch(message.body,/[a-z]/i);
 });
 test('goal incident and exact same-team lineup photo are preserved',()=>{
   const photo='https://img.thesports.com/football/player/p.png';
   const raw={...base,home_score:'2',incidents:[{side:'home',player:'Player One',is_goal:true,home_score:2,away_score:1,time:55}],lineups:{home_xi:[{name:'Player One',photo}],away_xi:[{name:'Player One',photo:'https://img.thesports.com/football/player/wrong.png'}]}};
   const match=fromSportScore(raw);assert.equal(match.goals[0].photo,photo);
-  const message=notificationFor({id:'goal',type:'goal-home',match},'ar','https://example.org/');assert.match(message.body,/55′.*\nالمسجل: Player One/);assert.equal(message.image,photo);
+  const message=notificationFor({id:'goal',type:'goal-home',match},'ar','https://example.org/');assert.match(message.body,/55′.*\nالمسجل: لاعب الأول/);assert.equal(message.image,photo);
 });
 
 test('assist enrichment requires the same team, exact score, minute, scorer and explicit assist',()=>{

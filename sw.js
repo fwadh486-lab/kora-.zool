@@ -1,4 +1,4 @@
-const CACHE='korazol-shell-v28';
+const CACHE='korazol-shell-v29';
 const DATA_CACHE='korazol-data-v1';
 const SHELL=['./','./push-client-v5.js','./match-feed-v2.js','./match-detail-feed-v2.js','./match-extras-v1.js','./match-pulse-v1.js','./match-center-v1.js','./team-feed-v1.js','./league-feed-v1.js','./index.html','./fixtures.html','./match-details.html','./team-details.html','./champions.html','./league-details.html','./lineup-v2.html','./manifest.webmanifest','./kora-zol-icon-192.png','./kora-zol-icon-512.png'];
 const shellPage=path=>['match-details.html','team-details.html','champions.html','league-details.html','fixtures.html','lineup-v2.html'].find(page=>path.endsWith('/'+page))||'index.html';

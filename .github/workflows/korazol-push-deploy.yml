@@ -70,3 +70,5 @@ jobs:
 
 
 # Release: Arabic club names and safe phonetic fallback for push alerts, including native Firebase.
+
+# Release: late goal-scorer matching by verified event score, then transparent missing-name fallback.

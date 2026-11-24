@@ -125,3 +125,5 @@ test('reject cross-match goals, mismatched teams, incomplete score and ambiguous
  assert.equal(verifiedGoalScorer(attachVerifiedScorer(ev,{...base,goals:[...base.goals,{...base.goals[0],player:'Player Two'}]})),null);
  assert.equal(verifiedGoalScorer({type:'goal-home',match:{...match,goals:[]}}),null);
 });
+
+test('goals without verified scorers state the limitation instead of displaying a guessed name',()=>{const alert=notificationFor({id:'unknown',type:'goal-away',match:{...match,homeScore:0,awayScore:1,goals:null,source:'SportScore'}},'ar','https://example.com/');assert.match(alert.body,/اسم المسجل لم يتأكد من المصدر بعد/);assert.doesNotMatch(alert.body,/المسجل: لاعب/);});

@@ -88,7 +88,7 @@ test('normalize added competitions',()=>{for(const [name,code] of [['Sudanese Pr
 test('AFC Champions League Elite fixtures stay distinct from AFC Champions League Two',()=>{
   const elite=fromSportScore({...base,competition:'AFC Champions League Elite'});
   assert.equal(elite?.league,'afcelite');
-  assert.equal(fromSportScore({...base,competition:'AFC Champions League'}).league,'afcelite');
+  assert.equal(fromSportScore({...base,competition:'AFC Champions League'}).league,'');
   const lower=fromSportScore({...base,competition:'AFC Champions League Two'});
   assert.equal(lower.league,'');
   const asian=fromSportScore({...base,competition:'AFC Champions League Elite',home:'Al Hilal',away:'Al Ain FC'});

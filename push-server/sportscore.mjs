@@ -6,7 +6,7 @@ const leagueCodes=new Map([
   ['spanishlaliga','es'],['laliga','es'],['bundesliga','de'],['germanbundesliga','de'],['italianseriea','it'],['seriea','it'],['frenchligue1','fr'],['ligue1','fr'],
   ['saudiprofessionalleague','sa'],['saudiproleague','sa'],['roshnsaudileague','sa'],['uefachampionsleague','cl'],['brazilianseriea','br'],
   ['dutcheredivisie','nl'],['eredivisie','nl'],['portugueseprimeraliga','pt'],['portugueseliga','pt'],['ligaportugal','pt'],['sudanpremierleague','sd'],['sudanesepremierleague','sd'],['sudaneseleague','sd'],['internationalfriendly','friendly'],['internationalfriendlies','friendly'],
-  ['rwandannationalleague','rw'],['rwandapremierleague','rw'],['qatarstarsleague','qa'],['qataristarsleague','qa'],['cafchampionsleague','cafcl'],['afcchampionsleagueelite','afcelite'],['afcchampionsleague','afcelite'],['uefaeuropaleague','el'],['uefanationsleague','nations'],['uefaeuropeanchampionship','euro']
+  ['rwandannationalleague','rw'],['rwandapremierleague','rw'],['qatarstarsleague','qa'],['qataristarsleague','qa'],['cafchampionsleague','cafcl'],['championsleagueelite','afcelite'],['afcchampionsleagueelite','afcelite'],['uefaeuropaleague','el'],['uefanationsleague','nations'],['uefaeuropeanchampionship','euro']
 ]);
 const statusCodes=new Map([['not started','NS'],['delayed','NS'],['1st half','1H'],['half time','HT'],['2nd half','2H'],['extra time','ET'],['extra time half time','BT'],['penalties','P'],['finished','FT'],['after extra time','AET'],['after penalties','PEN'],['postponed','PST'],['cancelled','CANC'],['abandoned','ABD'],['interrupted','INT']]);
 const finals=new Set(['FT','AET','PEN','AWD','WO','CANC','ABD','PST']);

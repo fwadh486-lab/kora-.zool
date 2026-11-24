@@ -127,3 +127,5 @@ test('reject cross-match goals, mismatched teams, incomplete score and ambiguous
 });
 
 test('goals without verified scorers state the limitation instead of displaying a guessed name',()=>{const alert=notificationFor({id:'unknown',type:'goal-away',match:{...match,homeScore:0,awayScore:1,goals:null,source:'SportScore'}},'ar','https://example.com/');assert.match(alert.body,/اسم المسجل لم يتأكد من المصدر بعد/);assert.doesNotMatch(alert.body,/المسجل: لاعب/);});
+
+test('score notifications from Bugesera against Rayon Sports use Arabic club names',()=>{const goal={id:'rw-goal',type:'goal-away',match:{id:'ss:rwanda',home:'Bugesera',away:'Rayon Sports FC',status:'1H',homeScore:0,awayScore:2,minute:42,date:'2026-11-24T13:00:00Z',source:'SportScore'}};const message=notificationFor(goal,'ar','https://example.org/');assert.equal(message.title,'بوغيسيرا - رايون سبورتس');assert.match(message.body,/اسم المسجل لم يتأكد/);const en=notificationFor(goal,'en','https://example.org/');assert.equal(en.title,'Bugesera - Rayon Sports FC');});

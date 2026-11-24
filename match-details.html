@@ -367,7 +367,7 @@ function renderMatchCenter(){
  const myToken=++posterToken;
  const canvas=document.createElement("canvas");
  KoraMatchCenter.png(canvas,match,{brandUrl:"./kora-zol-icon-192.png",phase:KoraMatchFeed.phaseOf,pulse:m=>KoraMatchPulse.analyze(m,teamMatch),statKey:KoraDetailFeed.statKey,leagueName:leagueNames[match.league]||match.competition})
- .then(({blob})=>{if(myToken!==posterToken)return;posterBlob=blob;posterUrl=URL.createObjectURL(blob);preview.src=posterUrl;preview.hidden=false;waiting.remove();save.disabled=false;share.disabled=false;status.textContent="صورة جاهزة للمشاركة · 1080 × 1350 PNG"})
+ .then(({blob})=>{if(myToken!==posterToken)return;posterBlob=blob;posterUrl=URL.createObjectURL(blob);preview.onload=()=>{if(myToken!==posterToken)return;preview.hidden=false;waiting.remove();save.disabled=false;share.disabled=false;status.textContent="صورة جاهزة للمشاركة · 1080 × 1350 PNG"};preview.onerror=()=>{if(myToken!==posterToken)return;waiting.textContent="تعذّر فتح معاينة الصورة. حاول تحديث المباراة.";status.textContent="الصورة لم تكتمل؛ نوصيك بإعادة المحاولة."};preview.src=posterUrl})
  .catch(()=>{if(myToken!==posterToken)return;waiting.textContent="تعذّر إنشاء الصورة. جرب تحديث الصفحة.";status.textContent="محتوى المباراة النصي متاح فوق الصورة."});
  const fileName=KoraMatchCenter.safeFilename(match);
  save.onclick=()=>{if(!posterUrl)return;const a=document.createElement("a");a.href=posterUrl;a.download=fileName;document.body.append(a);a.click();a.remove();status.textContent="بدأ طلب حفظ الصورة. إذا منع جهازك الحفظ، اضغط مطولاً على معاينة الصورة."};

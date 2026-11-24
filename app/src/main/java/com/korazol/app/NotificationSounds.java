@@ -17,15 +17,15 @@ import java.util.Locale;
  */
 final class NotificationSounds {
     private static final String PREFIX = "korazol_event_";
-    private static final String VERSION = "_sound_v1";
+    private static final String VERSION = "_sound_v2";
     private static final String[] TYPES = {
         "goal", "kickoff", "secondhalf", "halftime",
         "fulltime", "yellow", "red", "general"
     };
     private static final String[] TITLES = {
-        "⚽ الأهداف", "⏱ بداية المباراة", "▶ بداية الشوط الثاني",
-        "⏸ نهاية الشوط الأول", "🏁 نهاية المباراة",
-        "🟨 البطاقات الصفراء", "🟥 البطاقات الحمراء",
+        "⚽ الأهداف · هتاف الجمهور", "⏱ البداية · صافرة حكم", "▶ الشوط الثاني · صافرة حكم",
+        "⏸ نهاية الشوط · صافرتان", "🏁 نهاية المباراة · ثلاث صافرات",
+        "🟨 الكرت الأصفر · صافرة", "🟥 الكرت الأحمر · صافرة وجمهور",
         "🔔 تنبيهات كورة زول"
     };
     private static MediaPlayer currentPreview;

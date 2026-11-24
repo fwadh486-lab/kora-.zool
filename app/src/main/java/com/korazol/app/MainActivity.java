@@ -74,7 +74,7 @@ public class MainActivity extends Activity {
         settings.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);
         settings.setAllowFileAccess(false);
         settings.setAllowContentAccess(false);
-        settings.setUserAgentString(settings.getUserAgentString()+" KoraZolAndroid/0.7.0");
+        settings.setUserAgentString(settings.getUserAgentString()+" KoraZolAndroid/0.8.0");
         if(WebViewFeature.isFeatureSupported(WebViewFeature.WEB_MESSAGE_LISTENER)){
             WebViewCompat.addWebMessageListener(webView,"KoraNative",Collections.singleton("https://fwadh486-lab.github.io"),(view,message,sourceOrigin,isMainFrame,reply)->{
                 if(isMainFrame&&isAppUrl(Uri.parse(view.getUrl()==null?HOME:view.getUrl())))handleNativeMessage(message.getData(),reply);

@@ -6,7 +6,7 @@
   const $ = id => document.getElementById(id);
   const tr = (ar,en) => document.documentElement.lang === 'en' ? en : ar;
   const memory = new Map();
-  const get = key => { if(memory.has(key))return memory.get(key);try { return localStorage.getItem(key); } catch { return null; } };
+  const get = key => {try {const value=localStorage.getItem(key);if(value!==null)return value;} catch {}return memory.has(key)?memory.get(key):null;};
   const set = (key,value) => { memory.set(key,value);try { localStorage.setItem(key,value); } catch {} };
   function readJson(key,fallback){try{return JSON.parse(get(key)||'null')??fallback}catch{return fallback}}
   const pending = new Map(); let sequence=0;
@@ -19,7 +19,7 @@
   function enabled(){return get(KEY)==='yes'}
   function token(){let value=get(TOKEN);if(!value){value=crypto.randomUUID()+crypto.randomUUID();set(TOKEN,value)}return value}
   function preferenceData(){
-    const teams=typeof getFollowedTeams==='function'?getFollowedTeams().slice(0,100):[];
+    const teams=window.KoraNotifications?.teams?.()||(typeof getFollowedTeams==='function'?getFollowedTeams().slice(0,100):[]);
     const favoriteIds=new Set(typeof getFavorites==='function'?getFavorites():[]);
     const old=readJson(SAVED,[]);
     const matches=new Map((Array.isArray(old)?old:[]).filter(x=>favoriteIds.has(x.id)).map(x=>[x.id,x]));
@@ -27,7 +27,7 @@
     for(const e of all)if(favoriteIds.has(e.id)&&e.date&&e.home&&e.away)matches.set(e.id,{id:e.id,home:e.home,away:e.away,date:e.date});
     const selected=[...matches.values()].sort((a,b)=>String(a.id).localeCompare(String(b.id))).slice(0,100);
     set(SAVED,JSON.stringify(selected));
-    return {teams:[...teams].sort(),matches:selected,types:types(),allLive:get(ALL_LIVE)==='yes',language:document.documentElement.lang==='en'?'en':'ar'};
+    return {teams:[...teams].sort(),matches:selected,leagues:window.KoraNotifications?.leagues?.()||[],selectionRule:window.KoraNotifications?.rule?.()||'any',types:types(),allLive:get(ALL_LIVE)==='yes',language:document.documentElement.lang==='en'?'en':'ar'};
   }
   function render(){
     const button=$('backgroundPushButton'),test=$('backgroundPushTest'),status=$('backgroundPushStatus');
@@ -152,7 +152,7 @@
       }
     }catch{}finally{checkingTest=false}
   }
-  function onLanguage(){notice='';render();scheduleSync()}
+  function onLanguage(){notice='';render();window.KoraNotifications?.render?.();scheduleSync()}
   function soundPreview(){
     const section=$('nativeSoundPreview');
     if(!section)return;
@@ -176,16 +176,16 @@
     document.querySelectorAll('[data-push-type]').forEach(input=>input.addEventListener('change',()=>{
       const next=new Set(types());if(input.checked)next.add(input.dataset.pushType);else next.delete(input.dataset.pushType);
       set(PREFS_V2,JSON.stringify(TYPES.filter(type=>next.has(type))));
-      preferenceChanged=true;notice='';noticeError=false;render();scheduleSync();
+      preferenceChanged=true;notice='';noticeError=false;render();scheduleSync();document.dispatchEvent(new Event('korazol:preferences-changed'));
     }));
-    $('pushAllLive')?.addEventListener('change',event=>{set(ALL_LIVE,event.target.checked?'yes':'no');preferenceChanged=true;notice='';noticeError=false;render();scheduleSync()});
+    $('pushAllLive')?.addEventListener('change',event=>{set(ALL_LIVE,event.target.checked?'yes':'no');preferenceChanged=true;notice='';noticeError=false;render();scheduleSync();window.KoraNotifications?.render?.();document.dispatchEvent(new Event('korazol:preferences-changed'))});
     window.addEventListener('online',()=>{if(!config?.enabled)loadConfig();else scheduleSync()});
     document.addEventListener('visibilitychange',()=>{if(!document.hidden){if(enabled())loadConfig();scheduleSync()}});
     setInterval(()=>{if(!document.hidden)refreshTestStatus()},10000);
     setInterval(()=>{if(enabled()&&!document.hidden)loadConfig()},120000);
     render();loadConfig();
   }
-  window.KoraPush={sync:scheduleSync,render:onLanguage,ownsLiveAlerts:()=>enabled()&&synced&&Boolean(config?.liveEnabled)};
+  window.KoraPush={sync:scheduleSync,render:onLanguage,ownsLiveAlerts:()=>enabled()&&synced&&Boolean(config?.liveEnabled),notifyPreferences:preferenceData};
   init();
 })();
 

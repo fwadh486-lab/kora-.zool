@@ -6,7 +6,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timedelta, timezone
 import re
 
-LEAGUES = {"sd":"sudanese-premier-league", "rw":"rwandan-national-league", "qa":"qatar-stars-league", "sa":"saudi-professional-league", "el":"uefa-europa-league", "cafcl":"caf-champions-league", "nations":"uefa-nations-league", "euro":"uefa-european-championship"}
+LEAGUES = {"sd":"sudanese-premier-league", "rw":"rwandan-national-league", "qa":"qatar-stars-league", "sa":"saudi-professional-league", "el":"uefa-europa-league", "cafcl":"caf-champions-league", "afcelite":"afc-champions-league-elite", "nations":"uefa-nations-league", "euro":"uefa-european-championship"}
 STATUS = {"not started":"NS", "1st half":"1H", "half time":"HT", "2nd half":"2H", "extra time":"ET", "penalties":"P", "finished":"FT", "after extra time":"AET", "after penalties":"PEN", "postponed":"PST", "cancelled":"CANC", "abandoned":"ABD"}
 now = datetime.now(timezone.utc)
 days = [(now.date()+timedelta(days=i)).isoformat() for i in range(-3, 8)]

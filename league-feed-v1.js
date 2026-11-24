@@ -12,6 +12,7 @@
     it:['الدوري الإيطالي','Serie A','🇮🇹','إيطاليا','Italy'],
     fr:['الدوري الفرنسي','Ligue 1','🇫🇷','فرنسا','France'],
     cl:['دوري أبطال أوروبا','UEFA Champions League','🏆','أوروبا','Europe'],
+    afcelite:['دوري أبطال آسيا للنخبة','AFC Champions League Elite','🏆','آسيا','Asia'],
     el:['الدوري الأوروبي','UEFA Europa League','🏆','أوروبا','Europe'],
     cafcl:['دوري أبطال أفريقيا','CAF Champions League','🏆','أفريقيا','Africa'],
     euro:['كأس أمم أوروبا','UEFA European Championship','🇪🇺','أوروبا','Europe'],

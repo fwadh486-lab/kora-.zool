@@ -41,3 +41,22 @@ test('results and upcoming fixtures are sorted separately, duplicate fixtures me
   const result=f.partition(matches,Date.parse('2026-11-21T00:00:00Z'));
   assert.deepEqual(result.results.map(m=>m.id),['a']);assert.deepEqual(result.upcoming.map(m=>m.id),['b']);
 });
+
+test('Asian Champions League Elite is separate from Asian Champions League Two, with routing, group tables, and safe match filter',()=>{
+  assert.ok(f.valid('afcelite'));assert.equal(f.catalog.afcelite[0],'دوري أبطال آسيا للنخبة');
+  assert.equal(new URL(f.url('afcelite'),'https://example.com/').searchParams.get('league'),'afcelite');
+  const east={team:'Kashima Antlers',rank:1,points:9},west={team:'Al Hilal',rank:1,points:10};
+  const grouped={groups:{afcelite:[{group:'East',rows:[east]},{group:'West',rows:[west]}]}};
+  assert.deepEqual(f.tables(grouped,'afcelite').map(g=>g.group),['East','West']);
+  assert.equal(f.teams(grouped,'afcelite',[]).length,2);
+  const m={id:'ss:elite',league:'afcelite',home:'Al Hilal',away:'Al Ain',date:'2026-11-24T17:00:00Z',status:'FT',score:'2 - 1'};
+  const other={...m,id:'ss:two',league:'afctwo'};
+  assert.deepEqual(f.matches('afcelite',[m,other]).map(v=>v.id),['ss:elite']);
+  const home=fs.readFileSync(require.resolve('../index.html'),'utf8');
+  assert.match(home,/afcelite:\s*\["دوري أبطال آسيا للنخبة"/);
+  const sportscore=fs.readFileSync(require.resolve('../scripts/update_sportscore_fixtures.py'),'utf8');
+  const standing=fs.readFileSync(require.resolve('../scripts/update_standings.py'),'utf8');
+  assert.match(sportscore,/"afcelite":"afc-champions-league-elite"/);
+  assert.match(standing,/"afcelite":"afc-champions-league-elite"/);
+  assert.match(fs.readFileSync(require.resolve('../fixtures.html'),'utf8'),/value="afc.champions"/);
+});

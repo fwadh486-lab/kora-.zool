@@ -10,7 +10,7 @@ from datetime import datetime, timezone
 
 TOKEN = os.environ.get("FOOTBALL_DATA_API_KEY", "").strip()
 LEAGUES = {"cl": "CL", "en": "PL", "es": "PD", "de": "BL1", "it": "SA", "fr": "FL1", "br": "BSA", "nl": "DED", "pt": "PPL", "eng2": "ELC"}
-SPORTSCORE = {"cl":"uefa-champions-league", "it":"italian-serie-a", "sa":"saudi-professional-league", "sd":"sudanese-premier-league", "rw":"rwandan-national-league", "qa":"qatar-stars-league", "el":"uefa-europa-league", "cafcl":"caf-champions-league", "nations":"uefa-nations-league", "euro":"uefa-european-championship", "en":"english-premier-league", "es":"spanish-la-liga", "de":"bundesliga", "fr":"french-ligue-1", "br":"brazilian-serie-a", "nl":"netherlands-eredivisie", "pt":"portuguese-primera-liga", "eng2":"english-football-league-championship"}
+SPORTSCORE = {"cl":"uefa-champions-league", "it":"italian-serie-a", "sa":"saudi-professional-league", "sd":"sudanese-premier-league", "rw":"rwandan-national-league", "qa":"qatar-stars-league", "el":"uefa-europa-league", "cafcl":"caf-champions-league", "afcelite":"afc-champions-league-elite", "nations":"uefa-nations-league", "euro":"uefa-european-championship", "en":"english-premier-league", "es":"spanish-la-liga", "de":"bundesliga", "fr":"french-ligue-1", "br":"brazilian-serie-a", "nl":"netherlands-eredivisie", "pt":"portuguese-primera-liga", "eng2":"english-football-league-championship"}
 path = pathlib.Path("data/standings.json")
 previous = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
 missing_only = "--missing" in sys.argv

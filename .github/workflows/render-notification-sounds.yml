@@ -17,8 +17,14 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Audio renderer prerequisites
+      - name: Install audio decoder
+        shell: bash
         run: |
+          set -euo pipefail
+          if ! command -v ffmpeg >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq ffmpeg
+          fi
           python3 --version
           ffmpeg -version | head -1
       - name: Render realistic football notification pack

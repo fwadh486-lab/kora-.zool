@@ -60,3 +60,5 @@ test('Asian Champions League Elite is separate from Asian Champions League Two, 
   assert.match(standing,/"afcelite":"afc-champions-league-elite"/);
   assert.match(fs.readFileSync(require.resolve('../fixtures.html'),'utf8'),/value="afc.champions"/);
 });
+
+test('AFC Elite published standings contain two verified 16-club regional tables',()=>{const tables=f.tables(data,'afcelite');assert.equal(tables.length,2);assert.ok(tables.every(g=>g.rows.length===16));assert.ok(tables.some(g=>g.rows.some(r=>r.team==='Al-Ain FC')));assert.ok(tables.some(g=>g.rows.some(r=>r.team==='Vissel Kobe')));});

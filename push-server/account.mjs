@@ -58,7 +58,7 @@ export function cleanAccountData(raw){
    followedTeams:strings(raw.followedTeams||[],100),favoriteMatches:strings(raw.favoriteMatches||[],200),
    notificationTeams:strings(raw.notificationTeams||[],100),notificationLeagues:strings(raw.notificationLeagues||[],60,24),
    followedLeagues:strings(raw.followedLeagues||[],60,24),
-   savedMatches:saved,alertTypes,alertAllLive:raw.alertAllLive===true,alertRule:raw.alertRule==='both'?'both':'any'
+   savedMatches:saved,alertTypes,alertAllLive:raw.alertAllLive===true,alertFavoriteMatchesEnabled:raw.alertFavoriteMatchesEnabled!==false,alertRule:raw.alertRule==='both'?'both':'any'
  };
 }
 async function table(env){

@@ -73,7 +73,7 @@ function cleanPreferences(raw) {
   const types = Array.isArray(raw?.types) ? eventTypes.filter(t=>raw.types.includes(t)) : [];
   const validLeagues=new Set(['en','es','sa','sd','de','it','fr','cl','afcelite','eng2','pt','nl','br','rw','qa','el','cafcl','euro','nations','friendly','clubfriendly','nonfifa']);
   const leagues=Array.isArray(raw?.leagues)?[...new Set(raw.leagues.filter(v=>validLeagues.has(v)))].slice(0,60):[];
-  return {teams,matches,leagues,selectionRule:raw?.selectionRule==='both'?'both':'any',types,allLive:raw?.allLive===true,language:raw?.language==='en'?'en':'ar'};
+  return {teams,matches,leagues,selectionRule:raw?.selectionRule==='both'?'both':'any',favoriteMatchesEnabled:raw?.favoriteMatchesEnabled!==false,types,allLive:raw?.allLive===true,language:raw?.language==='en'?'en':'ar'};
 }
 async function parseRequest(request) {
   const declared=Number(request.headers.get('content-length')||0);

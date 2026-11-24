@@ -86,3 +86,5 @@ jobs:
 # Release: verified account-backed favorites and custom competition notifications.
 
 # Compatibility: verify Firebase public keys without unsupported redirect modes in Workers.
+
+# Release: separate favorite-match alert opt-out while retaining match favorites.

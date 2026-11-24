@@ -144,3 +144,5 @@ test('competition-only, team-only, combined and intersection notification filter
  assert.equal(selectedBy({...base,matches:[{id:'321',home:m.home,away:m.away,date:m.date}]},m),true);
  assert.equal(selectedBy({...base,allLive:true},m),true);
 });
+
+test('favorite match notifications can be disabled independently of saved favorites',()=>{const m={id:'42',home:'Al Hilal',away:'Al Ain',date:'2026-11-24T20:00:00Z',league:'afcelite'};const p={teams:[],leagues:[],matches:[{id:'42',home:m.home,away:m.away,date:m.date}],allLive:false,types:['goal']};assert.equal(selectedBy(p,m),true);assert.equal(selectedBy({...p,favoriteMatchesEnabled:false},m),false);assert.equal(selectedBy({...p,favoriteMatchesEnabled:false,leagues:['afcelite']},m),true);});

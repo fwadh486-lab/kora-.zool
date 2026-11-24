@@ -49,6 +49,7 @@ export function selectedBy(preferences, match) {
   if(preferences.selectionRule==='both'){
     if(teamSelected&&leagueSelected)return true;
   }else if(teamSelected||leagueSelected)return true;
+  if(preferences.favoriteMatchesEnabled===false)return false;
   return (preferences.matches||[]).some(item => {
     if (item.id === 'af:' + match.id || item.id === 'apif:' + match.id) return true;
     return normalizedName(item.home) === home && normalizedName(item.away) === away &&

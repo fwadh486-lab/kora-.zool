@@ -1,6 +1,9 @@
 name: Update football standings
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['scripts/update_standings.py', '.github/workflows/standings.yml']
   schedule:
     - cron: '17 */6 * * *'
 permissions:

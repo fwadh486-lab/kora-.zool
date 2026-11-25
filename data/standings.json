@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-25T07:39:37.933742+00:00",
+  "updated": "2026-11-25T13:37:45.141146+00:00",
   "leagues": {
     "cl": [
       {
@@ -4895,6 +4895,18 @@
         "rows": [
           {
             "rank": 1,
+            "team": "Kashima Antlers",
+            "crest": "https://img.thesports.com/football/team/90ca524b1b1c17911b1bf8e425c8d96d.png",
+            "played": 5,
+            "won": 4,
+            "draw": 1,
+            "lost": 0,
+            "gd": 13,
+            "points": 13,
+            "form": ""
+          },
+          {
+            "rank": 2,
             "team": "Vissel Kobe",
             "crest": "https://img.thesports.com/football/team/d85cce27ab583e5b3cead155f02b098a.png",
             "played": 5,
@@ -4906,19 +4918,19 @@
             "form": ""
           },
           {
-            "rank": 2,
-            "team": "Kashima Antlers",
-            "crest": "https://img.thesports.com/football/team/90ca524b1b1c17911b1bf8e425c8d96d.png",
-            "played": 4,
+            "rank": 3,
+            "team": "Gamba Osaka",
+            "crest": "https://img.thesports.com/football/team/91008a96b5de8c75376d17057f89890e.png",
+            "played": 5,
             "won": 3,
-            "draw": 1,
+            "draw": 2,
             "lost": 0,
-            "gd": 10,
-            "points": 10,
+            "gd": 7,
+            "points": 11,
             "form": ""
           },
           {
-            "rank": 3,
+            "rank": 4,
             "team": "Kashiwa Reysol",
             "crest": "https://img.thesports.com/football/team/d272859d78eb8ca7a14753f4293fbf45.png",
             "played": 5,
@@ -4930,7 +4942,7 @@
             "form": ""
           },
           {
-            "rank": 4,
+            "rank": 5,
             "team": "Shanghai Port",
             "crest": "https://img.thesports.com/football/team/e4e3bed039e14ee2821c1babec380452.png",
             "played": 5,
@@ -4942,7 +4954,7 @@
             "form": ""
           },
           {
-            "rank": 5,
+            "rank": 6,
             "team": "Kyoto Sanga",
             "crest": "https://img.thesports.com/football/team/7d6fa50ea67cde7d66612a8189897ba5.png",
             "played": 5,
@@ -4951,18 +4963,6 @@
             "lost": 1,
             "gd": 4,
             "points": 10,
-            "form": ""
-          },
-          {
-            "rank": 6,
-            "team": "Gamba Osaka",
-            "crest": "https://img.thesports.com/football/team/91008a96b5de8c75376d17057f89890e.png",
-            "played": 4,
-            "won": 2,
-            "draw": 2,
-            "lost": 0,
-            "gd": 5,
-            "points": 8,
             "form": ""
           },
           {
@@ -4979,18 +4979,6 @@
           },
           {
             "rank": 8,
-            "team": "Jeonbuk Hyundai Motors",
-            "crest": "https://img.thesports.com/football/team/ee2117f952745163fecfa4b74a6a2bea.png",
-            "played": 4,
-            "won": 2,
-            "draw": 1,
-            "lost": 1,
-            "gd": 1,
-            "points": 7,
-            "form": ""
-          },
-          {
-            "rank": 9,
             "team": "Beijing Guoan",
             "crest": "https://img.thesports.com/football/team/f9f803b7f492448da2201101b8f98d13.png",
             "played": 5,
@@ -5002,7 +4990,7 @@
             "form": ""
           },
           {
-            "rank": 10,
+            "rank": 9,
             "team": "Cong An Ha Noi FC",
             "crest": "https://img.thesports.com/football/team/f3dde7370cf875e4e657b4331b1b4a31.png",
             "played": 5,
@@ -5014,7 +5002,7 @@
             "form": ""
           },
           {
-            "rank": 11,
+            "rank": 10,
             "team": "Daejeon Hana Citizen",
             "crest": "https://img.thesports.com/football/team/090eeb1513e8f1d0cf6d8647d10b2eea.png",
             "played": 5,
@@ -5022,6 +5010,18 @@
             "draw": 1,
             "lost": 2,
             "gd": -1,
+            "points": 7,
+            "form": ""
+          },
+          {
+            "rank": 11,
+            "team": "Jeonbuk Hyundai Motors",
+            "crest": "https://img.thesports.com/football/team/ee2117f952745163fecfa4b74a6a2bea.png",
+            "played": 5,
+            "won": 2,
+            "draw": 1,
+            "lost": 2,
+            "gd": -2,
             "points": 7,
             "form": ""
           },
@@ -5041,11 +5041,11 @@
             "rank": 13,
             "team": "Port FC",
             "crest": "https://img.thesports.com/football/team/fb00f7ae0bf4530e86baf7bec110f69f.png",
-            "played": 4,
+            "played": 5,
             "won": 1,
             "draw": 0,
-            "lost": 3,
-            "gd": -5,
+            "lost": 4,
+            "gd": -7,
             "points": 3,
             "form": ""
           },
@@ -6130,25 +6130,25 @@
     ]
   },
   "leagueUpdated": {
-    "cl": "2026-11-25T07:39:37.933742+00:00",
-    "en": "2026-11-25T07:39:37.933742+00:00",
-    "es": "2026-11-25T07:39:37.933742+00:00",
-    "de": "2026-11-25T07:39:37.933742+00:00",
-    "it": "2026-11-25T07:39:37.933742+00:00",
-    "fr": "2026-11-25T07:39:37.933742+00:00",
-    "br": "2026-11-25T07:39:37.933742+00:00",
-    "nl": "2026-11-25T07:39:37.933742+00:00",
-    "pt": "2026-11-25T07:39:37.933742+00:00",
-    "eng2": "2026-11-25T07:39:37.933742+00:00",
-    "sa": "2026-11-25T07:40:53.614371+00:00",
-    "sd": "2026-11-25T07:40:53.811145+00:00",
-    "rw": "2026-11-25T07:40:53.987860+00:00",
-    "qa": "2026-11-25T07:40:54.176018+00:00",
-    "el": "2026-11-25T07:40:54.363044+00:00",
-    "cafcl": "2026-11-25T07:40:54.562059+00:00",
-    "afcelite": "2026-11-25T07:40:54.736307+00:00",
-    "nations": "2026-11-25T07:40:54.921395+00:00",
-    "euro": "2026-11-25T07:40:55.109538+00:00"
+    "cl": "2026-11-25T13:37:45.141146+00:00",
+    "en": "2026-11-25T13:37:45.141146+00:00",
+    "es": "2026-11-25T13:37:45.141146+00:00",
+    "de": "2026-11-25T13:37:45.141146+00:00",
+    "it": "2026-11-25T13:37:45.141146+00:00",
+    "fr": "2026-11-25T13:37:45.141146+00:00",
+    "br": "2026-11-25T13:37:45.141146+00:00",
+    "nl": "2026-11-25T13:37:45.141146+00:00",
+    "pt": "2026-11-25T13:37:45.141146+00:00",
+    "eng2": "2026-11-25T13:37:45.141146+00:00",
+    "sa": "2026-11-25T13:39:00.913992+00:00",
+    "sd": "2026-11-25T13:39:01.094188+00:00",
+    "rw": "2026-11-25T13:39:01.273893+00:00",
+    "qa": "2026-11-25T13:39:01.445183+00:00",
+    "el": "2026-11-25T13:39:01.620015+00:00",
+    "cafcl": "2026-11-25T13:39:01.794016+00:00",
+    "afcelite": "2026-11-25T13:39:01.968495+00:00",
+    "nations": "2026-11-25T13:39:02.148707+00:00",
+    "euro": "2026-11-25T13:39:02.323450+00:00"
   },
   "leagueSource": {
     "cl": "football-data.org",

@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-25T13:37:45.141146+00:00",
+  "updated": "2026-11-25T19:08:24.296955+00:00",
   "leagues": {
     "cl": [
       {
@@ -40,6 +40,18 @@
       },
       {
         "rank": 4,
+        "team": "FC Barcelona",
+        "crest": "https://crests.football-data.org/81.png",
+        "played": 5,
+        "won": 4,
+        "draw": 0,
+        "lost": 1,
+        "gd": 11,
+        "points": 12,
+        "form": null
+      },
+      {
+        "rank": 5,
         "team": "Real Betis Balompié",
         "crest": "https://crests.football-data.org/90.png",
         "played": 5,
@@ -51,7 +63,7 @@
         "form": null
       },
       {
-        "rank": 5,
+        "rank": 6,
         "team": "Arsenal FC",
         "crest": "https://crests.football-data.org/57.png",
         "played": 5,
@@ -63,7 +75,7 @@
         "form": null
       },
       {
-        "rank": 6,
+        "rank": 7,
         "team": "Manchester City FC",
         "crest": "https://crests.football-data.org/65.png",
         "played": 5,
@@ -75,7 +87,7 @@
         "form": null
       },
       {
-        "rank": 7,
+        "rank": 8,
         "team": "Borussia Dortmund",
         "crest": "https://crests.football-data.org/4.png",
         "played": 5,
@@ -84,18 +96,6 @@
         "lost": 1,
         "gd": 2,
         "points": 10,
-        "form": null
-      },
-      {
-        "rank": 8,
-        "team": "FC Barcelona",
-        "crest": "https://crests.football-data.org/81.png",
-        "played": 4,
-        "won": 3,
-        "draw": 0,
-        "lost": 1,
-        "gd": 8,
-        "points": 9,
         "form": null
       },
       {
@@ -342,28 +342,16 @@
         "rank": 29,
         "team": "Villarreal CF",
         "crest": "https://crests.football-data.org/94.png",
-        "played": 4,
+        "played": 5,
         "won": 1,
-        "draw": 0,
+        "draw": 1,
         "lost": 3,
         "gd": -6,
-        "points": 3,
+        "points": 4,
         "form": null
       },
       {
         "rank": 30,
-        "team": "Sabah FK",
-        "crest": "https://crests.football-data.org/10233.png",
-        "played": 4,
-        "won": 1,
-        "draw": 0,
-        "lost": 3,
-        "gd": -6,
-        "points": 3,
-        "form": null
-      },
-      {
-        "rank": 31,
         "team": "PAE AEK",
         "crest": "https://crests.football-data.org/1899.png",
         "played": 5,
@@ -375,7 +363,7 @@
         "form": null
       },
       {
-        "rank": 32,
+        "rank": 31,
         "team": "Feyenoord Rotterdam",
         "crest": "https://crests.football-data.org/675.png",
         "played": 5,
@@ -383,6 +371,18 @@
         "draw": 0,
         "lost": 4,
         "gd": -8,
+        "points": 3,
+        "form": null
+      },
+      {
+        "rank": 32,
+        "team": "Sabah FK",
+        "crest": "https://crests.football-data.org/10233.png",
+        "played": 5,
+        "won": 1,
+        "draw": 0,
+        "lost": 4,
+        "gd": -9,
         "points": 3,
         "form": null
       },
@@ -402,12 +402,12 @@
         "rank": 34,
         "team": "SK Slavia Praha",
         "crest": "https://crests.football-data.org/930.png",
-        "played": 4,
+        "played": 5,
         "won": 0,
-        "draw": 1,
+        "draw": 2,
         "lost": 3,
         "gd": -4,
-        "points": 1,
+        "points": 2,
         "form": null
       },
       {
@@ -6130,25 +6130,25 @@
     ]
   },
   "leagueUpdated": {
-    "cl": "2026-11-25T13:37:45.141146+00:00",
-    "en": "2026-11-25T13:37:45.141146+00:00",
-    "es": "2026-11-25T13:37:45.141146+00:00",
-    "de": "2026-11-25T13:37:45.141146+00:00",
-    "it": "2026-11-25T13:37:45.141146+00:00",
-    "fr": "2026-11-25T13:37:45.141146+00:00",
-    "br": "2026-11-25T13:37:45.141146+00:00",
-    "nl": "2026-11-25T13:37:45.141146+00:00",
-    "pt": "2026-11-25T13:37:45.141146+00:00",
-    "eng2": "2026-11-25T13:37:45.141146+00:00",
-    "sa": "2026-11-25T13:39:00.913992+00:00",
-    "sd": "2026-11-25T13:39:01.094188+00:00",
-    "rw": "2026-11-25T13:39:01.273893+00:00",
-    "qa": "2026-11-25T13:39:01.445183+00:00",
-    "el": "2026-11-25T13:39:01.620015+00:00",
-    "cafcl": "2026-11-25T13:39:01.794016+00:00",
-    "afcelite": "2026-11-25T13:39:01.968495+00:00",
-    "nations": "2026-11-25T13:39:02.148707+00:00",
-    "euro": "2026-11-25T13:39:02.323450+00:00"
+    "cl": "2026-11-25T19:08:24.296955+00:00",
+    "en": "2026-11-25T19:08:24.296955+00:00",
+    "es": "2026-11-25T19:08:24.296955+00:00",
+    "de": "2026-11-25T19:08:24.296955+00:00",
+    "it": "2026-11-25T19:08:24.296955+00:00",
+    "fr": "2026-11-25T19:08:24.296955+00:00",
+    "br": "2026-11-25T19:08:24.296955+00:00",
+    "nl": "2026-11-25T19:08:24.296955+00:00",
+    "pt": "2026-11-25T19:08:24.296955+00:00",
+    "eng2": "2026-11-25T19:08:24.296955+00:00",
+    "sa": "2026-11-25T19:09:40.034698+00:00",
+    "sd": "2026-11-25T19:09:40.220142+00:00",
+    "rw": "2026-11-25T19:09:40.389352+00:00",
+    "qa": "2026-11-25T19:09:40.553072+00:00",
+    "el": "2026-11-25T19:09:40.714651+00:00",
+    "cafcl": "2026-11-25T19:09:40.870119+00:00",
+    "afcelite": "2026-11-25T19:09:41.048098+00:00",
+    "nations": "2026-11-25T19:09:41.200782+00:00",
+    "euro": "2026-11-25T19:09:41.350360+00:00"
   },
   "leagueSource": {
     "cl": "football-data.org",

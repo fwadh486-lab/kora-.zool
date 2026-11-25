@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-24T21:57:50.326960+00:00",
+  "updated": "2026-11-25T01:11:41.763362+00:00",
   "matches": [
     {
       "events": [],
@@ -13056,9 +13056,9 @@
       "homeLogo": "https://crests.football-data.org/675.png",
       "awayLogo": "https://crests.football-data.org/503.png",
       "date": "2026-11-24T20:00:00Z",
-      "score": "1 - 1",
-      "status": "IN_PLAY",
-      "live": true,
+      "score": "0 - 1",
+      "status": "FINISHED",
+      "live": false,
       "source": "football-data.org"
     },
     {
@@ -13117,8 +13117,8 @@
       "awayLogo": "https://crests.football-data.org/1899.png",
       "date": "2026-11-24T20:00:00Z",
       "score": "1 - 0",
-      "status": "IN_PLAY",
-      "live": true,
+      "status": "FINISHED",
+      "live": false,
       "source": "football-data.org"
     },
     {
@@ -13156,9 +13156,9 @@
       "homeLogo": "https://crests.football-data.org/1772_large.png",
       "awayLogo": "https://crests.football-data.org/1769.png",
       "date": "2026-11-24T21:00:00Z",
-      "score": "2 - 0",
-      "status": "IN_PLAY",
-      "live": true,
+      "score": "3 - 0",
+      "status": "FINISHED",
+      "live": false,
       "source": "football-data.org"
     },
     {

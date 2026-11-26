@@ -133,10 +133,12 @@ async function restore(show=true){
    let local;try{local=JSON.parse(pending)}catch{throw Error('invalid_pending_backup')}
    await account('PUT',local);
    if(current.uid!==uid)return;
-   store(pendingKey(uid),null);
+   if(read(pendingKey(uid))===pending)store(pendingKey(uid),null);
  }
  const result=await account('GET');
  if(current.uid!==uid)return;
+ // A preference may change while a cloud request is in flight. Do not overwrite it.
+ if(read(pendingKey(uid))){await save(false);return;}
  if(result.found&&result.data){
   apply(result.data);lastUploaded=JSON.stringify(snapshot());
   if(show)status('✓ رجعنا مفضلاتك واختيارات الإشعارات من حسابك.','✓ Favorites and notification preferences restored.');
@@ -188,22 +190,30 @@ async function reset(){
  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){status('أدخل بريدك الإلكتروني أولاً.','Enter your email address first.',true);return}
  busy=true;render();
  try{await firebase('sendOobCode',{requestType:'PASSWORD_RESET',email});status('لو البريد مسجل، حتوصلك رسالة إعادة تعيين كلمة المرور.','If the email exists, a password reset message will arrive.')}
- catch(e){status(e.message,true)}
+ catch(e){status('تعذر إرسال رابط الاستعادة.','Could not send password reset link.',true)}
  finally{busy=false;render()}
 }
 async function runSafe(fn){
  if(busy)return;busy=true;render();try{await fn()}catch(e){status(e.message==='session_expired'?tr('انتهت الجلسة؛ سجل دخول من جديد.','Session expired; sign in again.'):tr('تعذّر الاتصال بالسيرفر. تأكد من الإنترنت وجرّب تاني.','Could not reach server. Check internet and retry.'),true)}
  finally{busy=false;render()}
 }
+function queueLocalChange(){
+ if(restoring)return;
+ if(current.uid){schedule();return}
+ try{
+  const cached=JSON.parse(read(ACCOUNT_KEY)||'null');
+  if(cached?.uid&&cached.refreshToken)store(pendingKey(cached.uid),JSON.stringify(snapshot()));
+ }catch{}
+}
 function init(){
- if(!$('koraAccount'))return;
+ if(!$('koraAccount')){document.addEventListener('korazol:preferences-changed',queueLocalChange);return;}
  $('koraAccountForm')?.addEventListener('submit',e=>{e.preventDefault();authenticate(false)});
  $('koraAccountSignup')?.addEventListener('click',()=>authenticate(true));
  $('koraAccountReset')?.addEventListener('click',reset);
  $('koraAccountSync')?.addEventListener('click',()=>runSafe(()=>save(true)));
  $('koraAccountRestore')?.addEventListener('click',()=>runSafe(()=>restore(true)));
  $('koraAccountSignout')?.addEventListener('click',signout);
- document.addEventListener('korazol:preferences-changed',schedule);
+ document.addEventListener('korazol:preferences-changed',queueLocalChange);
  const cached=read(ACCOUNT_KEY);if(cached){try{
   const data=JSON.parse(cached);
   if(data?.refreshToken&&data?.uid){current.refreshToken=data.refreshToken;current.uid=data.uid;current.email=data.email||'';activeUid=data.uid;

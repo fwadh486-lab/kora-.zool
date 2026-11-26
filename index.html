@@ -593,8 +593,31 @@ html.kz-settings-open #settings.active{display:block!important;width:100%;min-wi
 #settings .settings-backup,#settings .settings-jump,#settings .settings-actions,#settings .notify-rule,#settings .pin-manage-list,#settings .push-preference-list{min-width:0;max-width:100%;box-sizing:border-box}
 #settings input,#settings select,#settings textarea{max-width:100%;min-width:0}
 #settings [hidden]{display:none!important}
-html.kz-native #settings.active{isolation:isolate;transform:translateZ(0);backface-visibility:visible}
-</style><script>if(/KoraZolAndroid/i.test(navigator.userAgent))document.documentElement.classList.add("kz-native");</script></head>
+/* No compositor transform on settings: Android WebView may delay painting a promoted layer. */
+</style><script>if(/KoraZolAndroid/i.test(navigator.userAgent))document.documentElement.classList.add("kz-native");</script><style id="kz-settings-grid-v40">
+/* Settings layout: bounded rows independent of chip intrinsic widths. */
+html.kz-settings-open,html.kz-settings-open body{width:100%!important;max-width:100%!important;overflow-x:hidden!important;scroll-behavior:auto!important}
+html.kz-settings-open body>main{width:100%!important;max-width:760px!important;min-width:0!important;overflow-x:clip!important}
+html.kz-settings-open body>main>section:not(#settings){display:none!important}
+html.kz-settings-open body>main>#settings{display:block!important;visibility:visible!important;opacity:1!important;position:relative!important;inset:auto!important;transform:none!important;isolation:auto!important;min-width:0!important;width:100%!important;max-width:100%!important;overflow-x:clip!important;overflow-y:visible!important}
+#settings .settings-backup,#settings details,#settings fieldset,#settings form,#settings .settings-actions{width:100%;min-width:0;max-width:100%;box-sizing:border-box}
+#settings .settings-jump,#settings #pinManager,#settings #notifyLeagueList{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;grid-auto-rows:auto!important;gap:8px!important;align-items:stretch!important;justify-items:stretch!important;width:100%!important;min-width:0!important;max-width:100%!important}
+#settings #notifyTeamSelected{display:flex!important;flex-flow:row wrap!important;gap:8px!important;max-width:100%;min-width:0}
+#settings #notifyLeagueList>button,#settings #pinManager>button,#settings .settings-jump>button{display:flex!important;flex:none!important;align-items:center!important;justify-content:center!important;width:100%!important;min-width:0!important;max-width:100%!important;min-height:48px!important;height:auto!important;max-height:none!important;padding:9px 8px!important;font:700 13px/1.55 Cairo,Tahoma,Arial,sans-serif!important;white-space:normal!important;word-break:normal!important;overflow-wrap:break-word!important;writing-mode:horizontal-tb!important;text-align:center!important}
+#settings #notifyLeagueList>button{background:#172747!important;border:1px solid #7866a8!important;color:#fff!important;border-radius:12px!important}
+#settings #notifyLeagueList>button[aria-pressed=true]{background:linear-gradient(135deg,#824ac5,#4c287b)!important;border-color:#b096ff!important;color:#fff!important}
+#settings #notifyTeamSelected>button{flex:0 1 auto!important;max-width:100%!important;word-break:normal!important;overflow-wrap:break-word!important}
+#settings .notify-team-entry{display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;gap:8px!important;align-items:stretch!important}
+#settings .notify-team-entry input{width:100%!important;min-width:0!important}
+#settings .notify-team-entry button{white-space:nowrap!important;width:auto!important}
+#settings .settings-actions>label,#settings .notify-rule>label,#settings .push-preference-list>label{display:flex!important;align-items:center;gap:8px;min-width:0;max-width:100%;white-space:normal;word-break:normal}
+#settings .settings-actions>label{flex:1 1 120px}
+#settings .notify-rule>label{flex:1 1 100%}
+#settings input[type=radio],#settings input[type=checkbox]{flex:0 0 20px!important}
+#settings input[type=email],#settings input[type=password]{width:100%!important}
+#settings [hidden]{display:none!important}
+@media(max-width:320px){#settings #notifyLeagueList,#settings #pinManager,#settings .settings-jump{grid-template-columns:minmax(0,1fr)!important}}
+</style><script>if(new URLSearchParams(location.search).get("settings")==="1")document.documentElement.classList.add("kz-settings-open");</script></head>
 
 <body>
 <header>
@@ -1059,7 +1082,7 @@ function kzRevealSettings(){
  const root=document.documentElement,section=document.getElementById("settings");
  if(!section?.classList.contains("active"))return;
  root.classList.add("kz-settings-open");
- const reset=()=>{if(!section.classList.contains("active"))return;const scroller=document.scrollingElement||root;scroller.scrollLeft=0;document.body.scrollLeft=0;const main=section.parentElement;if(main)main.scrollLeft=0;void section.getBoundingClientRect().width;};
+ const reset=()=>{if(!section.classList.contains("active"))return;const scroller=document.scrollingElement||root;scroller.scrollLeft=0;document.body.scrollLeft=0;const main=section.parentElement;if(main)main.scrollLeft=0;section.scrollLeft=0;void section.offsetHeight;};
  reset();cancelAnimationFrame(kzSettingsFrame);
  kzSettingsFrame=requestAnimationFrame(()=>{reset();kzSettingsFrame=requestAnimationFrame(reset)});
 }
@@ -1087,7 +1110,7 @@ document.addEventListener("visibilitychange",()=>{if(!document.hidden&&navigator
 </script>
 <script src="./notifications-custom-v1.js"></script><script src="./account-v1.js"></script><script src="./push-client-v5.js"></script>
 
-<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=stadium20261126v39').catch(e=>console.warn('PWA service worker:',e)));}</script></body>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=stadium20261126v40').catch(e=>console.warn('PWA service worker:',e)));}</script></body>
 </html>
 <!-- CORAZOL navigation fix v3 -->
 

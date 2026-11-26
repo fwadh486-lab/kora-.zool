@@ -1,6 +1,9 @@
 name: Update friendly matches
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['scripts/update_friendlies.py', '.github/workflows/friendlies.yml']
   schedule:
     - cron: '12,42 * * * *'
 permissions:

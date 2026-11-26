@@ -52,6 +52,12 @@
     }
     return result;
   }
+  function dailySummary(matches, day) {
+    const games=mergeMatches([],matches).filter(m=>localDay(m.date)===day);
+    const active=games.filter(m=>['live','finished'].includes(phaseOf(m)));
+    const scores=active.map(m=>String(m.score||'').match(/^(\d+)\s*[-:]\s*(\d+)$/)).filter(Boolean);
+    return {matches:games.length,competitions:new Set(games.map(m=>m.league).filter(Boolean)).size,goals:scores.length?scores.reduce((n,m)=>n+Number(m[1])+Number(m[2]),0):null,scoredMatches:scores.length,activeMatches:active.length};
+  }
   function fixtureDays(offset, now = new Date()) {
     const start = new Date(now.getFullYear(),now.getMonth(),now.getDate()+offset);
     const end = new Date(now.getFullYear(),now.getMonth(),now.getDate()+offset+1);
@@ -105,6 +111,6 @@
     const logo=match[side+'Logo'];if(typeof logo==='string'&&/^https:\/\//.test(logo))p.set('crest',logo);
     return './team-details.html?'+p.toString();
   }
-  root.KoraMatchFeed = {localDay,phaseOf,visibleOnDay,mergeMatches,fixtureDays,fetchFixtures,resultDays,completedResults,fetchResultHistory,detailUrl,teamKey,teamUrl};
+  root.KoraMatchFeed = {localDay,phaseOf,visibleOnDay,mergeMatches,dailySummary,fixtureDays,fetchFixtures,resultDays,completedResults,fetchResultHistory,detailUrl,teamKey,teamUrl};
 })(globalThis);
 

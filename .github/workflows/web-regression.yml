@@ -1,8 +1,8 @@
 name: Kora Zol web regression checks
 on:
   push:
-    branches: [main]
-    paths: ['index.html','match-details.html','team-details.html','champions.html','league-details.html','league-feed-v1.js','team-feed-v1.js','match-feed-v2.js','match-detail-feed-v2.js','match-pulse-v1.js','match-center-v1.js','sw.js','league-feed-v1.js','scripts/update_sportscore_fixtures.py','scripts/update_standings.py','web-tests/**','push-client-v5.js','notifications-custom-v1.js','account-v1.js','account-config.json','.github/workflows/web-regression.yml']
+    branches: [main, stability-v42]
+    paths: ['stadium-theme-v1.css','fixtures.html','lineup-v2.html','scripts/update_friendlies.py','index.html','match-details.html','team-details.html','champions.html','league-details.html','league-feed-v1.js','team-feed-v1.js','match-feed-v2.js','match-detail-feed-v2.js','match-pulse-v1.js','match-center-v1.js','sw.js','league-feed-v1.js','scripts/update_sportscore_fixtures.py','scripts/update_standings.py','web-tests/**','push-client-v5.js','notifications-custom-v1.js','account-v1.js','account-config.json','.github/workflows/web-regression.yml']
 permissions:
   contents: read
 jobs:
@@ -16,6 +16,8 @@ jobs:
           node-version: '22'
       - name: Verify fixture history and match detail logic
         run: node --test web-tests/history.test.cjs web-tests/team.test.cjs web-tests/league.test.cjs web-tests/extras.test.cjs web-tests/pulse.test.cjs web-tests/center.test.cjs web-tests/sounds.test.cjs web-tests/account-ui.test.cjs
+      - name: Test friendly feed fallback
+        run: python3 -m unittest discover -s scripts -p test_friendlies_fallback.py
       - name: Install browser test runner
         run: |
           npm install --no-save --ignore-scripts playwright@1.62.1

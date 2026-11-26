@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0c101c">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap">
+
+<link rel="icon" type="image/png" href="./kora-zol-icon-192.png?v=brand20261111b">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="apple-touch-icon" href="./kora-zol-icon-192.png?v=brand20261111b">
+<title>كورة زول | Stadium preview</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;
+ font-family:'Cairo',Tahoma,Arial,sans-serif;
+ background:#0c101c;
+ color:white;
+}
+header{
+ background:#191f30;
+ padding:20px;
+ text-align:center;
+}
+.logo{
+ font-size:30px;
+ font-weight:bold;
+ color:#9274e8;
+}
+.subtitle{color:#aebbd0;font-size:13px}
+button{
+ border:0;
+ border-radius:9px;
+ padding:11px;
+ cursor:pointer;
+ font-weight:bold;
+}
+.lang{background:#9274e8;color:#0c101c;margin-top:12px}
+nav{
+ display:flex;
+ justify-content:space-around;
+ background:#191f30;
+ padding:12px 3px;
+ position:sticky;
+ top:0;
+}
+nav button{
+ background:transparent;
+ color:white;
+ font-size:13px;
+}
+nav button.active{color:#9274e8}
+main{padding:15px;max-width:650px;margin:auto}
+h2{font-size:19px}
+.card{
+ background:#22293d;
+ border-radius:14px;
+ padding:17px;
+ margin:12px 0;
+}
+.league{color:#9274e8;font-size:13px}
+.match{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:10px;
+ margin-top:15px;
+}
+.team{flex:1;text-align:center}
+.score{
+ font-size:23px;
+ font-weight:bold;
+ white-space:nowrap;
+}
+.status{
+ color:#aebbd0;
+ font-size:12px;
+ text-align:center;
+ margin-top:10px;
+}
+.live{color:#20e39a}
+table{
+ width:100%;
+ border-collapse;
+ text-align:center;
+}
+th,td{
+ padding:12px 5px;
+ border-bottom:1px solid #30384d;
+ font-size:13px;
+}
+th{color:#9274e8}
+section{display:none}
+section.active{display:block}
+select{background:#22293d;color:white;border:1px solid #30384d;border-radius:9px;padding:10px;width:100%;margin:8px 0 12px}
+.fav-btn{background:#30384d;color:#f7d35b;margin-top:12px;padding:8px 12px}
+footer{
+ text-align:center;
+ color:#8392aa;
+ padding:25px;
+ font-size:12px;
+}
+
+.notice{background:#22293d;border:1px solid #52738b;border-radius:12px;padding:12px 14px;font-size:13px;line-height:1.7;color:#d9e6f3;margin:0 0 18px}
+.date-controls{display:flex;align-items:center;justify-content:center;gap:10px;margin:4px 0 16px}.date-controls button{background:#30384d;color:white;min-width:38px}.date-controls span{font-size:14px;min-width:130px;text-align:center}.goal-row{padding:8px 0;border-bottom:1px solid #35435a}.goal-assist{color:#b8cad9;font-size:12px;margin-top:3px}.inline-details{margin-top:12px;padding:12px;border-top:1px solid #40556b;font-size:13px;line-height:1.8}.inline-details p{margin:5px 0}.inline-details button{background:#30384d;color:#9274e8}.match-detail{display:inline-block;color:#9274e8;text-decoration:none;font-size:13px;margin-top:14px;padding:6px 0}.match-detail:focus-visible{outline:2px solid #9274e8}
+.refresh-btn{background:#9274e8;color:#0c101c;margin:0 0 12px;padding:10px 14px}
+/* CORAZOL refreshed match cards */
+.logo{display:flex;align-items:center;justify-content:center;gap:10px;direction:ltr}.logo span{direction:rtl}.turban-ball{height:69px;width:64px;flex-shrink:0;filter:drop-shadow(0 3px 6px #0008)}
+
+header{position:relative;padding:50px 20px 22px}
+header .lang{position:absolute;top:10px;left:12px;margin:0;padding:7px 10px;font-size:11px;border-radius:10px;z-index:2}
+
+body{background:radial-gradient(ellipse at 50% 0%,#22293d 0%,#0c101c 48%,#0c101c 100%);min-height:100vh}
+header{background:linear-gradient(145deg,#30384d,#191f30);border-bottom:1px solid #30384d}
+.logo{letter-spacing:1px;text-shadow:0 0 22px #9274e840}
+nav{z-index:5;border-bottom:1px solid #30384d;box-shadow:0 5px 18px #0002}
+nav button.active{background:#9274e818;border-radius:12px}
+.match-card{position:relative;overflow:hidden;border:1px solid #3d536c;border-radius:22px;background:linear-gradient(145deg,#30384d,#22293d 75%);box-shadow:0 12px 28px #0004,inset 0 1px #ffffff13;padding:17px 16px;margin:16px 0;transition:transform .2s,box-shadow .2s}
+.match-card:before{content:"";position:absolute;inset:0 auto 0 0;width:4px;background:linear-gradient(#9274e8,#3c7cde)}
+.match-card:hover{transform:translateY(-2px);box-shadow:0 15px 30px #0006}
+.card-top,.card-bottom{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.demo-tag{border:1px solid #b7c5d044;background:#ffffff0b;border-radius:100px;padding:4px 9px;font-size:10px;color:#b9c9da;white-space:nowrap}
+.match-card .match{margin:20px 0 16px;gap:6px}
+.match-card .team{font-size:14px;font-weight:700;line-height:1.5;min-width:0}
+.match-card .score{font-size:26px;font-weight:800;letter-spacing:1px;padding:10px 12px;border-radius:13px;background:#191f30;border:1px solid #36516c;box-shadow:inset 0 1px 5px #0006;color:#fff}
+.match-card .status{margin:0;text-align:start;line-height:1.5}
+.match-card .fav-btn{margin:0;border-radius:50%;width:40px;height:40px;flex-shrink:0;font-size:23px;padding:0;background:#ffffff12;color:#f8ce5e}
+.match-card .fav-btn:hover{background:#ffffff28}
+select{border-radius:13px;background:#22293d;border-color:#40576f}
+@media(max-width:360px){.match-card .team{font-size:12px}.match-card .score{font-size:21px;padding:9px 7px}}
+.sound-bell{position:absolute;top:10px;right:12px;z-index:3;width:38px;height:38px;border:1px solid #50657c;border-radius:50%;background:#30384d;color:#fff;font-size:19px;display:grid;place-items:center;cursor:pointer;padding:0}.sound-bell[aria-pressed="true"]{border-color:#9274e8;background:#35294f}.sound-bell:focus-visible{outline:2px solid #9274e8}
+.zoot-team{position:relative;min-width:0;flex:1;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}.zoot-team .team{min-width:0}.zoot-label{position:relative;display:block;white-space:nowrap;color:#20e39a;font-size:17px;font-weight:900;text-shadow:0 2px 7px #000;animation:zootPop .5s ease-out both;pointer-events:none}@keyframes zootPop{from{opacity:0;transform:translateY(12px) scale(.5)}to{opacity:1;transform:translateY(0) scale(1)}}
+.test-goal{position:absolute;top:54px;right:12px;z-index:3;background:#254c40;color:#e7fff4;border:1px solid #20e39a;border-radius:10px;padding:5px 9px;font-size:12px;cursor:pointer}
+
+.team-crest{display:block;width:35px;height:35px;object-fit:contain;margin:0 auto 5px}.match-card .team{overflow-wrap:anywhere}nav button{min-height:44px}button:focus-visible{outline:2px solid #9274e8;outline-offset:2px}
+.brand-image{width:178px;height:178px;max-width:68vw;object-fit:contain;filter:drop-shadow(0 5px 14px #0006)}
+.brand-image[hidden],.legacy-brand[hidden]{display:none!important}
+.legacy-brand{display:flex;align-items:center;justify-content:center;gap:10px}
+.lineup-panel{display:grid;gap:14px}.lineup-team{display:block;background:#22293d;border:1px solid #36516c;border-radius:15px;padding:14px}.lineup-team h3{color:#9274e8}.lineup-team h4{margin:16px 0 8px}.player-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:8px}.player-item{display:flex;align-items:center;gap:9px;background:#30384d;border-radius:10px;padding:9px;font-size:12px}.player-item small{display:block;color:#b6c8db}.player-number{color:#9274e8;font-weight:900}.lineup-note,.lineup-muted{color:#bdcee0;line-height:1.8}.lineup-timeline{border-top:1px solid #456;padding-top:12px}.match-card .team[role="button"]{cursor:pointer;border-radius:9px;padding:6px}.match-card .team[role="button"]:focus-visible{outline:2px solid #9274e8}
+.football-pitch{position:relative;isolation:isolate;overflow:hidden;min-height:540px;border:3px solid #a5e3ac;border-radius:13px;background:repeating-linear-gradient(to bottom,#167c47 0px,#167c47 68px,#1d8b50 68px,#1d8b50 136px);display:flex;flex-direction:column;justify-content:space-around;padding:22px 7px;box-shadow:inset 0 0 28px #003b28}.pitch-markings{position:absolute;z-index:-1;inset:12px;border:2px solid #ffffff66;border-radius:2px;pointer-events:none}.pitch-markings:before{content:"";position:absolute;left:0;right:0;top:50%;border-top:2px solid #ffffff66}.pitch-markings:after{content:"";position:absolute;top:50%;left:50%;width:85px;height:85px;transform:translate(-50%,-50%);border:2px solid #ffffff66;border-radius:50%}.pitch-row{display:flex;align-items:center;justify-content:space-around;gap:3px;width:100%}.pitch-player{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:0;flex:1;cursor:pointer;text-align:center}.pitch-shirt{display:grid;place-items:center;width:33px;height:37px;background:#eff7ff;color:#17314b;font-size:14px;font-weight:900;clip-path:polygon(15% 0,34% 0,41% 9%,59% 9%,66% 0,85% 0,100% 24%,83% 39%,83% 100%,17% 100%,17% 39%,0 24%);filter:drop-shadow(0 2px 3px #0005)}.pitch-name{color:#fff;font-size:10px;font-weight:800;line-height:1.3;overflow-wrap:anywhere;text-shadow:0 2px 3px #000;max-width:100%}.pitch-player:focus-visible,.player-item:focus-visible{outline:2px solid #fff;outline-offset:3px}.player-list-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:8px}.player-detail{background:#30384d;border:1px solid #9274e8;border-radius:12px;padding:12px;margin-top:12px}.player-detail p{margin:4px 0}@media(min-width:500px){.pitch-name{font-size:12px}.pitch-shirt{width:42px;height:46px}}
+/* Modern match lineup v2 */
+.lineup-panel{display:grid;gap:18px}.lineup-team{display:block;background:#191f30;border:1px solid #30384d;border-radius:22px;padding:13px;overflow:hidden;box-shadow:0 12px 30px #0003}.lineup-team h3{font-size:19px;margin:4px 3px 8px}.squad-block{margin:16px 0 0;background:#22293d;border:1px solid #344e64;border-radius:17px;padding:12px}.squad-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px}.squad-heading h4{margin:0;font-size:15px;color:#e8f5ff}.squad-count{background:#31536a;border-radius:20px;padding:2px 9px;color:#d9ceff;font-size:12px}.football-pitch{position:relative;isolation:isolate;min-height:580px;padding:20px 5px;display:flex;flex-direction:column;justify-content:space-around;gap:14px;overflow:hidden;border:1px solid #79c89e;border-radius:14px;background:repeating-linear-gradient(180deg,#17683f 0,#17683f 78px,#1b7447 78px,#1b7447 156px);box-shadow:inset 0 0 55px #053a2a}.pitch-markings{position:absolute;z-index:-1;inset:12px;border:1.5px solid #d4ffe65c;pointer-events:none}.pitch-markings:before{content:"";position:absolute;top:50%;left:0;right:0;border-top:1.5px solid #d4ffe65c}.pitch-markings:after{content:"";position:absolute;top:50%;left:50%;width:88px;height:88px;transform:translate(-50%,-50%);border:1.5px solid #d4ffe65c;border-radius:50%}.pitch-row{display:flex;justify-content:space-around;align-items:center;gap:2px;width:100%}.pitch-player{background:none;border:0;color:white;min-width:0;flex:1;padding:2px;display:flex;align-items:center;flex-direction:column;gap:5px;cursor:pointer}.player-avatar{position:relative;display:grid;place-items:center;width:52px;height:52px;flex-shrink:0;border-radius:50%;border:2px solid #c4f4d7;background:linear-gradient(145deg,#486d7b,#163e4a);box-shadow:0 4px 14px #0006;overflow:hidden}.player-avatar img{width:100%;height:100%;object-fit:cover;object-position:top center}.player-avatar:empty:before{content:"👤";font-size:23px;opacity:.75}.avatar-number{position:absolute;bottom:0;right:0;background:#101d2b;color:#fff;font-size:10px;padding:0 4px;border-radius:5px}.squad-player-info{display:flex;flex-direction:column;align-items:center;min-width:0;width:100%;line-height:1.25}.squad-player-info strong{font-size:10px;font-weight:800;text-align:center;overflow-wrap:anywhere;text-shadow:0 2px 5px #000}.squad-player-info small{color:#a9c1d4;font-size:11px}.squad-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.squad-player{background:#30384d;color:#fff;border:1px solid #3c5b6f;border-radius:13px;padding:9px 7px;display:flex;align-items:center;gap:9px;text-align:start;min-width:0}.squad-player .player-avatar{width:42px;height:42px}.squad-player .squad-player-info{align-items:flex-start;text-align:start}.squad-player .squad-player-info strong{font-size:12px;text-align:start;text-shadow:none}.absent-block{border-color:#6e4d56}.absence-row{display:flex;justify-content:space-between;gap:10px;border-top:1px solid #40576a;padding:10px 0;font-size:12px}.absence-row span{color:#e4b3ad}.player-detail{background:#30384d;border:1px solid #9274e8;border-radius:12px;padding:12px;margin-top:12px}.player-detail p{margin:4px 0}.pitch-player:focus-visible,.squad-player:focus-visible{outline:2px solid #fff;outline-offset:2px}@media(max-width:380px){.player-avatar{width:43px;height:43px}.squad-player-info strong{font-size:9px}.squad-list{grid-template-columns:1fr 1fr}.football-pitch{min-height:530px}}@media(min-width:500px){.player-avatar{width:61px;height:61px}.squad-player-info strong{font-size:12px}}
+
+/* Lineup visual refresh v3: full pitch even when provider has no lineup */
+#matchCenterBody{padding:14px;background:#191f30;border:1px solid #30384d;border-radius:20px}
+#matchCenterBody>.lineup-panel{margin-top:14px}
+.lineup-team{background:#191f30!important;border:0!important;padding:2px!important;box-shadow:none!important}
+.lineup-team>h3{font-size:21px!important;color:#f4fbff!important;padding:12px 5px 0}
+.squad-block{background:#22293d!important;border:1px solid #345269!important;border-radius:20px!important;padding:12px!important}
+.football-pitch{min-height:620px!important;background:repeating-linear-gradient(180deg,#147347 0px,#147347 80px,#1a8050 80px,#1a8050 160px)!important;border:2px solid #a1e7bc!important;border-radius:18px!important;box-shadow:inset 0 0 70px #063d2d,0 10px 24px #0004!important}
+.pitch-empty{position:relative;z-index:2;align-self:center;margin:auto 18px;padding:25px 16px;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;color:#fff;background:#063f31d9;border:1px solid #a6e3bd8a;border-radius:19px;backdrop-filter:blur(8px);box-shadow:0 12px 30px #0005}
+.pitch-empty-icon{font-size:36px}.pitch-empty strong{font-size:17px}.pitch-empty small{font-size:12px;line-height:1.8;color:#c7f4dd}
+.pitch-player{background:transparent!important;border:0!important;padding:2px!important;box-shadow:none!important}
+.pitch-player .player-avatar{width:54px;height:54px;border:2px solid #e1fbe7;background:#1c4f55;box-shadow:0 3px 12px #0008}
+.pitch-player .squad-player-info strong{font-size:11px;color:white;text-shadow:0 2px 5px #000}
+.squad-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.squad-list .squad-player{background:#22293d;border:1px solid #375d6c;border-radius:14px}
+.absent-block{background:#261f2d!important;border-color:#674656!important}
+
+/* Reference-inspired lineups v4 - circular photos and pitch spacing */
+#matchCenterBody{background:#191f30!important;padding:10px!important}
+#matchCenterBody .lineup-panel{gap:24px}
+#matchCenterBody .lineup-team{padding:0!important;background:transparent!important;border:0!important}
+#matchCenterBody .lineup-team>h3{padding:12px 14px!important;margin:0!important;background:#22293d;color:#fff!important;border-radius:15px 15px 0 0}
+#matchCenterBody .formation-chip{display:inline-flex;background:#223f50;border:1px solid #457365;color:#a8f4c8;border-radius:25px;padding:5px 14px;margin:12px 8px;font-size:13px;font-weight:800}
+#matchCenterBody .squad-block{padding:0!important;margin:14px 0!important;background:#191f30!important;border:1px solid #30384d!important;overflow:hidden;border-radius:17px!important}
+#matchCenterBody .squad-heading{padding:14px 15px;margin:0!important;background:#22293d;border-bottom:1px solid #30384d}
+#matchCenterBody .squad-heading h4{font-size:16px!important}
+#matchCenterBody .football-pitch{min-height:650px!important;margin:0!important;border:0!important;border-radius:0!important;padding:30px 5px!important;gap:12px!important;background:repeating-linear-gradient(180deg,#417c62 0px,#417c62 94px,#48866a 94px,#48866a 188px)!important;box-shadow:none!important}
+#matchCenterBody .pitch-markings{inset:12px!important;border:1px solid #e0f5e06b!important}
+#matchCenterBody .pitch-markings:before{border-color:#e0f5e06b!important}
+#matchCenterBody .pitch-markings:after{border-color:#e0f5e06b!important}
+#matchCenterBody .pitch-row{gap:0!important}
+#matchCenterBody .pitch-player{padding:3px 1px!important;gap:3px!important;min-width:0!important}
+#matchCenterBody .pitch-player .player-avatar{width:58px!important;height:58px!important;border-radius:50%!important;border:2px solid #f7f9f9!important;background:#dbe8e6!important;overflow:visible!important;box-shadow:0 3px 10px #0004!important}
+#matchCenterBody .pitch-player .player-avatar img{border-radius:50%;width:100%;height:100%;object-fit:cover;object-position:center top}
+#matchCenterBody .pitch-player .player-avatar:has(img){background:#f6f6f6!important}
+#matchCenterBody .pitch-player .player-avatar:not(:has(img)):before{content:"👤";font-size:25px;color:#375d60}
+#matchCenterBody .pitch-player .avatar-number{position:absolute!important;bottom:-5px!important;right:-5px!important;background:#233a49!important;color:#fff!important;border:2px solid #c5e3d5;border-radius:12px!important;padding:1px 5px!important;font-size:10px!important}
+#matchCenterBody .pitch-player .squad-player-info strong{font-family:'Cairo',sans-serif;font-size:10px!important;line-height:1.35!important;max-width:100%;text-shadow:0 1px 4px #173a30!important;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+#matchCenterBody .player-rating{background:#72c7b0;color:#102e31;padding:1px 7px;border-radius:5px;font-size:11px;font-weight:900;margin-bottom:3px}
+#matchCenterBody .squad-list{padding:12px;gap:9px!important}
+#matchCenterBody .squad-list .squad-player{background:#22293d!important;border:1px solid #35576a!important;box-shadow:none!important}
+#matchCenterBody .absent-block{background:#251e2b!important;border:1px solid #694b58!important;padding-bottom:12px!important}
+#matchCenterBody .absent-block>.lineup-muted{padding:0 15px 12px}
+#matchCenterBody .pitch-empty{background:#254f44e8;border:1px solid #a2d5b8}
+@media(max-width:380px){#matchCenterBody .pitch-player .player-avatar{width:46px!important;height:46px!important}#matchCenterBody .pitch-player .squad-player-info strong{font-size:9px!important}}
+
+/* Kora Zol branded interior backdrop */
+header{background:linear-gradient(90deg,#191f30ee,#191f30dd),linear-gradient(145deg,#30384d,#191f30)}
+body{background:radial-gradient(ellipse at 50% 0%,#35294f 0%,#0c101c 48%,#0c101c 100%)}
+.upcoming-title{margin:12px 0;font-size:18px}.upcoming-scroll{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:5px 2px 17px;direction:rtl}.upcoming-card{scroll-snap-align:start;flex:0 0 220px;min-height:148px;border:1px solid #365668;border-radius:16px;background:#22293d;color:#f2f8ff;text-align:right;padding:13px;display:flex;flex-direction:column;justify-content:space-between;gap:10px;font:inherit;cursor:pointer}.upcoming-card small{color:#d9ceff}.upcoming-teams{display:flex;flex-direction:column;gap:8px}.upcoming-teams>span{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:800}.upcoming-teams img{width:25px;height:25px;object-fit:contain}.upcoming-card strong{font-size:12px;color:#a8d4e3}/* Compact reference-style results page */
+body{background:#0c101c!important}header{background:#191f30!important;padding:14px 16px!important}header .subtitle{display:none}header .brand-image{width:62px!important;height:62px!important;object-fit:contain!important}nav{background:#191f30!important;box-shadow:none!important;border-bottom:1px solid #30384d!important}nav button.active{background:transparent!important;border-bottom:3px solid #9274e8;border-radius:0!important}main{padding:12px!important}#matches>h2{font-size:17px}#matches .date-controls{background:#191f30;padding:7px;border-radius:13px}.reference-heading{font-size:15px;font-weight:800;margin:21px 4px 12px;color:#f0f7f7}.reference-league{background:#191f30;border:1px solid #30384d;border-radius:18px;overflow:hidden;margin-bottom:16px}.reference-league-title{background:#191f30;border-bottom:1px solid #30384d;padding:13px 15px;font-size:13px;font-weight:800}.reference-match{border-bottom:1px solid #30384d}.reference-match:last-child{border:0}.reference-match-row{display:grid;grid-template-columns:minmax(0,1fr) 100px minmax(0,1fr);gap:3px;align-items:center;min-height:114px;padding:13px 6px 7px}.reference-team{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;min-width:0;background:none;color:#f5f9fa;border:0;font:700 12px Cairo,Arial,sans-serif;line-height:1.5;padding:3px}.reference-team img{width:45px;height:45px;object-fit:contain}.reference-team span{text-align:center;max-width:100%;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.reference-score{display:flex;flex-direction:column;align-items:center;gap:4px;background:none;border:0;color:#fff;padding:3px}.reference-score strong{font-size:23px;direction:ltr;white-space:nowrap}.reference-score small{font-size:10px;color:#aebfc7;white-space:nowrap}.reference-score .reference-live{color:#ff6872;font-weight:900}.reference-bottom{border-top:1px solid #30384d;padding:5px 13px 8px;display:flex;align-items:center;justify-content:space-between;color:#a9bac1;font-size:11px}.reference-fav{font-size:23px;color:#f1d075;background:none;padding:0 6px}.reference-team:focus-visible,.reference-score:focus-visible{outline:2px solid #9274e8}@media(max-width:380px){.reference-match-row{grid-template-columns:minmax(0,1fr) 83px minmax(0,1fr)}.reference-team{font-size:11px}.reference-team img{width:37px;height:37px}.reference-score strong{font-size:19px}}
+/* HOME COMPACT LAYOUT v23 - override legacy large logo */
+body:has(#matches.active) header{height:72px!important;min-height:72px!important;max-height:72px!important;padding:7px 68px 7px 80px!important;display:flex!important;align-items:center!important;justify-content:center!important;overflow:hidden!important;background:#191f30!important}
+body:has(#matches.active) header .logo{height:58px!important;max-height:58px!important;width:auto!important;max-width:140px!important;overflow:hidden!important;display:flex!important;align-items:center!important;justify-content:center!important}
+body:has(#matches.active) header .brand-image{display:block!important;max-width:66px!important;max-height:56px!important;width:56px!important;height:56px!important;object-fit:contain!important}
+body:has(#matches.active) header .legacy-brand{max-height:56px!important;font-size:13px!important}
+body:has(#matches.active) header .subtitle{display:none!important}
+body:has(#matches.active) header .sound-bell{top:13px!important;right:12px!important;width:42px!important;height:42px!important}
+body:has(#matches.active) header .lang{top:15px!important;left:12px!important;padding:8px!important;font-size:11px!important}
+body:has(#matches.active) header .test-goal{display:none!important}
+body:has(#matches.active) nav{position:sticky!important;top:0!important;padding:3px 0!important}
+body:has(#matches.active) nav button{padding:10px 3px!important;font-size:12px!important}
+#matches>h2{display:none!important}
+#matches>label{display:none!important}
+#matches #leagueFilter{max-width:100%!important;margin:4px 0 6px!important;padding:9px!important}
+#matches .date-controls{margin:2px 0 8px!important}
+#matches #feedNotice[hidden]{display:none!important}
+#matches .reference-heading:first-child{margin-top:9px!important}
+#matches .reference-league{box-shadow:0 5px 16px #0002}
+/* Matches immediately on launch: controls after feed */
+#matches{padding-top:0!important}
+#matches #liveMatches{min-height:230px;margin-top:2px}
+#matches .match-filters{margin:20px 0 8px;border:1px solid #30384d;border-radius:13px;padding:10px;background:#191f30}
+#matches .match-filters summary{cursor:pointer;font-size:12px;font-weight:800;color:#d9ceff;padding:6px}
+#matches .match-filters label{display:block!important;margin:12px 0 4px}
+#matches .match-filters #leagueFilter{display:block!important;width:100%}
+#matches .match-filters .date-controls{display:flex!important}
+.home-loading{padding:10px 0}.home-loading strong{font-size:18px}.home-loading p{color:#a9bbc2;font-size:12px}.home-skeleton{height:115px;border-radius:16px;margin:12px 0;background:linear-gradient(90deg,#191f30 20%,#30384d 50%,#191f30 80%);background-size:200% 100%;animation:shimmer 1.7s linear infinite}@keyframes shimmer{to{background-position-x:-200%}}
+
+/* Reference-accurate score-list redesign, keeping the supplied Kora Zol identity. */
+:root{--rz-bg:#0c101c;--rz-panel:#191f30;--rz-header:#191f30;--rz-blue:#159fc4;--rz-muted:#9da5aa;--rz-line:#344149}
+body{background:var(--rz-bg)!important;color:#f7f8f9!important;font-family:'Cairo',Tahoma,Arial,sans-serif!important}
+header{height:102px!important;padding:12px 18px!important;background:var(--rz-header)!important;border:0!important;display:flex!important;align-items:center!important;justify-content:center!important}
+header .brand-image{height:82px!important;width:82px!important;object-fit:contain!important}
+header .logo{justify-content:center!important}
+header .subtitle{display:none!important}
+header .lang{top:15px!important;left:16px!important;background:#22293d!important;color:#fff!important;border:1px solid #3c515d!important}
+header .sound-bell{top:15px!important;right:14px!important;background:transparent!important;border:0!important}
+header .test-goal{display:none!important}
+main{max-width:900px!important;padding:0 0 105px!important}
+#matches{padding:0!important}
+.reference-top-tabs{display:grid;grid-template-columns:1fr 1fr;background:var(--rz-header);height:82px;align-items:stretch}
+.reference-top-tabs button{background:transparent;color:#a4aaad;font-size:21px;font-weight:600;border-radius:0;border-bottom:4px solid transparent}
+.reference-top-tabs button.selected{color:#fff;border-bottom-color:var(--rz-blue);font-weight:800}
+.reference-daybar{text-align:center;background:#191f30;color:#c3c8ca;padding:10px 8px;font-size:18px;font-weight:600}
+.reference-follow-note{display:block;background:#0c101c;color:#d8dee0;text-align:right;padding:30px 18px 12px;font-size:13px}
+#liveMatches{padding:0 12px}
+.reference-heading{font-size:15px!important;font-weight:600!important;color:#b6bec2!important;margin:17px 6px 8px!important}
+.reference-league{background:var(--rz-panel)!important;border-radius:20px!important;overflow:hidden!important;margin:16px 0 22px!important;border:0!important;box-shadow:none!important}
+.reference-league-title{background:#191f30!important;color:#f7f7f7!important;text-align:right!important;font-size:16px!important;font-weight:700!important;padding:15px 16px!important;margin:0!important;border-bottom:1px solid var(--rz-line)!important}
+.reference-league-stack{display:block!important}
+.reference-match{background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;margin:0!important;padding:14px 12px 10px!important;border-bottom:1px solid #37464c!important}
+.reference-match:last-child{border-bottom:0!important}
+.reference-match-row{display:grid!important;grid-template-columns:minmax(0,1fr) 110px minmax(0,1fr)!important;align-items:center!important;gap:5px!important;min-height:80px!important}
+.reference-team{display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:center!important;gap:9px!important;color:#f7f7f7!important;font-size:17px!important;font-weight:600!important;min-width:0!important;background:transparent!important;padding:4px!important}
+.reference-team img{width:35px!important;height:35px!important;object-fit:contain!important;flex-shrink:0!important;margin:0!important}
+.reference-team span{overflow-wrap:anywhere!important}
+.reference-score{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;background:transparent!important;border:0!important;box-shadow:none!important;padding:4px!important;color:#fff!important;min-width:0!important}
+.reference-score strong{font-size:23px!important;font-weight:600!important;line-height:1.4!important;white-space:nowrap!important}
+.reference-score small{font-size:11px!important;color:#b3bec4!important;font-weight:500!important;line-height:1.4!important}
+.reference-score small.reference-live{color:#f26767!important}
+.reference-bottom{display:flex!important;align-items:center!important;justify-content:space-between!important;padding:2px 9px 0!important;color:#8c9ca4!important;font-size:11px!important}
+.reference-fav{background:transparent!important;color:#b7c1c6!important;font-size:22px!important;border:0!important;padding:0 8px!important}
+#matches .match-quickbar{margin:15px 12px!important;background:#191f30!important;border-radius:18px!important;padding:5px!important;display:flex!important;gap:3px!important;overflow-x:auto!important}
+#matches .match-quickbar button{background:transparent!important;color:#aebbc2!important;border-radius:13px!important;white-space:nowrap!important;min-width:max-content!important}
+#matches .match-quickbar button[aria-pressed="true"]{background:#30384d!important;color:#fff!important}
+#matches .match-search{display:block!important;width:calc(100% - 24px)!important;margin:10px 12px!important;background:#191f30!important;border:1px solid #30384d!important;color:#fff!important;border-radius:13px!important}
+#matches .match-filters{margin:15px 12px!important;background:#191f30!important;border-radius:14px!important;padding:10px!important}
+#matches #feedNotice,#matches #dataHealth,#matches #matchCount{margin-left:12px!important;margin-right:12px!important}
+nav{position:fixed!important;bottom:0!important;top:auto!important;left:0!important;right:0!important;z-index:100!important;background:#191f30!important;border-top:1px solid #30384d!important;border-bottom:0!important;box-shadow:0 -5px 20px #0005!important;padding:6px 4px max(8px,env(safe-area-inset-bottom))!important;display:flex!important;justify-content:space-around!important;gap:0!important;overflow-x:auto!important}
+nav button{background:transparent!important;color:#a5b0b6!important;border-radius:0!important;font-size:11px!important;min-width:60px!important;min-height:59px!important;flex:1 0 0!important;padding:7px 2px!important;white-space:normal!important}
+nav button.active{color:#fff!important;border-top:2px solid var(--rz-blue)!important}
+main>section:not(#matches){padding:15px!important}
+@media(max-width:410px){.reference-team{font-size:14px!important;gap:5px!important}.reference-team img{width:28px!important;height:28px!important}.reference-match-row{grid-template-columns:minmax(0,1fr) 84px minmax(0,1fr)!important}.reference-score strong{font-size:20px!important}.reference-league-title{font-size:14px!important}.reference-top-tabs button{font-size:19px!important}}
+</style>
+<style id="korazol-ux-upgrade">
+.match-quickbar{display:flex;gap:8px;overflow-x:auto;padding:12px 2px 10px;scrollbar-width:none}.match-quickbar button{white-space:nowrap;border:1px solid #30384d;background:#191f30;color:#e4edf8;border-radius:999px;padding:10px 15px;min-height:44px;font:inherit;font-weight:700}.match-quickbar button[aria-pressed="true"]{background:#9274e8;color:#100a20;border-color:#9274e8}.match-search{display:block;width:100%;box-sizing:border-box;background:#191f30;color:#fff;border:1px solid #30384d;border-radius:12px;padding:13px 15px;font:inherit;min-height:46px}.match-search:focus{outline:2px solid #9274e8;outline-offset:2px}.reference-match{transition:transform .16s ease,border-color .16s ease}.reference-match:focus-within{border-color:#9274e8}.reference-fav{min-width:44px;min-height:44px}.match-count{color:#91a9bf;font-size:13px;padding:0 3px 9px}.team-search-card{display:flex;align-items:center;gap:12px;width:100%;min-height:60px;padding:12px;background:#191f30;color:#fff;border:1px solid #30384d;border-radius:12px;text-align:start;font:inherit;margin:7px 0}.team-search-card img{width:36px;height:36px;object-fit:contain}.team-search-card small{display:block;color:#a4bbcf;margin-top:3px}.team-search-title{margin:10px 0 6px;font-weight:700}
+</style>
+<style id="team-profile-styles">.team-profile{margin:12px 0 20px;padding:16px;border:1px solid #30384d;border-radius:16px;background:#191f30;color:#edf4fc}.team-profile-head{display:flex;align-items:center;gap:12px}.team-profile-head img{width:58px;height:58px;object-fit:contain}.team-profile-head h2{margin:0;font-size:21px}.team-profile h3{font-size:16px;margin:20px 0 10px}.team-profile-match{width:100%;display:flex;align-items:center;justify-content:space-between;gap:8px;text-align:start;background:#22293d;color:#edf4fc;border:1px solid #30384d;border-radius:10px;padding:12px;margin:7px 0;font:inherit;min-height:58px}.team-profile-match small{display:block;color:#a8bdcd;margin-top:4px}.team-profile-close{margin-inline-start:auto;border:1px solid #476178;background:#22293d;color:#fff;border-radius:9px;padding:8px 12px;min-height:40px}.team-profile-empty{color:#a8bdcd}.team-profile-back{background:none;border:0;color:#9274e8;font:inherit;padding:8px 0;margin-bottom:8px}</style>
+<style id="team-form-upgrade">.team-form-strip{display:flex;gap:7px;align-items:center;margin:10px 0 12px}.team-form-pill{display:inline-flex;align-items:center;justify-content:center;width:37px;height:37px;border-radius:10px;font-weight:800;color:#fff}.team-form-win{background:#167f55}.team-form-draw{background:#667788}.team-form-loss{background:#ad424b}.team-standing-info{background:#22293d;border:1px solid #35516a;border-radius:12px;padding:12px;margin-top:12px}.team-standing-info strong{font-size:19px}.team-standing-info small{display:block;color:#aec4d4;margin-top:5px}</style>
+<style id="follow-team-ui">.team-follow-btn{margin-inline-start:auto;background:#35294f;color:white;border:1px solid #9274e8;border-radius:10px;padding:10px 13px;min-height:44px;font:inherit;font-weight:700}.team-follow-btn[aria-pressed="true"]{background:#30384d;border-color:#7a9bb3}.followed-teams{display:flex;flex-wrap;gap:8px;margin:10px 0}.followed-team-chip{background:#22293d;border:1px solid #3b6577;border-radius:999px;color:#e7f7fa;font:inherit;padding:9px 13px;min-height:42px}.team-share-btn{display:block;margin-top:12px;background:#30384d;color:#fff;border:1px solid #446379;border-radius:10px;padding:10px 14px;min-height:44px;font:inherit}</style>
+<style id="global-search-v1">
+nav{gap:3px;overflow-x:auto;scrollbar-width:none;justify-content:space-between}nav button{flex:1;min-width:65px;padding:10px 5px;font-size:11px;white-space:nowrap}nav button:focus-visible{outline:2px solid #9274e8;outline-offset:-2px}@media(min-width:550px){nav button{font-size:13px;padding:11px}}.global-search-box{position:relative}.global-search-input{width:100%;min-height:52px;border-radius:14px;border:1px solid #54718a;background:#191f30;color:#fff;padding:13px 16px;font:inherit}.global-search-input:focus-visible,.global-team-result:focus-visible{outline:3px solid #9274e8;outline-offset:2px}.global-search-hint{color:#b2c7d7;font-size:13px;line-height:1.8}.global-search-results{margin:12px 0}.global-team-result{display:flex;align-items:center;gap:12px;text-align:start;width:100%;background:#22293d;color:#fff;border:1px solid #38536a;border-radius:14px;padding:12px;margin:9px 0;min-height:68px;font:inherit}.global-team-result img{width:42px;height:42px;object-fit:contain}.global-team-result span{flex:1}.global-team-result small{display:block;color:#b0c6d5;font-size:12px}.global-team-result .follow-mark{font-size:20px;color:#f5d36a}.global-search-state{border:1px dashed #47667a;border-radius:14px;padding:20px 15px;color:#b9ccdb;text-align:center;margin:14px 0}.data-health{border:1px solid #38546a;background:#22293d;border-radius:12px;padding:12px 14px;font-size:12px;color:#c8d8e4;margin:12px 0}.data-health strong{display:block;color:#d9ceff;font-size:13px}.data-health.warning{border-color:#a67e3b}.data-health.error{border-color:#a65454}
+</style><style id="history-controls-v1">.results-date-strip{display:flex;gap:7px;flex-wrap;margin:10px 0 14px;align-items:center}.results-date-strip button,.results-date-strip input{min-height:44px;border:1px solid var(--kz-line,#37506a);border-radius:10px;background:var(--kz-surface,#22293d);color:var(--kz-text,#eff7ff);padding:7px 11px;font:inherit;font-size:12px}.results-date-strip button[aria-pressed=true]{background:#35294f;color:#d9ceff;border-color:#9274e8}.results-date-strip input{color-scheme:dark;flex:1;min-width:145px}.results-date-strip button:focus-visible,.results-date-strip input:focus-visible{outline:2px solid #9274e8;outline-offset:2px}</style><style id="favorites-pro-v1">.favorites-tools{display:flex;gap:8px;flex-wrap;margin:12px 0}.favorites-tools button{background:#22293d;color:#fff;border:1px solid #45627a;min-height:44px;font:inherit}.favorites-tools button[aria-pressed="true"]{background:#9274e8;color:#100a20}.favorite-game{background:#22293d;border:1px solid #3b546d;border-radius:15px;padding:14px;margin:10px 0}.favorite-game-head{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:12px;color:#bad0df}.favorite-game-score{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;background:none;color:white;padding:12px 0;font:inherit;min-height:58px}.favorite-game-score strong{font-size:20px;white-space:nowrap}.favorite-game-score span{flex:1;min-width:0}.favorite-game-score img{width:30px;height:30px;object-fit:contain;vertical-align:middle;margin-inline-end:5px}.favorite-game-actions{display:flex;justify-content:flex-end;gap:8px}.favorite-game-actions button{background:#30384d;color:#fff;border:1px solid #45627a;min-height:42px}.favorites-empty{border:1px dashed #4b6c80;padding:24px;border-radius:15px;text-align:center;color:#c4d5e2}.favorites-empty button{display:block;margin:14px auto 0;background:#9274e8;color:#100a20}.favorites-live{color:#7257c5;font-weight:800}.favorites-upcoming{color:#b8d1e4}.favorites-finished{color:#e5c98d}</style><style id="settings-backup-style">.settings-backup{background:#22293d;border:1px solid #38546b;border-radius:18px;padding:20px;margin:16px 0}.settings-backup p{color:#c8d8e4;line-height:1.9}.settings-actions{display:flex;gap:10px;flex-wrap}.settings-actions button{min-height:48px;border-radius:12px;background:#9274e8;color:#100a20;font:inherit;font-weight:800;padding:10px 14px}.settings-actions button+button{background:#30384d;color:#fff;border:1px solid #537084}#backupMessage{min-height:24px}nav{overflow-x:auto;scrollbar-width:thin}nav button{flex-shrink:0}</style><style id="korazol-reference-final-v2">
+html{scroll-padding-top:12px}
+body{background:#0c101c!important}
+body>header{height:92px!important;background:#191f30!important;padding:8px 14px!important}
+body>nav{position:fixed!important;inset:auto 0 0 0!important;width:100%!important;height:auto!important;max-height:94px!important;display:flex!important;justify-content:space-around!important;align-items:stretch!important;gap:0!important;background:#191f30!important;border-top:1px solid #334047!important;border-bottom:0!important;padding:5px 2px max(6px,env(safe-area-inset-bottom))!important;z-index:9999!important;overflow-x:auto!important;box-shadow:0 -4px 15px #0008!important}
+body>nav button{min-width:0!important;flex:1 1 0!important;font-size:clamp(9px,2.7vw,13px)!important;line-height:1.3!important;white-space:normal!important;padding:8px 1px!important;min-height:54px!important;color:#a9b0b5!important;border-radius:0!important}
+body>nav button.active{color:#fff!important;background:transparent!important;border-top:3px solid #159fc4!important}
+body>main{padding-bottom:110px!important}
+#matches .reference-top-tabs{display:grid!important;grid-template-columns:1fr 1fr!important;height:70px!important;background:#191f30!important}
+#matches .reference-top-tabs button{font-size:21px!important;border-radius:0!important;border-bottom:3px solid transparent!important;color:#aeb5b8!important}
+#matches .reference-top-tabs button.selected{color:white!important;border-bottom-color:#159fc4!important}
+#matches .reference-daybar{background:#191f30!important;color:#b9c1c5!important;font-size:16px!important;padding:11px!important}
+#matches .reference-follow-note{background:#0c101c!important;padding:22px 15px 12px!important;color:#d4d8db!important}
+#matches #feedNotice,#matches #dataHealth,#matches #matchCount{display:none!important}
+#matches .match-quickbar{display:none!important}
+#matches .match-search{display:none!important}
+#matches .reference-league{background:#191f30!important;border:0!important;border-radius:20px!important;margin:14px 12px 20px!important;overflow:hidden!important}
+#matches #liveMatches{padding:0!important}
+#matches .reference-league-title{background:#191f30!important;color:white!important;border-bottom:1px solid #334047!important;padding:16px 15px!important;text-align:right!important;font-size:16px!important}
+#matches .reference-match{background:#191f30!important;border:0!important;border-bottom:1px solid #344147!important;border-radius:0!important;padding:14px 9px 8px!important;margin:0!important;box-shadow:none!important}
+#matches .reference-match:last-child{border-bottom:0!important}
+#matches .reference-match-row{display:grid!important;grid-template-columns:minmax(0,1fr) 94px minmax(0,1fr)!important;gap:2px!important;min-height:85px!important}
+#matches .reference-team{font-size:clamp(12px,3.8vw,17px)!important;color:#fff!important;gap:5px!important;background:transparent!important}
+#matches .reference-team img{width:32px!important;height:32px!important}
+#matches .reference-score{background:transparent!important;border:0!important;box-shadow:none!important}
+#matches .reference-score strong{font-size:22px!important;color:#fff!important}
+#matches .reference-bottom{background:transparent!important;color:#a0aeb5!important}
+#matches .reference-fav{color:#adb8bd!important;background:transparent!important}
+#matches .match-filters{margin:10px 12px!important}
+@media(min-width:700px){body>nav{max-width:900px!important;left:50%!important;right:auto!important;transform:translateX(-50%)!important}}
+</style>
+<style id="home-polish-20261120">
+:root{--kz-bg:#0c101c;--kz-surface:#191f30;--kz-raised:#22293d;--kz-line:#30384d;--kz-text:#f4f7f8;--kz-muted:#a9bac2;--kz-accent:#9274e8;--kz-live:#ff777f}
+html{background:var(--kz-bg);color-scheme:dark}
+body{background:var(--kz-bg)!important;color:var(--kz-text)!important}
+body>header,body:has(#matches.active)>header{height:72px!important;min-height:72px!important;max-height:72px!important;padding:8px 64px!important;background:linear-gradient(110deg,#191f30,#191f30)!important;border-bottom:1px solid var(--kz-line)!important}
+body>header .logo,body:has(#matches.active)>header .logo{width:auto!important;max-width:none!important;gap:9px!important;direction:inherit!important;overflow:visible!important;height:56px!important}
+body>header .brand-image,body:has(#matches.active)>header .brand-image{width:48px!important;height:48px!important;max-width:48px!important;max-height:48px!important;filter:none!important;object-fit:contain!important}
+body>header .brand-image[hidden],body:has(#matches.active)>header .brand-image[hidden]{display:none!important}
+.brand-wordmark{font-size:18px!important;font-weight:900;line-height:1.25;letter-spacing:0;color:var(--kz-text);white-space:nowrap;text-shadow:none}
+body>header .lang,body:has(#matches.active)>header .lang,body>header .sound-bell,body:has(#matches.active)>header .sound-bell{top:14px!important;width:42px!important;height:42px!important;min-height:42px!important;padding:0!important;border:1px solid var(--kz-line)!important;border-radius:13px!important;background:var(--kz-raised)!important;color:var(--kz-text)!important;display:grid!important;place-items:center;font-size:14px!important}
+body>header .lang{left:12px!important}
+body>header .sound-bell{right:12px!important}
+body>main{max-width:760px!important;padding:0 0 calc(83px + env(safe-area-inset-bottom))!important}
+#matches .reference-top-tabs{margin:14px 14px 8px!important;height:46px!important;padding:4px;background:var(--kz-surface)!important;border:1px solid var(--kz-line);border-radius:14px;gap:4px}
+#matches .reference-top-tabs button{font-size:14px!important;border:0!important;border-radius:10px!important;padding:6px!important;color:var(--kz-muted)!important;min-height:36px}
+#matches .reference-top-tabs button.selected{background:var(--kz-accent)!important;color:#100a20!important;font-weight:900!important}
+.home-day-controls{display:grid;grid-template-columns:44px minmax(0,1fr) 44px auto;align-items:center;gap:6px;margin:12px 14px 8px}
+.home-day-controls button{min-height:42px;min-width:42px;background:var(--kz-surface);color:var(--kz-text);border:1px solid var(--kz-line);padding:4px 10px;border-radius:12px;font:inherit;font-weight:800}
+.home-day-controls .date-arrow{font-size:24px;line-height:1}
+#matches .reference-daybar{padding:0!important;background:none!important;font-size:13px!important;font-weight:800!important;color:var(--kz-text)!important}
+#matches .reference-follow-note{display:none!important}
+#matches .match-quickbar{display:flex!important;margin:7px 14px!important;padding:0!important;background:none!important;gap:7px!important}
+#matches .match-quickbar button{min-height:36px!important;font-size:12px!important;padding:6px 12px!important;background:var(--kz-surface)!important;border:1px solid var(--kz-line)!important;border-radius:10px!important;color:var(--kz-muted)!important}
+#matches .match-quickbar button[aria-pressed=true]{background:#35294f!important;color:#9274e8!important;border-color:#59477f!important}
+#matches .match-filters{margin:9px 14px!important;background:var(--kz-surface)!important;border:1px solid var(--kz-line)!important;border-radius:12px!important;padding:4px 9px!important}
+#matches .match-filters summary{color:var(--kz-muted)!important;font-size:12px;min-height:34px;padding:6px}
+#matches .match-filters[open] .match-search{display:block!important;width:100%!important;margin:8px 0!important}
+#matches #feedNotice:not([hidden]){display:block!important;margin:10px 14px 0!important;padding:5px 0!important;border:0!important;background:none!important;color:var(--kz-muted)!important;font-size:11px!important;line-height:1.5}
+#matches #matchCount{display:block!important;margin:0 14px!important;padding:4px 0!important;font-size:11px;color:var(--kz-muted)}
+#matches #dataHealth{display:none!important}
+#matches #followedTeams,#matches #teamSearchResults,#matches #teamProfile{margin-inline:14px}
+#matches .reference-heading{margin:18px 16px 8px!important;font-size:14px!important;color:var(--kz-text)!important;font-weight:900!important}
+#matches .reference-league{background:var(--kz-surface)!important;border:1px solid var(--kz-line)!important;border-radius:16px!important;margin:0 14px 14px!important}
+#matches .reference-league-title{padding:11px 13px!important;background:var(--kz-raised)!important;border-bottom:1px solid var(--kz-line)!important;font-size:13px!important;font-weight:800!important;display:flex;align-items:center;gap:8px}
+#matches a.reference-league-title{min-height:44px;text-decoration:none;cursor:pointer}#matches a.reference-league-title:focus-visible{outline:3px solid #9274e8;outline-offset:-3px}#matches .league-chevron{margin-inline-start:auto;font-size:23px;line-height:1;color:#9274e8}
+.league-open{display:block;text-align:center;color:#9274e8;text-decoration:none;font-weight:700;padding:10px;min-height:44px}.league-open[hidden]{display:none}
+#matches .reference-match{padding:9px 10px 3px!important;background:var(--kz-surface)!important;border-bottom:1px solid var(--kz-line)!important}
+#matches .reference-match:last-child{border:0!important}
+#matches .reference-match-row{grid-template-columns:minmax(0,1fr) 90px minmax(0,1fr)!important;min-height:80px!important;gap:4px!important;padding:0!important}
+#matches .reference-team{flex-direction:column!important;gap:5px!important;font-size:12px!important;font-weight:700!important;padding:6px 0!important;min-height:76px}
+#matches .reference-team img{width:34px!important;height:34px!important;flex:none!important}
+#matches .reference-team span{font-size:12px!important;line-height:1.4!important;display:-webkit-box!important;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;text-align:center}
+#matches .reference-score{gap:5px!important;min-height:66px}
+#matches .reference-score strong{font-size:23px!important;font-weight:900!important;font-variant-numeric:tabular-nums;letter-spacing:0!important}
+#matches .reference-score small{max-width:90px;overflow:hidden;text-overflow:ellipsis;font-size:10px!important}
+#matches .reference-score small.reference-live{color:var(--kz-live)!important;background:#462729;border-radius:7px;padding:3px 7px;font-weight:900!important}
+#matches .reference-bottom{border-top:0!important;padding:0 2px!important;min-height:37px;font-size:11px!important}
+#matches .reference-fav{min-width:44px!important;min-height:44px!important;font-size:22px!important}
+#matches .reference-fav[aria-pressed=true]{color:#f8d675!important}
+#matches .home-loading{margin:8px 14px;color:var(--kz-muted)}
+#matches .home-skeleton{height:121px;margin:10px 0;border:1px solid var(--kz-line);border-radius:16px;background:linear-gradient(90deg,#191f30 20%,#22293d 50%,#191f30 80%);background-size:200% 100%}
+#matches #liveMatches>.notice{margin:14px;background:var(--kz-surface);border:1px dashed var(--kz-line);border-radius:14px;text-align:center;padding:24px 14px;color:var(--kz-muted)}
+body>nav,body:has(#matches.active)>nav{position:fixed!important;inset:auto 0 0 0!important;padding:5px 4px max(6px,env(safe-area-inset-bottom))!important;background:#191f30!important;border-top:1px solid var(--kz-line)!important;border-bottom:0!important;box-shadow:0 -8px 24px #0004!important;z-index:9999!important;gap:2px!important;overflow:visible!important}
+body>nav button,body:has(#matches.active)>nav button{min-width:0!important;min-height:56px!important;display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:clamp(9px,2.7vw,12px)!important;padding:5px 1px!important;border:0!important;border-radius:12px!important;background:transparent!important;color:var(--kz-muted)!important;font-weight:700}
+body>nav button::before{content:attr(data-icon);font-size:19px;line-height:1.2;font-family:Arial,sans-serif}
+body>nav button.active,body:has(#matches.active)>nav button.active{background:#35294f!important;color:var(--kz-accent)!important;border:0!important}
+button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:2px solid var(--kz-accent)!important;outline-offset:2px}
+@media(min-width:700px){body>nav,body:has(#matches.active)>nav{max-width:760px!important;left:50%!important;right:auto!important;transform:translateX(-50%)!important}}
+@media(prefers-reduced-motion:reduce){.home-skeleton{animation:none!important}.reference-match{transition:none!important}}
+</style><style>.push-preference-list{display:grid;gap:6px;margin:8px 0 16px}.push-preference-list label{display:flex;align-items:center;gap:10px;min-height:44px;padding:6px 8px;background:#191f30;border-radius:10px;font-size:14px}.push-preference-list input{accent-color:#9274e8;width:19px;height:19px}.settings-actions button[hidden]{display:none!important}.settings-actions button:disabled{opacity:.48;cursor:not-allowed}.background-push-card h3{color:#9274e8}</style><style>.recent-search-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:14px 0 8px;color:var(--text,#eaf4f4)}.recent-search-head strong{font-size:13px}.recent-search-head button{border:0;background:transparent;color:var(--muted,#a8c4cb);min-height:44px;padding:8px 10px;font-size:12px}.recent-search-chips{display:flex;gap:8px;overflow-x:auto;padding:3px 0 12px}.recent-team-chip{flex:none;min-height:44px;padding:8px 12px;border:1px solid #59477f;background:#35294f;color:#d9ceff;border-radius:12px;font:inherit;font-size:12px;cursor:pointer}.recent-team-chip:focus-visible,.recent-search-head button:focus-visible{outline:3px solid #9274e8;outline-offset:2px}@media(prefers-color-scheme:light){.recent-team-chip{background:#d9ceff;color:#332451;border-color:#9274e8}}</style><style>.reference-center-open{display:inline-flex;align-items:center;justify-content:center;min-height:38px;border:1px solid #9274e8;border-radius:10px;padding:6px 10px;background:#35294f;color:#d9ceff;font:700 12px Cairo,Tahoma,Arial,sans-serif;white-space:nowrap;cursor:pointer}.reference-center-open:focus-visible{outline:3px solid #d9ceff;outline-offset:2px}.reference-bottom{gap:7px}.reference-bottom>span{min-width:0;overflow-wrap:anywhere}@media(max-width:360px){.reference-center-open{font-size:11px;padding:6px 7px}}</style><style id="notify-custom-styles">.notify-chip-list{display:flex;flex-wrap;gap:7px;margin:10px 0}.notify-chip-list button{font:700 12px Cairo,Tahoma,Arial,sans-serif;min-height:44px;border-radius:10px;border:1px solid #9274e8;background:#35294f;color:#d9ceff;padding:9px;cursor:pointer}.notify-chip-list button[aria-pressed=true],#notifyTeamSelected button{background:#35294f;border-color:#9274e8}.notify-team-entry{display:flex;gap:7px;margin:8px 0}.notify-team-entry input{flex:1;min-width:0;min-height:44px;border-radius:9px;padding:9px;background:var(--card,#191f30);color:inherit;border:1px solid #9274e8}.notify-team-entry button{min-height:44px;padding:9px;border-radius:9px;border:0;background:#35294f;color:white;font-weight:700}.notify-rule{display:flex;flex-wrap;gap:12px;border:1px solid #9274e8;border-radius:10px;padding:10px;margin:12px 0}.notify-rule legend{font-size:12px;font-weight:800}.notify-rule label{min-height:40px;font-size:12px;display:flex;align-items:center;gap:7px}#notifyCustomCard label{cursor:pointer}#notifyCustomCard input[type=radio]{min-width:18px;min-height:18px}</style><style id="kora-account-style">#koraAccountForm{display:grid;gap:9px}#koraAccountForm label{font-weight:700}#koraAccountForm input{width:100%;min-height:44px;background:var(--card,#191f30);border:1px solid #608577;border-radius:9px;color:inherit;padding:10px}#koraAccountGuest .settings-actions,#koraAccountSigned .settings-actions{display:flex;gap:9px;flex-wrap;margin-top:10px}#koraAccountGuest button,#koraAccountSigned button{min-height:44px;border:1px solid #9274e8;border-radius:10px;padding:10px;background:#35294f;color:white;font:700 12px Cairo,Tahoma,Arial,sans-serif}#koraAccountSigned[hidden],#koraAccountGuest[hidden]{display:none!important}</style><style id="matchday-modern-v1">
+:root{--kz-bg:#0c101c;--kz-surface:#191f30;--kz-raised:#22293d;--kz-line:#30384d;--kz-text:#d9ceff;--kz-muted:#a7bbc1;--kz-accent:#9274e8;--kz-live:#ff858b}
+body>header,body:has(#matches.active)>header{background:#191f30!important;height:66px!important;min-height:66px!important;max-height:66px!important}
+body>header .logo,body:has(#matches.active)>header .logo{height:50px!important}
+body>header .brand-image,body:has(#matches.active)>header .brand-image{width:40px!important;height:40px!important}
+body>header .lang,body:has(#matches.active)>header .lang,body>header .sound-bell,body:has(#matches.active)>header .sound-bell{top:10px!important;width:44px!important;height:44px!important}
+body>nav button::before{content:""!important;display:block;width:23px;height:23px;background:currentColor;mask:var(--nav-icon) center/contain no-repeat;-webkit-mask:var(--nav-icon) center/contain no-repeat}
+body>nav button:nth-child(1)::before{--nav-icon:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%223%22%20y%3D%225%22%20width%3D%2218%22%20height%3D%2214%22%20rx%3D%222%22%2F%3E%3Cpath%20d%3D%22M12%205v14%22%2F%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%223%22%2F%3E%3C%2Fsvg%3E")}
+body>nav button:nth-child(2)::before{--nav-icon:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%223%22%20y%3D%225%22%20width%3D%2218%22%20height%3D%2216%22%20rx%3D%222%22%2F%3E%3Cpath%20d%3D%22M16%203v4M8%203v4M3%2010h18M8%2015h2m4%200h2%22%2F%3E%3C%2Fsvg%3E")}
+body>nav button:nth-child(3)::before{--nav-icon:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2210.5%22%20cy%3D%2210.5%22%20r%3D%226.5%22%2F%3E%3Cpath%20d%3D%22m16%2016%205%205%22%2F%3E%3C%2Fsvg%3E")}
+body>nav button:nth-child(4)::before{--nav-icon:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M4%2020h16M6%2016v-5h3v5m2%200V5h3v11m2%200V8h3v8%22%2F%3E%3C%2Fsvg%3E")}
+body>nav button:nth-child(5)::before{--nav-icon:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m12%203%202.8%205.7%206.2.9-4.5%204.4%201%206.2-5.5-2.9-5.5%202.9%201-6.2L3%209.6l6.2-.9z%22%2F%3E%3C%2Fsvg%3E")}
+body>nav button:nth-child(6)::before{--nav-icon:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M4%206h16M4%2012h16M4%2018h16%22%2F%3E%3Ccircle%20cx%3D%228%22%20cy%3D%226%22%20r%3D%222%22%20fill%3D%22white%22%2F%3E%3Ccircle%20cx%3D%2216%22%20cy%3D%2212%22%20r%3D%222%22%20fill%3D%22white%22%2F%3E%3Ccircle%20cx%3D%2210%22%20cy%3D%2218%22%20r%3D%222%22%20fill%3D%22white%22%2F%3E%3C%2Fsvg%3E")}
+body>nav button,body:has(#matches.active)>nav button{font-size:clamp(9px,2.5vw,12px)!important;gap:5px!important;min-height:60px!important}
+body>nav button.active,body:has(#matches.active)>nav button.active{background:#35294f!important}
+#matches .matchday-intro{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:20px 16px 8px}
+.matchday-intro h1{font-size:25px;margin:0;font-weight:900;line-height:1.3}
+.matchday-intro p{font-size:12px;color:var(--kz-muted);margin:5px 0 0}
+.matchday-refresh{width:44px;height:44px;display:grid;place-items:center;background:var(--kz-raised);color:var(--kz-accent);border:1px solid var(--kz-line);border-radius:14px;font-size:24px;flex:none}
+.matchday-refresh:disabled{opacity:.5;cursor:wait}
+.matchday-week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;margin:0 14px 12px}
+.matchday-week button{min-width:0;min-height:62px;padding:5px 1px;background:var(--kz-surface);border:1px solid var(--kz-line);border-radius:13px;color:var(--kz-muted);font:inherit;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+.matchday-week button span{font-size:10px;line-height:1.4}.matchday-week button strong{font-size:17px;line-height:1.3;font-variant-numeric:tabular-nums}
+.matchday-week button[aria-pressed=true]{background:var(--kz-accent);border-color:var(--kz-accent);color:#100a20}
+#matches .match-quickbar button{min-height:44px!important;white-space:nowrap}
+#matches .match-filters summary{min-height:44px;display:flex;align-items:center}
+#matches #dataHealth.error,#matches #dataHealth.warning{display:block!important;margin:8px 14px;border-radius:12px;font-size:12px}
+#matches .reference-heading{font-size:15px!important;margin-top:20px!important}
+#matches .reference-league{content-visibility:auto;contain-intrinsic-size:auto 240px;border-radius:16px!important;box-shadow:none!important}
+.league-toolbar{display:flex;align-items:stretch;background:var(--kz-raised);border-bottom:1px solid var(--kz-line)}
+#matches .league-toolbar .reference-league-title{flex:1;min-width:0;border:0!important}
+.league-collapse{min-width:44px;min-height:44px;background:transparent;color:var(--kz-muted);font:inherit;font-size:19px;border-radius:0;border-inline-start:1px solid var(--kz-line)}
+.league-collapse[aria-expanded=false]{color:var(--kz-accent)}
+.reference-league-stack[hidden]{display:none!important}
+#matches .reference-match{padding:10px 10px 5px!important}
+#matches .reference-match-row{min-height:80px!important;grid-template-columns:minmax(0,1fr) 88px minmax(0,1fr)!important}
+#matches .reference-score strong{font-size:24px!important}
+#matches .reference-team img{width:37px!important;height:37px!important}
+#matches .reference-bottom{min-height:44px!important}
+#matches .reference-center-open{min-height:40px;background:#35294f;border-color:#59477f;font-size:11px}
+#matches .reference-match[data-phase=live]{border-inline-start:3px solid var(--kz-live)!important}
+body>main>section:not(#matches){padding:16px!important}
+body>main>section:not(#matches)>h2{font-size:23px;line-height:1.4;margin:4px 0 18px;color:var(--kz-text)}
+#standings>.card,.settings-backup,.favorite-game,.global-search-box{background:var(--kz-surface)!important;border:1px solid var(--kz-line)!important;border-radius:16px!important;box-shadow:none!important}
+#standings>.card{overflow-x:auto;padding:8px!important}
+#standings th,#standings td{font-variant-numeric:tabular-nums}
+#standings tbody tr:nth-child(even){background:#ffffff05}
+#standings tbody td:last-child{font-weight:900;color:var(--kz-accent)}
+#standings select,#matches select,.global-search-input{min-height:48px!important;font:inherit;background:var(--kz-raised)!important;border-color:var(--kz-line)!important}
+.settings-jump{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0 18px}
+.settings-jump button{min-height:54px;background:var(--kz-raised);color:var(--kz-text);border:1px solid var(--kz-line);border-radius:13px;font:inherit;font-size:12px;text-align:start;padding:10px}
+.settings-backup{padding:15px!important;scroll-margin-top:12px}
+.settings-backup h3{margin:0 0 10px;color:var(--kz-text)!important;font-size:17px}
+.settings-backup p{font-size:13px;color:var(--kz-muted)!important}
+.favorites-tools{display:flex;overflow:auto;flex-wrap:nowrap!important}.favorites-tools button{flex:none}
+#matches .matchday-competition{display:flex!important;align-items:center;justify-content:space-between;gap:8px;margin:10px 14px!important;padding:11px 13px!important;border-radius:13px;background:var(--kz-raised);border-color:var(--kz-line);font-size:12px}
+#matches .matchday-competition::after{content:"›";font:22px Arial;color:var(--kz-accent)}html[dir=rtl] #matches .matchday-competition::after{content:"‹"}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><style id="pinned-competitions-v1">
+#pinnedCompetitions{margin:12px 14px 4px}
+.pinned-heading{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:0 0 8px}
+.pinned-heading strong{font-size:13px;color:var(--kz-text)}.pinned-heading small{font-size:11px;color:var(--kz-muted)}
+.pinned-list{display:flex;gap:6px;overflow:auto;padding:2px 0 5px;scrollbar-width:thin}
+.pinned-list button{flex:none;min-height:44px;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:8px 12px;background:var(--kz-surface);color:var(--kz-text);border:1px solid var(--kz-line);border-radius:12px;font:700 12px Cairo,Tahoma,Arial,sans-serif}
+.pinned-list button[aria-pressed=true]{background:#35294f;border-color:#9274e8;color:#d9ceff}
+.pin-competition{flex:none;min-width:44px;min-height:44px;background:transparent;color:var(--kz-muted);font:800 21px Arial;border-radius:0;border-inline-start:1px solid var(--kz-line)}
+.pin-competition[aria-pressed=true]{color:#f3ca68}
+#matches .league-toolbar .reference-league-title{overflow-wrap:anywhere}
+#pinSettings .pin-manage-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:12px}
+.pin-manage-list button{min-height:48px;text-align:start;font:700 12px Cairo,Tahoma,Arial,sans-serif;color:var(--kz-text);background:var(--kz-raised);border:1px solid var(--kz-line);border-radius:12px;padding:9px}
+.pin-manage-list button[aria-pressed=true]{background:#35294f;border-color:#9274e8;color:#d9ceff}
+</style><style id="kz-deep-brand-v1">
+/* Kora Zol approved Deep Lavender / Deep Ice Blue identity */
+:root{--kz-brand:#9274e8;--kz-ice:#159fc4;--kz-brand-ink:#100a20;--kz-brand-tint:#35294f}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline-color:var(--kz-brand)!important}
+
+:root{--kz-bg:#0c101c;--kz-surface:#191f30;--kz-raised:#22293d;--kz-line:#30384d;--kz-accent:#9274e8;--kz-text:#f5f3ff;--kz-muted:#a7b0c3;--kz-live:#ff858b}
+body{background:var(--kz-bg)!important;accent-color:var(--kz-brand)}
+body>header,body:has(#matches.active)>header,body>nav,body:has(#matches.active)>nav{background:#171c2c!important}
+body>nav button.active,body:has(#matches.active)>nav button.active{background:var(--kz-brand-tint)!important;color:#bca9ff!important}
+#matches .reference-top-tabs button.selected,.matchday-week button[aria-pressed=true]{background:var(--kz-brand)!important;color:var(--kz-brand-ink)!important}
+#matches .match-quickbar button[aria-pressed=true],.pinned-list button[aria-pressed=true],.pin-manage-list button[aria-pressed=true]{background:var(--kz-brand-tint)!important;color:#d9ceff!important;border-color:var(--kz-brand)!important}
+#matches .reference-center-open{background:var(--kz-brand-tint)!important;color:#e7dfff!important;border-color:var(--kz-brand)!important}
+#matches .reference-score strong,.favorite-game-score strong,#standings tbody td:last-child{color:var(--kz-ice)!important}
+.live,.reference-live{color:var(--kz-live)!important}.zoot-label{color:#20e39a!important}
+</style>
+<style id="kz-readable-v1">
+/* Readability pass: preserve brand accents and improve text contrast. */
+
+:root{--kz-text:#ffffff;--kz-muted:#c5cddd;--kz-readable:#fff;--kz-secondary:#c5cddd}
+#matches .reference-team,#matches .reference-team span{color:var(--kz-readable)!important;font-weight:800!important}
+#matches .reference-team span{font-size:clamp(13px,3.45vw,15px)!important;line-height:1.45!important}
+#matches .reference-league-title,.matchday-intro h1,.team-profile-head h2,.team-search-card strong,.global-team-result strong{color:var(--kz-readable)!important}
+#matches .reference-score small:not(.reference-live),#matches .reference-bottom,.team-search-card small,.team-profile-match small,.team-profile-empty,.team-standing-info small,.global-search-hint,.global-search-state,.lineup-muted,.lineup-note,.player-item small,.squad-player-info small{color:var(--kz-secondary)!important}
+#matches .reference-score strong,.favorite-game-score strong,#standings tbody td:last-child{color:#54c9e5!important}
+.squad-player .squad-player-info strong,.player-item{color:#fff!important;font-size:14px!important;font-weight:800!important;line-height:1.45!important;text-shadow:none!important}
+.pitch-player .squad-player-info strong,#matchCenterBody .pitch-player .squad-player-info strong{color:#fff!important;font-size:clamp(12px,3.3vw,13px)!important;font-weight:800!important;line-height:1.45!important;text-shadow:none!important;background:#14231d;border-radius:4px;padding:1px 3px;max-width:100%;box-sizing:border-box;white-space:normal;overflow-wrap:anywhere;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+#matchCenterBody .squad-player:not(.pitch-player) .squad-player-info strong{font-size:14px!important}
+#standings td:not(:last-child),.favorite-game-score span{color:#fff}
+
+</style>
+<style id="kz-stadium-preview-v1">
+:root{--kz-bg:#061126;--kz-surface:#101c37;--kz-raised:#172747;--kz-line:#35456b;--kz-accent:#b096ff;--kz-ice:#59cfff;--kz-text:#fff;--kz-muted:#c5d0e5}
+body{background:radial-gradient(ellipse at 0 0,#241746 0,transparent 32%),radial-gradient(ellipse at 100% 12%,#073259 0,transparent 30%),#061126!important;color:#fff!important}
+body>header,body:has(#matches.active)>header{background:linear-gradient(105deg,#161837,#06152c 72%)!important;height:86px!important;min-height:86px!important;max-height:none!important;padding:10px 14px!important;display:flex!important;justify-content:space-between!important;align-items:center!important;gap:8px!important;overflow:visible!important;border:0!important}
+body>header .logo,body:has(#matches.active)>header .logo{display:flex!important;flex-direction:row-reverse!important;justify-content:flex-start!important;height:auto!important;max-width:none!important;gap:8px!important}
+body>header .brand-image,body:has(#matches.active)>header .brand-image{width:53px!important;height:53px!important;max-width:53px!important;max-height:53px!important;border-radius:12px}
+body>header .brand-image[hidden]{display:none!important}
+body>header .brand-wordmark{color:#fff!important;font-size:23px!important;font-weight:900!important;line-height:1.3;text-align:start}
+body>header .brand-wordmark:after{content:"Kora Zol";display:block;color:#59cfff;font:700 13px system-ui;letter-spacing:.2px}
+html[lang=en] body>header .brand-wordmark:after{content:"Football live"}
+body>header .subtitle,body>header .test-goal{display:none!important}
+.kz-stadium-actions{display:flex;gap:5px;align-items:center;flex:none}
+body>header .kz-stadium-actions .lang,body>header .kz-stadium-actions .sound-bell,body>header .kz-stadium-search{position:static!important;inset:auto!important;margin:0!important;min-width:35px!important;width:35px!important;height:35px!important;min-height:35px!important;display:grid!important;place-items:center;border:1px solid #59628b!important;border-radius:50%!important;color:#e3eaff!important;background:linear-gradient(145deg,#2a2650,#0d1d38)!important;font-size:11px!important;padding:0!important}
+body>header .kz-stadium-search svg{width:18px;height:18px}
+.kz-topnav{display:flex;justify-content:space-around;gap:3px;padding:7px 10px 10px;max-width:760px;margin:auto;border-bottom:1px solid #35507d60;background:#08152d66}
+.kz-topnav button{background:transparent;color:#c5d0e5;font:700 clamp(11px,3.2vw,14px) Cairo,Tahoma,sans-serif;white-space:nowrap;padding:8px 10px;border-radius:100px;min-height:40px;flex:1}
+.kz-topnav button[aria-current=page]{background:linear-gradient(135deg,#824ac5,#4c287b);color:#fff;box-shadow:0 0 15px #8d48d84f}
+body>main{background:transparent!important;padding-bottom:110px!important}
+body>main>section#kzHome{padding:0 12px 20px!important;max-width:760px;margin:auto}
+#kzHome .kz-stadium{height:clamp(100px,25vw,190px);margin:0 -12px;background:linear-gradient(180deg,#06112600 65%,#061126 100%),url(data:image/webp;base64,UklGRnYJAABXRUJQVlA4IGoJAACwRgCdASoIAn8APulyslMpJq+0ItN6eoAdCWVtxMm74fty8VW+GKCKLxt5VSGglstBrj7F1vt3w4b3G3KJpuZ0hKCaWP3otH6bGSaJJuDDI0F/vKuHoBSB5sux6ZlQcnFB/d/mRVcdTDeUJJSQq7wbB5hsXEURIpJlDOxU1iHyU545JXhy7apqyBYcUaRyYfD0+zSKH49cmbjQft3e+83h/MYAVMJpEOmAKl+/ECv6NyCmykfoVdNZGCCwxGSFS9vpaGzvw0pS7XjytZAtP7m7juNtvOfMXRctdTsJ3x5pGnrsTjmLhSMP19lqjcgvfaMgIFmntBaiss5srUzBRnNhLnyGhqfuc8HKa/ckdUKsMX8LzbTtgwN/9gv75VJXPCghZ1IwzeSLD4SJHm/dOullj7KW7wTN08uwok4MsnIdyCxkNvDT/8WSRPDPFa8LfK5P+ZOr+MZIEannKEtI1hLqDldr5URDixVw3GYPPvA0iv+3/jw6v1ZSBnCFGa1ODuwuHIauQaqYa4RRVzW2GsKXcfn1vPwNvEaFkkYs1GNP4/UvxIDD+BKwNhCAdfftU/E59AOsmr4nsCviXwaFWQS0onOXdP1w8a7v2D5Zoq8c5Vwo5oyT3jLDvbVK/RFODuJw1t0u46C6YA7AKXSXP5rZ/dBTyg7+tcXje2Pa4rEpkPw8WTOTqIZCDDKKiKzyLQ3818LtsPn3vugZ+dAi4TVfANUNMSmvRoXLOCDlX9ck8J/AZwZLObE1jbIf3j+AAP7wjZ6GrG/g13pSumdZg83XoOwOaXdRx159XgSnr6Btk/Aflt6QmrUqb/y8A2NCz4KCN03/hMcPgq2+57wUxN67g5LY00Ic/MvC2ayT9mCQgWS5ze/Ifx9ERLkYUiGUVEACClAPQTbAIhfEZIRQeiHHpyLYEIf0Z6AUMozx3qYKuF7zt9TLA0jb6Wq+s2ht/5XWHvhS37sNn7xJW8l3WbagvgiNe1l0Jc8adrBcR0a3rCbNbwGsq98UzAdkgZVNaHvjA8nP93vGWJsXQSfsTDi1ewFMIowYMeOi9L07/QEhlN1xSrUAlz/UTcWzz6mKJlMXgBcs3BTa1nq4lPrnjTJ1Yi0ID1KGAua1hEluO0av+TUjHp/6drUQj/GP3hOjxI2EwCY+/sK39/j6kB0v3mX0Y8M3BcH4AAOczAfo4yLH5gWvPu8obsBW1Pz0Nzz9vSvPmZJ//iOsg44d5KVzYW1F4JLq2nfMUDen8E4mI3pTj6cMAVilFeUwgs3kTDz7gyVBVbMr0yDmo6kaspObM0bPoTZ/rP0XsiyYooMh9h67OOs704XgnUEh5J+waKTQ5v/DcVM9D5z5d7ropqNElrmV+Qk5CvH8hhKkj08DsFmGvW5YYN6SmpjIm24yg6qyWpDkH2DsuMO53qIJq/ogBcEIrF+zf0R6rwd5mTMtCJTl4BIBZu0jCn/ab3dQUvn3xMuk91c8c+LHz/AkxQcd1NlUlV5+4y0im8B03hTD0BBCSqQUI+WQKHhWHDWNRwN73bnxeJ0OB2m8ykWTadGdqUgimQR6RhLVGK0j3xoiT2cIcvsITQZ333EQ8IErh5KVBcL0FONqGuqcHuNR/QqfgNR2wxj2re1+eKE53l/dzH7Q36ESs9Utt8M3xWyphm/prLmVOdsgBichakLsc/WPtYNYm8WkN+Egj0wWMQZRqoiTgI4L7Pj0ly6fGWEQwHE3XPZK1gFmnS5CVx0MAJQZNQqhPe7g+GbKrlT9FH2oX3JfrusQujFgwJcSRvDMVq1s30tVtIP33ZGWqlA+1PlfHxTQ9ttwfUbnykFk5ph5CsIiTLalGdz5tcqj62PVf1tzWFGACl4F1fJZdCWBNDtGK/jBsetijBNgMTTwLZsLJbNiuwKxa8JKJvNIVMfX+BDat68Ck/KZAP2Y2U66jPBeyCX7m9abhTZeSDsYtpxZiW1XIYNKgWSPZf4dx8VdWlZHa0BalYs9IKII30TmlfQzQcn4OT+2XHGSlXIfefTILPJlP0sVixHo9qwCHkGsGSbgXMy782u8kOhmHuwRhO6HSwpOK+n9X/rHqZHkyLlUwlJHos44YMj98smCPrurW7rdJtoqBJ7Y5zBly3oQFm60kHO1Mium5GCxW14Pa8Ce2GE1BeblAufkLS+AE1pQKt5qZiPvWGRz/rYV90ULbKgDiv9Pb4OAcTecIykk9iEFXtXyT5aMsqf/kjGOiFFVXnf37OW1IsrPJHbviauAOJ0+6DX94WC9iwksmYjahxHh++Vu7Oz3fPKYJ5piyXnfWWiOI6szJOuCo34tcfsM9JAoEkRIOEeEW4eBsUtmttr8Vkqzicl5c8SoKh9LWgmEMmTHYR4DFwf3Ih0LRN7AQFooIolbi9ND+E4Z/LXMWggFJLAQBxsvH4G31DSDi8wqKxxJBfKotBdJerPYnxvD0bshtzWdBEGI6S3n7kAR4ZCNQi9uIWzyt228fNKDyfY6jQKa9Q5XWu+2wEUrJ/7nnewvZUYOKLI7xJqDCGzkj07QnKXtCE3QnHVwc6KmjIB/ud9xOmDVUmWJNivFF04G3dmJ3LTvJZ5eSGvFbHBjT0dA5ePc9smyt3ACfynCMdlsjEzpcqCEYpV45jH0BO4yQHGlue9vlZ9WFuEQPX7KHstaYIn0SC8v2iXvZ6tzQFmcoWN2PAoPJKfW/78M3fUft++JscKNbnQn9S/Fo8VjDq1wKsDs7ySvv20oHOvvPvPFkZSnvT48nmSU9L6xRnx3+bZ4cN/2A+jRIOxzhT2a1+voDB7nhR2TDAj4iiW4dRGzcEcPBvWKEZoRbb93hvidwxlfFy9ID3a/iY7rjq9QhWOu6zo3/YhHoVgIJqWwkv2PFu3ckYeqsaTpCTfxzt5Mrm3nDaKCX9L8ep6a3pkpMeIXZp3DmPZcIVVyGafm4KFX0Leq+5CQyQ06vXngx0Xm7Y3tt8B8Mw3fB4VgSkhEL4UuY2LXz3D5+lKXjUx4+uQAF2/PWM4a5ppkS8ayh3Igct8NnhBsFL+fcw9wH1+00IWeC/vcqlSpoGRF2mrhNEV2d7+IN9/Pi7ZiHOGECmzt1XJVPfRDG1WUKxeHcsxDpNgHQbHN3I03j4G4eWw3EYErXIBsC2q9N9ZO86Dft/Ui4QxyWw64NinjlCozaz+iSbb4MpKR9g5QKqdKS7con7Ghkw5DpKcAUD751eLsgAAA) center/100% 100% no-repeat;pointer-events:none}
+#kzHome .kz-home-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 0 13px}
+#kzHome h1{margin:0;font-size:clamp(21px,5.5vw,29px);font-weight:900;color:#fff;line-height:1.3}
+.kz-home-heading button,.kz-dash-link{background:none;color:#59cfff;font:800 12px Cairo,Tahoma,sans-serif;min-height:44px;padding:5px}
+.kz-home-matches{display:grid;gap:8px}
+.kz-home-card,.kz-dash-panel{position:relative;border:1px solid #4b427b;border-radius:15px;background:linear-gradient(115deg,#25204eeb,#0d1e38f2 70%,#11294aea);box-shadow:inset 0 1px 14px #6e7eff18,0 3px 12px #0003;min-width:0;overflow:hidden}
+.kz-home-card{padding:9px 10px;color:#fff;text-decoration:none;display:block;border-inline-end-color:#366ba3}
+.kz-home-card[data-phase=live]{border-color:#754a9b #3b5d93 #3b5d93 #754a9b}
+.kz-card-head{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:6px;font-size:11px;color:#e5eaff;line-height:1.4}
+.kz-card-head>span:first-child{font-weight:700;overflow-wrap:anywhere}
+.kz-card-state{display:flex;align-items:center;gap:4px;flex:none}
+.kz-card-state b{background:#253453;border-radius:20px;padding:3px 8px;font-size:10px;font-weight:800;color:#e9efff;white-space:nowrap}
+.kz-home-card[data-phase=live] .kz-card-state b{background:#ae2946;color:#fff}
+.kz-card-state small{font-size:10px;color:#c5d0e5;white-space:nowrap}
+.kz-card-body{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:5px;align-items:center;min-height:49px}
+.kz-card-team{display:flex;align-items:center;justify-content:flex-start;gap:6px;min-width:0;font-size:clamp(11px,3.3vw,15px);font-weight:800;line-height:1.4;overflow-wrap:anywhere}
+.kz-card-team:last-child{flex-direction:row-reverse;text-align:end}
+.kz-card-team img{width:clamp(26px,7.8vw,40px);height:clamp(26px,7.8vw,40px);object-fit:contain;flex:none}
+.kz-card-score{direction:ltr;white-space:nowrap;background:#1b2449;border:1px solid #53508b;border-radius:30px;box-shadow:inset 0 0 12px #9b57ea25;padding:6px 12px;min-width:62px;text-align:center;color:#fff;font:900 clamp(15px,4.1vw,21px) system-ui}
+.kz-home-card[data-phase=upcoming] .kz-card-score{color:#69d8ff;font-size:14px}
+.kz-dash-grid{display:grid;grid-template-columns:1.42fr 1fr;gap:8px;margin-top:12px}
+.kz-dash-panel{padding:9px 8px;background:linear-gradient(145deg,#182a4a,#0b1930);border-color:#354b73}
+.kz-dash-panel:nth-child(2){background:linear-gradient(135deg,#36255b,#101e38 70%);border-color:#3e426d}
+.kz-dash-panel h2{font-size:clamp(10px,3.1vw,15px);margin:0 0 9px;color:#fff;font-weight:800;line-height:1.4}
+.kz-mini-table{font-size:10px;width:100%;table-layout:fixed}
+.kz-mini-table th,.kz-mini-table td{border-bottom:1px solid #48587930;font-size:10px;padding:6px 1px;color:#fff}
+.kz-mini-table th{color:#c5d0e5;font-size:9px}
+.kz-mini-table th:nth-child(2),.kz-mini-table td:nth-child(2){width:51%;text-align:start}
+.kz-mini-table td:nth-child(2){overflow-wrap:anywhere;line-height:1.3}
+.kz-mini-table td:last-child{color:#59cfff;font-weight:900}
+.kz-mini-table img{width:16px;height:16px;object-fit:contain;vertical-align:middle;margin-inline-end:3px}
+.kz-metric-row{display:flex;align-items:center;justify-content:space-between;gap:4px;background:#26345366;border-radius:8px;margin:5px 0;padding:6px;color:#dce6f9;font-size:10px;line-height:1.4}
+.kz-metric-row strong{font:800 15px system-ui;color:#fff}
+.kz-home-note{font-size:10px;color:#c5d0e5;line-height:1.6;margin:8px 2px}
+.kz-home-empty{padding:18px 10px;color:#c5d0e5;border:1px solid #354b73;border-radius:14px;text-align:center;background:#101c37}
+body>nav,body:has(#matches.active)>nav{background:linear-gradient(120deg,#171b39f7,#08162dfb)!important;border-top:1px solid #465a8b!important;border-radius:21px 21px 0 0!important;padding:7px 7px max(8px,env(safe-area-inset-bottom))!important}
+body>nav button,body:has(#matches.active)>nav button{color:#c5d0e5!important;font-size:11px!important}
+body>nav button.active,body:has(#matches.active)>nav button.active{color:#fff!important;background:radial-gradient(ellipse at 60% 100%,#7840b488,#30234f 70%)!important;box-shadow:inset 0 0 12px #a86bff50}
+body>nav button[data-kz-bottom=home]{order:-1}
+body>nav button[data-kz-bottom=home]::before{mask:none!important;-webkit-mask:none!important;background:none!important;content:"⌂"!important;font-size:28px;line-height:22px}
+body>nav button[data-icon="▦"],body>nav button[data-icon="⌕"]{display:none!important}
+#matches .reference-league,#matches .reference-match,.settings-backup,.favorite-game,#standings>.card{background:linear-gradient(115deg,#201e43,#101e36 75%)!important;border-color:#46547d!important}
+#matches .league-toolbar{background:#172747!important}
+#matches .reference-score strong{color:#fff!important}
+.kz-competition-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.kz-competition-list a{padding:14px 9px;border:1px solid #46547d;border-radius:12px;background:#12213b;color:#fff;font-weight:700;text-decoration:none;font-size:13px}
+@media(max-width:350px){.kz-topnav button{padding:6px 4px}.kz-dash-grid{gap:5px}.kz-dash-panel{padding:7px 5px}.kz-card-score{padding:5px 8px;min-width:54px}body>header .brand-wordmark{font-size:18px!important}}
+@media(min-width:650px){.kz-card-head,.kz-metric-row,.kz-mini-table td,.kz-mini-table th{font-size:13px}.kz-home-card{padding:14px}.kz-dash-panel{padding:16px}.kz-mini-table img{width:22px;height:22px}}
+</style></head>
+
+<body>
+<header>
+ <div class="logo"><span class="brand-wordmark" data-ar="كورة زول" data-en="Kora Zol">كورة زول</span><img class="brand-image" src="./kora-zol-icon-192.png?v=brand20261111b" alt="شعار كورة زول" hidden onload="this.hidden=false;this.nextElementSibling.hidden=true" onerror="this.hidden=true"><div class="legacy-brand"><svg class="turban-ball" viewBox="0 0 100 110" role="img" aria-label="كرة قدم بعمامة سودانية" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="ballShade"><stop stop-color="#fff"/><stop offset="1" stop-color="#c4d0d8"/></radialGradient></defs><circle cx="51" cy="65" r="34" fill="url(#ballShade)" stroke="#152338" stroke-width="3"/><path d="M50 47l-14 10 5 17h19l9-16-19-11zm-25 12-7 8 6 17 13-6-3-18zm46-1 13-2 3 18-13 10-10-11zM44 91l-3 7 18 0 7-8z" fill="#182638"/><path d="M16 44Q9 21 35 14Q61 3 82 23L89 34Q66 27 46 38Q27 48 16 44Z" fill="#f8f9fc" stroke="#d1d9e2" stroke-width="2"/><path d="M15 40Q40 16 83 27M19 32Q47 11 78 22M25 23Q49 9 69 17" fill="none" stroke="#c8d2de" stroke-width="4" stroke-linecap="round"/><path d="M16 43Q40 28 85 32" fill="none" stroke="#f7f8fa" stroke-width="9"/><path d="M17 47Q40 32 85 36" fill="none" stroke="#c51e36" stroke-width="2"/><path d="M19 43Q12 62 20 91L29 96Q25 67 32 43Z" fill="#f6f7fa" stroke="#d2dae4" stroke-width="2"/><path d="M20 88l9 3" stroke="#c51e36" stroke-width="3"/></svg><span>كورة زول</span></div></div>
+ <p class="subtitle" data-ar="عالم كرة القدم بين يديك"
+ data-en="Your football world">
+ عالم كرة القدم بين يديك</p>
+ <button id="testGoal" class="test-goal" type="button" onclick="testZoot()" title="اختبار الهدف">⚽ تجربة</button>
+ <button id="soundBell" class="sound-bell" type="button" onclick="setSoundAlerts(!soundEnabled)" aria-label="تشغيل تنبيهات الأهداف" title="تنبيهات الأهداف">🔕</button>
+ <button class="lang" onclick="changeLang()" aria-label="تغيير اللغة">EN</button>
+<div class="kz-stadium-actions" id="kzHeaderActions"></div></header><div class="kz-topnav" role="group" aria-label="Main shortcuts"><button type="button" data-kz-tab="kzHome" onclick="kzGo('kzHome')" data-ar="الرئيسية" data-en="Home">الرئيسية</button><button type="button" data-kz-tab="matches" onclick="kzGo('matches')" data-ar="المباريات" data-en="Matches">المباريات</button><button type="button" data-kz-tab="kzCompetitions" onclick="kzGo('kzCompetitions')" data-ar="البطولات" data-en="Leagues">البطولات</button><button type="button" data-kz-tab="standings" onclick="kzGo('standings')" data-ar="الترتيب" data-en="Table">الترتيب</button><button type="button" data-kz-tab="fixtures" onclick="kzGo('fixtures')" data-ar="الجدول" data-en="Fixtures">الجدول</button></div>
+
+<nav aria-label="التنقل الرئيسي">
+ <button class="active" data-icon="▣" onclick="showTab('matches',this)"
+ data-ar="المباريات" data-en="Matches">المباريات</button>
+ <button data-icon="▦" onclick="showTab('fixtures',this)" data-ar="الجدول" data-en="Fixtures">الجدول</button>
+ <button data-icon="⌕" onclick="showTab('search',this)" data-ar="البحث" data-en="Search">🔎 البحث</button>
+ <button data-icon="☷" onclick="showTab('standings',this)"
+ data-ar="الترتيب" data-en="Standings">الترتيب</button>
+ <button data-icon="☆" onclick="showTab('favorites',this)"
+ data-ar="المفضلة" data-en="Favorites">المفضلة</button>
+ <button data-icon="⚙" onclick="showTab('settings',this)" data-ar="الإعدادات" data-en="Settings">⚙️ الإعدادات</button>
+<button data-kz-bottom="home" onclick="showTab('kzHome',this)" data-ar="الرئيسية" data-en="Home">الرئيسية</button></nav>
+
+<main><section id="kzHome"><div class="kz-stadium" aria-hidden="true"></div><div class="kz-home-heading"><h1 data-ar="مباريات اليوم" data-en="Today's matches">مباريات اليوم</h1><button type="button" onclick="kzGo('matches',true)" data-ar="عرض الكل ‹" data-en="View all ›">عرض الكل ‹</button></div><div id="kzHomeMatches" class="kz-home-matches"></div><div class="kz-dash-grid"><div class="kz-dash-panel"><h2 data-ar="ترتيب الدوري الإنجليزي" data-en="Premier League table">ترتيب الدوري الإنجليزي</h2><div id="kzMiniStandings"></div><button class="kz-dash-link" type="button" onclick="document.getElementById('standingsLeague').value='en';renderStandings();kzGo('standings')" data-ar="الترتيب الكامل ‹" data-en="Full table ›">الترتيب الكامل ‹</button></div><div class="kz-dash-panel"><h2 data-ar="إحصائيات سريعة" data-en="Quick stats">إحصائيات سريعة</h2><div id="kzQuickStats"></div></div></div><p id="kzHomeNote" class="kz-home-note" role="status"></p></section><section id="kzCompetitions"><h2 data-ar="البطولات" data-en="Competitions">البطولات</h2><div id="kzCompetitionList" class="kz-competition-list"></div></section>
+<section id="matches" class="active"><div class="matchday-intro"><div><h1 data-ar="مركز المباريات" data-en="Matchday">مركز المباريات</h1><p data-ar="نتائجك، لحظة بلحظة" data-en="Your scores, moment by moment">نتائجك، لحظة بلحظة</p></div><button id="matchdayRefresh" class="matchday-refresh" type="button" onclick="refreshMatchday(this)" aria-label="Refresh scores" title="Refresh scores">↻</button></div>
+<a href="./champions.html" class="notice matchday-competition" style="text-decoration:none;color:inherit" data-ar="🏆 دوري أبطال أوروبا · الموسم والترتيب" data-en="🏆 Champions League · season and standings">🏆 دوري أبطال أوروبا · الموسم والترتيب</a>
+
+<div class="reference-top-tabs" role="group" aria-label="نتائج المباريات"><button type="button" id="tabMine" onclick="setHomeResultsTab('mine')" data-ar="نتائجي" data-en="My scores">نتائجي</button><button type="button" id="tabAll" class="selected" onclick="setHomeResultsTab('all')" data-ar="جميع النتائج" data-en="All scores">جميع النتائج</button></div><div class="home-day-controls"><button class="date-arrow" type="button" onclick="shiftDay(-1)" aria-label="Previous day">‹</button><div class="reference-daybar" id="referenceDaybar" aria-live="polite">اليوم</div><button class="date-arrow" type="button" onclick="shiftDay(1)" aria-label="Next day">›</button><button type="button" onclick="goToday()" data-ar="اليوم" data-en="Today">اليوم</button></div><div id="matchdayWeek" class="matchday-week" role="group" aria-label="Match dates"></div><div id="pinnedCompetitions"></div><div class="reference-follow-note" id="referenceFollowNote">قريباً - الفرق والمباريات الخاصة بي</div><div class="notice" id="feedNotice" role="status" data-ar="جاري تحميل نتائج المباريات من المصدر المباشر..." data-en="Loading live match data from the provider..." hidden>جاري تحميل نتائج المباريات من المصدر المباشر...</div>
+<div id="dataHealth" class="data-health" role="status"></div><p style="margin:4px 0 10px;font-size:11px;color:var(--muted);text-align:center"><a href="https://sportscore.com/" style="color:inherit">Powered by SportScore</a></p><div class="match-quickbar" role="group" aria-label="Match quick filters"><button type="button" data-match-view="all" aria-pressed="true" onclick="setMatchView('all')">⚽ الكل</button><button type="button" data-match-view="live" aria-pressed="false" onclick="setMatchView('live')">🔴 مباشر</button><button type="button" data-match-view="upcoming" aria-pressed="false" onclick="setMatchView('upcoming')">📅 القادمة</button><button type="button" data-match-view="results" aria-pressed="false" onclick="setMatchView('results')">🏁 النتائج</button><button type="button" data-match-view="favorites" aria-pressed="false" onclick="setMatchView('favorites')">★ المفضلة</button></div><details class="match-filters"><summary data-ar="⚙ الدوري والبحث" data-en="⚙ League and search">⚙ الدوري والبحث</summary><label for="leagueFilter" data-ar="تصفية حسب الدوري" data-en="Filter by league">تصفية حسب الدوري</label>
+<select id="leagueFilter" onchange="filterMatches()"><option value="all" data-ar="كل الدوريات" data-en="All leagues">كل الدوريات</option><option value="es" data-ar="الدوري الإسباني" data-en="La Liga">الدوري الإسباني</option><option value="en" data-ar="الدوري الإنجليزي" data-en="Premier League">الدوري الإنجليزي</option><option value="sd" data-ar="الدوري السوداني" data-en="Sudan Premier League">الدوري السوداني</option><option value="sa" data-ar="الدوري السعودي" data-en="Saudi Pro League">الدوري السعودي</option><option value="de" data-ar="الدوري الألماني" data-en="Bundesliga">الدوري الألماني</option><option value="it" data-ar="الدوري الإيطالي" data-en="Serie A">الدوري الإيطالي</option><option value="fr" data-ar="الدوري الفرنسي" data-en="Ligue 1">الدوري الفرنسي</option><option value="cl" data-ar="دوري أبطال أوروبا" data-en="Champions League">دوري أبطال أوروبا</option><option value="br" data-ar="الدوري البرازيلي" data-en="Brazilian Série A">الدوري البرازيلي</option><option value="nl" data-ar="الدوري الهولندي" data-en="Eredivisie">الدوري الهولندي</option><option value="pt" data-ar="الدوري البرتغالي" data-en="Primeira Liga">الدوري البرتغالي</option><option value="eng2" data-ar="تشامبيونشيب الإنجليزي" data-en="English Championship">تشامبيونشيب الإنجليزي</option><option value="friendly" data-ar="وديات المنتخبات" data-en="International friendlies">وديات المنتخبات</option><option value="clubfriendly" data-ar="وديات الأندية" data-en="Club friendlies">وديات الأندية</option><option value="nonfifa" data-ar="وديات أخرى" data-en="Other friendlies">وديات أخرى</option><option value="sd" data-ar="الدوري السوداني" data-en="Sudanese League">الدوري السوداني</option></select><input class="match-search" id="matchSearch" type="search" placeholder="ابحث بالعربي أو الإنجليزي عن فريق أو دوري..." aria-label="Search matches by team or league" oninput="debounceMatchSearch()"><span id="matchDate" hidden></span></details><div id="matchCount" class="match-count" aria-live="polite"></div><div id="followedTeams"></div><div id="teamSearchResults" aria-live="polite"></div><div id="teamProfile" aria-live="polite"></div><div id="liveMatches"><div class="home-loading" role="status"><strong data-ar="جاري تحميل المباريات…" data-en="Loading matches…">جاري تحميل المباريات…</strong><div class="home-skeleton"></div><div class="home-skeleton"></div></div></div>
+
+</section>
+
+<section id="fixtures"><h2 data-ar="📅 جدول المباريات الجاية" data-en="📅 Upcoming fixtures">📅 جدول المباريات الجاية</h2><iframe id="fixturesFrame" title="جدول المباريات الجاية" loading="lazy" style="width:100%;height:78vh;min-height:580px;border:0;border-radius:12px;background:#0e192a" data-src="./fixtures.html?embedded=1&design=20261108font1"></iframe></section>
+<section id="standings">
+<div class="notice" id="standingsInfo" role="status">جاري تحميل الترتيب الحقيقي...</div>
+<label for="standingsLeague" data-ar="اختر الدوري" data-en="Choose league">اختر الدوري</label>
+<select id="standingsLeague" onchange="renderStandings()"><option value="es" data-ar="الدوري الإسباني" data-en="La Liga">الدوري الإسباني</option><option value="en" data-ar="الدوري الإنجليزي" data-en="Premier League">الدوري الإنجليزي</option><option value="cl" data-ar="دوري أبطال أوروبا" data-en="Champions League">دوري أبطال أوروبا</option><option value="sa" data-ar="الدوري السعودي" data-en="Saudi Pro League">الدوري السعودي</option><option value="sd" data-ar="الدوري السوداني" data-en="Sudanese League">الدوري السوداني</option></select>
+<a href="./champions.html" class="notice" style="display:block;text-decoration:none;color:inherit;margin:10px 0" data-ar="🏆 أبطال أوروبا — مباريات الموسم والترتيب" data-en="🏆 Champions League — season fixtures and standings">🏆 أبطال أوروبا — مباريات الموسم والترتيب</a>
+<h2 data-ar="🏆 ترتيب الدوري"
+data-en="🏆 League Standings">
+🏆 ترتيب الدوري</h2>
+<div class="card">
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th data-ar="الفريق" data-en="Team">الفريق</th>
+<th data-ar="لعب" data-en="P">لعب</th>
+<th data-ar="ف" data-en="W">ف</th><th data-ar="ت" data-en="D">ت</th><th data-ar="خ" data-en="L">خ</th><th data-ar="ف.أ" data-en="GD">ف.أ</th><th data-ar="نقاط" data-en="Pts">نقاط</th>
+</tr>
+</thead>
+<tbody id="standingsBody"></tbody>
+</table>
+</div>
+</section>
+
+<section id="matchCenter"><h2 data-ar="تفاصيل المباراة" data-en="Match center">تفاصيل المباراة</h2><div id="matchCenterBody" class="card" role="status"></div><button type="button" class="refresh-btn" onclick="showTab('matches',document.querySelector('nav button'))" data-ar="العودة للمباريات" data-en="Back to matches">العودة للمباريات</button></section>
+<section id="search">
+<h2 data-ar="🔎 البحث عن الفرق" data-en="🔎 Team search">🔎 البحث عن الفرق</h2>
+<p class="global-search-hint" data-ar="ابحث بالعربي أو الإنجليزي عن أي فريق موجود في المباريات المتاحة. اضغط على الفريق لعرض مبارياته ونتائجه ومتابعته." data-en="Search in Arabic or English for teams in available fixtures. Open a team to see results, upcoming matches and follow it.">ابحث بالعربي أو الإنجليزي عن أي فريق موجود في المباريات المتاحة. اضغط على الفريق لعرض مبارياته ونتائجه ومتابعته.</p>
+<div class="global-search-box"><input id="globalSearchInput" class="global-search-input" type="search" autocomplete="off" placeholder="مثلاً: الهلال، أرسنال، برشلونة" aria-label="البحث عن الفرق" oninput="debounceGlobalSearch()"></div>
+<div id="globalSearchResults" class="global-search-results" aria-live="polite"></div>
+<div id="globalTeamProfile"></div>
+</section>
+<section id="favorites">
+<h2 data-ar="⭐ المفضلة" data-en="⭐ Favorites">
+⭐ المفضلة</h2>
+<div class="favorites-tools" role="group" aria-label="Favorite match filters"><button type="button" data-fav-filter="all" aria-pressed="true" onclick="setFavoriteFilter('all')">الكل</button><button type="button" data-fav-filter="live" aria-pressed="false" onclick="setFavoriteFilter('live')">🔴 مباشر</button><button type="button" data-fav-filter="upcoming" aria-pressed="false" onclick="setFavoriteFilter('upcoming')">📅 القادمة</button><button type="button" data-fav-filter="results" aria-pressed="false" onclick="setFavoriteFilter('results')">🏁 النتائج</button></div><div id="favoriteMatches"></div>
+</section>
+<section id="settings"><h2 data-ar="الإعدادات" data-en="Settings">الإعدادات</h2><div class="settings-jump" role="group" aria-label="Settings shortcuts"><button type="button" onclick="jumpSettings('koraAccount')" data-ar="◉ الحساب والمزامنة" data-en="◉ Account & sync">◉ الحساب والمزامنة</button><button type="button" onclick="jumpSettings('notifyCustomCard')" data-ar="◎ تخصيص التنبيهات" data-en="◎ Alert preferences">◎ تخصيص التنبيهات</button><button type="button" onclick="jumpSettings('phoneAlerts')" data-ar="♧ إشعارات الجوال" data-en="♧ Phone notifications">♧ إشعارات الجوال</button><button type="button" onclick="jumpSettings('backupSettings')" data-ar="↧ النسخ الاحتياطي" data-en="↧ Backup">↧ النسخ الاحتياطي</button></div><div class="settings-backup" id="pinSettings"><h3 data-ar="★ البطولات المثبتة" data-en="★ Pinned competitions">★ البطولات المثبتة</h3><p data-ar="ثبّت بطولاتك لتظهر أولاً في كل مجموعة نتائج. هذا الاختيار محفوظ على جهازك ولا يغيّر الإشعارات." data-en="Pin competitions to show them first in each match group. This preference stays on this device and does not change notifications.">ثبّت بطولاتك لتظهر أولاً في كل مجموعة نتائج. هذا الاختيار محفوظ على جهازك ولا يغيّر الإشعارات.</p><div id="pinManager" class="pin-manage-list"></div><p id="pinStatus" role="status"></p></div><div class="settings-backup" id="notifyCustomCard"><h3 data-ar="🎯 خصّص إشعاراتك" data-en="🎯 Customize notifications">🎯 خصّص إشعاراتك</h3><p data-ar="اختار بطولة بس أو فريق واحد أو الاتنين. لمن تختار فريق وبطولة بتقدر تستقبل تنبيهات الفريق داخل البطولة بس." data-en="Choose leagues, individual teams, or both. You can limit notifications to a team inside a selected competition.">اختار بطولة بس أو فريق واحد أو الاتنين. وحدد الفريق داخل البطولة لو داير.</p><div class="settings-actions" role="group" aria-label="Notification scope"><label><input type="radio" name="notifyScope" value="selected" checked><span data-ar="المحدد فقط" data-en="Selected only">المحدد فقط</span></label><label><input type="radio" name="notifyScope" value="all"><span data-ar="كل المباريات" data-en="All matches">كل المباريات</span></label></div><details open><summary data-ar="🏆 اختار البطولات" data-en="🏆 Competitions">🏆 اختار البطولات</summary><div id="notifyLeagueList" class="notify-chip-list"></div></details><label for="notifyTeamInput" data-ar="⭐ اختار الفرق" data-en="⭐ Teams">⭐ اختار الفرق</label><div class="notify-team-entry"><input type="search" id="notifyTeamInput" list="notifyTeamChoices" maxlength="100" placeholder="اسم الفريق…" aria-label="Team name"><datalist id="notifyTeamChoices"></datalist><button type="button" id="notifyTeamAdd" data-ar="إضافة" data-en="Add">إضافة</button></div><div id="notifyTeamSelected" class="notify-chip-list"></div><fieldset class="notify-rule"><legend data-ar="لو اخترت بطولة وفريق مع بعض" data-en="When you select both">لو اخترت بطولة وفريق مع بعض</legend><label><input type="radio" name="notifyRule" value="any" checked><span data-ar="البطولة أو الفريق" data-en="Competition OR team">البطولة أو الفريق</span></label><label><input type="radio" name="notifyRule" value="both"><span data-ar="الفريق داخل البطولة فقط" data-en="Team WITHIN competition only">الفريق داخل البطولة فقط</span></label></fieldset><label class="notify-fav-switch" style="display:flex;gap:9px;align-items:center;min-height:48px"><input id="notifyFavoriteMatches" type="checkbox" checked><span data-ar="🔔 تنبيهات المباريات المحفوظة في المفضلة" data-en="🔔 Alerts for saved favorite matches">🔔 تنبيهات المباريات المحفوظة في المفضلة</span></label><p id="notifyCustomSummary" role="status" aria-live="polite"></p></div><div class="settings-backup" id="koraAccount"><h3 data-ar="👤 حساب كورة زول" data-en="👤 Kora Zol account">👤 حساب كورة زول</h3><p data-ar="سجّل بالبريد وكلمة مرور لاستعادة الفرق والبطولات والمفضلات بعد حذف التطبيق أو تغيير تلفونك." data-en="Sign up with email and password to restore followed teams, leagues and favorites after reinstalling or switching phones.">احفظ مفضلاتك في حسابك عشان ترجع بعد حذف التطبيق.</p><div id="koraAccountGuest"><form id="koraAccountForm"><label for="koraAccountEmail" data-ar="البريد الإلكتروني" data-en="Email">البريد الإلكتروني</label><input id="koraAccountEmail" type="email" autocomplete="username" required maxlength="254" placeholder="example@email.com" dir="ltr"><label for="koraAccountPassword" data-ar="كلمة المرور" data-en="Password">كلمة المرور</label><input id="koraAccountPassword" type="password" autocomplete="current-password" required minlength="6" maxlength="128" placeholder="••••••••" dir="ltr"><div class="settings-actions"><button type="submit" id="koraAccountLogin" data-ar="دخول" data-en="Sign in">دخول</button><button type="button" id="koraAccountSignup" data-ar="إنشاء حساب" data-en="Create account">إنشاء حساب</button><button type="button" id="koraAccountReset" data-ar="نسيت كلمة المرور" data-en="Forgot password">نسيت كلمة المرور</button></div></form></div><div id="koraAccountSigned" hidden><p id="koraAccountEmailLabel"></p><div class="settings-actions"><button id="koraAccountSync" type="button" data-ar="☁ حفظ مفضلات الجهاز في حسابي" data-en="☁ Back up device favorites">☁ حفظ مفضلات الجهاز في حسابي</button><button id="koraAccountRestore" type="button" data-ar="↙ استرجاع مفضلات الحساب" data-en="↙ Restore account favorites">↙ استرجاع مفضلات الحساب</button><button id="koraAccountSignout" type="button" data-ar="خروج" data-en="Sign out">خروج</button></div></div><p id="koraAccountStatus" role="status" aria-live="polite"></p></div><div class="settings-backup background-push-card" id="phoneAlerts"><h3 data-ar="🔔 إشعارات الجوال" data-en="🔔 Phone notifications">🔔 إشعارات الجوال</h3><p data-ar="استلم إشعارات الفرق المتابعة والمباريات المفضلة حتى عندما يكون كورة زول مقفولاً." data-en="Receive alerts for followed teams and favorite matches even when Kora Zol is closed.">استلم إشعارات الفرق المتابعة والمباريات المفضلة حتى عندما يكون كورة زول مقفولاً.</p><div class="push-preference-list"><label><input type="checkbox" data-push-type="goal" checked><span data-ar="⚽ الأهداف" data-en="⚽ Goals">⚽ الأهداف</span></label><label><input type="checkbox" data-push-type="kickoff" checked><span data-ar="⏱ بداية المباراة والشوط الثاني" data-en="⏱ Kickoff and second half">⏱ بداية المباراة والشوط الثاني</span></label><label><input type="checkbox" data-push-type="yellow" checked><span data-ar="🟨 البطاقات الصفراء" data-en="🟨 Yellow cards">🟨 البطاقات الصفراء</span></label><label><input type="checkbox" data-push-type="red" checked><span data-ar="🟥 البطاقات الحمراء" data-en="🟥 Red cards">🟥 البطاقات الحمراء</span></label><label><input type="checkbox" data-push-type="halftime" checked><span data-ar="⏸ نهاية الشوط الأول" data-en="⏸ Half time">⏸ نهاية الشوط الأول</span></label><label><input type="checkbox" data-push-type="fulltime" checked><span data-ar="🏁 نهاية المباراة" data-en="🏁 Full time">🏁 نهاية المباراة</span></label><label><input type="checkbox" id="pushAllLive"><span data-ar="🔔 كل المباريات الحية في الدوريات المدعومة" data-en="🔔 All live matches in supported leagues">🔔 كل المباريات الحية في الدوريات المدعومة</span></label></div><div class="settings-actions"><button type="button" id="backgroundPushButton" disabled>🔔 تشغيل إشعارات الخلفية</button><button type="button" id="backgroundPushTest" hidden disabled data-ar="إرسال تجربة" data-en="Send test">إرسال تجربة</button></div><div id="nativeSoundPreview" hidden style="margin:14px 0;padding:12px;border:1px solid var(--border,#315248);border-radius:12px">
+<h4 data-ar="🎵 أصوات الأحداث — جرّب بنفسك" data-en="🎵 Event sounds — Try them" style="margin:0 0 8px">🎵 أصوات الأحداث — جرّب بنفسك</h4>
+<p data-ar="صوت مختلف لكل نوع إشعار، ويعمل حتى والتطبيق مقفول. تقدر تغيّر أو تسكت أي صوت من إعدادات إشعارات أندرويد. الأصوات بتحترم الوضع الصامت وعدم الإزعاج." data-en="A different tone for each alert, even when the app is closed. Change or mute individual sounds in Android notification settings. Silent and Do Not Disturb are respected." style="font-size:12px;line-height:1.7;margin:0 0 9px">صوت مختلف لكل نوع إشعار، ويعمل حتى والتطبيق مقفول. تقدر تغيّر أو تسكت أي صوت من إعدادات إشعارات أندرويد. الأصوات بتحترم الوضع الصامت وعدم الإزعاج.</p>
+<div class="settings-actions" style="display:flex;flex-wrap:wrap;gap:8px">
+<button type="button" data-sound-preview="goal" data-ar="⚽ اسمع الهدف" data-en="⚽ Goal">⚽ اسمع الهدف</button>
+<button type="button" data-sound-preview="kickoff" data-ar="⏱ بداية المباراة" data-en="⏱ Kickoff">⏱ بداية المباراة</button>
+<button type="button" data-sound-preview="secondhalf" data-ar="▶ الشوط الثاني" data-en="▶ Second half">▶ الشوط الثاني</button>
+<button type="button" data-sound-preview="halftime" data-ar="⏸ نهاية الشوط" data-en="⏸ Half-time">⏸ نهاية الشوط</button>
+<button type="button" data-sound-preview="fulltime" data-ar="🏁 نهاية المباراة" data-en="🏁 Full-time">🏁 نهاية المباراة</button>
+<button type="button" data-sound-preview="yellow" data-ar="🟨 كرت أصفر" data-en="🟨 Yellow card">🟨 كرت أصفر</button>
+<button type="button" data-sound-preview="red" data-ar="🟥 كرت أحمر" data-en="🟥 Red card">🟥 كرت أحمر</button>
+</div><p id="nativeSoundStatus" role="status" aria-live="polite" style="font-size:12px;margin:8px 0 0"></p>
+<p style="font-size:11px;line-height:1.8;color:var(--muted,#a8c8b7)" data-ar="🎙 المؤثرات الجديدة تسجيلات حقيقية مُعدّلة. صوت الجمهور من Gregor Quendel بترخيص CC BY 4.0؛ وباقي المؤثرات من تسجيلات CC0. اعرف مصادر الأصوات" data-en="🎙 New effects are edited real recordings. Crowd by Gregor Quendel under CC BY 4.0; other cues use CC0 recordings. See audio credits.">🎙 المؤثرات الجديدة تسجيلات حقيقية مُعدّلة. صوت الجمهور من Gregor Quendel بترخيص CC BY 4.0؛ وباقي المؤثرات من تسجيلات CC0. <a href="./SOUND_CREDITS.md" target="_blank" rel="noopener" style="color:var(--accent,#4cda9d)">مصادر الأصوات</a></p></div><p id="backgroundPushStatus" role="status" aria-live="polite"></p><p id="preferenceSyncStatus" role="status" aria-live="polite"></p><p id="liveFeedStatus" role="status" aria-live="polite">○ جاري انتظار اتصال مصدر الأحداث الحية</p><p style="font-size:.85rem"><a href="https://sportscore.com/" rel="dofollow" title="Sports data by SportScore" style="color:var(--accent,#25ca94);text-decoration:underline">Powered by SportScore</a></p></div><div class="settings-backup"><h3 data-ar="تنبيهات الأهداف" data-en="Goal notifications">تنبيهات الأهداف</h3><p data-ar="تنبيهات للأهداف أثناء فتح التطبيق، للفرق المتابعة أو المباريات المحفوظة. لا تعمل كإشعارات خلفية عند إغلاق التطبيق." data-en="Goal alerts while the app is open, for followed teams and saved matches. Not background push when the app is closed.">تنبيهات للأهداف أثناء فتح التطبيق، للفرق المتابعة أو المباريات المحفوظة. لا تعمل كإشعارات خلفية عند إغلاق التطبيق.</p><div class="settings-actions"><button type="button" id="notificationButton" onclick="toggleGoalNotifications()">🔔 تشغيل تنبيهات الأهداف</button></div><p id="notificationStatus" role="status"></p></div><div class="settings-backup" id="backupSettings"><h3 data-ar="حفظ المفضلة والمتابعة" data-en="Back up your favorites">حفظ المفضلة والمتابعة</h3><p data-ar="احفظ ملفاً فيه فرقك ومبارياتك المفضلة، واسترجعه بعد إعادة التثبيت أو على جهاز آخر." data-en="Export followed teams and saved matches, and restore them after reinstalling or on another device.">احفظ ملفاً فيه فرقك ومبارياتك المفضلة، واسترجعه بعد إعادة التثبيت أو على جهاز آخر.</p><div class="settings-actions"><button type="button" onclick="exportUserData()" data-ar="⬇️ تصدير نسخة احتياطية" data-en="⬇️ Export backup">⬇️ تصدير نسخة احتياطية</button><button type="button" onclick="document.getElementById('backupImport').click()" data-ar="⬆️ استيراد نسخة احتياطية" data-en="⬆️ Import backup">⬆️ استيراد نسخة احتياطية</button><input id="backupImport" type="file" accept=".json,application/json" hidden onchange="importUserData(this)"></div><p id="backupMessage" role="status" aria-live="polite"></p></div></section></main>
+
+<footer>
+كورة زول © 2026<br>
+<span data-ar="النتائج من مصدر خارجي والترتيب من football-data.org عند توفره"
+data-en="Scores from external sources; standings via football-data.org when available">
+النتائج من مصدر خارجي والترتيب من football-data.org عند توفره
+</span>
+</footer>
+
+<script>
+/* Navigation stays usable even if the scores provider or another script fails. */
+document.addEventListener('click',function(event){
+ const button=event.target.closest('nav button');
+ if(!button||typeof showTab==='function')return;
+ const match=button.getAttribute('onclick')?.match(/showTab\('([^']+)'/);
+ if(!match)return;
+ event.preventDefault();
+ event.stopImmediatePropagation();
+ const id=match[1];
+ document.querySelectorAll('main > section').forEach(section=>section.classList.toggle('active',section.id===id));
+ document.querySelectorAll('nav button').forEach(tab=>tab.classList.toggle('active',tab===button));
+ if(id==='fixtures'){
+  const frame=document.getElementById('fixturesFrame');
+  if(frame&&!frame.getAttribute('src'))frame.src=frame.dataset.src;
+ }
+},true);
+window.addEventListener('error',function(event){
+ const notice=document.getElementById('feedNotice');
+ if(notice){notice.hidden=false;notice.textContent='تعذّر تشغيل جزء من التطبيق. التبويبات متاحة، وجاري معالجة الخطأ.';}
+ console.error('Kora Zol runtime error:',event.message);
+});
+</script>
+<script src="./match-feed-v2.js"></script>
+<script>
+let language=localStorage.getItem("corazol_lang")||"ar";
+
+const extraLeagues={afcelite:["دوري أبطال آسيا للنخبة","AFC Champions League Elite","🏆"],rw:["الدوري الرواندي","Rwandan National League","🇷🇼"],qa:["الدوري القطري","Qatar Stars League","🇶🇦"],el:["الدوري الأوروبي","UEFA Europa League","🏆"],cafcl:["دوري أبطال أفريقيا","CAF Champions League","🌍"],euro:["كأس أمم أوروبا","UEFA European Championship","🇪🇺"],nations:["دوري الأمم الأوروبية","UEFA Nations League","🇪🇺"],it:["الدوري الإيطالي","Serie A","🇮🇹"],de:["الدوري الألماني","Bundesliga","🇩🇪"],fr:["الدوري الفرنسي","Ligue 1","🇫🇷"],br:["الدوري البرازيلي","Brazilian Série A","🇧🇷"],nl:["الدوري الهولندي","Eredivisie","🇳🇱"],pt:["الدوري البرتغالي","Primeira Liga","🇵🇹"],eng2:["تشامبيونشيب الإنجليزي","English Championship","🏴"]};
+for(const id of ['leagueFilter','standingsLeague']){const select=document.getElementById(id);const seen=new Set();for(const option of [...select.options]){if(seen.has(option.value))option.remove();else seen.add(option.value)}for(const [code,[ar,en]] of Object.entries(extraLeagues)){if(seen.has(code))continue;const option=document.createElement('option');option.value=code;option.dataset.ar=ar;option.dataset.en=en;option.textContent=language==='ar'?ar:en;select.append(option)}}
+for(const id of ['leagueFilter','standingsLeague']){const select=document.getElementById(id),link=document.createElement('a');link.className='league-open';link.dataset.ar='تفاصيل البطولة ‹';link.dataset.en='Competition details ›';link.textContent=language==='ar'?link.dataset.ar:link.dataset.en;const sync=()=>{link.hidden=select.value==='all';link.href='./league-details.html?league='+encodeURIComponent(select.value)};select.insertAdjacentElement('afterend',link);select.addEventListener('change',sync);sync()}
+const standingsSnapshot={leagues:{},groups:{},updated:null,leagueUpdated:{},leagueSource:{},error:null};
+async function loadStandings(){
+ try{
+  const response=await fetch('./data/standings.json?v='+Math.floor(Date.now()/3600000),{cache:'no-cache'});
+  if(!response.ok)throw new Error('Standings unavailable');
+  const data=await response.json();
+  if(!data||typeof data.leagues!=='object')throw new Error('Invalid standings data');
+  standingsSnapshot.leagues=data.leagues;standingsSnapshot.groups=data.groups||{};standingsSnapshot.leagueSource=data.leagueSource||{};
+  standingsSnapshot.updated=data.updated||null;standingsSnapshot.leagueUpdated=data.leagueUpdated||{};
+  standingsSnapshot.error=null;
+ }catch(error){standingsSnapshot.error=error.message;}
+ renderStandings();
+}
+function renderStandings(){kzRenderHome();
+ const key=document.getElementById("standingsLeague").value;
+ const body=document.getElementById("standingsBody");
+ const info=document.getElementById("standingsInfo");
+ body.replaceChildren();
+ const tables=standingsSnapshot.groups[key]||[{group:'',rows:standingsSnapshot.leagues[key]}];
+ if(!tables.some(t=>Array.isArray(t.rows)&&t.rows.length)){
+  info.textContent=localized("الترتيب غير متاح حالياً من مزود البيانات.","Standings are currently unavailable from the provider.");
+  return;
+ }
+ const updated=standingsSnapshot.leagueUpdated[key]||standingsSnapshot.updated;info.textContent=localized("آخر تحديث للترتيب: ","Standings updated: ")+(updated?new Date(updated).toLocaleString(language==="ar"?"ar-SA":"en-US"):"—");
+ if(standingsSnapshot.leagueSource[key]==='SportScore'){const link=document.createElement('a');link.href='https://sportscore.com/';link.textContent=' · Powered by SportScore';info.append(link)}
+ for(const [index,table] of tables.entries()){const rows=table.rows||[];if(tables.length>1){const heading=document.createElement('tr'),cell=document.createElement('th');cell.colSpan=8;const region=key==='afcelite'&&rows.length===16?(rows.some(r=>r.team==='Al-Ain FC')?localized('منطقة الغرب','West Region'):rows.some(r=>r.team==='Vissel Kobe')?localized('منطقة الشرق','East Region'):''):'';cell.textContent=region||((table.group||localized('مجموعة','Group'))+' · '+(index+1));heading.append(cell);body.append(heading)}for(const row of rows){
+  const tr=document.createElement("tr");if((key==="cl"||key==="el")&&rows.length===36){const rank=Number(row.rank);tr.style.borderInlineStart="4px solid "+(rank<=8?"#42d784":rank<=24?"#dda94d":"#d85f65")}
+  for(const value of [row.rank,row.team,row.played,row.won,row.draw,row.lost,row.gd,row.points]){
+   const td=document.createElement("td");if(value===row.team&&row.crest){const img=document.createElement("img");img.src=row.crest;img.alt="";img.loading="lazy";img.width=24;img.height=24;img.style.cssText="vertical-align:middle;object-fit:contain;margin-inline-end:8px";td.appendChild(img)}td.appendChild(document.createTextNode(String(value??"—")));tr.appendChild(td);
+  }
+  body.appendChild(tr);
+ }}
+}
+function applyLang(){
+ document.documentElement.lang=language;
+ document.querySelector(".logo span").textContent=language==="ar"?"كورة زول":"KORA ZOL";
+ document.documentElement.dir=language==="ar"?"rtl":"ltr";
+ document.querySelectorAll("[data-ar]").forEach(el=>{
+  el.textContent=el.getAttribute("data-"+language);
+ });
+ renderFavorites();
+ updateNotificationControls();
+ renderStandings();
+ if(lastUpdated)updateNotice();
+ if(lastUpdated)renderLive();
+ showDate();
+ updateReferenceDaybar();
+ document.querySelector("header .lang").textContent=language==="ar"?"EN":"عربي";
+ const labels={all:["الكل","All"],live:["مباشر","Live"],upcoming:["القادمة","Upcoming"],results:["النتائج","Results"],favorites:["المفضلة","Favorites"]};
+ document.querySelectorAll("[data-match-view]").forEach(b=>b.textContent=labels[b.dataset.matchView]?.[language==="ar"?0:1]||b.textContent);
+ renderPinnedCompetitions();renderPinManager();kzRenderHome();if(document.getElementById('kzCompetitions').classList.contains('active'))kzRenderCompetitions();
+ document.getElementById("matchSearch").placeholder=localized("ابحث عن فريق أو دوري...","Search teams or leagues...");window.KoraPush?.render();
+}
+
+function changeLang(){
+ language=language==="ar"?"en":"ar";
+ localStorage.setItem("corazol_lang",language);
+ applyLang();
+}
+
+const feeds={es:"esp.1",en:"eng.1",sa:"ksa.1",de:"ger.1",it:"ita.1",fr:"fra.1",cl:"uefa.champions",afcelite:"afc.champions",nations:"uefa.nations",friendly:"fifa.friendly",clubfriendly:"club.friendly",nonfifa:"nonfifa",br:"bra.1",nl:"ned.1",pt:"por.1",eng2:"eng.2"};
+const crestLookup={};
+async function fetchCrestMap(){try{const response=await fetch("./data/standings.json",{cache:"no-cache"});if(!response.ok)return;const data=await response.json();for(const rows of Object.values(data.leagues||{})){for(const row of rows){if(row.team&&row.crest)crestLookup[normalizeTeam(row.team)]=row.crest;}}}catch(e){}}
+function normalizeTeam(name){return String(name||"").toLowerCase().normalize("NFKD").replace(/[\\u0300-\\u036f]/g,"").replace(/\\b(fc|cf|afc|sc|club|football|de|the)\\b/g,"").replace(/[^a-z0-9]/g,"");}
+function resolveCrest(name,logo){return logo||crestLookup[normalizeTeam(name)]||"";}
+let liveEvents=[],feedFailures=[],lastUpdated=null,dayOffset=0,requestSequence=0,loadingScores=true,providerAvailable=false;
+const scoreCacheKey='korazol_scores_v2',historyCacheKey='korazol_result_history_v1';
+let historyEvents=[],historyLoading=false,historyPartial=false,historyUpdated=0;
+try{const saved=JSON.parse(localStorage.getItem(historyCacheKey)||'null');if(Array.isArray(saved?.events)){historyEvents=saved.events;historyUpdated=Number(saved.updated)||0;historyPartial=Boolean(saved.partial)}}catch{}
+function allCachedMatches(){return KoraMatchFeed.mergeMatches(KoraMatchFeed.mergeMatches(window.upcomingEvents||[],historyEvents),liveEvents)}
+async function loadResultHistory(force=false){if(historyLoading||(!force&&Date.now()-historyUpdated<600000))return;historyLoading=true;renderLive();try{const now=new Date(),data=await KoraMatchFeed.fetchResultHistory(now,3);if(data.successCount){historyEvents=KoraMatchFeed.completedResults(KoraMatchFeed.mergeMatches(historyEvents,data.events),KoraMatchFeed.resultDays(now,3));historyUpdated=Date.now();historyPartial=data.partial;try{localStorage.setItem(historyCacheKey,JSON.stringify({events:historyEvents,updated:historyUpdated,partial:historyPartial}))}catch{}}else historyPartial=true}catch{historyPartial=true}finally{historyLoading=false;renderLive()}}
+function restoreCachedScores(){try{const saved=JSON.parse(localStorage.getItem(scoreCacheKey)||'null');if(saved&&Array.isArray(saved.events)){liveEvents=saved.events;const updated=new Date(saved.updated);if(!Number.isNaN(updated.getTime()))lastUpdated=updated;updateNotice();renderLive();}}catch(e){}}
+let audioContext=null;let soundEnabled=localStorage.getItem("korazol_sound")==="yes";let observedScores=new Map();
+function updateSoundBell(){const b=document.getElementById("soundBell");if(!b)return;b.textContent=soundEnabled?"🔔":"🔕";b.setAttribute("aria-pressed",String(soundEnabled));b.setAttribute("aria-label",soundEnabled?"إيقاف تنبيهات الأهداف":"تشغيل تنبيهات الأهداف");b.title=b.getAttribute("aria-label")}
+function setSoundAlerts(enabled){soundEnabled=enabled;localStorage.setItem("korazol_sound",enabled?"yes":"no");if(enabled){try{audioContext=audioContext||new (window.AudioContext||window.webkitAudioContext)();audioContext.resume()}catch(e){soundEnabled=false;localStorage.setItem("korazol_sound","no")}}updateSoundBell()}
+function playGoalTone(){if(!soundEnabled||!audioContext||document.hidden)return;try{const start=audioContext.currentTime;[660,880,1100].forEach((hz,i)=>{const o=audioContext.createOscillator(),g=audioContext.createGain();o.type="sine";o.frequency.value=hz;g.gain.setValueAtTime(.0001,start+i*.19);g.gain.exponentialRampToValueAtTime(.12,start+i*.19+.025);g.gain.exponentialRampToValueAtTime(.0001,start+i*.19+.16);o.connect(g);g.connect(audioContext.destination);o.start(start+i*.19);o.stop(start+i*.19+.17)})}catch(e){}}
+const zootEvents=new Map();
+function playNetSound(){if(!soundEnabled||document.hidden)return;try{audioContext=audioContext||new (window.AudioContext||window.webkitAudioContext)();audioContext.resume();const ctx=audioContext,rate=ctx.sampleRate,len=Math.floor(rate*.85),buffer=ctx.createBuffer(1,len,rate),data=buffer.getChannelData(0);for(let i=0;i<len;i++){const t=i/rate;data[i]=(Math.random()*2-1)*Math.exp(-t*6)*(.6+.4*Math.sin(t*130))}const src=ctx.createBufferSource(),filter=ctx.createBiquadFilter(),gain=ctx.createGain();src.buffer=buffer;filter.type="lowpass";filter.frequency.setValueAtTime(3400,ctx.currentTime);filter.frequency.exponentialRampToValueAtTime(500,ctx.currentTime+.8);gain.gain.value=.38;src.connect(filter);filter.connect(gain);gain.connect(ctx.destination);src.start()}catch(e){}}
+function testZoot(){const selected=document.getElementById("leagueFilter").value;const e=liveEvents.find(x=>x.live&&(selected==="all"||x.league===selected))||liveEvents.find(x=>selected==="all"||x.league===selected);if(!e){alert("ما في مباراة ظاهرة للاختبار. اختار دوري فيه مباريات أولاً.");return}const until=Date.now()+5000;zootEvents.set(e.id,{side:"home",until});renderLive();playNetSound();setTimeout(()=>{const v=zootEvents.get(e.id);if(v&&v.until===until){zootEvents.delete(e.id);renderLive()}},5000)}
+let goalNotificationsEnabled=localStorage.getItem("korazol_goal_notifications")==="yes";
+function updateNotificationControls(){const button=document.getElementById("notificationButton"),status=document.getElementById("notificationStatus");if(button)button.textContent=goalNotificationsEnabled?localized("🔕 إيقاف التنبيهات","🔕 Disable alerts"):localized("🔔 تشغيل التنبيهات","🔔 Enable alerts");if(status)status.textContent=!("Notification" in window)?localized("متصفحك لا يدعم تنبيهات النظام.","System notifications are not supported in this browser."):Notification.permission==="denied"?localized("المتصفح حظر الإشعارات. غيّر الإذن من إعدادات الموقع.","Notifications are blocked. Change the site permission."):localized("التنبيهات تعمل أثناء فتح التطبيق فقط.","Alerts work only while the app is open.")}
+async function toggleGoalNotifications(){if(goalNotificationsEnabled){goalNotificationsEnabled=false;localStorage.setItem("korazol_goal_notifications","no");updateNotificationControls();return}if(!("Notification" in window)){updateNotificationControls();return}try{const permission=await Notification.requestPermission();goalNotificationsEnabled=permission==="granted";localStorage.setItem("korazol_goal_notifications",goalNotificationsEnabled?"yes":"no")}catch(e){goalNotificationsEnabled=false}updateNotificationControls()}
+function isFollowedGoal(e){if(getFavorites().includes(e.id))return true;const teams=getFollowedTeams().map(normalizeTeamSearch);return teams.includes(normalizeTeamSearch(e.home))||teams.includes(normalizeTeamSearch(e.away))}
+function notifyGoal(e,side,score){if(window.KoraPush?.ownsLiveAlerts())return;if(!goalNotificationsEnabled||!("Notification" in window)||Notification.permission!=="granted"||!isFollowedGoal(e))return;const scorer=side==="home"?e.home:e.away;try{const title=localized("⚽ هدف! "+scorer,"⚽ GOAL! "+scorer);const body=e.home+" "+score+" "+e.away;if(navigator.serviceWorker?.controller){navigator.serviceWorker.ready.then(reg=>reg.showNotification(title,{body,tag:"korazol-goal-"+e.id+"-"+score,icon:"./kora-zol-icon-192.png",data:{url:"./match-details.html?id="+encodeURIComponent(e.id)}})).catch(()=>{if(!document.hidden)new Notification(title,{body})})}else if(!document.hidden)new Notification(title,{body})}catch(err){console.warn("Notification unavailable",err)}}
+function checkGoals(events){if(dayOffset!==0)return;const now=Date.now();for(const [id,v] of zootEvents){if(v.until<=now)zootEvents.delete(id)}for(const e of events){const previous=observedScores.get(e.id),current=e.score;if(e.live&&previous&&previous!==current&&/^\d+ - \d+$/.test(previous)&&/^\d+ - \d+$/.test(current)){const a=previous.split(" - ").map(Number),b=current.split(" - ").map(Number);const side=b[0]>a[0]&&b[1]===a[1]?"home":b[1]>a[1]&&b[0]===a[0]?"away":null;if(side){const until=Date.now()+5000;zootEvents.set(e.id,{side,until});playNetSound();notifyGoal(e,side,current);setTimeout(()=>{const active=zootEvents.get(e.id);if(active&&active.until===until){zootEvents.delete(e.id);renderLive()}},5000)}}observedScores.set(e.id,current)}}
+function selectedDate(){const now=new Date();return new Date(Date.UTC(now.getFullYear(),now.getMonth(),now.getDate()+dayOffset))}
+function setSelectedDay(offset){offset=Math.max(-30,Math.min(30,Number(offset)||0));if(dayOffset===offset)return;dayOffset=offset;loadingScores=true;lastUpdated=null;const notice=document.getElementById("feedNotice");if(notice)notice.hidden=true;renderLive();refreshScores();if(offset===0&&(matchView==="results"||homeResultsTab==="mine"))loadResultHistory()}
+function shiftDay(n){setSelectedDay(dayOffset+n)}
+function goToday(){setSelectedDay(0)}
+function showDate(){const d=selectedDate();document.getElementById("matchDate").textContent=d.toLocaleDateString(language==="ar"?"ar-SA":"en-GB",{timeZone:"UTC",weekday:"short",day:"numeric",month:"short"});}
+function localized(ar,en){return language==="ar"?ar:en}
+function updateNotice(){
+ const n=document.getElementById("feedNotice");
+ if(n){n.hidden=false;const offline=!navigator.onLine;const time=lastUpdated?lastUpdated.toLocaleTimeString(language==='ar'?'ar-SA':'en-US',{hour:'2-digit',minute:'2-digit'}):"";const failed=!providerAvailable&&feedFailures.length===Object.keys(feeds).length;n.textContent=offline||failed?localized("تعذر الاتصال · "+(time?"آخر بيانات محفوظة "+time:"لا توجد بيانات محفوظة"),"Connection unavailable · "+(time?"Last cached "+time:"No cached data")):time?localized("آخر تحديث: ","Last updated: ")+time:localized("جاري الاتصال بمصدر المباريات…","Connecting to match provider…");}
+}
+let matchView="all";
+function setMatchView(view){matchView=view;document.querySelectorAll("[data-match-view]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.matchView===view)));renderLive();if(view==="results"&&dayOffset===0)loadResultHistory()}
+function normalizeTeamSearch(value){return String(value||"").toLocaleLowerCase().normalize("NFKD").replace(/[ً-ٰٟ]/g,"").replace(/[أإآ]/g,"ا").replace(/ة/g,"ه").replace(/ى/g,"ي").replace(/[^\p{L}\p{N}]/gu,"")}
+const teamArabicAliases={
+"المريخ":["al merreikh","al merrikh","al merikh"],"الهلال السوداني":["al hilal omdurman","al hilal sc","al hilal sudan"],
+"ارسنال":["arsenal"],"ليفربول":["liverpool"],"مانشستر سيتي":["manchester city","man city"],"مان سيتي":["manchester city","man city"],"مانشستر يونايتد":["manchester united","man united"],"مان يونايتد":["manchester united","man united"],"تشيلسي":["chelsea"],"توتنهام":["tottenham","spurs"],"نيوكاسل":["newcastle"],"استون فيلا":["aston villa"],"برايتون":["brighton"],"ايفرتون":["everton"],"وست هام":["west ham"],"فولهام":["fulham"],"نوتنغهام":["nottingham"],"برينتفورد":["brentford"],"بورنموث":["bournemouth"],"وولفرهامبتون":["wolves","wolverhampton"],"ليدز":["leeds"],"سندرلاند":["sunderland"],"برشلونة":["barcelona"],"برشلونه":["barcelona"],"ريال مدريد":["real madrid"],"اتلتيكو مدريد":["atletico madrid"],"اتليتكو مدريد":["atletico madrid"],"اشبيلية":["sevilla"],"اشبيليه":["sevilla"],"فالنسيا":["valencia"],"فياريال":["villarreal"],"ريال بيتيس":["real betis","betis"],"اتلتيك بلباو":["athletic club","athletic bilbao"],"ريال سوسيداد":["real sociedad"],"جيرونا":["girona"],"بايرن ميونخ":["bayern"],"بوروسيا دورتموند":["dortmund"],"دورتموند":["dortmund"],"باير ليفركوزن":["leverkusen"],"لايبزيغ":["leipzig"],"لايبزيج":["leipzig"],"شتوتغارت":["stuttgart"],"اينتراخت فرانكفورت":["frankfurt"],"يوفنتوس":["juventus"],"انتر ميلان":["inter milan","internazionale","inter"],"ميلان":["ac milan","milan"],"نابولي":["napoli"],"روما":["roma"],"لاتسيو":["lazio"],"اتالانتا":["atalanta"],"فيورنتينا":["fiorentina"],"باريس سان جيرمان":["paris saint-germain","psg"],"باريس":["paris saint-germain","psg"],"مارسيليا":["marseille"],"موناكو":["monaco"],"ليون":["lyon"],"ليل":["lille"],"الهلال":["al hilal","al-hilal","al hilal saudi"],"النصر":["al nassr","al-nassr"],"الاتحاد":["al ittihad","al-ittihad"],"الاهلي":["al ahli","al-ahli"],"الشباب":["al shabab"],"القادسية":["al qadsiah"],"التعاون":["al taawoun"],"الفتح":["al fateh"],"الفيحاء":["al fayha"],"ضمك":["damac"],"الخليج":["al khaleej"],"الرياض":["al riyadh"]
+};
+function searchTerms(value){const normalized=normalizeTeamSearch(value);const values=[normalized];for(const [arabic,english] of Object.entries(teamArabicAliases)){if(normalizeTeamSearch(arabic).includes(normalized)||normalized.includes(normalizeTeamSearch(arabic)))values.push(...english.map(normalizeTeamSearch))}return values.filter(Boolean)}
+function matchesTeamQuery(value,terms){const name=normalizeTeamSearch(value);return terms.some(term=>name.includes(term))}
+function getFollowedTeams(){try{const v=JSON.parse(localStorage.getItem("korazol_followed_teams_v1")||"[]");return Array.isArray(v)?v.filter(x=>typeof x==="string"):[]}catch{return []}}
+function toggleFollowedTeam(name){const key=normalizeTeamSearch(name);const current=getFollowedTeams();const next=current.some(n=>normalizeTeamSearch(n)===key)?current.filter(n=>normalizeTeamSearch(n)!==key):[...current,name];localStorage.setItem("korazol_followed_teams_v1",JSON.stringify(next));document.dispatchEvent(new Event("korazol:preferences-changed"));renderLive();openTeamProfile(name)}
+function teamIsFollowed(name){return getFollowedTeams().some(n=>normalizeTeamSearch(n)===normalizeTeamSearch(name))}
+function renderFollowedTeams(){const host=document.getElementById("followedTeams");if(!host)return;host.replaceChildren();const teams=getFollowedTeams();if(!teams.length)return;const title=document.createElement("strong");title.textContent=localized("⭐ الفرق المتابعة","⭐ Followed teams");host.append(title);const list=document.createElement("div");list.className="followed-teams";for(const name of teams){const b=document.createElement("button");b.className="followed-team-chip";b.textContent=name;b.onclick=()=>openTeamProfile(name);list.append(b)}host.append(list)}
+function openTeamProfile(teamName){const target=document.getElementById("teamProfile");if(!target)return;target.replaceChildren();const all=allCachedMatches();const key=normalizeTeamSearch(teamName);const matches=[...new Map(all.filter(m=>normalizeTeamSearch(m.home)===key||normalizeTeamSearch(m.away)===key).map(m=>[m.id,m])).values()];const profile=document.createElement("div");profile.className="team-profile";const back=document.createElement("button");back.type="button";back.className="team-profile-back";back.textContent=localized("‹ الرجوع للبحث","‹ Back to search");back.onclick=()=>{target.replaceChildren();document.getElementById("matchSearch")?.focus()};profile.append(back);const head=document.createElement("div");head.className="team-profile-head";const teamMatch=matches.find(m=>normalizeTeamSearch(m.home)===key)||matches[0];const logo=teamMatch?(normalizeTeamSearch(teamMatch.home)===key?teamMatch.homeLogo:teamMatch.awayLogo):"";if(logo){const img=document.createElement("img");img.src=logo;img.alt="";img.onerror=()=>img.remove();head.append(img)}const h=document.createElement("h2");h.textContent=teamName;head.append(h);const follow=document.createElement("button");follow.className="team-follow-btn";follow.type="button";follow.setAttribute("aria-pressed",String(teamIsFollowed(teamName)));follow.textContent=teamIsFollowed(teamName)?localized("★ متابع","★ Following"):localized("☆ تابع الفريق","☆ Follow");follow.onclick=()=>toggleFollowedTeam(teamName);head.append(follow);profile.append(head);const standingsRows=Object.entries(standingsSnapshot.leagues||{}).flatMap(([league,rows])=>Array.isArray(rows)?rows.map(row=>({...row,league})):[]);
+const standing=standingsRows.find(row=>normalizeTeamSearch(row.team)===key)||standingsRows.find(row=>matchesTeamQuery(row.team,[key])&&normalizeTeamSearch(row.team).length>=key.length-3);
+const standingBox=document.createElement("div");standingBox.className="team-standing-info";const standingTitle=document.createElement("strong");standingTitle.textContent=standing?localized("🏆 المركز ","🏆 Rank ")+standing.rank:localized("🏆 ترتيب الفريق غير متاح حالياً","🏆 League position unavailable");standingBox.append(standingTitle);if(standing){const meta=document.createElement("small");meta.textContent=localized("لعب ","Played ")+standing.played+" · "+localized("نقاط ","Points ")+standing.points+" · "+localized("فارق أهداف ","Goal difference ")+standing.gd;standingBox.append(meta)}profile.append(standingBox);
+const now=Date.now();const upcoming=matches.filter(m=>m.score==="— : —"&&new Date(m.date).getTime()>=now-7200000).sort((a,b)=>new Date(a.date)-new Date(b.date)).slice(0,10);const previous=matches.filter(m=>KoraMatchFeed.phaseOf(m)==="finished"&&/^\d+\s*[-:]\s*\d+$/.test(String(m.score))).sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,10);const recentFive=previous.slice(0,5);const formTitle=document.createElement("h3");formTitle.textContent=localized("📊 آخر 5 مباريات","📊 Last 5 matches");profile.append(formTitle);const formStrip=document.createElement("div");formStrip.className="team-form-strip";if(!recentFive.length){const p=document.createElement("p");p.className="team-profile-empty";p.textContent=localized("لا توجد نتائج سابقة متاحة.","No previous results available.");profile.append(p)}else{for(const m of [...recentFive].reverse()){const nums=String(m.score).match(/^(\d+)\s*-\s*(\d+)$/);if(!nums)continue;const home=normalizeTeamSearch(m.home)===key;const ours=Number(nums[home?1:2]),theirs=Number(nums[home?2:1]);const outcome=ours>theirs?"win":ours===theirs?"draw":"loss";const pill=document.createElement("span");pill.className="team-form-pill team-form-"+outcome;pill.textContent=outcome==="win"?localized("ف","W"):outcome==="draw"?localized("ت","D"):localized("خ","L");pill.title=m.home+" "+m.score+" "+m.away;formStrip.append(pill)}if(!formStrip.children.length){const p=document.createElement("p");p.className="team-profile-empty";p.textContent=localized("نتائج آخر المباريات غير مكتملة.","Recent scores are incomplete.");profile.append(p)}else profile.append(formStrip)}
+function section(title,list){const heading=document.createElement("h3");heading.textContent=title;profile.append(heading);if(!list.length){const empty=document.createElement("p");empty.className="team-profile-empty";empty.textContent=localized("ما في مباريات متاحة ضمن الفترة المحفوظة.","No matches in the saved date range.");profile.append(empty);return}for(const m of list){const btn=document.createElement("button");btn.type="button";btn.className="team-profile-match";const names=document.createElement("span");names.textContent=m.home+" × "+m.away;const meta=document.createElement("small");meta.textContent=m.date?new Date(m.date).toLocaleString(language==="ar"?"ar-SA":"en-US",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}):"";names.append(meta);const score=document.createElement("strong");score.textContent=m.score==="— : —"?localized("القادمة","Upcoming"):m.score;btn.append(names,score);btn.onclick=()=>{if(m.source==="football-data.org")location.href="./match-details.html?id="+encodeURIComponent(m.id);else openMatchCenter(m)};profile.append(btn)}}section(localized("📅 المباريات الجاية","Upcoming fixtures"),upcoming);section(localized("🏁 آخر النتائج","Recent results"),previous);const share=document.createElement("button");share.type="button";share.className="team-share-btn";share.textContent=localized("↗ مشاركة صفحة الفريق","↗ Share team");share.onclick=()=>{const url=new URL(location.href);url.searchParams.set("team",teamName);url.searchParams.delete("v");if(navigator.share)navigator.share({title:teamName,url:url.href}).catch(()=>{});else if(navigator.clipboard)navigator.clipboard.writeText(url.href).then(()=>{share.textContent=localized("✓ تم نسخ الرابط","✓ Link copied")}).catch(()=>{});};profile.append(share);target.append(profile);target.scrollIntoView({behavior:"smooth",block:"start"})}
+function renderTeamSearch(query){const target=document.getElementById("teamSearchResults");if(!target)return;target.replaceChildren();if(!query||query.trim().length<2)return;const terms=searchTerms(query);const data=allCachedMatches();const teams=new Map();for(const e of data){for(const side of ["home","away"]){const name=e[side];if(!name)continue;const key=normalizeTeamSearch(name);if(!matchesTeamQuery(name,terms))continue;const prev=teams.get(key);if(!prev)teams.set(key,{name,logo:e[side+"Logo"],matches:[e]});else if(!prev.matches.some(m=>m.id===e.id))prev.matches.push(e)}}if(!teams.size)return;const title=document.createElement("div");title.className="team-search-title";title.textContent=localized("الفرق المطابقة","Matching teams");target.append(title);for(const team of [...teams.values()].sort((a,b)=>b.matches.length-a.matches.length).slice(0,12)){const btn=document.createElement("button");btn.type="button";btn.className="team-search-card";if(team.logo){const img=document.createElement("img");img.src=team.logo;img.alt="";img.loading="lazy";img.onerror=()=>img.remove();btn.append(img)}const info=document.createElement("span");const name=document.createElement("strong");name.textContent=team.name;const sub=document.createElement("small");sub.textContent=localized("مباريات متاحة: ","Available matches: ")+team.matches.length;info.append(name,sub);btn.append(info);btn.onclick=()=>openTeamProfile(team.name);target.append(btn)}}
+const RECENT_TEAM_SEARCH_KEY="korazol_recent_team_search_v1";
+function recentTeamSearches(){try{const v=JSON.parse(localStorage.getItem(RECENT_TEAM_SEARCH_KEY)||"[]");return Array.isArray(v)?v.filter(s=>typeof s==="string"&&s.length>0&&s.length<=100).slice(0,8):[]}catch{return []}}
+function rememberTeamSearch(name){if(typeof name!=="string"||!name.trim()||name.length>100)return;const key=normalizeTeamSearch(name);if(!key)return;const updated=[name,...recentTeamSearches().filter(v=>normalizeTeamSearch(v)!==key)].slice(0,8);try{localStorage.setItem(RECENT_TEAM_SEARCH_KEY,JSON.stringify(updated))}catch{}}
+function selectGlobalTeam(name){rememberTeamSearch(name);const input=document.getElementById("matchSearch");if(input)input.value=name;showTab("matches",document.querySelector('nav button[onclick*="matches"]'));setMatchView("all");openTeamProfile(name)}
+function renderGlobalSearch(){const target=document.getElementById("globalSearchResults");if(!target)return;target.replaceChildren();const query=(document.getElementById("globalSearchInput")?.value||"").trim();const data=allCachedMatches();const teams=new Map();for(const e of data){for(const side of ["home","away"]){const name=e[side];if(!name)continue;const key=normalizeTeamSearch(name);if(!teams.has(key))teams.set(key,{name,logo:e[side+"Logo"]||"",matches:new Set()});teams.get(key).matches.add(e.id)}}const all=[...teams.values()];const recent=query.length<2?recentTeamSearches().map(name=>all.find(t=>normalizeTeamSearch(t.name)===normalizeTeamSearch(name))).filter(Boolean):[];if(recent.length){const head=document.createElement("div");head.className="recent-search-head";const title=document.createElement("strong");title.textContent=localized("🕘 بحثت عنها مؤخراً","🕘 Recently viewed teams");const clear=document.createElement("button");clear.type="button";clear.textContent=localized("مسح السجل","Clear history");clear.setAttribute("aria-label",localized("مسح سجل البحث عن الفرق","Clear recent team searches"));clear.onclick=()=>{try{localStorage.removeItem(RECENT_TEAM_SEARCH_KEY)}catch{}renderGlobalSearch()};head.append(title,clear);const chips=document.createElement("div");chips.className="recent-search-chips";for(const item of recent){const b=document.createElement("button");b.type="button";b.className="recent-team-chip";b.textContent=item.name;b.onclick=()=>selectGlobalTeam(item.name);chips.append(b)}target.append(head,chips)}const matches=query.length>=2?all.filter(t=>matchesTeamQuery(t.name,searchTerms(query))):all.filter(t=>teamIsFollowed(t.name));matches.sort((a,b)=>Number(teamIsFollowed(b.name))-Number(teamIsFollowed(a.name))||b.matches.size-a.matches.size||a.name.localeCompare(b.name));if(!matches.length){if(query.length<2&&recent.length)return;const empty=document.createElement("div");empty.className="global-search-state";empty.textContent=query.length>=2?localized("ما لقينا الفريق في المباريات المتاحة. جرّب اسم تاني أو الكتابة بالإنجليزي.","No matching team in available fixtures. Try another name."):localized("ابحث عن فريق، أو تابع فريق من صفحته عشان يظهر هنا.","Search for a team, or follow teams to see them here.");target.append(empty);return}const heading=document.createElement("p");heading.className="global-search-hint";heading.textContent=query.length>=2?localized("نتائج الفرق: ","Teams found: ")+matches.length:localized("الفرق المتابعة","Followed teams");target.append(heading);for(const team of matches.slice(0,40)){const button=document.createElement("button");button.type="button";button.className="global-team-result";if(team.logo){const img=document.createElement("img");img.src=team.logo;img.alt="";img.loading="lazy";img.onerror=()=>img.remove();button.append(img)}const details=document.createElement("span");const name=document.createElement("strong");name.textContent=team.name;const count=document.createElement("small");count.textContent=localized("مباريات متاحة: ","Available matches: ")+team.matches.size;details.append(name,count);button.append(details);if(teamIsFollowed(team.name)){const star=document.createElement("span");star.className="follow-mark";star.textContent="★";star.setAttribute("aria-label",localized("متابع","Following"));button.append(star)}button.onclick=()=>selectGlobalTeam(team.name);target.append(button)}}
+function updateDataHealth(){const el=document.getElementById("dataHealth");if(!el)return;const items=window.upcomingEvents||[];const snapshot=allCachedMatches().filter(e=>KoraMatchFeed.phaseOf(e)==="finished");const recent=lastUpdated instanceof Date&&!Number.isNaN(lastUpdated.getTime())?lastUpdated:null;const hours=recent?(Date.now()-recent.getTime())/3600000:null;el.className="data-health"+(!navigator.onLine?" error":hours!==null&&hours>2?" warning":"");const title=document.createElement("strong");title.textContent=!navigator.onLine?localized("⚠️ أنت غير متصل بالإنترنت","⚠️ You are offline"):localized("📡 حالة بيانات المباريات","📡 Match data status");const detail=document.createElement("span");detail.textContent=localized("نتائج محفوظة: ","Saved results: ")+snapshot.length+" · "+(recent?localized("آخر اتصال مباشر: ","Last live fetch: ")+recent.toLocaleTimeString(language==="ar"?"ar-SA":"en-US",{hour:"2-digit",minute:"2-digit"}):localized("لا يوجد اتصال مباشر مؤكد بعد","No confirmed live fetch yet"));el.replaceChildren(title,detail)}
+let homeResultsTab="all";
+function setHomeResultsTab(tab){homeResultsTab=tab;const note=document.getElementById("referenceFollowNote");if(note)note.textContent=tab==="mine"?localized("الفرق والمباريات الخاصة بي","My followed teams and matches"):localized("كل المباريات المتاحة من مصادر البيانات","All matches available from data providers");document.getElementById("tabMine")?.classList.toggle("selected",tab==="mine");document.getElementById("tabAll")?.classList.toggle("selected",tab==="all");renderLive();if(tab==="mine"&&dayOffset===0)loadResultHistory()}
+const PINNED_LEAGUES_KEY="korazol_pinned_leagues_v1";
+const matchdayCollapsed=new Set();
+function getPinnedLeagues(){try{const v=JSON.parse(localStorage.getItem(PINNED_LEAGUES_KEY)||"[]");return Array.isArray(v)?[...new Set(v.filter(x=>typeof x==="string"&&/^[a-z0-9_-]{1,32}$/i.test(x)))].slice(0,40):[]}catch{return []}}
+function togglePinnedLeague(code){if(typeof code!=="string"||!/^[a-z0-9_-]{1,32}$/i.test(code))return;const list=getPinnedLeagues(),next=list.includes(code)?list.filter(x=>x!==code):[...list,code].slice(0,40);try{localStorage.setItem(PINNED_LEAGUES_KEY,JSON.stringify(next))}catch{const note=document.getElementById("pinStatus");if(note)note.textContent=localized("تعذر حفظ الاختيار على الجهاز","Could not save preference");return}renderLive();renderPinManager()}
+function leagueNameForPin(code){const opt=[...document.getElementById("leagueFilter").options].find(o=>o.value===code);return opt?.textContent||localized(extraLeagues[code]?.[0]||code,extraLeagues[code]?.[1]||code)}
+function renderPinnedCompetitions(){const host=document.getElementById("pinnedCompetitions");if(!host)return;host.replaceChildren();const heading=document.createElement("div"),label=document.createElement("strong"),hint=document.createElement("small");heading.className="pinned-heading";label.textContent=localized("★ بطولاتي","★ My competitions");hint.textContent=localized("ثبّت بطولة من النجمة","Pin via the star");heading.append(label,hint);host.append(heading);const row=document.createElement("div");row.className="pinned-list";const selected=document.getElementById("leagueFilter");function chip(code,text){const b=document.createElement("button");b.type="button";b.textContent=text;b.setAttribute("aria-pressed",String(selected.value===code));b.onclick=()=>{if(![...selected.options].some(o=>o.value===code)){const opt=new Option(leagueNameForPin(code),code);if(extraLeagues[code]){opt.dataset.ar=extraLeagues[code][0];opt.dataset.en=extraLeagues[code][1]}selected.add(opt)}selected.value=code;selected.dispatchEvent(new Event("change",{bubbles:true}))};row.append(b)}chip("all",localized("الكل","All"));for(const code of getPinnedLeagues())chip(code,leagueNameForPin(code));const manage=document.createElement("button");manage.type="button";manage.textContent=localized("+ إدارة البطولات","+ Manage");manage.onclick=()=>{showTab("settings",document.querySelector("nav button[data-icon='⚙']"));renderPinManager();jumpSettings("pinSettings")};row.append(manage);host.append(row)}
+function renderPinManager(){const host=document.getElementById("pinManager");if(!host)return;host.replaceChildren();const codes=[...new Set([...Array.from(document.getElementById("leagueFilter").options,o=>o.value),...Object.keys(extraLeagues),...getPinnedLeagues()])].filter(x=>x!=="all");const pinned=new Set(getPinnedLeagues());for(const code of codes){const b=document.createElement("button");b.type="button";b.textContent=(pinned.has(code)?"★ ":"☆ ")+leagueNameForPin(code);b.setAttribute("aria-pressed",String(pinned.has(code)));b.onclick=()=>togglePinnedLeague(code);host.append(b)}const status=document.getElementById("pinStatus");if(status)status.textContent=localized("عدد البطولات المثبتة: ","Pinned competitions: ")+pinned.size}
+let matchdaySearchTimer,globalSearchTimer,matchdayWeekKey="";
+function debounceMatchSearch(){clearTimeout(matchdaySearchTimer);matchdaySearchTimer=setTimeout(renderLive,150)}
+function debounceGlobalSearch(){clearTimeout(globalSearchTimer);globalSearchTimer=setTimeout(renderGlobalSearch,150)}
+function jumpSettings(id){document.getElementById(id)?.scrollIntoView({block:"start",behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"})}
+async function refreshMatchday(button){button.disabled=true;button.setAttribute("aria-busy","true");try{await refreshScores();if(dayOffset===0&&(matchView==="results"||homeResultsTab==="mine"))await loadResultHistory(true)}catch(e){console.warn("Manual refresh failed",e)}finally{button.disabled=false;button.removeAttribute("aria-busy")}}
+function renderMatchdayWeek(){const host=document.getElementById("matchdayWeek");if(!host)return;const now=new Date(),base=Date.UTC(now.getFullYear(),now.getMonth(),now.getDate()),start=Math.max(-30,Math.min(24,dayOffset-3)),key=[base,start,dayOffset,language].join(":");if(key===matchdayWeekKey)return;matchdayWeekKey=key;const locale=language==="ar"?"ar-SA-u-ca-gregory":"en-GB";host.setAttribute("aria-label",localized("اختيار يوم المباريات","Choose match date"));const frag=document.createDocumentFragment();for(let off=start;off<start+7;off++){const d=new Date(base+off*86400000),b=document.createElement("button"),day=document.createElement("span"),num=document.createElement("strong");b.type="button";day.textContent=off===0?localized("اليوم","Today"):d.toLocaleDateString(locale,{weekday:"short",timeZone:"UTC"});num.textContent=d.toLocaleDateString(locale,{day:"numeric",timeZone:"UTC"});b.append(day,num);b.setAttribute("aria-pressed",String(off===dayOffset));b.setAttribute("aria-label",d.toLocaleDateString(locale,{dateStyle:"full",timeZone:"UTC"}));b.onclick=()=>setSelectedDay(off);frag.append(b)}host.replaceChildren(frag);const refresh=document.getElementById("matchdayRefresh");if(refresh){refresh.title=localized("تحديث النتائج","Refresh scores");refresh.setAttribute("aria-label",refresh.title)}}
+function updateReferenceDaybar(){renderMatchdayWeek();const d=selectedDate();const label=d.toLocaleDateString(language==="ar"?"ar-SA-u-ca-gregory":"en-US",{weekday:"short",day:"numeric",month:"short",timeZone:"UTC"});const bar=document.getElementById("referenceDaybar");if(bar)bar.textContent=label}
+function renderLive(){kzRenderHome();updateReferenceDaybar();renderPinnedCompetitions();
+ const target=document.getElementById("liveMatches");target.replaceChildren();
+ const old=document.getElementById("upcomingMatches");if(old)old.remove();
+ const selected=document.getElementById("leagueFilter").value;
+ const selectedDayKey=selectedDate().toISOString().slice(0,10);
+ const isVisible=e=>KoraMatchFeed.visibleOnDay(e,selectedDayKey,dayOffset===0);
+ const favs=new Set(getFavorites()),followed=new Set(getFollowedTeams().map(normalizeTeamSearch));
+ const followedMatch=e=>followed.has(normalizeTeamSearch(e.home))||followed.has(normalizeTeamSearch(e.away));
+ const matchesFilter=e=>(selected==="all"||e.league===selected)&&(homeResultsTab==="all"||favs.has(e.id)||followedMatch(e));
+ const all=liveEvents.filter(isVisible).filter(matchesFilter);
+ const historyMode=dayOffset===0&&(matchView==="results"||homeResultsTab==="mine");
+ const rangeDays=historyMode?KoraMatchFeed.resultDays(new Date(),3):[selectedDayKey];
+ if(matchView==="results"){const bar=document.createElement("div");bar.className="results-date-strip";for(const [offset,label] of [[0,localized("آخر 3 أيام","Last 3 days")],[-1,localized("أمس","Yesterday")],[-2,localized("أول أمس","2 days ago")]]){const b=document.createElement("button");b.type="button";b.textContent=label;b.setAttribute("aria-pressed",String(dayOffset===offset));b.onclick=()=>setSelectedDay(offset);bar.append(b)}const dateInput=document.createElement("input");dateInput.type="date";dateInput.value=selectedDayKey;dateInput.max=KoraMatchFeed.localDay(new Date());dateInput.min=KoraMatchFeed.resultDays(new Date(),31).at(-1);dateInput.setAttribute("aria-label",localized("اختيار تاريخ النتائج","Choose results date"));dateInput.onchange=()=>{const d=Date.parse(dateInput.value+"T00:00:00Z"),today=Date.parse(KoraMatchFeed.localDay(new Date())+"T00:00:00Z");if(Number.isFinite(d))setSelectedDay(Math.round((d-today)/86400000))};bar.append(dateInput);target.append(bar)}
+ const names={en:localized("الدوري الإنجليزي الممتاز","Premier League"),es:localized("الدوري الإسباني","La Liga"),sa:localized("الدوري السعودي للمحترفين","Saudi Pro League"),de:localized("الدوري الألماني","Bundesliga"),it:localized("الدوري الإيطالي","Serie A"),fr:localized("الدوري الفرنسي","Ligue 1"),cl:localized("دوري أبطال أوروبا","Champions League"),afcelite:localized("دوري أبطال آسيا للنخبة","AFC Champions League Elite"),nations:localized("دوري الأمم الأوروبية","UEFA Nations League"),br:localized("الدوري البرازيلي","Brazilian Série A"),nl:localized("الدوري الهولندي","Eredivisie"),pt:localized("الدوري البرتغالي","Primeira Liga"),eng2:localized("تشامبيونشيب الإنجليزي","English Championship"),friendly:localized("وديات المنتخبات","International Friendlies"),clubfriendly:localized("وديات الأندية","Club Friendlies"),nonfifa:localized("وديات أخرى","Other Friendlies"),sd:localized("الدوري السوداني","Sudan Premier League")};
+ const icons={en:"🏴",es:"🇪🇸",sa:"🇸🇦",de:"🇩🇪",it:"🇮🇹",fr:"🇫🇷",cl:"🏆",afcelite:"🏆",nations:"🇪🇺",br:"🇧🇷",nl:"🇳🇱",pt:"🇵🇹",eng2:"🏴",friendly:"🌍",clubfriendly:"🤝",nonfifa:"⚽",sd:"🇸🇩"};
+ function openReferenceMatch(e){try{sessionStorage.setItem("korazol_match_details",JSON.stringify(e))}catch(err){console.warn("Match cache unavailable",err)}location.href=KoraMatchFeed.detailUrl(e)}
+ function card(e){const c=document.createElement("article");c.className="reference-match";c.dataset.phase=KoraMatchFeed.phaseOf(e);
+  const row=document.createElement("div");row.className="reference-match-row";
+  function team(n,logo,side){const b=document.createElement("button");b.type="button";b.className="reference-team";b.setAttribute("aria-label",localized("تفاصيل الفريق ","Team details ")+n);if(logo){const im=document.createElement("img");im.src=logo;im.alt="";im.loading="lazy";im.decoding="async";im.width=37;im.height=37;im.onerror=()=>im.remove();b.append(im)}const label=document.createElement("span");label.textContent=n;b.append(label);b.onclick=()=>{try{sessionStorage.setItem("korazol_match_details",JSON.stringify(e))}catch{}location.href=KoraMatchFeed.teamUrl(e,side)};return b}
+  row.append(team(e.home,e.homeLogo,"home"));const score=document.createElement("button");score.type="button";score.className="reference-score";const val=document.createElement("strong");val.textContent=e.score==="— : —"&&e.date?new Date(e.date).toLocaleTimeString(language==="ar"?"ar-SA":"en-US",{hour:"2-digit",minute:"2-digit"}):e.score;score.append(val);const sub=document.createElement("small");const phase=KoraMatchFeed.phaseOf(e);sub.textContent=phase==="live"?localized("● مباشر","● LIVE")+(e.status==="HT"?localized(" · استراحة"," · HT"):e.minute!=null?" · "+e.minute+"′":e.status?" · "+e.status:""):phase==="finished"?localized("انتهت","FT")+(KoraMatchFeed.localDay(e.date)!==selectedDayKey?" · "+new Date(e.date).toLocaleDateString(language==="ar"?"ar-SA-u-ca-gregory":"en-US",{day:"numeric",month:"short"}):""):e.date&&e.score==="— : —"?new Date(e.date).toLocaleDateString(language==="ar"?"ar-SA-u-ca-gregory":"en-US",{weekday:"short",day:"numeric",month:"short"}):e.status;sub.className=e.live?"reference-live":"";score.append(sub);score.onclick=()=>{openReferenceMatch(e)};row.append(score,team(e.away,e.awayLogo,"away"));c.append(row);
+  const bottom=document.createElement("div");bottom.className="reference-bottom";const status=document.createElement("span");status.textContent=e.live?localized("المباراة جارية","Match live"):e.date&&e.score==="— : —"?localized("الموعد بتوقيت جهازك","Your local time"):e.status;bottom.append(status);const centerOpen=document.createElement("button");centerOpen.className="reference-center-open";centerOpen.type="button";centerOpen.textContent=localized("⚡ ماتش سنتر","⚡ Match Center");centerOpen.setAttribute("aria-label",localized("فتح ماتش سنتر: ","Open match center: ")+e.home+" - "+e.away);centerOpen.onclick=()=>{try{sessionStorage.setItem("korazol_match_details",JSON.stringify(e))}catch{}location.href=KoraMatchFeed.detailUrl(e,{tab:"center"})};bottom.append(centerOpen);const fav=document.createElement("button");fav.className="reference-fav";fav.dataset.id=e.id;fav.textContent=favs.has(e.id)?"★":"☆";fav.setAttribute("aria-label",localized("المفضلة","Favorite"));fav.setAttribute("aria-pressed",String(favs.has(e.id)));fav.onclick=()=>toggleFavorite(fav);bottom.append(fav);c.append(bottom);return c}
+ for(const [code,[ar,en,icon]] of Object.entries(extraLeagues)){names[code]=localized(ar,en);icons[code]=icon}
+ const leaguePriority=["cl","afcelite","sd","rw","cafcl","sa","qa","el","euro","nations","it","en","es","de","fr","friendly","br","nl","pt","eng2","nonfifa","clubfriendly"];
+ const pinnedLeagues=getPinnedLeagues();const leagueRank=league=>{const pin=pinnedLeagues.indexOf(league);if(pin>=0)return pin-pinnedLeagues.length;const rank=leaguePriority.indexOf(league);return rank<0?leaguePriority.length:rank};
+ const localDay=date=>{const d=new Date(date);return Number.isNaN(d.getTime())?"":d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
+ const todayKey=localDay(new Date());
+ const hasToday=matches=>matches.some(m=>localDay(m.date)===todayKey);
+ function group(list,title){if(!list.length)return;const h=document.createElement("h3");h.className="reference-heading";h.textContent=title;target.append(h);const byLeague=new Map();for(const e of list){if(!byLeague.has(e.league))byLeague.set(e.league,[]);byLeague.get(e.league).push(e)}for(const [league,matches] of [...byLeague.entries()].sort(([a,am],[b,bm])=>Number(pinnedLeagues.includes(b))-Number(pinnedLeagues.includes(a))||Number(hasToday(bm))-Number(hasToday(am))||leagueRank(a)-leagueRank(b)||String(a).localeCompare(String(b)))){matches.sort((a,b)=>new Date(a.date||0)-new Date(b.date||0));const wrap=document.createElement("div");wrap.className="reference-league";const label=document.createElement("a");label.className="reference-league-title";label.href="./league-details.html?league="+encodeURIComponent(league);label.setAttribute("aria-label",localized("تفاصيل البطولة: ","Competition details: ")+(names[league]||league));label.append(document.createTextNode((icons[league]||"⚽")+" "+(names[league]||league)));const arrow=document.createElement("span");arrow.className="league-chevron";arrow.textContent=language==="ar"?"‹":"›";arrow.setAttribute("aria-hidden","true");label.append(arrow);const toolbar=document.createElement("div");toolbar.className="league-toolbar";const stack=document.createElement("div");stack.className="reference-league-stack";const collapse=document.createElement("button");collapse.type="button";collapse.className="league-collapse";const collapseKey=league+":"+title;function syncCollapse(){const closed=matchdayCollapsed.has(collapseKey);stack.hidden=closed;collapse.textContent=closed?"+":"−";collapse.setAttribute("aria-expanded",String(!closed));collapse.setAttribute("aria-label",localized(closed?"توسيع البطولة":"طي البطولة",closed?"Expand competition":"Collapse competition")+" · "+(names[league]||league)+" · "+matches.length)}function buildCards(){if(!stack.childElementCount)for(const e of matches)stack.append(card(e))}collapse.onclick=()=>{if(matchdayCollapsed.has(collapseKey)){matchdayCollapsed.delete(collapseKey);buildCards()}else matchdayCollapsed.add(collapseKey);syncCollapse()};const pin=document.createElement("button");pin.type="button";pin.className="pin-competition";pin.textContent=pinnedLeagues.includes(league)?"★":"☆";pin.setAttribute("aria-pressed",String(pinnedLeagues.includes(league)));pin.setAttribute("aria-label",localized(pinnedLeagues.includes(league)?"إلغاء تثبيت ":"تثبيت ",pinnedLeagues.includes(league)?"Unpin ":"Pin ")+(names[league]||league));pin.onclick=()=>togglePinnedLeague(league);toolbar.append(label,pin,collapse);wrap.append(toolbar,stack);if(!matchdayCollapsed.has(collapseKey))buildCards();syncCollapse();target.append(wrap)}}
+ const snapshot=(window.upcomingEvents||[]).filter(isVisible).filter(matchesFilter);
+ const merged=KoraMatchFeed.mergeMatches(snapshot,all,false);
+ const live=merged.filter(e=>KoraMatchFeed.phaseOf(e)==="live");
+ const scheduled=merged.filter(e=>KoraMatchFeed.phaseOf(e)==="upcoming"||KoraMatchFeed.phaseOf(e)==="other").sort((a,b)=>new Date(a.date||0)-new Date(b.date||0)).slice(0,500);
+ const resultPool=KoraMatchFeed.mergeMatches(merged,KoraMatchFeed.mergeMatches(historyEvents,allCachedMatches()).filter(matchesFilter));
+ const results=KoraMatchFeed.completedResults(resultPool,rangeDays).slice(0,500);
+ const query=(document.getElementById("matchSearch")?.value||"").trim().toLocaleLowerCase();
+ renderTeamSearch(query);
+ renderFollowedTeams();
+ if(document.getElementById("search").classList.contains("active"))renderGlobalSearch();
+ updateDataHealth();
+ if(!query)document.getElementById("teamProfile")?.replaceChildren();
+
+ const matchesQuery=e=>!query||[e.home,e.away,names[e.league],e.league].some(v=>matchesTeamQuery(v,searchTerms(query)));
+ const sortFav=list=>list.filter(matchesQuery).sort((a,b)=>Number(favs.has(b.id)||followedMatch(b))-Number(favs.has(a.id)||followedMatch(a)));
+ const displayLive=sortFav(live),displayUpcoming=sortFav(scheduled),displayResults=sortFav(results);
+ const onlyFavorites=list=>matchView==="favorites"?list.filter(e=>favs.has(e.id)||followedMatch(e)):list;
+ const visibleLive=onlyFavorites(displayLive),visibleUpcoming=onlyFavorites(displayUpcoming),visibleResults=onlyFavorites(displayResults);
+ if(matchView==="all"||matchView==="live"||matchView==="favorites")group(visibleLive,localized("🔴 مباشر الآن","🔴 Live now"));
+ if(matchView==="all"||matchView==="upcoming"||matchView==="favorites")group(visibleUpcoming,localized("قريباً — المباريات الجاية","Upcoming matches"));
+ if(matchView==="all"||matchView==="results"||matchView==="favorites"){if(historyMode){for(const day of rangeDays){const list=visibleResults.filter(e=>KoraMatchFeed.localDay(e.date)===day);const label=new Date(day+"T12:00:00Z").toLocaleDateString(language==="ar"?"ar-SA-u-ca-gregory":"en-GB",{weekday:"long",day:"numeric",month:"short",timeZone:"UTC"});group(list,localized("🏁 نتائج ","🏁 Results · ")+label)}if(historyLoading||historyPartial){const note=document.createElement("p");note.className="notice";note.textContent=historyLoading?localized("جاري تحميل نتائج الأيام السابقة…","Loading recent results…"):localized("بعض النتائج قد تكون ناقصة بسبب المصدر. اضغط لإعادة المحاولة.","Some results are unavailable from the provider. Retry.");if(!historyLoading){const retry=document.createElement("button");retry.type="button";retry.textContent=localized("تحديث","Retry");retry.onclick=()=>loadResultHistory(true);note.append(retry)}target.append(note)}}else group(visibleResults,localized("المباريات السابقة","Results"))}
+ const shown=(matchView==="live"?visibleLive.length:matchView==="upcoming"?visibleUpcoming.length:matchView==="results"?visibleResults.length:visibleLive.length+visibleUpcoming.length+visibleResults.length);
+ const count=document.getElementById("matchCount");if(count)count.textContent=localized("المباريات المعروضة: ","Matches shown: ")+shown;
+ if(!shown&&(loadingScores||(historyMode&&historyLoading))){const loader=document.createElement("div");loader.className="home-loading";loader.setAttribute("role","status");const title=document.createElement("strong");title.textContent=localized("جاري تحميل المباريات…","Loading matches…");loader.append(title);for(let i=0;i<2;i++){const skeleton=document.createElement("div");skeleton.className="home-skeleton";skeleton.setAttribute("aria-hidden","true");loader.append(skeleton)}target.append(loader)}else if(!shown){const p=document.createElement("p");p.className="notice";p.textContent=matchView==="favorites"||homeResultsTab==="mine"?localized("تابع فريقك أو اضغط ☆ على مباراة لعرض نتائجك. يمكنك مشاهدة جميع النتائج الآن.","Follow a team or star a match to see your scores. You can view all results now."):localized("ما في مباريات مطابقة للتاريخ والتصفية الحالية.","No matches for this date and filter.");if(homeResultsTab==="mine"){const allButton=document.createElement("button");allButton.type="button";allButton.textContent=localized("جميع النتائج","All scores");allButton.onclick=()=>{setHomeResultsTab("all");setMatchView("results")};p.append(allButton)}target.append(p)}
+
+ renderFavorites();window.KoraPush?.sync();
+}
+function playerName(p){return p?.athlete?.displayName||p?.athlete?.fullName||p?.displayName||p?.name||'—'}
+function addText(parent,tag,value,cls){const el=document.createElement(tag);el.textContent=value;if(cls)el.className=cls;parent.append(el);return el}
+function openMatchCenter(e,side){try{sessionStorage.setItem("korazol_match_details",JSON.stringify(e))}catch{}location.href=KoraMatchFeed.detailUrl(e,{tab:"lineup",side:side==="away"?"away":"home"})}
+const goalCache=new Map();
+async function showMatchGoals(e,box){
+ const key=e.id+":"+e.score;
+ if(goalCache.has(key)){renderGoalRows(box,goalCache.get(key));return}
+ try{
+  const code=feeds[e.league];
+  const response=await fetch("https://site.api.espn.com/apis/site/v2/sports/soccer/"+code+"/summary?event="+encodeURIComponent(e.eventId),{signal:AbortSignal.timeout(12000)});
+  if(!response.ok)throw Error("HTTP "+response.status);
+  const data=await response.json();
+  const competition=data.header?.competitions?.[0]||{};
+  const raw=[...(competition.details||[]),...(data.scoringPlays||[]),...(data.keyEvents||[]),...(data.plays||[])];
+  const seen=new Set(),goals=[];
+  const athleteName=a=>a?.athlete?.displayName||a?.athlete?.fullName||a?.displayName||a?.fullName||"";
+  for(const p of raw){
+   const desc=String(p.text||p.shortText||p.description||"");
+   const type=String(p.type?.text||p.type?.name||p.type||"");
+   const isGoal=p.scoringPlay===true||p.isScore===true||/goal|scored/i.test(type);
+   if(!isGoal||/disallowed|cancelled|overturned|no goal|ruled out/i.test(type+" "+desc))continue;
+   const athletes=p.athletes||p.participants||[];
+   const scorer=athleteName(athletes.find(a=>/scorer|goal|score/i.test(String(a.type||a.role||""))))||
+     athleteName(athletes.find(a=>!/assist/i.test(String(a.type||a.role||""))))||
+     athleteName(p.scorer)||athleteName(p.player)||"";
+   const assist=athleteName(athletes.find(a=>/assist/i.test(String(a.type||a.role||""))))||athleteName(p.assist);
+   const minute=String(p.clock?.displayValue||p.minute||p.time?.displayValue||"").replace(/['′]/g,"");
+   if(!scorer)continue;
+   const id=[scorer,minute,p.team?.id||p.teamId||""].join(":");
+   if(seen.has(id))continue;seen.add(id);
+   goals.push({scorer,assist,minute});
+  }
+  goalCache.set(key,goals);if(box.isConnected)renderGoalRows(box,goals);
+ }catch(err){if(box.isConnected)box.textContent=localized("تفاصيل الأهداف غير متاحة حالياً.","Goal details unavailable.")}
+}
+function renderGoalRows(box,goals){
+ box.replaceChildren();
+ if(!goals.length){box.textContent=localized("أسماء مسجلي الأهداف غير متاحة من المصدر حالياً.","Scorer names unavailable from provider.");return}
+ for(const g of goals){
+  const row=document.createElement("div");row.className="goal-row";
+  const scorer=document.createElement("div");scorer.textContent="⚽ "+g.scorer+(g.minute?" — "+g.minute+"′":"");row.appendChild(scorer);
+  if(g.assist){const assist=document.createElement("div");assist.className="goal-assist";assist.textContent=localized("صناعة: ","Assist: ")+g.assist;row.appendChild(assist)}
+  box.appendChild(row)
+ }
+}
+let friendlySnapshot=[];
+async function loadFriendlySnapshot(){try{const response=await fetch("./data/friendlies.json?v="+Math.floor(Date.now()/120000),{cache:"no-store",signal:AbortSignal.timeout(10000)});if(!response.ok)return;const data=await response.json();if(!Array.isArray(data.matches)||!data.updated)return;const age=Date.now()-new Date(data.updated).getTime();if(!Number.isFinite(age)||age<0||age>3*3600000)return;friendlySnapshot=data.matches.filter(e=>e&&e.id&&e.date);const selected=selectedDate().toISOString().slice(0,10);const matches=friendlySnapshot.filter(e=>KoraMatchFeed.visibleOnDay(e,selected,dayOffset===0));const byId=new Map(liveEvents.map(e=>[e.id,e]));for(const e of matches)byId.set(e.id,e);liveEvents=[...byId.values()];checkGoals(liveEvents);renderLive()}catch(e){console.warn("Friendly snapshot unavailable",e)}}
+async function refreshScores(){
+ 
+ const sequence=++requestSequence;showDate();updateReferenceDaybar();const requestedDay=dayOffset,now=new Date();const days=KoraMatchFeed.fixtureDays(requestedDay,now);const date=[days[0],...(days.length>1?[days.at(-1)]:[])].map(d=>d.replaceAll("-","")).join("-");const provider=KoraMatchFeed.fetchFixtures(requestedDay,now).catch(()=>({events:[],successCount:0,partial:true}));
+ const result=await Promise.allSettled(Object.entries(feeds).map(async ([league,code])=>{
+  const url="https://site.api.espn.com/apis/site/v2/sports/soccer/"+code+"/scoreboard?dates="+date;
+  const response=await fetch(url,{cache:"no-store",signal:AbortSignal.timeout(12000)});
+  if(!response.ok)throw Error("HTTP "+response.status);
+  const json=await response.json();
+  return (json.events||[]).map(ev=>{
+   const comp=ev.competitions?.[0]||{},teams=comp.competitors||[];
+   const home=teams.find(t=>t.homeAway==="home")||teams[0]||{};
+   const away=teams.find(t=>t.homeAway==="away")||teams[1]||{};
+   const status=ev.status?.type?.shortDetail||ev.status?.type?.description||"";
+   const state=ev.status?.type?.state;
+   return {id:league+":"+ev.id,eventId:ev.id,league,home:home.team?.displayName||"—",away:away.team?.displayName||"—",homeLogo:resolveCrest(home.team?.displayName,home.team?.logo||home.team?.logos?.[0]?.href),awayLogo:resolveCrest(away.team?.displayName,away.team?.logo||away.team?.logos?.[0]?.href),score:state==="pre"?"— : —":(home.score??"—")+" - "+(away.score??"—"),date:ev.date,status,live:state==="in",phase:state==="in"?"live":state==="post"&&ev.status?.type?.completed===true?"finished":state==="post"?"other":KoraMatchFeed.phaseOf({status}),detail:ev.links?.find(l=>l.rel?.includes("summary"))?.href||ev.links?.[0]?.href||null};
+  });
+ }));
+ const sport=await provider;
+ if(sequence!==requestSequence)return;
+ loadingScores=false;
+ const previousByLeague=new Map();for(const e of liveEvents){if(!previousByLeague.has(e.league))previousByLeague.set(e.league,[]);previousByLeague.get(e.league).push(e)}
+ const combined=[];const entries=Object.entries(feeds);let successCount=0;
+ result.forEach((r,i)=>{const league=entries[i][0];if(r.status==="fulfilled"){combined.push(...r.value);successCount++}else combined.push(...(previousByLeague.get(league)||[]))});
+ providerAvailable=Boolean(sport.successCount);if(providerAvailable)successCount++;if(successCount){const selectedKey=selectedDate().toISOString().slice(0,10);const oldFinal=liveEvents.filter(e=>KoraMatchFeed.phaseOf(e)==="finished"&&KoraMatchFeed.localDay(e.date)===selectedKey);liveEvents=KoraMatchFeed.mergeMatches(oldFinal,KoraMatchFeed.mergeMatches([...combined,...friendlySnapshot.filter(e=>KoraMatchFeed.visibleOnDay(e,selectedKey,requestedDay===0))],sport.events));try{localStorage.setItem(scoreCacheKey,JSON.stringify({events:liveEvents,updated:new Date().toISOString()}));}catch(e){}}
+ checkGoals(liveEvents);
+ feedFailures=result.map((r,i)=>r.status==="rejected"?Object.keys(feeds)[i]:null).filter(Boolean);
+ if(successCount)lastUpdated=new Date();updateNotice();renderLive();
+}
+let upcomingRequest=0;
+async function loadSnapshotFixtures(){const old=Array.isArray(window.upcomingEvents)?window.upcomingEvents:[];const merged=new Map(old.map(e=>[e.id,e]));let loaded=0;for(const file of ["fixtures.json","sportscore-fixtures.json"]){try{const res=await fetch("./data/"+file+"?v="+Math.floor(Date.now()/180000),{cache:"no-store"});if(!res.ok)continue;const data=await res.json();if(!Array.isArray(data.matches))continue;for(const e of data.matches){if(e.date&&new Date(e.date).getTime()>Date.now()-120*86400000){merged.set(e.id,e);loaded++}}}catch(e){console.warn("Snapshot unavailable:",file,e)}}if(loaded){window.upcomingEvents=[...merged.values()].sort((a,b)=>new Date(a.date)-new Date(b.date));localStorage.setItem("korazol_upcoming_v1",JSON.stringify(window.upcomingEvents));renderLive()}}
+
+async function loadUpcoming(){
+ const sequence=++upcomingRequest,now=new Date();
+ const fmt=d=>d.toISOString().slice(0,10).replaceAll("-","");
+ const end=new Date(now);end.setDate(end.getDate()+10);
+ const range=fmt(now)+"-"+fmt(end);
+ const found=[];let successes=0,failures=0;
+ const leagues=Object.entries(feeds);
+ async function get(league,code,dates){const response=await fetch("https://site.api.espn.com/apis/site/v2/sports/soccer/"+code+"/scoreboard?dates="+dates,{cache:"no-store",signal:AbortSignal.timeout(12000)});if(!response.ok)throw Error("HTTP "+response.status);const data=await response.json();return(data.events||[]).filter(ev=>ev.status?.type?.state==="pre"&&new Date(ev.date)>now).map(ev=>{const teams=ev.competitions?.[0]?.competitors||[];const home=teams.find(t=>t.homeAway==="home")||teams[0]||{};const away=teams.find(t=>t.homeAway==="away")||teams[1]||{};return{id:league+":"+ev.id,eventId:ev.id,league,home:home.team?.displayName||"—",away:away.team?.displayName||"—",homeLogo:home.team?.logo||home.team?.logos?.[0]?.href||"",awayLogo:away.team?.logo||away.team?.logos?.[0]?.href||"",date:ev.date,score:"— : —",status:"Upcoming",live:false}})}
+ await Promise.all(leagues.map(async([league,code])=>{try{const items=await get(league,code,range);successes++;found.push(...items)}catch(e){failures++}}));
+ if(sequence!==upcomingRequest)return;
+ const old=Array.isArray(window.upcomingEvents)?window.upcomingEvents.filter(e=>Date.parse(e.date)>now.getTime()-120*86400000):[];
+ const merged=new Map([...old,...found].map(e=>[e.id,e]));
+ window.upcomingEvents=[...merged.values()].sort((a,b)=>new Date(a.date)-new Date(b.date));
+ try{localStorage.setItem("korazol_upcoming_v1",JSON.stringify(window.upcomingEvents))}catch(e){}
+ renderLive();
+ if(!found.length&&failures===leagues.length)console.warn("Upcoming fixture provider unavailable");
+}
+try{window.upcomingEvents=JSON.parse(localStorage.getItem("korazol_upcoming_v1")||"[]")}catch{window.upcomingEvents=[]}
+function filterMatches(){renderLive();}
+function getFavorites(){try{const stored=JSON.parse(localStorage.getItem("corazol_favorites")||"[]");return Array.isArray(stored)?stored.filter(x=>typeof x==="string"):[]}catch(e){return []}}
+function toggleFavorite(button){const id=button.dataset.id;let favorites=getFavorites();favorites=favorites.includes(id)?favorites.filter(x=>x!==id):[...favorites,id];localStorage.setItem("corazol_favorites",JSON.stringify(favorites));document.dispatchEvent(new Event("korazol:preferences-changed"));renderLive();}
+let favoriteFilter="all";
+function setFavoriteFilter(value){favoriteFilter=value;document.querySelectorAll("[data-fav-filter]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.favFilter===value)));renderFavorites()}
+function favoriteMatchState(e){const phase=KoraMatchFeed.phaseOf(e);return phase==="finished"?"results":phase}
+function renderFavorites(){
+ const target=document.getElementById("favoriteMatches");if(!target)return;target.replaceChildren();
+ const favorites=new Set(getFavorites()),followed=getFollowedTeams().map(normalizeTeamSearch);
+ document.querySelectorAll("#liveMatches .reference-fav").forEach(b=>{b.textContent=favorites.has(b.dataset.id)?"★":"☆"});
+ const merged=allCachedMatches();
+ const matches=merged.filter(e=>favorites.has(e.id)||followed.includes(normalizeTeamSearch(e.home))||followed.includes(normalizeTeamSearch(e.away))).filter(e=>favoriteFilter==="all"||favoriteMatchState(e)===favoriteFilter).sort((a,b)=>{const priority={live:0,upcoming:1,other:2,results:3};const pa=priority[favoriteMatchState(a)],pb=priority[favoriteMatchState(b)];return pa-pb||(pa===1?new Date(a.date)-new Date(b.date):new Date(b.date)-new Date(a.date))});
+ if(!matches.length){const empty=document.createElement("div");empty.className="favorites-empty";empty.textContent=localized("ما في مباريات مطابقة. تابع فريق من البحث أو اضغط النجمة بجانب مباراة.","No matching matches. Follow a team from Search or star a match.");const go=document.createElement("button");go.textContent=localized("🔎 البحث عن فريق","🔎 Find a team");go.onclick=()=>showTab("search",document.querySelector('nav button[onclick*="search"]'));empty.append(go);target.append(empty);return}
+ for(const e of matches.slice(0,150)){const card=document.createElement("article");card.className="favorite-game";const state=favoriteMatchState(e);const head=document.createElement("div");head.className="favorite-game-head";const league=document.createElement("span");league.textContent=e.league||"⚽";const status=document.createElement("span");status.className=state==="live"?"favorites-live":state==="upcoming"?"favorites-upcoming":"favorites-finished";status.textContent=state==="live"?localized("● مباشر","● LIVE"):state==="upcoming"&&e.date?new Date(e.date).toLocaleString(language==="ar"?"ar-SA":"en-US",{month:"short",day:"numeric",hour:"2-digit",minute:"2-digit"}):e.status||localized("النتيجة","Result");head.append(league,status);card.append(head);const open=document.createElement("button");open.type="button";open.className="favorite-game-score";open.setAttribute("aria-label",e.home+" "+e.score+" "+e.away);for(const side of ["home","away"]){const team=document.createElement("span");if(e[side+"Logo"]){const img=document.createElement("img");img.src=e[side+"Logo"];img.alt="";img.loading="lazy";img.onerror=()=>img.remove();team.append(img)}team.append(document.createTextNode(e[side]||"—"));if(side==="home")open.append(team);else{const score=document.createElement("strong");score.textContent=state==="upcoming"?"VS":e.score||"—";open.append(score,team)}}open.onclick=()=>{if(e.source==="football-data.org")location.href="./match-details.html?id="+encodeURIComponent(e.id);else openMatchCenter(e)};card.append(open);const actions=document.createElement("div");actions.className="favorite-game-actions";const star=document.createElement("button");star.textContent=favorites.has(e.id)?localized("★ إزالة من المفضلة","★ Unstar"):localized("☆ حفظ المباراة","☆ Save match");star.onclick=()=>{let ids=getFavorites();ids=ids.includes(e.id)?ids.filter(id=>id!==e.id):[...ids,e.id];localStorage.setItem("corazol_favorites",JSON.stringify(ids));renderLive()};actions.append(star);card.append(actions);target.append(card)}
+}
+function backupStatus(message){const node=document.getElementById("backupMessage");if(node)node.textContent=message}
+function exportUserData(){try{const data={format:"korazol-user-backup",version:1,exportedAt:new Date().toISOString(),followedTeams:getFollowedTeams(),favoriteMatches:getFavorites(),language:language};const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});const url=URL.createObjectURL(blob);const link=document.createElement("a");link.href=url;link.download="kora-zol-backup-"+new Date().toISOString().slice(0,10)+".json";document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);backupStatus(localized("تم تجهيز النسخة الاحتياطية. احتفظ بالملف في مكان آمن.","Backup created. Keep the file somewhere safe."))}catch(e){backupStatus(localized("تعذر تصدير البيانات.","Could not export your data."))}}
+async function importUserData(input){const file=input.files?.[0];if(!file)return;try{if(file.size>1024*1024)throw Error("File too large");const data=JSON.parse(await file.text());if(data?.format!=="korazol-user-backup"||data.version!==1||!Array.isArray(data.followedTeams)||!Array.isArray(data.favoriteMatches))throw Error("Invalid backup");const valid=arr=>arr.length<=2000&&arr.every(x=>typeof x==="string"&&x.length>0&&x.length<=200);if(!valid(data.followedTeams)||!valid(data.favoriteMatches))throw Error("Invalid values");const followed=[...new Set([...getFollowedTeams(),...data.followedTeams])];const favorites=[...new Set([...getFavorites(),...data.favoriteMatches])];localStorage.setItem("korazol_followed_teams_v1",JSON.stringify(followed));localStorage.setItem("corazol_favorites",JSON.stringify(favorites));document.dispatchEvent(new Event("korazol:preferences-changed"));renderLive();renderFavorites();document.dispatchEvent(new Event("korazol:preferences-changed"));backupStatus(localized("تم استرجاع "+data.followedTeams.length+" فريق و"+data.favoriteMatches.length+" مباراة ودمجها مع المحفوظ حالياً.","Restored and merged "+data.followedTeams.length+" teams and "+data.favoriteMatches.length+" matches."))}catch(e){backupStatus(localized("الملف غير صالح أو تعذر قراءته. لم نغيّر المفضلة.","Invalid backup file. Your favorites were not changed."))}finally{input.value=""}}
+
+function kzNode(tag,cls,txt){const n=document.createElement(tag);if(cls)n.className=cls;if(txt!=null)n.textContent=String(txt);return n}
+function kzGo(id,reset=false){if(reset){goToday();document.getElementById('leagueFilter').value='all';setHomeResultsTab('all');setMatchView('all')}const b=id==='kzHome'?document.querySelector('[data-kz-bottom=home]'):Array.from(document.querySelectorAll('body>nav button')).find(x=>x.getAttribute('onclick')?.includes("'"+id+"'"));showTab(id,b)}
+function kzLeague(code){const map={en:['الدوري الإنجليزي الممتاز','Premier League'],es:['الدوري الإسباني','La Liga'],cl:['دوري أبطال أوروبا','Champions League'],sa:['دوري روشن','Saudi Pro League'],sd:['الدوري السوداني','Sudan Premier League'],it:['الدوري الإيطالي','Serie A'],de:['الدوري الألماني','Bundesliga'],fr:['الدوري الفرنسي','Ligue 1'],friendly:['وديات المنتخبات','International friendlies'],afcelite:['أبطال آسيا للنخبة','AFC Champions League Elite']};const pair=map[code];if(pair)return localized(...pair);const option=Array.from(document.querySelectorAll('#leagueFilter option')).find(o=>o.value===code);return option?.textContent||code||localized('كرة القدم','Football')}
+function kzLogo(url){if(typeof url!=='string'||!/^https:\/\//i.test(url))return null;const i=kzNode('img');i.src=url;i.alt='';i.loading='lazy';i.decoding='async';i.onerror=()=>i.remove();return i}
+function kzRenderCompetitions(){const root=document.getElementById('kzCompetitionList');if(!root)return;root.replaceChildren();for(const code of [...new Set(['en','es','cl','sa','sd','it','de','fr','afcelite',...Object.keys(standingsSnapshot.leagues||{})])]){const a=kzNode('a','',kzLeague(code));a.href='./league-details.html?league='+encodeURIComponent(code);root.append(a)}}
+function kzRenderHome(){const root=document.getElementById('kzHomeMatches');if(!root||!document.getElementById('kzHome').classList.contains('active'))return;const today=KoraMatchFeed.localDay(new Date());const games=allCachedMatches().filter(m=>KoraMatchFeed.localDay(m.date)===today);const priority={live:0,upcoming:1,finished:2,other:3};const list=[...games].sort((a,b)=>(priority[KoraMatchFeed.phaseOf(a)]??4)-(priority[KoraMatchFeed.phaseOf(b)]??4)||Date.parse(a.date)-Date.parse(b.date));root.replaceChildren();for(const m of list.slice(0,3)){const phase=KoraMatchFeed.phaseOf(m);const a=kzNode('a','kz-home-card');a.dataset.phase=phase;a.href=KoraMatchFeed.detailUrl(m);a.onclick=()=>{try{sessionStorage.setItem('korazol_match_details',JSON.stringify(m))}catch{}};const head=kzNode('div','kz-card-head');head.append(kzNode('span','',kzLeague(m.league)));const st=kzNode('span','kz-card-state');if(phase==='live'&&m.minute!=null)st.append(kzNode('small','',m.minute+'′'));st.append(kzNode('b','',phase==='live'?localized('● مباشر','● LIVE'):phase==='finished'?localized('منتهية','FT'):phase==='upcoming'?localized('قادمة','Upcoming'):(m.status||'—')));head.append(st);const row=kzNode('div','kz-card-body');const team=side=>{const x=kzNode('span','kz-card-team');const i=kzLogo(m[side+'Logo']);if(i)x.append(i);x.append(kzNode('span','',m[side]||'—'));return x};const val=phase==='upcoming'&&Number.isFinite(Date.parse(m.date))?new Date(m.date).toLocaleTimeString(language==='ar'?'ar-SA':'en-GB',{hour:'2-digit',minute:'2-digit',hour12:false}):m.score||'—';row.append(team('home'),kzNode('span','kz-card-score',val),team('away'));a.append(head,row);root.append(a)}if(!list.length)root.append(kzNode('div','kz-home-empty',loadingScores?localized('جاري تحميل مباريات اليوم…','Loading today’s matches…'):localized('لا توجد مباريات متاحة في البيانات الحالية.','No matches in available data.')));
+const standings=document.getElementById('kzMiniStandings');standings.replaceChildren();const rows=standingsSnapshot.leagues.en||[];if(rows.length){const t=kzNode('table','kz-mini-table'),head=kzNode('thead'),tr=kzNode('tr');for(const h of ['#',localized('الفريق','Team'),localized('لعب','P'),localized('النقاط','Pts')])tr.append(kzNode('th','',h));head.append(tr);t.append(head);const b=kzNode('tbody');for(const r of rows.slice(0,3)){const row=kzNode('tr'),name=kzNode('td');const i=kzLogo(r.crest);if(i)name.append(i);name.append(document.createTextNode(r.team||'—'));row.append(kzNode('td','',r.rank??'—'),name,kzNode('td','',r.played??'—'),kzNode('td','',r.points??'—'));b.append(row)}t.append(b);standings.append(t)}else standings.append(kzNode('p','kz-home-note',localized('الترتيب غير متاح حالياً','Table unavailable')));
+const scores=games.filter(m=>['live','finished'].includes(KoraMatchFeed.phaseOf(m))).map(m=>String(m.score).match(/^(\d+)\s*[-:]\s*(\d+)$/)).filter(Boolean);const goalCount=scores.reduce((sum,m)=>sum+Number(m[1])+Number(m[2]),0);const metrics=document.getElementById('kzQuickStats');metrics.replaceChildren();for(const [label,value] of [[localized('مباريات اليوم','Matches today'),games.length|| (loadingScores?'—':0)],[localized('أهداف متاحة','Known goals'),scores.length?goalCount:'—'],[localized('بطولات اليوم','Competitions'),games.length?new Set(games.map(m=>m.league).filter(Boolean)).size:loadingScores?'—':0]]){const r=kzNode('div','kz-metric-row');r.append(kzNode('span','',label),kzNode('strong','',value));metrics.append(r)}document.getElementById('kzHomeNote').textContent=(lastUpdated?localized('آخر تحديث: ','Updated: ')+lastUpdated.toLocaleTimeString(language==='ar'?'ar-SA':'en-GB',{hour:'2-digit',minute:'2-digit'})+' · ':'')+localized('الإحصائيات حسب البيانات المتاحة. Powered by SportScore','Stats based on available data. Powered by SportScore');
+}
+
+function showTab(id,button){
+ document.querySelectorAll("main > section").forEach(s=>{
+  s.classList.remove("active");
+ });
+ document.getElementById(id).classList.add("active");
+ if(id==="kzHome"){if(dayOffset!==0)goToday();kzRenderHome()}if(id==="kzCompetitions")kzRenderCompetitions();document.querySelectorAll("[data-kz-tab]").forEach(b=>{if(b.dataset.kzTab===id)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current")});
+ if(id==="settings")renderPinManager();
+ if(id==="favorites")loadResultHistory();
+ if(id==="search"){renderGlobalSearch();document.getElementById("globalSearchInput")?.focus({preventScroll:true})}
+ if(id==="fixtures"){const frame=document.getElementById("fixturesFrame");if(frame&&!frame.getAttribute("src"))frame.src=frame.dataset.src;}
+ document.querySelectorAll("nav button").forEach(b=>{
+  b.classList.remove("active");
+ });
+ if(button)button.classList.add("active");
+ document.querySelectorAll("nav button").forEach(b=>{if(b.classList.contains("active"))b.setAttribute("aria-current","page");else b.removeAttribute("aria-current")});
+ window.scrollTo(0,0);
+}
+
+{const actions=document.getElementById('kzHeaderActions');const search=kzNode('button','kz-stadium-search');search.type='button';search.setAttribute('aria-label','Search / البحث');search.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg>';search.onclick=()=>kzGo('search');actions.append(document.getElementById('soundBell'),search,document.querySelector('header .lang'));}applyLang();
+restoreCachedScores();
+renderLive();
+const firstScoreRequest=refreshScores();
+loadStandings();
+fetchCrestMap().then(()=>{if(liveEvents.length){for(const e of liveEvents){e.homeLogo=resolveCrest(e.home,e.homeLogo);e.awayLogo=resolveCrest(e.away,e.awayLogo)}renderLive()}});
+updateSoundBell();
+loadSnapshotFixtures();
+loadFriendlySnapshot();
+let matchdaySecondaryStarted=false;function startSecondaryMatchday(){if(matchdaySecondaryStarted)return;matchdaySecondaryStarted=true;loadUpcoming();loadResultHistory()}
+firstScoreRequest.then(startSecondaryMatchday,startSecondaryMatchday);setTimeout(startSecondaryMatchday,4000);
+const deepLink=new URLSearchParams(location.search);if(!deepLink.has("settings")&&!deepLink.has("team")&&!deepLink.has("match"))kzGo("kzHome");if(deepLink.get("settings")==="1"){showTab("settings",document.querySelector("nav button[data-icon='⚙']"))}if(deepLink.has("team")){const requested=deepLink.get("team");if(requested&&requested.length<100){const input=document.getElementById("matchSearch");if(input){input.value=requested;setMatchView("all")}setTimeout(()=>openTeamProfile(requested),1400)}}if(deepLink.has("match")&&deepLink.has("league")){const code=deepLink.get("league");const league=Object.keys(feeds).find(k=>feeds[k]===code);const eventId=deepLink.get("match");if(league&&/^[0-9]+$/.test(eventId)){openMatchCenter({id:league+":"+eventId,eventId,league,home:deepLink.get("home")||"الفريق الأول",away:deepLink.get("away")||"الفريق الثاني",score:"—",status:""});}}
+let refreshTimer=null;
+function scheduleLiveRefresh(){if(refreshTimer)clearTimeout(refreshTimer);const active=liveEvents.some(e=>e.live);const delay=active?30000:180000;refreshTimer=setTimeout(async()=>{if(!document.hidden&&navigator.onLine&&dayOffset===0){try{await refreshScores()}catch(e){console.warn("Score refresh failed",e)}}scheduleLiveRefresh()},delay)}
+scheduleLiveRefresh();
+setInterval(()=>{if(!document.hidden&&navigator.onLine)loadFriendlySnapshot()},120000);
+window.addEventListener('online',()=>{refreshScores();loadResultHistory();scheduleLiveRefresh()});
+window.addEventListener('offline',()=>{updateNotice();updateDataHealth()});
+window.addEventListener('online',updateDataHealth);
+document.addEventListener("visibilitychange",()=>{if(!document.hidden&&navigator.onLine)refreshScores();scheduleLiveRefresh()});
+</script>
+<script src="./notifications-custom-v1.js"></script><script src="./account-v1.js"></script><script src="./push-client-v5.js"></script>
+
+</body>
+</html>
+<!-- CORAZOL navigation fix v3 -->
+

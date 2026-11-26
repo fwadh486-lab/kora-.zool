@@ -451,6 +451,21 @@ body>nav button.active,body:has(#matches.active)>nav button.active{background:va
 #matches .reference-score strong,.favorite-game-score strong,#standings tbody td:last-child{color:var(--kz-ice)!important}
 .live,.reference-live{color:var(--kz-live)!important}.zoot-label{color:#20e39a!important}
 </style>
+<style id="kz-readable-v1">
+/* Readability pass: preserve brand accents and improve text contrast. */
+
+:root{--kz-text:#ffffff;--kz-muted:#c5cddd;--kz-readable:#fff;--kz-secondary:#c5cddd}
+#matches .reference-team,#matches .reference-team span{color:var(--kz-readable)!important;font-weight:800!important}
+#matches .reference-team span{font-size:clamp(13px,3.45vw,15px)!important;line-height:1.45!important}
+#matches .reference-league-title,.matchday-intro h1,.team-profile-head h2,.team-search-card strong,.global-team-result strong{color:var(--kz-readable)!important}
+#matches .reference-score small:not(.reference-live),#matches .reference-bottom,.team-search-card small,.team-profile-match small,.team-profile-empty,.team-standing-info small,.global-search-hint,.global-search-state,.lineup-muted,.lineup-note,.player-item small,.squad-player-info small{color:var(--kz-secondary)!important}
+#matches .reference-score strong,.favorite-game-score strong,#standings tbody td:last-child{color:#54c9e5!important}
+.squad-player .squad-player-info strong,.player-item{color:#fff!important;font-size:14px!important;font-weight:800!important;line-height:1.45!important;text-shadow:none!important}
+.pitch-player .squad-player-info strong,#matchCenterBody .pitch-player .squad-player-info strong{color:#fff!important;font-size:clamp(12px,3.3vw,13px)!important;font-weight:800!important;line-height:1.45!important;text-shadow:none!important;background:#14231d;border-radius:4px;padding:1px 3px;max-width:100%;box-sizing:border-box;white-space:normal;overflow-wrap:anywhere;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+#matchCenterBody .squad-player:not(.pitch-player) .squad-player-info strong{font-size:14px!important}
+#standings td:not(:last-child),.favorite-game-score span{color:#fff}
+
+</style>
 </head>
 
 <body>

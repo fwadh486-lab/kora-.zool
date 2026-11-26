@@ -261,6 +261,24 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 @media(prefers-color-scheme:dark){.hero .score,.center-score strong{color:var(--kz-ice)!important}}
 @media(prefers-color-scheme:light){.hero .score,.center-score strong{color:#08738e!important}}
 </style>
+<style id="kz-readable-v1">
+/* Readability pass: preserve brand accents and improve text contrast. */
+
+:root{--kz-readable:#fff;--kz-secondary:#c5cddd}
+.hero .team{color:#fff!important;font-size:clamp(14px,3.65vw,17px)!important;font-weight:800!important;line-height:1.45!important}
+.lineup-person-name,.predicted-player small{color:#fff!important;font-size:clamp(12px,3.3vw,13px)!important;font-weight:800!important;line-height:1.45!important;text-shadow:none!important;background:#14231d;border-radius:4px;padding:1px 3px;box-sizing:border-box;max-width:100%!important;white-space:normal!important;overflow-wrap:anywhere;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden!important}
+.lineup-bench-row{font-size:14px!important;font-weight:700;line-height:1.5;color:#fff}
+.lineup-bench-row small,.lineup-meta{color:var(--kz-secondary)!important;font-size:12px!important}
+.player-dialog-sheet,.player-profile-head h2,.player-profile-row strong{color:#fff!important}
+.player-profile-head p,.player-profile-row span,.player-profile-note{color:var(--kz-secondary)!important;font-size:13px!important}
+.center-event,.center-star,.center-event strong,.center-star strong{color:#fff!important}
+.center-event strong,.center-star strong{font-size:14px!important;font-weight:800;line-height:1.5}
+.center-event small,.center-stat-head small,.center-stat-note,.stat-team-key{color:var(--kz-secondary)!important}
+.center-stat-head strong{color:#fff!important}
+.center-meta{color:#c5cddd!important}
+@media(prefers-color-scheme:light){.center-meta{color:#3b3157!important}}
+
+</style>
 </head><body><header><a href="./index.html">↩ المباريات</a><strong id="matchHeaderTitle">تفاصيل المباراة</strong><span>⚽</span></header><main class="container"><section id="hero" class="hero loading">جاري تحميل تفاصيل المباراة...</section><div class="tabs" id="tabs"><button class="active" data-tab="details">التفاصيل</button><button data-tab="center">⚡ ماتش سنتر</button><button data-tab="stats">الإحصائيات</button><button data-tab="events">الأحداث</button><button data-tab="pulse">💚 نبض زول</button><button data-tab="form">الأداء</button><button data-tab="h2h">المواجهات</button><button data-tab="lineup">التشكيلة</button></div><div class="match-tools"><button id="matchFav" type="button" onclick="toggleMatchFavorite()">☆ حفظ المباراة</button><button type="button" onclick="shareMatch()">↗ مشاركة</button><button type="button" onclick="refreshMatchDetails()" id="refreshDetail">⟳ تحديث</button><a class="calendar-entry" id="matchCalendar" hidden target="_blank" rel="noopener noreferrer" aria-label="إضافة موعد المباراة إلى التقويم">📅 التقويم</a><span id="matchUpdated" role="status"></span></div><div id="content"></div><p style="text-align:center;font-size:12px"><a href="https://sportscore.com/" style="color:inherit">Powered by SportScore</a></p></main><script src="./match-feed-v2.js"></script><script src="./match-detail-feed-v2.js"></script><script src="./match-extras-v1.js"></script><script src="./match-pulse-v1.js"></script><script src="./match-center-v1.js"></script><script>
 const $=id=>document.getElementById(id),q=new URLSearchParams(location.search),id=q.get("id"),leagueNames={en:"الدوري الإنجليزي الممتاز",es:"الدوري الإسباني",de:"الدوري الألماني",it:"الدوري الإيطالي",fr:"الدوري الفرنسي",cl:"دوري أبطال أوروبا",afcelite:"دوري أبطال آسيا للنخبة",nations:"دوري الأمم الأوروبية",sa:"الدوري السعودي",friendly:"وديات المنتخبات",clubfriendly:"وديات الأندية",nonfifa:"وديات أخرى",br:"الدوري البرازيلي",nl:"الدوري الهولندي",pt:"الدوري البرتغالي",eng2:"تشامبيونشيب",sd:"الدوري السوداني",rw:"الدوري الرواندي",qa:"الدوري القطري",el:"الدوري الأوروبي",cafcl:"دوري أبطال أفريقيا",euro:"كأس أمم أوروبا"},fmt=d=>new Date(d).toLocaleString("ar-SA",{weekday:"long",day:"numeric",month:"long",hour:"2-digit",minute:"2-digit"});
 let match=null,all=[],tab=["details","center","stats","events","pulse","form","h2h","lineup"].includes(q.get("tab"))?q.get("tab"):"details";

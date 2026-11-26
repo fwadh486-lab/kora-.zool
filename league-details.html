@@ -9,6 +9,14 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 
 .tabs button.active,.tabs button[aria-pressed=true],.tabs .active{background:var(--kz-brand-tint)!important;color:#e7dfff!important;border-color:var(--kz-brand)!important}
 </style>
+<style id="kz-readable-v1">
+/* Readability pass: preserve brand accents and improve text contrast. */
+
+:root{--text:#ffffff;--muted:#c5cddd}
+.club,.team-card{font-size:14px!important;font-weight:700;color:#fff}
+.score small:not(.live){color:var(--muted)}
+
+</style>
 </head><body>
 <header><a id="back" href="./index.html">‹ المباريات</a><strong id="brand">كورة زول</strong><button id="lang" type="button">EN</button></header>
 <main><section class="hero" id="hero"></section><nav class="tabs" id="tabs" aria-label="Competition"></nav><p class="muted status" id="status" role="status"></p><div id="content"></div><footer>Football data provided by <a href="https://www.football-data.org/">football-data.org</a> · <a href="https://sportscore.com/" rel="dofollow">Powered by SportScore</a></footer></main>

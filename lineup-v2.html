@@ -7,6 +7,16 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 
 .tabs button.active,.tabs button[aria-pressed=true],.tabs .active{background:var(--kz-brand-tint)!important;color:#e7dfff!important;border-color:var(--kz-brand)!important}
 </style>
+<style id="kz-readable-v1">
+/* Readability pass: preserve brand accents and improve text contrast. */
+
+:root{--kz-readable:#fff;--kz-secondary:#c5cddd}
+.pitch .player .name{font-size:clamp(12px,3.3vw,13px)!important;line-height:1.45;font-weight:800;color:#fff!important;background:#14231d;border-radius:4px;padding:1px 3px;box-sizing:border-box;text-shadow:none!important;white-space:normal;overflow-wrap:anywhere;max-width:100%;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+.bench .player .name{font-size:14px!important;color:#fff!important;line-height:1.45;font-weight:800;text-shadow:none}
+.score p,.lineup-meta{color:var(--kz-secondary)!important}
+.absent,.coach,.detail{color:#fff;font-size:14px;line-height:1.6}
+
+</style>
 </head><body><header><a href="./">↩ المباريات</a><strong>كورة زول | التشكيلة</strong><span>⚽</span></header><main class="wrap"><div class="score"><h1 id="matchTitle">تفاصيل المباراة</h1><p id="status">جاري تحميل التشكيلات…</p></div><div class="tabs"><button id="homeTab" class="active">الفريق الأول</button><button id="awayTab">الفريق الثاني</button></div><div id="home" class="team active"></div><div id="away" class="team"></div><div id="detail" class="detail hidden"></div></main><script src="./match-detail-feed-v2.js"></script><script>
 const qs=new URLSearchParams(location.search),code=qs.get('league'),eventId=qs.get('match');const names=[qs.get('home')||'الفريق الأول',qs.get('away')||'الفريق الثاني'];const codes=['eng.1','esp.1','ksa.1'];const $=id=>document.getElementById(id);
 function el(tag,cls,txt){const x=document.createElement(tag);if(cls)x.className=cls;if(txt!==undefined)x.textContent=String(txt);return x}

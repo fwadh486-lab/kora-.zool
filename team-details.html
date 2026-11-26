@@ -9,6 +9,15 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 
 .tabs button.active,.tabs button[aria-pressed=true],.tabs .active{background:var(--kz-brand-tint)!important;color:#e7dfff!important;border-color:var(--kz-brand)!important}
 </style>
+<style id="kz-readable-v1">
+/* Readability pass: preserve brand accents and improve text contrast. */
+
+.player{font-size:14px;font-weight:700;line-height:1.5}
+.player strong,.match strong,.identity h1,.club-name{font-weight:800}
+@media(prefers-color-scheme:dark){.player,.match,.identity h1,.club-name{color:#fff}.muted,small,.status,.empty{color:#c5cddd}}
+@media(prefers-color-scheme:light){.player,.match,.identity h1,.club-name{color:#172731}.muted,small,.status,.empty{color:#465563}}
+
+</style>
 </head><body>
 <header><a id="back" href="./index.html">‹ المباريات</a><strong id="heading">كورة زول</strong><button id="lang" type="button">EN</button></header>
 <main><section class="hero" id="hero"></section><nav class="tabs" id="tabs" aria-label="صفحة الفريق"></nav><p id="status" class="status" role="status"></p><div id="content"><div class="skeleton"></div></div><p class="status"><a href="https://sportscore.com/">Powered by SportScore</a></p></main>

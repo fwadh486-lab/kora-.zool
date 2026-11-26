@@ -7,6 +7,13 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 
 .tabs button.active,.tabs button[aria-pressed=true],.tabs .active{background:var(--kz-brand-tint)!important;color:#e7dfff!important;border-color:var(--kz-brand)!important}
 </style>
+<style id="kz-readable-v1">
+/* Readability pass: preserve brand accents and improve text contrast. */
+
+.team,.club{color:#fff;font-weight:700;font-size:14px!important}
+.muted,.empty,.footer,.champions-date{color:#c5cddd}
+
+</style>
 </head><body><header><a href="./index.html" id="back">‹ المباريات</a><strong>كورة زول</strong><button id="lang">EN</button></header><main><section class="hero"><div style="font-size:34px">🏆</div><h1 id="title">دوري أبطال أوروبا</h1><p id="season" class="muted"></p></section><nav class="tabs" id="tabs" aria-label="Competition views"></nav><p class="muted" id="status" role="status"></p><div id="content"></div><footer class="footer">Football data provided by <a href="https://www.football-data.org/">football-data.org</a> · <a href="https://sportscore.com/" rel="dofollow" title="Sports data by SportScore">Powered by SportScore</a></footer></main><script src="./match-feed-v2.js"></script><script>
 'use strict';const $=id=>document.getElementById(id);let lang=localStorage.getItem('corazol_lang')==='en'?'en':'ar',tab='fixtures',loading=true,matches=[],standings=null,updated=null;const tr=(ar,en)=>lang==='ar'?ar:en,locale=()=>lang==='ar'?'ar-SA-u-ca-gregory':'en-GB';const year=new Date().getMonth()>=6?new Date().getFullYear():new Date().getFullYear()-1;
 function el(tag,cls,text){const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=String(text);return n}function img(url){if(!/^https:\/\/(?:crests\.football-data\.org|img\.thesports\.com|a\.espncdn\.com)\//.test(url||''))return null;const i=el('img');i.src=url;i.alt='';i.loading='lazy';i.onerror=()=>i.remove();return i}function panel(title){const p=el('section','panel');p.append(el('h2','',title));$('content').append(p);return p}function empty(p,ar,en){p.append(el('p','empty',tr(ar,en)))}function format(d){return new Date(d).toLocaleString(locale(),{weekday:'short',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}function zone(rank){return rank<=8?'direct':rank<=24?'playoff':'out'}

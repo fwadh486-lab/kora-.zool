@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-25T19:08:24.296955+00:00",
+  "updated": "2026-11-26T01:31:48.928678+00:00",
   "leagues": {
     "cl": [
       {
@@ -18,12 +18,12 @@
         "rank": 2,
         "team": "Paris Saint-Germain FC",
         "crest": "https://crests.football-data.org/524.png",
-        "played": 4,
+        "played": 5,
         "won": 4,
-        "draw": 0,
+        "draw": 1,
         "lost": 0,
         "gd": 15,
-        "points": 12,
+        "points": 13,
         "form": null
       },
       {
@@ -52,6 +52,18 @@
       },
       {
         "rank": 5,
+        "team": "Liverpool FC",
+        "crest": "https://crests.football-data.org/64.png",
+        "played": 5,
+        "won": 4,
+        "draw": 0,
+        "lost": 1,
+        "gd": 7,
+        "points": 12,
+        "form": null
+      },
+      {
+        "rank": 6,
         "team": "Real Betis Balompié",
         "crest": "https://crests.football-data.org/90.png",
         "played": 5,
@@ -63,7 +75,7 @@
         "form": null
       },
       {
-        "rank": 6,
+        "rank": 7,
         "team": "Arsenal FC",
         "crest": "https://crests.football-data.org/57.png",
         "played": 5,
@@ -75,7 +87,7 @@
         "form": null
       },
       {
-        "rank": 7,
+        "rank": 8,
         "team": "Manchester City FC",
         "crest": "https://crests.football-data.org/65.png",
         "played": 5,
@@ -87,7 +99,19 @@
         "form": null
       },
       {
-        "rank": 8,
+        "rank": 9,
+        "team": "Sporting Clube de Portugal",
+        "crest": "https://crests.football-data.org/498.png",
+        "played": 5,
+        "won": 3,
+        "draw": 1,
+        "lost": 1,
+        "gd": 4,
+        "points": 10,
+        "form": null
+      },
+      {
+        "rank": 10,
         "team": "Borussia Dortmund",
         "crest": "https://crests.football-data.org/4.png",
         "played": 5,
@@ -99,7 +123,7 @@
         "form": null
       },
       {
-        "rank": 9,
+        "rank": 11,
         "team": "Aston Villa FC",
         "crest": "https://crests.football-data.org/58.png",
         "played": 5,
@@ -111,43 +135,31 @@
         "form": null
       },
       {
-        "rank": 10,
-        "team": "Liverpool FC",
-        "crest": "https://crests.football-data.org/64.png",
-        "played": 4,
-        "won": 3,
-        "draw": 0,
-        "lost": 1,
-        "gd": 4,
-        "points": 9,
-        "form": null
-      },
-      {
-        "rank": 11,
-        "team": "Club Brugge KV",
-        "crest": "https://crests.football-data.org/851.png",
-        "played": 4,
-        "won": 3,
-        "draw": 0,
-        "lost": 1,
-        "gd": 4,
-        "points": 9,
-        "form": null
-      },
-      {
         "rank": 12,
-        "team": "Sporting Clube de Portugal",
-        "crest": "https://crests.football-data.org/498.png",
-        "played": 4,
+        "team": "FC Internazionale Milano",
+        "crest": "https://crests.football-data.org/108.png",
+        "played": 5,
         "won": 3,
         "draw": 0,
-        "lost": 1,
+        "lost": 2,
         "gd": 4,
         "points": 9,
         "form": null
       },
       {
         "rank": 13,
+        "team": "Club Brugge KV",
+        "crest": "https://crests.football-data.org/851.png",
+        "played": 5,
+        "won": 3,
+        "draw": 0,
+        "lost": 2,
+        "gd": 1,
+        "points": 9,
+        "form": null
+      },
+      {
+        "rank": 14,
         "team": "Galatasaray SK",
         "crest": "https://crests.football-data.org/610.png",
         "played": 5,
@@ -159,31 +171,67 @@
         "form": null
       },
       {
-        "rank": 14,
+        "rank": 15,
         "team": "FC Bayern München",
         "crest": "https://crests.football-data.org/5.png",
-        "played": 4,
+        "played": 5,
         "won": 2,
         "draw": 2,
-        "lost": 0,
-        "gd": 7,
+        "lost": 1,
+        "gd": 6,
         "points": 8,
         "form": null
       },
       {
-        "rank": 15,
+        "rank": 16,
+        "team": "Fenerbahçe SK",
+        "crest": "https://crests.football-data.org/613.png",
+        "played": 5,
+        "won": 2,
+        "draw": 2,
+        "lost": 1,
+        "gd": -4,
+        "points": 8,
+        "form": null
+      },
+      {
+        "rank": 17,
         "team": "VfB Stuttgart",
         "crest": "https://crests.football-data.org/10.png",
-        "played": 4,
+        "played": 5,
         "won": 2,
         "draw": 1,
-        "lost": 1,
-        "gd": 3,
+        "lost": 2,
+        "gd": 1,
         "points": 7,
         "form": null
       },
       {
-        "rank": 16,
+        "rank": 18,
+        "team": "Club Atlético de Madrid",
+        "crest": "https://crests.football-data.org/78.png",
+        "played": 5,
+        "won": 2,
+        "draw": 1,
+        "lost": 2,
+        "gd": 1,
+        "points": 7,
+        "form": null
+      },
+      {
+        "rank": 19,
+        "team": "Manchester United FC",
+        "crest": "https://crests.football-data.org/66.png",
+        "played": 5,
+        "won": 2,
+        "draw": 1,
+        "lost": 2,
+        "gd": 0,
+        "points": 7,
+        "form": null
+      },
+      {
+        "rank": 20,
         "team": "FK Bodø/Glimt",
         "crest": "https://crests.football-data.org/5721.png",
         "played": 5,
@@ -195,19 +243,7 @@
         "form": null
       },
       {
-        "rank": 17,
-        "team": "FC Internazionale Milano",
-        "crest": "https://crests.football-data.org/108.png",
-        "played": 4,
-        "won": 2,
-        "draw": 0,
-        "lost": 2,
-        "gd": 2,
-        "points": 6,
-        "form": null
-      },
-      {
-        "rank": 18,
+        "rank": 21,
         "team": "LASK Linz",
         "crest": "https://crests.football-data.org/2016.png",
         "played": 5,
@@ -219,19 +255,7 @@
         "form": null
       },
       {
-        "rank": 19,
-        "team": "Manchester United FC",
-        "crest": "https://crests.football-data.org/66.png",
-        "played": 4,
-        "won": 2,
-        "draw": 0,
-        "lost": 2,
-        "gd": 0,
-        "points": 6,
-        "form": null
-      },
-      {
-        "rank": 20,
+        "rank": 22,
         "team": "FC Porto",
         "crest": "https://crests.football-data.org/503.png",
         "played": 5,
@@ -243,7 +267,7 @@
         "form": null
       },
       {
-        "rank": 21,
+        "rank": 23,
         "team": "RB Leipzig",
         "crest": "https://crests.football-data.org/721.png",
         "played": 5,
@@ -255,67 +279,55 @@
         "form": null
       },
       {
-        "rank": 22,
-        "team": "Fenerbahçe SK",
-        "crest": "https://crests.football-data.org/613.png",
-        "played": 4,
-        "won": 1,
-        "draw": 2,
-        "lost": 1,
-        "gd": -5,
-        "points": 5,
-        "form": null
-      },
-      {
-        "rank": 23,
-        "team": "AS Roma",
-        "crest": "https://crests.football-data.org/100.png",
-        "played": 4,
-        "won": 1,
-        "draw": 1,
-        "lost": 2,
-        "gd": 2,
-        "points": 4,
-        "form": null
-      },
-      {
         "rank": 24,
-        "team": "FK Shakhtar Donetsk",
-        "crest": "https://crests.football-data.org/1887.png",
-        "played": 4,
-        "won": 1,
-        "draw": 1,
-        "lost": 2,
-        "gd": 0,
-        "points": 4,
+        "team": "Villarreal CF",
+        "crest": "https://crests.football-data.org/94.png",
+        "played": 5,
+        "won": 2,
+        "draw": 0,
+        "lost": 3,
+        "gd": -5,
+        "points": 6,
         "form": null
       },
       {
         "rank": 25,
-        "team": "Viking FK",
-        "crest": "https://crests.football-data.org/5720.png",
-        "played": 4,
+        "team": "AS Roma",
+        "crest": "https://crests.football-data.org/100.png",
+        "played": 5,
         "won": 1,
-        "draw": 1,
+        "draw": 2,
         "lost": 2,
-        "gd": -1,
-        "points": 4,
+        "gd": 2,
+        "points": 5,
         "form": null
       },
       {
         "rank": 26,
-        "team": "Club Atlético de Madrid",
-        "crest": "https://crests.football-data.org/78.png",
-        "played": 4,
+        "team": "FK Shakhtar Donetsk",
+        "crest": "https://crests.football-data.org/1887.png",
+        "played": 5,
         "won": 1,
         "draw": 1,
-        "lost": 2,
+        "lost": 3,
         "gd": -1,
         "points": 4,
         "form": null
       },
       {
         "rank": 27,
+        "team": "Viking FK",
+        "crest": "https://crests.football-data.org/5720.png",
+        "played": 5,
+        "won": 1,
+        "draw": 1,
+        "lost": 3,
+        "gd": -3,
+        "points": 4,
+        "form": null
+      },
+      {
+        "rank": 28,
         "team": "SSC Napoli",
         "crest": "https://crests.football-data.org/113.png",
         "played": 5,
@@ -327,7 +339,19 @@
         "form": null
       },
       {
-        "rank": 28,
+        "rank": 29,
+        "team": "Lille OSC",
+        "crest": "https://crests.football-data.org/521.png",
+        "played": 5,
+        "won": 1,
+        "draw": 1,
+        "lost": 3,
+        "gd": -5,
+        "points": 4,
+        "form": null
+      },
+      {
+        "rank": 30,
         "team": "PSV",
         "crest": "https://crests.football-data.org/674.png",
         "played": 5,
@@ -339,19 +363,7 @@
         "form": null
       },
       {
-        "rank": 29,
-        "team": "Villarreal CF",
-        "crest": "https://crests.football-data.org/94.png",
-        "played": 5,
-        "won": 1,
-        "draw": 1,
-        "lost": 3,
-        "gd": -6,
-        "points": 4,
-        "form": null
-      },
-      {
-        "rank": 30,
+        "rank": 31,
         "team": "PAE AEK",
         "crest": "https://crests.football-data.org/1899.png",
         "played": 5,
@@ -363,7 +375,7 @@
         "form": null
       },
       {
-        "rank": 31,
+        "rank": 32,
         "team": "Feyenoord Rotterdam",
         "crest": "https://crests.football-data.org/675.png",
         "played": 5,
@@ -375,7 +387,7 @@
         "form": null
       },
       {
-        "rank": 32,
+        "rank": 33,
         "team": "Sabah FK",
         "crest": "https://crests.football-data.org/10233.png",
         "played": 5,
@@ -387,7 +399,7 @@
         "form": null
       },
       {
-        "rank": 33,
+        "rank": 34,
         "team": "Racing Club de Lens",
         "crest": "https://crests.football-data.org/546.png",
         "played": 5,
@@ -399,26 +411,14 @@
         "form": null
       },
       {
-        "rank": 34,
+        "rank": 35,
         "team": "SK Slavia Praha",
         "crest": "https://crests.football-data.org/930.png",
         "played": 5,
         "won": 0,
-        "draw": 2,
-        "lost": 3,
-        "gd": -4,
-        "points": 2,
-        "form": null
-      },
-      {
-        "rank": 35,
-        "team": "Lille OSC",
-        "crest": "https://crests.football-data.org/521.png",
-        "played": 4,
-        "won": 0,
         "draw": 1,
-        "lost": 3,
-        "gd": -6,
+        "lost": 4,
+        "gd": -5,
         "points": 1,
         "form": null
       },
@@ -1674,12 +1674,12 @@
         "rank": 7,
         "team": "CA Mineiro",
         "crest": "https://crests.football-data.org/1766.png",
-        "played": 35,
+        "played": 36,
         "won": 14,
-        "draw": 9,
+        "draw": 10,
         "lost": 12,
         "gd": 4,
-        "points": 51,
+        "points": 52,
         "form": null
       },
       {
@@ -1768,6 +1768,18 @@
       },
       {
         "rank": 15,
+        "team": "SC Corinthians Paulista",
+        "crest": "https://crests.football-data.org/1779.png",
+        "played": 36,
+        "won": 10,
+        "draw": 11,
+        "lost": 15,
+        "gd": -2,
+        "points": 41,
+        "form": null
+      },
+      {
+        "rank": 16,
         "team": "Grêmio FBPA",
         "crest": "https://crests.football-data.org/1767.png",
         "played": 36,
@@ -1779,7 +1791,7 @@
         "form": null
       },
       {
-        "rank": 16,
+        "rank": 17,
         "team": "Mirassol FC",
         "crest": "https://crests.football-data.org/4364.png",
         "played": 36,
@@ -1788,18 +1800,6 @@
         "lost": 15,
         "gd": -10,
         "points": 41,
-        "form": null
-      },
-      {
-        "rank": 17,
-        "team": "SC Corinthians Paulista",
-        "crest": "https://crests.football-data.org/1779.png",
-        "played": 35,
-        "won": 10,
-        "draw": 10,
-        "lost": 15,
-        "gd": -2,
-        "points": 40,
         "form": null
       },
       {
@@ -2290,6 +2290,18 @@
       },
       {
         "rank": 2,
+        "team": "Stoke City FC",
+        "crest": "https://crests.football-data.org/70.png",
+        "played": 17,
+        "won": 11,
+        "draw": 2,
+        "lost": 4,
+        "gd": 8,
+        "points": 35,
+        "form": null
+      },
+      {
+        "rank": 3,
         "team": "Wolverhampton Wanderers FC",
         "crest": "https://crests.football-data.org/76.png",
         "played": 17,
@@ -2301,39 +2313,27 @@
         "form": null
       },
       {
-        "rank": 3,
-        "team": "Stoke City FC",
-        "crest": "https://crests.football-data.org/70.png",
-        "played": 16,
-        "won": 10,
-        "draw": 2,
-        "lost": 4,
-        "gd": 7,
-        "points": 32,
-        "form": null
-      },
-      {
         "rank": 4,
         "team": "Birmingham City FC",
         "crest": "https://crests.football-data.org/332.png",
-        "played": 16,
-        "won": 8,
+        "played": 17,
+        "won": 9,
         "draw": 5,
         "lost": 3,
-        "gd": 13,
-        "points": 29,
+        "gd": 15,
+        "points": 32,
         "form": null
       },
       {
         "rank": 5,
         "team": "West Bromwich Albion FC",
         "crest": "https://crests.football-data.org/74.png",
-        "played": 16,
-        "won": 8,
+        "played": 17,
+        "won": 9,
         "draw": 5,
         "lost": 3,
-        "gd": 8,
-        "points": 29,
+        "gd": 10,
+        "points": 32,
         "form": null
       },
       {
@@ -2410,6 +2410,18 @@
       },
       {
         "rank": 12,
+        "team": "Blackburn Rovers FC",
+        "crest": "https://crests.football-data.org/59.png",
+        "played": 17,
+        "won": 7,
+        "draw": 4,
+        "lost": 6,
+        "gd": 0,
+        "points": 25,
+        "form": null
+      },
+      {
+        "rank": 13,
         "team": "West Ham United FC",
         "crest": "https://crests.football-data.org/563.png",
         "played": 17,
@@ -2418,18 +2430,6 @@
         "lost": 5,
         "gd": 13,
         "points": 24,
-        "form": null
-      },
-      {
-        "rank": 13,
-        "team": "Blackburn Rovers FC",
-        "crest": "https://crests.football-data.org/59.png",
-        "played": 16,
-        "won": 6,
-        "draw": 4,
-        "lost": 6,
-        "gd": -1,
-        "points": 22,
         "form": null
       },
       {
@@ -2484,11 +2484,11 @@
         "rank": 18,
         "team": "Millwall FC",
         "crest": "https://crests.football-data.org/384.png",
-        "played": 16,
+        "played": 17,
         "won": 5,
         "draw": 3,
-        "lost": 8,
-        "gd": -5,
+        "lost": 9,
+        "gd": -6,
         "points": 18,
         "form": null
       },
@@ -2496,11 +2496,11 @@
         "rank": 19,
         "team": "Bolton Wanderers FC",
         "crest": "https://crests.football-data.org/60.png",
-        "played": 16,
+        "played": 17,
         "won": 5,
         "draw": 3,
-        "lost": 8,
-        "gd": -9,
+        "lost": 9,
+        "gd": -11,
         "points": 18,
         "form": null
       },
@@ -2508,11 +2508,11 @@
         "rank": 20,
         "team": "Watford FC",
         "crest": "https://crests.football-data.org/346.png",
-        "played": 16,
+        "played": 17,
         "won": 4,
         "draw": 3,
-        "lost": 9,
-        "gd": -14,
+        "lost": 10,
+        "gd": -15,
         "points": 15,
         "form": null
       },
@@ -2544,11 +2544,11 @@
         "rank": 23,
         "team": "Burnley FC",
         "crest": "https://crests.football-data.org/328.png",
-        "played": 16,
+        "played": 17,
         "won": 1,
         "draw": 8,
-        "lost": 7,
-        "gd": -9,
+        "lost": 8,
+        "gd": -11,
         "points": 11,
         "form": null
       },
@@ -2822,6 +2822,18 @@
       },
       {
         "rank": 4,
+        "team": "Al Merreikh",
+        "crest": "https://img.thesports.com/football/team/8d91d8a9d0bad26ee122319e68d005f4.png",
+        "played": 7,
+        "won": 3,
+        "draw": 4,
+        "lost": 0,
+        "gd": 6,
+        "points": 13,
+        "form": ""
+      },
+      {
+        "rank": 5,
         "team": "Kiyovu FC",
         "crest": "https://img.thesports.com/football/team/6a439a84204d3c26d1eb8f5ab23ceff0.png",
         "played": 8,
@@ -2833,7 +2845,7 @@
         "form": ""
       },
       {
-        "rank": 5,
+        "rank": 6,
         "team": "Al-Hilal Omdurman",
         "crest": "https://img.thesports.com/football/team/a691d27e179273d643d91b9693771b47.png",
         "played": 6,
@@ -2845,7 +2857,7 @@
         "form": ""
       },
       {
-        "rank": 6,
+        "rank": 7,
         "team": "Gorilla FC",
         "crest": "https://img.thesports.com/football/team/ede61a516e9aed5d770ccb6b8c0e5abe.png",
         "played": 9,
@@ -2857,7 +2869,7 @@
         "form": ""
       },
       {
-        "rank": 7,
+        "rank": 8,
         "team": "Rayon Sports FC",
         "crest": "https://img.thesports.com/football/team/7c860f3dc3dabf1f765e22b5925f840f.png",
         "played": 7,
@@ -2869,7 +2881,7 @@
         "form": ""
       },
       {
-        "rank": 8,
+        "rank": 9,
         "team": "Bugesera",
         "crest": "https://img.thesports.com/football/team/5db95690bfe0fa492a593ae56589cb6c.png",
         "played": 7,
@@ -2881,31 +2893,31 @@
         "form": ""
       },
       {
-        "rank": 9,
-        "team": "Al Merreikh",
-        "crest": "https://img.thesports.com/football/team/8d91d8a9d0bad26ee122319e68d005f4.png",
-        "played": 6,
-        "won": 2,
-        "draw": 4,
-        "lost": 0,
-        "gd": 4,
-        "points": 10,
-        "form": ""
-      },
-      {
         "rank": 10,
-        "team": "Musanze FC",
-        "crest": "https://img.thesports.com/football/team/5b6ae244c1130c6614d4f1b492ecbcd0.png",
-        "played": 8,
+        "team": "APR FC",
+        "crest": "https://img.thesports.com/football/team/5c3095c0b6846235ed53eca20544d5c9.png",
+        "played": 5,
         "won": 3,
-        "draw": 0,
-        "lost": 5,
-        "gd": -3,
-        "points": 9,
+        "draw": 2,
+        "lost": 0,
+        "gd": 7,
+        "points": 11,
         "form": ""
       },
       {
         "rank": 11,
+        "team": "Musanze FC",
+        "crest": "https://img.thesports.com/football/team/5b6ae244c1130c6614d4f1b492ecbcd0.png",
+        "played": 9,
+        "won": 3,
+        "draw": 0,
+        "lost": 6,
+        "gd": -6,
+        "points": 9,
+        "form": ""
+      },
+      {
+        "rank": 12,
         "team": "Sunrise FC",
         "crest": "https://img.thesports.com/football/team/7d8bf0f818f1f3d6ea131b9cd5f07fae.png",
         "played": 9,
@@ -2914,18 +2926,6 @@
         "lost": 2,
         "gd": -6,
         "points": 9,
-        "form": ""
-      },
-      {
-        "rank": 12,
-        "team": "APR FC",
-        "crest": "https://img.thesports.com/football/team/5c3095c0b6846235ed53eca20544d5c9.png",
-        "played": 4,
-        "won": 2,
-        "draw": 2,
-        "lost": 0,
-        "gd": 4,
-        "points": 8,
         "form": ""
       },
       {
@@ -2944,11 +2944,11 @@
         "rank": 14,
         "team": "AS Kigali",
         "crest": "https://img.thesports.com/football/team/0cb6386133648f81fd1603f4d6b6e740.png",
-        "played": 7,
+        "played": 8,
         "won": 2,
         "draw": 2,
-        "lost": 3,
-        "gd": -3,
+        "lost": 4,
+        "gd": -5,
         "points": 8,
         "form": ""
       },
@@ -6130,25 +6130,25 @@
     ]
   },
   "leagueUpdated": {
-    "cl": "2026-11-25T19:08:24.296955+00:00",
-    "en": "2026-11-25T19:08:24.296955+00:00",
-    "es": "2026-11-25T19:08:24.296955+00:00",
-    "de": "2026-11-25T19:08:24.296955+00:00",
-    "it": "2026-11-25T19:08:24.296955+00:00",
-    "fr": "2026-11-25T19:08:24.296955+00:00",
-    "br": "2026-11-25T19:08:24.296955+00:00",
-    "nl": "2026-11-25T19:08:24.296955+00:00",
-    "pt": "2026-11-25T19:08:24.296955+00:00",
-    "eng2": "2026-11-25T19:08:24.296955+00:00",
-    "sa": "2026-11-25T19:09:40.034698+00:00",
-    "sd": "2026-11-25T19:09:40.220142+00:00",
-    "rw": "2026-11-25T19:09:40.389352+00:00",
-    "qa": "2026-11-25T19:09:40.553072+00:00",
-    "el": "2026-11-25T19:09:40.714651+00:00",
-    "cafcl": "2026-11-25T19:09:40.870119+00:00",
-    "afcelite": "2026-11-25T19:09:41.048098+00:00",
-    "nations": "2026-11-25T19:09:41.200782+00:00",
-    "euro": "2026-11-25T19:09:41.350360+00:00"
+    "cl": "2026-11-26T01:31:48.928678+00:00",
+    "en": "2026-11-26T01:31:48.928678+00:00",
+    "es": "2026-11-26T01:31:48.928678+00:00",
+    "de": "2026-11-26T01:31:48.928678+00:00",
+    "it": "2026-11-26T01:31:48.928678+00:00",
+    "fr": "2026-11-26T01:31:48.928678+00:00",
+    "br": "2026-11-26T01:31:48.928678+00:00",
+    "nl": "2026-11-26T01:31:48.928678+00:00",
+    "pt": "2026-11-26T01:31:48.928678+00:00",
+    "eng2": "2026-11-26T01:31:48.928678+00:00",
+    "sa": "2026-11-26T01:33:03.476302+00:00",
+    "sd": "2026-11-26T01:33:03.581387+00:00",
+    "rw": "2026-11-26T01:33:03.715653+00:00",
+    "qa": "2026-11-26T01:33:03.834660+00:00",
+    "el": "2026-11-26T01:33:03.954672+00:00",
+    "cafcl": "2026-11-26T01:33:04.082081+00:00",
+    "afcelite": "2026-11-26T01:33:04.197586+00:00",
+    "nations": "2026-11-26T01:33:04.324076+00:00",
+    "euro": "2026-11-26T01:33:04.444608+00:00"
   },
   "leagueSource": {
     "cl": "football-data.org",

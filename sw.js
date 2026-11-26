@@ -1,7 +1,7 @@
-const CACHE='korazol-shell-v36';
+const CACHE='korazol-shell-v37';
 const DATA_CACHE='korazol-data-v1';
-const SHELL=['./','./push-client-v5.js','./notifications-custom-v1.js','./account-v1.js','./account-config.json','./match-feed-v2.js','./match-detail-feed-v2.js','./match-extras-v1.js','./match-pulse-v1.js','./match-center-v1.js','./team-feed-v1.js','./league-feed-v1.js','./index.html','./fixtures.html','./match-details.html','./team-details.html','./champions.html','./league-details.html','./lineup-v2.html','./manifest.webmanifest','./kora-zol-icon-192.png','./kora-zol-icon-512.png'];
-const shellPage=path=>['match-details.html','team-details.html','champions.html','league-details.html','fixtures.html','lineup-v2.html'].find(page=>path.endsWith('/'+page))||'index.html';
+const SHELL=['./','./stadium-theme-v1.css','./stadium-preview.html','./push-client-v5.js','./notifications-custom-v1.js','./account-v1.js','./account-config.json','./match-feed-v2.js','./match-detail-feed-v2.js','./match-extras-v1.js','./match-pulse-v1.js','./match-center-v1.js','./team-feed-v1.js','./league-feed-v1.js','./index.html','./fixtures.html','./match-details.html','./team-details.html','./champions.html','./league-details.html','./lineup-v2.html','./manifest.webmanifest','./kora-zol-icon-192.png','./kora-zol-icon-512.png'];
+const shellPage=path=>['stadium-preview.html','match-details.html','team-details.html','champions.html','league-details.html','fixtures.html','lineup-v2.html'].find(page=>path.endsWith('/'+page))||'index.html';
 self.addEventListener('install',event=>{
  event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(SHELL)));
  self.skipWaiting();

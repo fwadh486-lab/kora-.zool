@@ -575,7 +575,26 @@ body>main>#settings.active{display:block!important;position:relative;min-width:0
 body>nav button[data-icon="▦"],body>nav button[data-icon="⌕"]{display:none!important}
 body>nav button[data-icon="⚙"]{display:flex!important;min-width:0!important}
 @media(max-width:360px){#settings .settings-backup{padding:12px!important}#settings .settings-actions button:not([hidden]){flex-basis:100%}}
-</style></head>
+</style><style id="kz-android-viewport-v39">
+html,body{width:100%;max-width:100%;overflow-x:hidden!important}
+body>header,body>.kz-topnav,body>main,body>nav{box-sizing:border-box;min-width:0;width:100%}
+body>main{max-width:760px!important;width:100%;margin-inline:auto!important}
+body>main>section{min-width:0;max-width:100%;box-sizing:border-box}
+body>main>section:not(.active){display:none!important}
+body>main>section.active{display:block!important}
+body>nav,body:has(#matches.active)>nav{left:0!important;right:0!important;transform:none!important;margin-inline:auto!important}
+body>header .logo{min-width:0;flex:1 1 auto}
+body>header .brand-wordmark{min-width:0;overflow-wrap:anywhere}
+body>.kz-topnav{max-width:760px;justify-content:flex-start}
+html.kz-settings-open{overflow-x:hidden!important;overflow-y:auto!important}
+html.kz-settings-open body{height:auto!important;max-height:none!important;overflow-x:hidden!important;overflow-y:visible!important;min-height:100vh}
+html.kz-settings-open body>main{height:auto!important;max-height:none!important;overflow:visible!important;padding-bottom:calc(120px + env(safe-area-inset-bottom,0px))!important}
+html.kz-settings-open #settings.active{display:block!important;width:100%;min-width:0;max-width:100%;height:auto!important;overflow:visible!important}
+#settings .settings-backup,#settings .settings-jump,#settings .settings-actions,#settings .notify-rule,#settings .pin-manage-list,#settings .push-preference-list{min-width:0;max-width:100%;box-sizing:border-box}
+#settings input,#settings select,#settings textarea{max-width:100%;min-width:0}
+#settings [hidden]{display:none!important}
+html.kz-native #settings.active{isolation:isolate;transform:translateZ(0);backface-visibility:visible}
+</style><script>if(/KoraZolAndroid/i.test(navigator.userAgent))document.documentElement.classList.add("kz-native");</script></head>
 
 <body>
 <header>
@@ -1016,10 +1035,12 @@ const scores=games.filter(m=>['live','finished'].includes(KoraMatchFeed.phaseOf(
 }
 
 function showTab(id,button){
+ const destination=document.getElementById(id);if(!destination)return;
+ document.documentElement.classList.toggle("kz-settings-open",id==="settings");
  document.querySelectorAll("main > section").forEach(s=>{
   s.classList.remove("active");
  });
- document.getElementById(id).classList.add("active");
+ destination.classList.add("active");
  if(id==="kzHome"){if(dayOffset!==0)goToday();kzRenderHome()}if(id==="kzCompetitions")kzRenderCompetitions();document.querySelectorAll("[data-kz-tab]").forEach(b=>{if(b.dataset.kzTab===id)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current")});
  if(id==="settings"){try{renderPinManager()}catch(e){console.warn("Settings pins unavailable",e)}}
  if(id==="favorites")loadResultHistory();
@@ -1031,9 +1052,19 @@ function showTab(id,button){
  if(button)button.classList.add("active");
  document.querySelectorAll("nav button").forEach(b=>{if(b.classList.contains("active"))b.setAttribute("aria-current","page");else b.removeAttribute("aria-current")});
  window.scrollTo(0,0);
+ if(id==="settings")kzRevealSettings();
 }
-
-{const actions=document.getElementById('kzHeaderActions');const search=kzNode('button','kz-stadium-search');search.type='button';search.setAttribute('aria-label','Search / البحث');search.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg>';search.onclick=()=>kzGo('search');actions.append(document.getElementById('soundBell'),search,document.querySelector('header .lang'));}applyLang();
+let kzSettingsFrame=0;
+function kzRevealSettings(){
+ const root=document.documentElement,section=document.getElementById("settings");
+ if(!section?.classList.contains("active"))return;
+ root.classList.add("kz-settings-open");
+ const reset=()=>{if(!section.classList.contains("active"))return;const scroller=document.scrollingElement||root;scroller.scrollLeft=0;document.body.scrollLeft=0;const main=section.parentElement;if(main)main.scrollLeft=0;void section.getBoundingClientRect().width;};
+ reset();cancelAnimationFrame(kzSettingsFrame);
+ kzSettingsFrame=requestAnimationFrame(()=>{reset();kzSettingsFrame=requestAnimationFrame(reset)});
+}
+window.addEventListener("pageshow",()=>{if(document.getElementById("settings")?.classList.contains("active"))kzRevealSettings()});
+{const actions=document.getElementById('kzHeaderActions');const search=kzNode('button','kz-stadium-search');search.type='button';search.setAttribute('aria-label','Search / البحث');search.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg>';search.onclick=()=>kzGo('search');actions.append(document.getElementById('soundBell'),search,document.querySelector('header .lang'));}if(new URLSearchParams(location.search).get("settings")==="1")showTab("settings",document.querySelector("nav button[data-icon='⚙']"));applyLang();
 restoreCachedScores();
 renderLive();
 const firstScoreRequest=refreshScores();
@@ -1056,7 +1087,7 @@ document.addEventListener("visibilitychange",()=>{if(!document.hidden&&navigator
 </script>
 <script src="./notifications-custom-v1.js"></script><script src="./account-v1.js"></script><script src="./push-client-v5.js"></script>
 
-<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=stadium20261126v38').catch(e=>console.warn('PWA service worker:',e)));}</script></body>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=stadium20261126v39').catch(e=>console.warn('PWA service worker:',e)));}</script></body>
 </html>
 <!-- CORAZOL navigation fix v3 -->
 

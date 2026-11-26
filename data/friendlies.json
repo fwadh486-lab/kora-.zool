@@ -1,0 +1,39 @@
+{
+  "updated": "2026-11-26T15:27:34.351296+00:00",
+  "date": "2026-11-26",
+  "source": "ESPN",
+  "partial": true,
+  "missingLeagues": [],
+  "matches": [
+    {
+      "id": "clubfriendly:401933656",
+      "eventId": "401933656",
+      "league": "clubfriendly",
+      "home": "FC Ilves",
+      "away": "SJK-J",
+      "homeLogo": "",
+      "awayLogo": "",
+      "date": "2026-11-26T13:00Z",
+      "score": "— : —",
+      "status": "Scheduled",
+      "phase": "upcoming",
+      "live": false,
+      "source": "ESPN"
+    },
+    {
+      "id": "clubfriendly:401936496",
+      "eventId": "401936496",
+      "league": "clubfriendly",
+      "home": "Frederiksberg Alliancen 2000",
+      "away": "Bronshoj",
+      "homeLogo": "",
+      "awayLogo": "",
+      "date": "2026-11-26T16:45Z",
+      "score": "— : —",
+      "status": "Scheduled",
+      "phase": "upcoming",
+      "live": false,
+      "source": "ESPN"
+    }
+  ]
+}

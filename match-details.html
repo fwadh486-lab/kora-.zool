@@ -279,6 +279,36 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 @media(prefers-color-scheme:light){.center-meta{color:#3b3157!important}}
 
 </style>
+<style id="kz-detail-contrast-v2">
+
+/* Match detail text: neutral foreground, brand colors reserved for controls and charts. */
+body{color:#ffffff!important}
+#content .panel{color:#ffffff}
+#content .panel h3{color:#ffffff!important;font-weight:800!important;font-size:17px!important;line-height:1.55}
+#content .item{font-size:14px!important;line-height:1.6;gap:12px;flex-wrap:wrap}
+#content .item>span{color:#c5cddd!important;font-weight:600;flex-shrink:0}
+#content .item>strong{color:#ffffff!important;font-weight:800;overflow-wrap:anywhere;min-width:0}
+#content .reference-performance-side>strong{color:#ffffff!important;font-size:14px;font-weight:800}
+#content .reference-performance-games small:not(.win):not(.loss),#content .muted,#content .notice,#content .reference-players,#content .reference-prediction-note,#content .comparison-result small,#content .event-meta{color:#c5cddd!important}
+#content .panel>button.badge{display:block;margin:12px 15px;padding:9px 14px;min-height:44px;border:1px solid #9274e8;border-radius:10px;background:#35294f;color:#ffffff!important;font:700 14px Cairo,Tahoma,Arial,sans-serif;cursor:pointer}
+#content .best-player .badge{color:#54c9e5;font-weight:800}
+#tabs button:not(.active){color:#c5cddd!important;font-weight:600}
+#tabs button.active{color:#ffffff!important;font-weight:800}
+#content .comparison-result,#content .h2h-row a,#content .event-minute,#content .event-subs,#content .h2h-stat strong{color:#ffffff!important}
+#content .stat-values small,#content .quick-stat small{color:#c5cddd!important}
+#content .center-hero h2,#content .center-score span,#content .center-subhead,#content .center-insight,#content .pulse-story{color:#ffffff!important}
+#content .center-hero .center-kicker,#content .center-meta,#content .center-poster-help,#content .center-status,#content .center-poster .center-loading,#content .pulse-times{color:#c5cddd!important}
+#content .center-link{color:#54c9e5!important}
+#content .center-stat{background:#22293d!important}
+#content .center-stat span{color:#c5cddd!important}
+#content .center-stat strong{color:#ffffff!important}
+#content .center-score strong{color:#54c9e5!important}
+#content .pulse-chart,#content .pulse-details{background:#191f30!important;color:#ffffff!important}
+#content .pulse-team-label,#content .pulse-details span{color:#ffffff!important}
+#content .pulse-details small,#content .pulse-help,#content .pulse-legend{color:#c5cddd!important}
+main>p:last-child a{color:#c5cddd!important}
+
+</style>
 </head><body><header><a href="./index.html">↩ المباريات</a><strong id="matchHeaderTitle">تفاصيل المباراة</strong><span>⚽</span></header><main class="container"><section id="hero" class="hero loading">جاري تحميل تفاصيل المباراة...</section><div class="tabs" id="tabs"><button class="active" data-tab="details">التفاصيل</button><button data-tab="center">⚡ ماتش سنتر</button><button data-tab="stats">الإحصائيات</button><button data-tab="events">الأحداث</button><button data-tab="pulse">💚 نبض زول</button><button data-tab="form">الأداء</button><button data-tab="h2h">المواجهات</button><button data-tab="lineup">التشكيلة</button></div><div class="match-tools"><button id="matchFav" type="button" onclick="toggleMatchFavorite()">☆ حفظ المباراة</button><button type="button" onclick="shareMatch()">↗ مشاركة</button><button type="button" onclick="refreshMatchDetails()" id="refreshDetail">⟳ تحديث</button><a class="calendar-entry" id="matchCalendar" hidden target="_blank" rel="noopener noreferrer" aria-label="إضافة موعد المباراة إلى التقويم">📅 التقويم</a><span id="matchUpdated" role="status"></span></div><div id="content"></div><p style="text-align:center;font-size:12px"><a href="https://sportscore.com/" style="color:inherit">Powered by SportScore</a></p></main><script src="./match-feed-v2.js"></script><script src="./match-detail-feed-v2.js"></script><script src="./match-extras-v1.js"></script><script src="./match-pulse-v1.js"></script><script src="./match-center-v1.js"></script><script>
 const $=id=>document.getElementById(id),q=new URLSearchParams(location.search),id=q.get("id"),leagueNames={en:"الدوري الإنجليزي الممتاز",es:"الدوري الإسباني",de:"الدوري الألماني",it:"الدوري الإيطالي",fr:"الدوري الفرنسي",cl:"دوري أبطال أوروبا",afcelite:"دوري أبطال آسيا للنخبة",nations:"دوري الأمم الأوروبية",sa:"الدوري السعودي",friendly:"وديات المنتخبات",clubfriendly:"وديات الأندية",nonfifa:"وديات أخرى",br:"الدوري البرازيلي",nl:"الدوري الهولندي",pt:"الدوري البرتغالي",eng2:"تشامبيونشيب",sd:"الدوري السوداني",rw:"الدوري الرواندي",qa:"الدوري القطري",el:"الدوري الأوروبي",cafcl:"دوري أبطال أفريقيا",euro:"كأس أمم أوروبا"},fmt=d=>new Date(d).toLocaleString("ar-SA",{weekday:"long",day:"numeric",month:"long",hour:"2-digit",minute:"2-digit"});
 let match=null,all=[],tab=["details","center","stats","events","pulse","form","h2h","lineup"].includes(q.get("tab"))?q.get("tab"):"details";

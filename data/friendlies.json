@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-27T15:00:06.112724+00:00",
+  "updated": "2026-11-27T16:07:45.029235+00:00",
   "date": "2026-11-27",
   "source": "ESPN",
   "partial": true,
@@ -74,9 +74,9 @@
       "homeLogo": "",
       "awayLogo": "",
       "date": "2026-11-27T17:45Z",
-      "score": "— : —",
-      "status": "Scheduled",
-      "phase": "upcoming",
+      "score": "0 - 0",
+      "status": "Canceled",
+      "phase": "other",
       "live": false,
       "source": "ESPN"
     }

@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-27T13:30:25.227746+00:00",
+  "updated": "2026-11-27T19:12:49.931599+00:00",
   "leagues": {
     "cl": [
       {
@@ -1527,7 +1527,7 @@
       {
         "rank": 13,
         "team": "Le Mans FC",
-        "crest": "https://crests.football-data.org/535.png",
+        "crest": "https://upload.wikimedia.org/wikipedia/en/5/57/Le_Mans_FC_logo.svg",
         "played": 11,
         "won": 2,
         "draw": 5,
@@ -1952,12 +1952,12 @@
         "rank": 10,
         "team": "FC Groningen",
         "crest": "https://crests.football-data.org/677.png",
-        "played": 13,
+        "played": 14,
         "won": 4,
-        "draw": 3,
+        "draw": 4,
         "lost": 6,
         "gd": -1,
-        "points": 15,
+        "points": 16,
         "form": null
       },
       {
@@ -2048,12 +2048,12 @@
         "rank": 18,
         "team": "Willem II Tilburg",
         "crest": "https://crests.football-data.org/672.png",
-        "played": 13,
+        "played": 14,
         "won": 0,
-        "draw": 3,
+        "draw": 4,
         "lost": 10,
         "gd": -30,
-        "points": 3,
+        "points": 4,
         "form": null
       }
     ],
@@ -2568,6 +2568,18 @@
     "sa": [
       {
         "rank": 1,
+        "team": "Al Qadsiah",
+        "crest": "https://img.thesports.com/football/team/bc74439d19c8bbaa17c57406b120b86d.png",
+        "played": 13,
+        "won": 10,
+        "draw": 1,
+        "lost": 2,
+        "gd": 22,
+        "points": 31,
+        "form": ""
+      },
+      {
+        "rank": 2,
         "team": "Al Hilal",
         "crest": "https://img.thesports.com/football/team/07a555616afab7be32e00150eacf4197.png",
         "played": 11,
@@ -2576,18 +2588,6 @@
         "lost": 1,
         "gd": 23,
         "points": 30,
-        "form": ""
-      },
-      {
-        "rank": 2,
-        "team": "Al Qadsiah",
-        "crest": "https://img.thesports.com/football/team/bc74439d19c8bbaa17c57406b120b86d.png",
-        "played": 12,
-        "won": 9,
-        "draw": 1,
-        "lost": 2,
-        "gd": 20,
-        "points": 28,
         "form": ""
       },
       {
@@ -2678,11 +2678,11 @@
         "rank": 10,
         "team": "Al Khaleej",
         "crest": "https://img.thesports.com/football/team/6d48cbd483dee74ed9aef387bb082d64.png",
-        "played": 12,
+        "played": 13,
         "won": 3,
         "draw": 6,
-        "lost": 3,
-        "gd": -5,
+        "lost": 4,
+        "gd": -6,
         "points": 15,
         "form": ""
       },
@@ -2690,12 +2690,12 @@
         "rank": 11,
         "team": "Al Kholood",
         "crest": "https://img.thesports.com/football/team/068aa9b10aa4d47ab3a8fdbe8b716518.png",
-        "played": 11,
-        "won": 3,
+        "played": 12,
+        "won": 4,
         "draw": 3,
         "lost": 5,
-        "gd": -9,
-        "points": 12,
+        "gd": -8,
+        "points": 15,
         "form": ""
       },
       {
@@ -2714,11 +2714,11 @@
         "rank": 13,
         "team": "Al Fayha",
         "crest": "https://img.thesports.com/football/team/2b0b85fcec97994a4758002512957d7a.png",
-        "played": 12,
+        "played": 13,
         "won": 2,
         "draw": 5,
-        "lost": 5,
-        "gd": -4,
+        "lost": 6,
+        "gd": -6,
         "points": 11,
         "form": ""
       },
@@ -3040,18 +3040,42 @@
       },
       {
         "rank": 4,
-        "team": "Al-Arabi Sports Club",
-        "crest": "https://img.thesports.com/football/team/00bb4a98ec1224af879bd139519ce3b7.png",
-        "played": 10,
-        "won": 3,
-        "draw": 5,
-        "lost": 2,
-        "gd": 7,
-        "points": 14,
+        "team": "Lusail City FC",
+        "crest": "https://img.thesports.com/football/team/4ffc7d1c2110bf73bbb60224d33cb774.png",
+        "played": 11,
+        "won": 4,
+        "draw": 3,
+        "lost": 4,
+        "gd": 3,
+        "points": 15,
         "form": ""
       },
       {
         "rank": 5,
+        "team": "Al-Gharafa Sports Club",
+        "crest": "https://img.thesports.com/football/team/fcac1eae493c493061e66608158b40ef.png",
+        "played": 11,
+        "won": 4,
+        "draw": 3,
+        "lost": 4,
+        "gd": -1,
+        "points": 15,
+        "form": ""
+      },
+      {
+        "rank": 6,
+        "team": "Al-Arabi Sports Club",
+        "crest": "https://img.thesports.com/football/team/00bb4a98ec1224af879bd139519ce3b7.png",
+        "played": 11,
+        "won": 3,
+        "draw": 5,
+        "lost": 3,
+        "gd": 5,
+        "points": 14,
+        "form": ""
+      },
+      {
+        "rank": 7,
         "team": "Al-Shamal Sports Club",
         "crest": "https://img.thesports.com/football/team/af47207f36a49c89502312138e54f6a7.png",
         "played": 10,
@@ -3063,7 +3087,7 @@
         "form": ""
       },
       {
-        "rank": 6,
+        "rank": 8,
         "team": "Al-Ahli Sports Club(Qatar)",
         "crest": "https://img.thesports.com/football/team/99b9e5475b90aa5b91fe68685bcd5e78.png",
         "played": 10,
@@ -3072,30 +3096,6 @@
         "lost": 3,
         "gd": -1,
         "points": 13,
-        "form": ""
-      },
-      {
-        "rank": 7,
-        "team": "Lusail City FC",
-        "crest": "https://img.thesports.com/football/team/4ffc7d1c2110bf73bbb60224d33cb774.png",
-        "played": 10,
-        "won": 3,
-        "draw": 3,
-        "lost": 4,
-        "gd": 1,
-        "points": 12,
-        "form": ""
-      },
-      {
-        "rank": 8,
-        "team": "Al-Gharafa Sports Club",
-        "crest": "https://img.thesports.com/football/team/fcac1eae493c493061e66608158b40ef.png",
-        "played": 10,
-        "won": 3,
-        "draw": 3,
-        "lost": 4,
-        "gd": -3,
-        "points": 12,
         "form": ""
       },
       {
@@ -3138,11 +3138,11 @@
         "rank": 12,
         "team": "Al-Sailiya Sports Club",
         "crest": "https://img.thesports.com/football/team/d1abf15eb401638c8bfd12c8b4606f66.png",
-        "played": 10,
+        "played": 11,
         "won": 1,
         "draw": 1,
-        "lost": 8,
-        "gd": -23,
+        "lost": 9,
+        "gd": -25,
         "points": 4,
         "form": ""
       }
@@ -6130,25 +6130,25 @@
     ]
   },
   "leagueUpdated": {
-    "cl": "2026-11-27T13:30:25.227746+00:00",
-    "en": "2026-11-27T13:30:25.227746+00:00",
-    "es": "2026-11-27T13:30:25.227746+00:00",
-    "de": "2026-11-27T13:30:25.227746+00:00",
-    "it": "2026-11-27T13:30:25.227746+00:00",
-    "fr": "2026-11-27T13:30:25.227746+00:00",
-    "br": "2026-11-27T13:30:25.227746+00:00",
-    "nl": "2026-11-27T13:30:25.227746+00:00",
-    "pt": "2026-11-27T13:30:25.227746+00:00",
-    "eng2": "2026-11-27T13:30:25.227746+00:00",
-    "sa": "2026-11-27T13:31:40.344903+00:00",
-    "sd": "2026-11-27T13:31:40.524873+00:00",
-    "rw": "2026-11-27T13:31:40.711004+00:00",
-    "qa": "2026-11-27T13:31:40.891365+00:00",
-    "el": "2026-11-27T13:31:41.078135+00:00",
-    "cafcl": "2026-11-27T13:31:41.279109+00:00",
-    "afcelite": "2026-11-27T13:31:41.470950+00:00",
-    "nations": "2026-11-27T13:31:41.657391+00:00",
-    "euro": "2026-11-27T13:31:41.840900+00:00"
+    "cl": "2026-11-27T19:12:49.931599+00:00",
+    "en": "2026-11-27T19:12:49.931599+00:00",
+    "es": "2026-11-27T19:12:49.931599+00:00",
+    "de": "2026-11-27T19:12:49.931599+00:00",
+    "it": "2026-11-27T19:12:49.931599+00:00",
+    "fr": "2026-11-27T19:12:49.931599+00:00",
+    "br": "2026-11-27T19:12:49.931599+00:00",
+    "nl": "2026-11-27T19:12:49.931599+00:00",
+    "pt": "2026-11-27T19:12:49.931599+00:00",
+    "eng2": "2026-11-27T19:12:49.931599+00:00",
+    "sa": "2026-11-27T19:14:03.356755+00:00",
+    "sd": "2026-11-27T19:14:03.453799+00:00",
+    "rw": "2026-11-27T19:14:03.555659+00:00",
+    "qa": "2026-11-27T19:14:03.667864+00:00",
+    "el": "2026-11-27T19:14:03.769192+00:00",
+    "cafcl": "2026-11-27T19:14:03.867509+00:00",
+    "afcelite": "2026-11-27T19:14:03.965857+00:00",
+    "nations": "2026-11-27T19:14:04.071618+00:00",
+    "euro": "2026-11-27T19:14:04.185236+00:00"
   },
   "leagueSource": {
     "cl": "football-data.org",

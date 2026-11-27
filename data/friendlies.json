@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-27T12:38:27.681472+00:00",
+  "updated": "2026-11-27T13:56:41.862358+00:00",
   "date": "2026-11-27",
   "source": "ESPN",
   "partial": true,
@@ -14,9 +14,9 @@
       "homeLogo": "",
       "awayLogo": "https://a.espncdn.com/i/teamlogos/soccer/500/8219.png",
       "date": "2026-11-27T11:30Z",
-      "score": "— : —",
-      "status": "Scheduled",
-      "phase": "upcoming",
+      "score": "1 - 3",
+      "status": "FT",
+      "phase": "finished",
       "live": false,
       "source": "ESPN"
     },
@@ -25,7 +25,7 @@
       "eventId": "401936553",
       "league": "clubfriendly",
       "home": "1. FC Tatran Presov",
-      "away": "FC LOKOMOTÍVA KOŠICE",
+      "away": "FC Lokomotíva Kosice",
       "homeLogo": "",
       "awayLogo": "",
       "date": "2026-11-27T13:00Z",

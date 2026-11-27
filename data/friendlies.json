@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-27T19:38:12.294482+00:00",
+  "updated": "2026-11-27T20:31:18.989837+00:00",
   "date": "2026-11-27",
   "source": "ESPN",
   "partial": true,
@@ -59,9 +59,9 @@
       "homeLogo": "https://a.espncdn.com/i/teamlogos/soccer/500/2936.png",
       "awayLogo": "",
       "date": "2026-11-27T17:30Z",
-      "score": "— : —",
-      "status": "Scheduled",
-      "phase": "upcoming",
+      "score": "0 - 3",
+      "status": "FT",
+      "phase": "finished",
       "live": false,
       "source": "ESPN"
     },

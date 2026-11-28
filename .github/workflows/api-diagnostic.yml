@@ -1,0 +1,62 @@
+name: Read-only football API diagnostic
+on:
+  push:
+    branches: [diagnostic-api-20261128]
+    paths: ['.github/workflows/api-diagnostic.yml']
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Check existing key without revealing it
+        env:
+          API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
+        run: |
+          python - <<'PY'
+          import os, json, urllib.request, urllib.error
+          key = os.environ.get('API_FOOTBALL_KEY','').strip()
+          if not key:
+              print('DIAGNOSTIC: secret absent')
+              raise SystemExit(1)
+          def probe(path):
+              req=urllib.request.Request('https://v3.football.api-sports.io/'+path,headers={'x-apisports-key':key})
+              try:
+                  with urllib.request.urlopen(req,timeout=15) as r:
+                      code=r.status
+                      p=json.load(r)
+              except urllib.error.HTTPError as e:
+                  print('DIAGNOSTIC: HTTP',e.code)
+                  try: p=json.loads(e.read())
+                  except Exception: return None
+                  code=e.code
+              except Exception as e:
+                  print('DIAGNOSTIC: transport error',type(e).__name__)
+                  return None
+              errors=p.get('errors')
+              if errors:
+                  msg=str(errors).lower()
+                  label=next((k for k in ['suspend','rate limit','quota','subscription','invalid','unauthorized','ip address','access','plan','key'] if k in msg),'other provider error')
+                  print('DIAGNOSTIC:',path,'HTTP',code,'provider error:',label)
+                  return None
+              if code != 200:
+                  return None
+              print('DIAGNOSTIC:',path,'HTTP',code,'results',p.get('results'))
+              return p.get('response')
+          s=probe('status')
+          if not isinstance(s,dict):
+              raise SystemExit(1)
+          sub=s.get('subscription',{})
+          print('DIAGNOSTIC: subscription active:',sub.get('active'),'plan:',sub.get('plan'))
+          quota=s.get('requests',{})
+          print('DIAGNOSTIC: daily quota:',quota.get('limit_day'),'used:',quota.get('current'))
+          if sub.get('active') is not True:
+              raise SystemExit(1)
+          probe('fixtures?live=all')
+          for country in ['Sudan','Saudi-Arabia']:
+              leagues=probe('leagues?country='+country)
+              if isinstance(leagues,list):
+                  for item in leagues:
+                      print('DIAGNOSTIC: league',item.get('league',{}).get('name'),'latest season',max([x.get('year',0) for x in item.get('seasons',[])],default=0))
+          PY

@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-27T19:12:49.931599+00:00",
+  "updated": "2026-11-28T01:29:25.783302+00:00",
   "leagues": {
     "cl": [
       {
@@ -524,11 +524,11 @@
         "rank": 8,
         "team": "Chelsea FC",
         "crest": "https://crests.football-data.org/61.png",
-        "played": 11,
+        "played": 12,
         "won": 5,
         "draw": 1,
-        "lost": 5,
-        "gd": 0,
+        "lost": 6,
+        "gd": -1,
         "points": 16,
         "form": null
       },
@@ -594,6 +594,18 @@
       },
       {
         "rank": 14,
+        "team": "Nottingham Forest FC",
+        "crest": "https://crests.football-data.org/351.png",
+        "played": 12,
+        "won": 3,
+        "draw": 3,
+        "lost": 6,
+        "gd": -5,
+        "points": 12,
+        "form": null
+      },
+      {
+        "rank": 15,
         "team": "Coventry City FC",
         "crest": "https://crests.football-data.org/1076.png",
         "played": 11,
@@ -605,7 +617,7 @@
         "form": null
       },
       {
-        "rank": 15,
+        "rank": 16,
         "team": "Fulham FC",
         "crest": "https://crests.football-data.org/63.png",
         "played": 11,
@@ -617,7 +629,7 @@
         "form": null
       },
       {
-        "rank": 16,
+        "rank": 17,
         "team": "Ipswich Town FC",
         "crest": "https://crests.football-data.org/349.png",
         "played": 11,
@@ -626,18 +638,6 @@
         "lost": 6,
         "gd": -7,
         "points": 11,
-        "form": null
-      },
-      {
-        "rank": 17,
-        "team": "Nottingham Forest FC",
-        "crest": "https://crests.football-data.org/351.png",
-        "played": 11,
-        "won": 2,
-        "draw": 3,
-        "lost": 6,
-        "gd": -6,
-        "points": 9,
         "form": null
       },
       {
@@ -740,6 +740,18 @@
       },
       {
         "rank": 6,
+        "team": "Real Racing Club de Santander",
+        "crest": "https://crests.football-data.org/5335.png",
+        "played": 14,
+        "won": 6,
+        "draw": 2,
+        "lost": 6,
+        "gd": -10,
+        "points": 20,
+        "form": null
+      },
+      {
+        "rank": 7,
         "team": "Sevilla FC",
         "crest": "https://crests.football-data.org/559.png",
         "played": 13,
@@ -748,18 +760,6 @@
         "lost": 4,
         "gd": -2,
         "points": 19,
-        "form": null
-      },
-      {
-        "rank": 7,
-        "team": "Real Racing Club de Santander",
-        "crest": "https://crests.football-data.org/5335.png",
-        "played": 13,
-        "won": 5,
-        "draw": 2,
-        "lost": 6,
-        "gd": -12,
-        "points": 17,
         "form": null
       },
       {
@@ -850,11 +850,11 @@
         "rank": 15,
         "team": "Levante UD",
         "crest": "https://crests.football-data.org/88.png",
-        "played": 13,
+        "played": 14,
         "won": 2,
         "draw": 6,
-        "lost": 5,
-        "gd": -5,
+        "lost": 6,
+        "gd": -7,
         "points": 12,
         "form": null
       },
@@ -984,12 +984,12 @@
         "rank": 6,
         "team": "SV Werder Bremen",
         "crest": "https://crests.football-data.org/12.png",
-        "played": 10,
+        "played": 11,
         "won": 5,
-        "draw": 3,
+        "draw": 4,
         "lost": 2,
         "gd": 6,
-        "points": 18,
+        "points": 19,
         "form": null
       },
       {
@@ -1128,12 +1128,12 @@
         "rank": 18,
         "team": "Borussia Mönchengladbach",
         "crest": "https://crests.football-data.org/18.png",
-        "played": 10,
+        "played": 11,
         "won": 1,
-        "draw": 1,
+        "draw": 2,
         "lost": 8,
         "gd": -14,
-        "points": 4,
+        "points": 5,
         "form": null
       }
     ],
@@ -1224,6 +1224,18 @@
       },
       {
         "rank": 8,
+        "team": "Bologna FC 1909",
+        "crest": "https://crests.football-data.org/103.png",
+        "played": 13,
+        "won": 5,
+        "draw": 4,
+        "lost": 4,
+        "gd": 2,
+        "points": 19,
+        "form": null
+      },
+      {
+        "rank": 9,
         "team": "SSC Napoli",
         "crest": "https://crests.football-data.org/113.png",
         "played": 12,
@@ -1231,18 +1243,6 @@
         "draw": 3,
         "lost": 4,
         "gd": 5,
-        "points": 18,
-        "form": null
-      },
-      {
-        "rank": 9,
-        "team": "Bologna FC 1909",
-        "crest": "https://crests.football-data.org/103.png",
-        "played": 12,
-        "won": 5,
-        "draw": 3,
-        "lost": 4,
-        "gd": 2,
         "points": 18,
         "form": null
       },
@@ -1356,6 +1356,18 @@
       },
       {
         "rank": 19,
+        "team": "Venezia FC",
+        "crest": "https://crests.football-data.org/454.png",
+        "played": 13,
+        "won": 2,
+        "draw": 1,
+        "lost": 10,
+        "gd": -17,
+        "points": 7,
+        "form": null
+      },
+      {
+        "rank": 20,
         "team": "Udinese Calcio",
         "crest": "https://crests.football-data.org/115.png",
         "played": 12,
@@ -1363,18 +1375,6 @@
         "draw": 3,
         "lost": 8,
         "gd": -13,
-        "points": 6,
-        "form": null
-      },
-      {
-        "rank": 20,
-        "team": "Venezia FC",
-        "crest": "https://crests.football-data.org/454.png",
-        "played": 12,
-        "won": 2,
-        "draw": 0,
-        "lost": 10,
-        "gd": -17,
         "points": 6,
         "form": null
       }
@@ -1396,16 +1396,28 @@
         "rank": 2,
         "team": "Paris FC",
         "crest": "https://crests.football-data.org/1045.png",
-        "played": 11,
+        "played": 12,
         "won": 7,
         "draw": 2,
-        "lost": 2,
-        "gd": 11,
+        "lost": 3,
+        "gd": 10,
         "points": 23,
         "form": null
       },
       {
         "rank": 3,
+        "team": "Stade Brestois 29",
+        "crest": "https://crests.football-data.org/512.png",
+        "played": 12,
+        "won": 6,
+        "draw": 3,
+        "lost": 3,
+        "gd": 8,
+        "points": 21,
+        "form": null
+      },
+      {
+        "rank": 4,
         "team": "Lille OSC",
         "crest": "https://crests.football-data.org/521.png",
         "played": 11,
@@ -1417,7 +1429,7 @@
         "form": null
       },
       {
-        "rank": 4,
+        "rank": 5,
         "team": "Olympique Lyonnais",
         "crest": "https://crests.football-data.org/523.png",
         "played": 11,
@@ -1429,25 +1441,13 @@
         "form": null
       },
       {
-        "rank": 5,
+        "rank": 6,
         "team": "Olympique de Marseille",
         "crest": "https://crests.football-data.org/516.png",
         "played": 11,
         "won": 6,
         "draw": 0,
         "lost": 5,
-        "gd": 7,
-        "points": 18,
-        "form": null
-      },
-      {
-        "rank": 6,
-        "team": "Stade Brestois 29",
-        "crest": "https://crests.football-data.org/512.png",
-        "played": 11,
-        "won": 5,
-        "draw": 3,
-        "lost": 3,
         "gd": 7,
         "points": 18,
         "form": null
@@ -1527,7 +1527,7 @@
       {
         "rank": 13,
         "team": "Le Mans FC",
-        "crest": "https://upload.wikimedia.org/wikipedia/en/5/57/Le_Mans_FC_logo.svg",
+        "crest": "https://crests.football-data.org/535.png",
         "played": 11,
         "won": 2,
         "draw": 5,
@@ -1626,23 +1626,23 @@
         "rank": 3,
         "team": "Cruzeiro EC",
         "crest": "https://crests.football-data.org/1771.png",
-        "played": 36,
-        "won": 20,
+        "played": 37,
+        "won": 21,
         "draw": 6,
         "lost": 10,
-        "gd": 9,
-        "points": 66,
+        "gd": 10,
+        "points": 69,
         "form": null
       },
       {
         "rank": 4,
         "team": "Fluminense FC",
         "crest": "https://crests.football-data.org/1765.png",
-        "played": 36,
+        "played": 37,
         "won": 18,
         "draw": 9,
-        "lost": 9,
-        "gd": 15,
+        "lost": 10,
+        "gd": 14,
         "points": 63,
         "form": null
       },
@@ -2180,6 +2180,18 @@
       },
       {
         "rank": 11,
+        "team": "CD Nacional",
+        "crest": "https://crests.football-data.org/5529.png",
+        "played": 12,
+        "won": 4,
+        "draw": 1,
+        "lost": 7,
+        "gd": -7,
+        "points": 13,
+        "form": null
+      },
+      {
+        "rank": 12,
         "team": "FC Alverca",
         "crest": "https://crests.football-data.org/7822.png",
         "played": 11,
@@ -2191,7 +2203,7 @@
         "form": null
       },
       {
-        "rank": 12,
+        "rank": 13,
         "team": "CF Estrela da Amadora",
         "crest": "https://crests.football-data.org/9136.png",
         "played": 11,
@@ -2199,18 +2211,6 @@
         "draw": 4,
         "lost": 5,
         "gd": -5,
-        "points": 10,
-        "form": null
-      },
-      {
-        "rank": 13,
-        "team": "CD Nacional",
-        "crest": "https://crests.football-data.org/5529.png",
-        "played": 11,
-        "won": 3,
-        "draw": 1,
-        "lost": 7,
-        "gd": -8,
         "points": 10,
         "form": null
       },
@@ -2230,11 +2230,11 @@
         "rank": 15,
         "team": "CS Marítimo",
         "crest": "https://crests.football-data.org/5575.png",
-        "played": 10,
+        "played": 11,
         "won": 2,
         "draw": 2,
-        "lost": 6,
-        "gd": -12,
+        "lost": 7,
+        "gd": -13,
         "points": 8,
         "form": null
       },
@@ -2280,11 +2280,11 @@
         "rank": 1,
         "team": "Middlesbrough FC",
         "crest": "https://crests.football-data.org/343.png",
-        "played": 17,
+        "played": 18,
         "won": 10,
         "draw": 5,
-        "lost": 2,
-        "gd": 14,
+        "lost": 3,
+        "gd": 12,
         "points": 35,
         "form": null
       },
@@ -2340,12 +2340,12 @@
         "rank": 6,
         "team": "Southampton FC",
         "crest": "https://crests.football-data.org/340.png",
-        "played": 17,
-        "won": 9,
+        "played": 18,
+        "won": 10,
         "draw": 5,
         "lost": 3,
-        "gd": 16,
-        "points": 28,
+        "gd": 18,
+        "points": 31,
         "form": null
       },
       {
@@ -2576,7 +2576,7 @@
         "lost": 2,
         "gd": 22,
         "points": 31,
-        "form": ""
+        "form": "WWLWW"
       },
       {
         "rank": 2,
@@ -2588,7 +2588,7 @@
         "lost": 1,
         "gd": 23,
         "points": 30,
-        "form": ""
+        "form": "WWWWW"
       },
       {
         "rank": 3,
@@ -2600,10 +2600,22 @@
         "lost": 2,
         "gd": 15,
         "points": 28,
-        "form": ""
+        "form": "WWWWL"
       },
       {
         "rank": 4,
+        "team": "Al Ittihad",
+        "crest": "https://img.thesports.com/football/team/dea986d20115216c05d1a45ba9a6162e.png",
+        "played": 12,
+        "won": 8,
+        "draw": 3,
+        "lost": 1,
+        "gd": 11,
+        "points": 27,
+        "form": "LWWDW"
+      },
+      {
+        "rank": 5,
         "team": "Al Ahli SC",
         "crest": "https://img.thesports.com/football/team/a0a227a6100628d3213e1fc321acd4f2.png",
         "played": 12,
@@ -2612,31 +2624,19 @@
         "lost": 4,
         "gd": 11,
         "points": 24,
-        "form": ""
-      },
-      {
-        "rank": 5,
-        "team": "Al Ittihad",
-        "crest": "https://img.thesports.com/football/team/dea986d20115216c05d1a45ba9a6162e.png",
-        "played": 11,
-        "won": 7,
-        "draw": 3,
-        "lost": 1,
-        "gd": 10,
-        "points": 24,
-        "form": ""
+        "form": "WWWLW"
       },
       {
         "rank": 6,
         "team": "NEOM Sports Club",
         "crest": "https://img.thesports.com/football/team/e5516d35314acec9169f33834a199842.png",
-        "played": 12,
+        "played": 13,
         "won": 7,
         "draw": 1,
-        "lost": 4,
-        "gd": 8,
+        "lost": 5,
+        "gd": 7,
         "points": 22,
-        "form": ""
+        "form": "LLWWL"
       },
       {
         "rank": 7,
@@ -2648,7 +2648,7 @@
         "lost": 3,
         "gd": 1,
         "points": 19,
-        "form": ""
+        "form": "DWLWD"
       },
       {
         "rank": 8,
@@ -2660,7 +2660,7 @@
         "lost": 3,
         "gd": 6,
         "points": 17,
-        "form": ""
+        "form": "WDWWW"
       },
       {
         "rank": 9,
@@ -2672,7 +2672,7 @@
         "lost": 5,
         "gd": -3,
         "points": 16,
-        "form": ""
+        "form": "DWLLD"
       },
       {
         "rank": 10,
@@ -2684,7 +2684,7 @@
         "lost": 4,
         "gd": -6,
         "points": 15,
-        "form": ""
+        "form": "WWLWL"
       },
       {
         "rank": 11,
@@ -2696,7 +2696,7 @@
         "lost": 5,
         "gd": -8,
         "points": 15,
-        "form": ""
+        "form": "LLLLW"
       },
       {
         "rank": 12,
@@ -2708,7 +2708,7 @@
         "lost": 6,
         "gd": -15,
         "points": 12,
-        "form": ""
+        "form": "DLWLL"
       },
       {
         "rank": 13,
@@ -2720,7 +2720,7 @@
         "lost": 6,
         "gd": -6,
         "points": 11,
-        "form": ""
+        "form": "LLDWL"
       },
       {
         "rank": 14,
@@ -2732,7 +2732,7 @@
         "lost": 6,
         "gd": -11,
         "points": 11,
-        "form": ""
+        "form": "DLWLD"
       },
       {
         "rank": 15,
@@ -2744,7 +2744,7 @@
         "lost": 6,
         "gd": -6,
         "points": 10,
-        "form": ""
+        "form": "DLLDL"
       },
       {
         "rank": 16,
@@ -2756,7 +2756,7 @@
         "lost": 8,
         "gd": -14,
         "points": 9,
-        "form": ""
+        "form": "WLLLW"
       },
       {
         "rank": 17,
@@ -2768,7 +2768,7 @@
         "lost": 7,
         "gd": -14,
         "points": 5,
-        "form": ""
+        "form": "LDLLD"
       },
       {
         "rank": 18,
@@ -2780,7 +2780,7 @@
         "lost": 9,
         "gd": -13,
         "points": 3,
-        "form": ""
+        "form": "LLLDL"
       }
     ],
     "rw": [
@@ -2822,6 +2822,18 @@
       },
       {
         "rank": 4,
+        "team": "Rayon Sports FC",
+        "crest": "https://img.thesports.com/football/team/7c860f3dc3dabf1f765e22b5925f840f.png",
+        "played": 8,
+        "won": 4,
+        "draw": 3,
+        "lost": 1,
+        "gd": 6,
+        "points": 15,
+        "form": ""
+      },
+      {
+        "rank": 5,
         "team": "Al Merreikh",
         "crest": "https://img.thesports.com/football/team/8d91d8a9d0bad26ee122319e68d005f4.png",
         "played": 7,
@@ -2833,19 +2845,19 @@
         "form": ""
       },
       {
-        "rank": 5,
+        "rank": 6,
         "team": "Kiyovu FC",
         "crest": "https://img.thesports.com/football/team/6a439a84204d3c26d1eb8f5ab23ceff0.png",
-        "played": 8,
+        "played": 9,
         "won": 4,
         "draw": 1,
-        "lost": 3,
-        "gd": 4,
+        "lost": 4,
+        "gd": 3,
         "points": 13,
         "form": ""
       },
       {
-        "rank": 6,
+        "rank": 7,
         "team": "Al-Hilal Omdurman",
         "crest": "https://img.thesports.com/football/team/a691d27e179273d643d91b9693771b47.png",
         "played": 6,
@@ -2857,7 +2869,7 @@
         "form": ""
       },
       {
-        "rank": 7,
+        "rank": 8,
         "team": "Gorilla FC",
         "crest": "https://img.thesports.com/football/team/ede61a516e9aed5d770ccb6b8c0e5abe.png",
         "played": 9,
@@ -2866,18 +2878,6 @@
         "lost": 2,
         "gd": 1,
         "points": 13,
-        "form": ""
-      },
-      {
-        "rank": 8,
-        "team": "Rayon Sports FC",
-        "crest": "https://img.thesports.com/football/team/7c860f3dc3dabf1f765e22b5925f840f.png",
-        "played": 7,
-        "won": 3,
-        "draw": 3,
-        "lost": 1,
-        "gd": 5,
-        "points": 12,
         "form": ""
       },
       {
@@ -3012,7 +3012,7 @@
         "lost": 0,
         "gd": 16,
         "points": 24,
-        "form": ""
+        "form": "DWDWW"
       },
       {
         "rank": 2,
@@ -3024,7 +3024,7 @@
         "lost": 3,
         "gd": 17,
         "points": 21,
-        "form": ""
+        "form": "LWWLW"
       },
       {
         "rank": 3,
@@ -3036,7 +3036,7 @@
         "lost": 1,
         "gd": 11,
         "points": 21,
-        "form": ""
+        "form": "WWWWL"
       },
       {
         "rank": 4,
@@ -3048,7 +3048,7 @@
         "lost": 4,
         "gd": 3,
         "points": 15,
-        "form": ""
+        "form": "LWWLW"
       },
       {
         "rank": 5,
@@ -3060,7 +3060,7 @@
         "lost": 4,
         "gd": -1,
         "points": 15,
-        "form": ""
+        "form": "DWLWW"
       },
       {
         "rank": 6,
@@ -3072,7 +3072,7 @@
         "lost": 3,
         "gd": 5,
         "points": 14,
-        "form": ""
+        "form": "LDDLL"
       },
       {
         "rank": 7,
@@ -3084,7 +3084,7 @@
         "lost": 3,
         "gd": 1,
         "points": 13,
-        "form": ""
+        "form": "DLLWD"
       },
       {
         "rank": 8,
@@ -3096,7 +3096,7 @@
         "lost": 3,
         "gd": -1,
         "points": 13,
-        "form": ""
+        "form": "LDWDD"
       },
       {
         "rank": 9,
@@ -3108,7 +3108,7 @@
         "lost": 5,
         "gd": -6,
         "points": 11,
-        "form": ""
+        "form": "WWLLL"
       },
       {
         "rank": 10,
@@ -3120,7 +3120,7 @@
         "lost": 6,
         "gd": -11,
         "points": 10,
-        "form": ""
+        "form": "LLLWL"
       },
       {
         "rank": 11,
@@ -3132,7 +3132,7 @@
         "lost": 5,
         "gd": -9,
         "points": 9,
-        "form": ""
+        "form": "DWLLW"
       },
       {
         "rank": 12,
@@ -3144,7 +3144,7 @@
         "lost": 9,
         "gd": -25,
         "points": 4,
-        "form": ""
+        "form": "LLLWL"
       }
     ],
     "el": [
@@ -3158,7 +3158,7 @@
         "lost": 0,
         "gd": 10,
         "points": 15,
-        "form": ""
+        "form": "WWWWW"
       },
       {
         "rank": 2,
@@ -3170,7 +3170,7 @@
         "lost": 0,
         "gd": 10,
         "points": 13,
-        "form": ""
+        "form": "WWDWW"
       },
       {
         "rank": 3,
@@ -3182,7 +3182,7 @@
         "lost": 0,
         "gd": 8,
         "points": 13,
-        "form": ""
+        "form": "WWWWD"
       },
       {
         "rank": 4,
@@ -3194,7 +3194,7 @@
         "lost": 1,
         "gd": 9,
         "points": 12,
-        "form": ""
+        "form": "WWWLW"
       },
       {
         "rank": 5,
@@ -3206,7 +3206,7 @@
         "lost": 1,
         "gd": 6,
         "points": 12,
-        "form": ""
+        "form": "WWWWL"
       },
       {
         "rank": 6,
@@ -3218,7 +3218,7 @@
         "lost": 0,
         "gd": 8,
         "points": 11,
-        "form": ""
+        "form": "WDWWD"
       },
       {
         "rank": 7,
@@ -3230,7 +3230,7 @@
         "lost": 1,
         "gd": 4,
         "points": 10,
-        "form": ""
+        "form": "WWDLW"
       },
       {
         "rank": 8,
@@ -3242,7 +3242,7 @@
         "lost": 1,
         "gd": 1,
         "points": 10,
-        "form": ""
+        "form": "LDWWW"
       },
       {
         "rank": 9,
@@ -3254,7 +3254,7 @@
         "lost": 1,
         "gd": 1,
         "points": 10,
-        "form": ""
+        "form": "WWWDL"
       },
       {
         "rank": 10,
@@ -3266,7 +3266,7 @@
         "lost": 2,
         "gd": 5,
         "points": 9,
-        "form": ""
+        "form": "LWWLW"
       },
       {
         "rank": 11,
@@ -3278,7 +3278,7 @@
         "lost": 2,
         "gd": 5,
         "points": 9,
-        "form": ""
+        "form": "LLWWW"
       },
       {
         "rank": 12,
@@ -3290,7 +3290,7 @@
         "lost": 1,
         "gd": 4,
         "points": 8,
-        "form": ""
+        "form": "WLDDW"
       },
       {
         "rank": 13,
@@ -3302,7 +3302,7 @@
         "lost": 1,
         "gd": 0,
         "points": 8,
-        "form": ""
+        "form": "WWDLD"
       },
       {
         "rank": 14,
@@ -3314,7 +3314,7 @@
         "lost": 1,
         "gd": -1,
         "points": 8,
-        "form": ""
+        "form": "WWLDD"
       },
       {
         "rank": 15,
@@ -3326,7 +3326,7 @@
         "lost": 2,
         "gd": 2,
         "points": 7,
-        "form": ""
+        "form": "LLWDW"
       },
       {
         "rank": 16,
@@ -3338,7 +3338,7 @@
         "lost": 2,
         "gd": 0,
         "points": 7,
-        "form": ""
+        "form": "LDWWL"
       },
       {
         "rank": 17,
@@ -3350,7 +3350,7 @@
         "lost": 2,
         "gd": -1,
         "points": 7,
-        "form": ""
+        "form": "DWLWL"
       },
       {
         "rank": 18,
@@ -3362,7 +3362,7 @@
         "lost": 2,
         "gd": -3,
         "points": 7,
-        "form": ""
+        "form": "WLDLW"
       },
       {
         "rank": 19,
@@ -3374,7 +3374,7 @@
         "lost": 3,
         "gd": 0,
         "points": 6,
-        "form": ""
+        "form": "LLLWW"
       },
       {
         "rank": 20,
@@ -3386,7 +3386,7 @@
         "lost": 3,
         "gd": -1,
         "points": 6,
-        "form": ""
+        "form": "LWLLW"
       },
       {
         "rank": 21,
@@ -3398,7 +3398,7 @@
         "lost": 3,
         "gd": -1,
         "points": 6,
-        "form": ""
+        "form": "WLLWL"
       },
       {
         "rank": 22,
@@ -3410,7 +3410,7 @@
         "lost": 1,
         "gd": -1,
         "points": 6,
-        "form": ""
+        "form": "DWDDL"
       },
       {
         "rank": 23,
@@ -3422,7 +3422,7 @@
         "lost": 3,
         "gd": -3,
         "points": 6,
-        "form": ""
+        "form": "WLLWL"
       },
       {
         "rank": 24,
@@ -3434,7 +3434,7 @@
         "lost": 3,
         "gd": -3,
         "points": 6,
-        "form": ""
+        "form": "LLLWW"
       },
       {
         "rank": 25,
@@ -3446,7 +3446,7 @@
         "lost": 3,
         "gd": -4,
         "points": 6,
-        "form": ""
+        "form": "LLLWW"
       },
       {
         "rank": 26,
@@ -3458,7 +3458,7 @@
         "lost": 3,
         "gd": -4,
         "points": 6,
-        "form": ""
+        "form": "WWLLL"
       },
       {
         "rank": 27,
@@ -3470,7 +3470,7 @@
         "lost": 2,
         "gd": 4,
         "points": 5,
-        "form": ""
+        "form": "LDWDL"
       },
       {
         "rank": 28,
@@ -3482,7 +3482,7 @@
         "lost": 2,
         "gd": -4,
         "points": 5,
-        "form": ""
+        "form": "LLDWD"
       },
       {
         "rank": 29,
@@ -3494,7 +3494,7 @@
         "lost": 3,
         "gd": -2,
         "points": 4,
-        "form": ""
+        "form": "WDLLL"
       },
       {
         "rank": 30,
@@ -3506,7 +3506,7 @@
         "lost": 3,
         "gd": -3,
         "points": 4,
-        "form": ""
+        "form": "LWLLD"
       },
       {
         "rank": 31,
@@ -3518,7 +3518,7 @@
         "lost": 3,
         "gd": -5,
         "points": 4,
-        "form": ""
+        "form": "DLWLL"
       },
       {
         "rank": 32,
@@ -3530,7 +3530,7 @@
         "lost": 4,
         "gd": -3,
         "points": 3,
-        "form": ""
+        "form": "LLWLL"
       },
       {
         "rank": 33,
@@ -3542,7 +3542,7 @@
         "lost": 3,
         "gd": -8,
         "points": 2,
-        "form": ""
+        "form": "LDLLD"
       },
       {
         "rank": 34,
@@ -3554,7 +3554,7 @@
         "lost": 3,
         "gd": -10,
         "points": 2,
-        "form": ""
+        "form": "LLDLD"
       },
       {
         "rank": 35,
@@ -3566,7 +3566,7 @@
         "lost": 4,
         "gd": -8,
         "points": 1,
-        "form": ""
+        "form": "DLLLL"
       },
       {
         "rank": 36,
@@ -3578,7 +3578,7 @@
         "lost": 5,
         "gd": -12,
         "points": 0,
-        "form": ""
+        "form": "LLLLL"
       }
     ],
     "cafcl": [
@@ -4706,7 +4706,7 @@
             "lost": 0,
             "gd": 11,
             "points": 13,
-            "form": ""
+            "form": "WWWWD"
           },
           {
             "rank": 2,
@@ -4718,7 +4718,7 @@
             "lost": 0,
             "gd": 10,
             "points": 11,
-            "form": ""
+            "form": "WDDWW"
           },
           {
             "rank": 3,
@@ -4730,7 +4730,7 @@
             "lost": 1,
             "gd": 3,
             "points": 10,
-            "form": ""
+            "form": "WWLWD"
           },
           {
             "rank": 4,
@@ -4742,7 +4742,7 @@
             "lost": 1,
             "gd": 3,
             "points": 10,
-            "form": ""
+            "form": "WWLWD"
           },
           {
             "rank": 5,
@@ -4754,7 +4754,7 @@
             "lost": 1,
             "gd": 3,
             "points": 9,
-            "form": ""
+            "form": "LLWWW"
           },
           {
             "rank": 6,
@@ -4766,7 +4766,7 @@
             "lost": 2,
             "gd": -2,
             "points": 9,
-            "form": ""
+            "form": "WWWLL"
           },
           {
             "rank": 7,
@@ -4778,7 +4778,7 @@
             "lost": 1,
             "gd": 2,
             "points": 8,
-            "form": ""
+            "form": "DWWDL"
           },
           {
             "rank": 8,
@@ -4790,7 +4790,7 @@
             "lost": 1,
             "gd": 2,
             "points": 8,
-            "form": ""
+            "form": "DDWLW"
           },
           {
             "rank": 9,
@@ -4802,7 +4802,7 @@
             "lost": 2,
             "gd": -1,
             "points": 7,
-            "form": ""
+            "form": "DLWLW"
           },
           {
             "rank": 10,
@@ -4814,7 +4814,7 @@
             "lost": 2,
             "gd": 2,
             "points": 6,
-            "form": ""
+            "form": "LLLWW"
           },
           {
             "rank": 11,
@@ -4826,7 +4826,7 @@
             "lost": 3,
             "gd": -3,
             "points": 6,
-            "form": ""
+            "form": "LLWLW"
           },
           {
             "rank": 12,
@@ -4838,7 +4838,7 @@
             "lost": 2,
             "gd": -2,
             "points": 5,
-            "form": ""
+            "form": "WLLDD"
           },
           {
             "rank": 13,
@@ -4850,7 +4850,7 @@
             "lost": 3,
             "gd": -6,
             "points": 2,
-            "form": ""
+            "form": "LDLDL"
           },
           {
             "rank": 14,
@@ -4862,7 +4862,7 @@
             "lost": 3,
             "gd": -6,
             "points": 2,
-            "form": ""
+            "form": "LLDDL"
           },
           {
             "rank": 15,
@@ -4874,7 +4874,7 @@
             "lost": 3,
             "gd": -7,
             "points": 2,
-            "form": ""
+            "form": "DDLLL"
           },
           {
             "rank": 16,
@@ -4886,7 +4886,7 @@
             "lost": 5,
             "gd": -9,
             "points": 0,
-            "form": ""
+            "form": "LLLLL"
           }
         ]
       },
@@ -4903,7 +4903,7 @@
             "lost": 0,
             "gd": 13,
             "points": 13,
-            "form": ""
+            "form": "WWWDW"
           },
           {
             "rank": 2,
@@ -4915,7 +4915,7 @@
             "lost": 1,
             "gd": 3,
             "points": 12,
-            "form": ""
+            "form": "WWWWL"
           },
           {
             "rank": 3,
@@ -4927,7 +4927,7 @@
             "lost": 0,
             "gd": 7,
             "points": 11,
-            "form": ""
+            "form": "WWDDW"
           },
           {
             "rank": 4,
@@ -4939,7 +4939,7 @@
             "lost": 1,
             "gd": 6,
             "points": 10,
-            "form": ""
+            "form": "LWDWW"
           },
           {
             "rank": 5,
@@ -4951,7 +4951,7 @@
             "lost": 1,
             "gd": 5,
             "points": 10,
-            "form": ""
+            "form": "WDLWW"
           },
           {
             "rank": 6,
@@ -4963,7 +4963,7 @@
             "lost": 1,
             "gd": 4,
             "points": 10,
-            "form": ""
+            "form": "LWWDW"
           },
           {
             "rank": 7,
@@ -4975,7 +4975,7 @@
             "lost": 1,
             "gd": 3,
             "points": 8,
-            "form": ""
+            "form": "DWWLD"
           },
           {
             "rank": 8,
@@ -4987,7 +4987,7 @@
             "lost": 2,
             "gd": -1,
             "points": 7,
-            "form": ""
+            "form": "WWDLL"
           },
           {
             "rank": 9,
@@ -4999,7 +4999,7 @@
             "lost": 2,
             "gd": -1,
             "points": 7,
-            "form": ""
+            "form": "LLWDW"
           },
           {
             "rank": 10,
@@ -5011,7 +5011,7 @@
             "lost": 2,
             "gd": -1,
             "points": 7,
-            "form": ""
+            "form": "WDLLW"
           },
           {
             "rank": 11,
@@ -5023,7 +5023,7 @@
             "lost": 2,
             "gd": -2,
             "points": 7,
-            "form": ""
+            "form": "WLDWL"
           },
           {
             "rank": 12,
@@ -5035,7 +5035,7 @@
             "lost": 2,
             "gd": -3,
             "points": 3,
-            "form": ""
+            "form": "DLDDL"
           },
           {
             "rank": 13,
@@ -5047,7 +5047,7 @@
             "lost": 4,
             "gd": -7,
             "points": 3,
-            "form": ""
+            "form": "LLLWL"
           },
           {
             "rank": 14,
@@ -5059,7 +5059,7 @@
             "lost": 3,
             "gd": -4,
             "points": 2,
-            "form": ""
+            "form": "LLDLD"
           },
           {
             "rank": 15,
@@ -5071,7 +5071,7 @@
             "lost": 4,
             "gd": -8,
             "points": 1,
-            "form": ""
+            "form": "LLLDL"
           },
           {
             "rank": 16,
@@ -5083,7 +5083,7 @@
             "lost": 5,
             "gd": -14,
             "points": 0,
-            "form": ""
+            "form": "LLLLL"
           }
         ]
       }
@@ -5102,7 +5102,7 @@
             "lost": 1,
             "gd": 4,
             "points": 13,
-            "form": ""
+            "form": "WDWLW"
           },
           {
             "rank": 2,
@@ -5114,7 +5114,7 @@
             "lost": 2,
             "gd": 5,
             "points": 12,
-            "form": ""
+            "form": "LWLWW"
           },
           {
             "rank": 3,
@@ -5126,7 +5126,7 @@
             "lost": 2,
             "gd": 2,
             "points": 10,
-            "form": ""
+            "form": "WDWWL"
           },
           {
             "rank": 4,
@@ -5138,7 +5138,7 @@
             "lost": 6,
             "gd": -11,
             "points": 0,
-            "form": ""
+            "form": "LLLLL"
           }
         ]
       },
@@ -5155,7 +5155,7 @@
             "lost": 1,
             "gd": 8,
             "points": 11,
-            "form": ""
+            "form": "LWDWW"
           },
           {
             "rank": 2,
@@ -5167,7 +5167,7 @@
             "lost": 1,
             "gd": 4,
             "points": 11,
-            "form": ""
+            "form": "WDWWL"
           },
           {
             "rank": 3,
@@ -5179,7 +5179,7 @@
             "lost": 1,
             "gd": -4,
             "points": 11,
-            "form": ""
+            "form": "WDDLW"
           },
           {
             "rank": 4,
@@ -5191,7 +5191,7 @@
             "lost": 6,
             "gd": -8,
             "points": 0,
-            "form": ""
+            "form": "LLLLL"
           }
         ]
       },
@@ -5208,7 +5208,7 @@
             "lost": 1,
             "gd": 13,
             "points": 15,
-            "form": ""
+            "form": "WWWWW"
           },
           {
             "rank": 2,
@@ -5220,7 +5220,7 @@
             "lost": 1,
             "gd": 8,
             "points": 15,
-            "form": ""
+            "form": "WWWWL"
           },
           {
             "rank": 3,
@@ -5232,7 +5232,7 @@
             "lost": 4,
             "gd": -10,
             "points": 6,
-            "form": ""
+            "form": "LLLLW"
           },
           {
             "rank": 4,
@@ -5244,7 +5244,7 @@
             "lost": 6,
             "gd": -11,
             "points": 0,
-            "form": ""
+            "form": "LLLLL"
           }
         ]
       },
@@ -5261,7 +5261,7 @@
             "lost": 1,
             "gd": 3,
             "points": 15,
-            "form": ""
+            "form": "WWWLW"
           },
           {
             "rank": 2,
@@ -5273,7 +5273,7 @@
             "lost": 3,
             "gd": 1,
             "points": 9,
-            "form": ""
+            "form": "LLLWW"
           },
           {
             "rank": 3,
@@ -5285,7 +5285,7 @@
             "lost": 3,
             "gd": 2,
             "points": 9,
-            "form": ""
+            "form": "WLWWL"
           },
           {
             "rank": 4,
@@ -5297,7 +5297,7 @@
             "lost": 5,
             "gd": -6,
             "points": 3,
-            "form": ""
+            "form": "LWLLL"
           }
         ]
       },
@@ -5314,7 +5314,7 @@
             "lost": 0,
             "gd": 14,
             "points": 16,
-            "form": ""
+            "form": "WWWDW"
           },
           {
             "rank": 2,
@@ -5326,7 +5326,7 @@
             "lost": 1,
             "gd": 5,
             "points": 11,
-            "form": ""
+            "form": "WLWDW"
           },
           {
             "rank": 3,
@@ -5338,7 +5338,7 @@
             "lost": 3,
             "gd": -5,
             "points": 7,
-            "form": ""
+            "form": "LWLWL"
           },
           {
             "rank": 4,
@@ -5350,7 +5350,7 @@
             "lost": 6,
             "gd": -14,
             "points": 0,
-            "form": ""
+            "form": "LLLLL"
           }
         ]
       },
@@ -5367,7 +5367,7 @@
             "lost": 0,
             "gd": 5,
             "points": 12,
-            "form": ""
+            "form": "DWDWD"
           },
           {
             "rank": 2,
@@ -5379,7 +5379,7 @@
             "lost": 1,
             "gd": 3,
             "points": 11,
-            "form": ""
+            "form": "DWWWD"
           },
           {
             "rank": 3,
@@ -5391,7 +5391,7 @@
             "lost": 3,
             "gd": -3,
             "points": 7,
-            "form": ""
+            "form": "DLLLW"
           },
           {
             "rank": 4,
@@ -5403,7 +5403,7 @@
             "lost": 4,
             "gd": -5,
             "points": 2,
-            "form": ""
+            "form": "DLDLL"
           }
         ]
       },
@@ -5420,7 +5420,7 @@
             "lost": 0,
             "gd": 5,
             "points": 12,
-            "form": ""
+            "form": "WDDWD"
           },
           {
             "rank": 2,
@@ -5432,7 +5432,7 @@
             "lost": 2,
             "gd": 4,
             "points": 8,
-            "form": ""
+            "form": "WDDLW"
           },
           {
             "rank": 3,
@@ -5444,7 +5444,7 @@
             "lost": 2,
             "gd": -4,
             "points": 6,
-            "form": ""
+            "form": "LDDDL"
           },
           {
             "rank": 4,
@@ -5456,7 +5456,7 @@
             "lost": 2,
             "gd": -5,
             "points": 4,
-            "form": ""
+            "form": "LDDDD"
           }
         ]
       },
@@ -5473,7 +5473,7 @@
             "lost": 0,
             "gd": 5,
             "points": 14,
-            "form": ""
+            "form": "WDWWD"
           },
           {
             "rank": 2,
@@ -5485,7 +5485,7 @@
             "lost": 1,
             "gd": 3,
             "points": 11,
-            "form": ""
+            "form": "WDWLW"
           },
           {
             "rank": 3,
@@ -5497,7 +5497,7 @@
             "lost": 3,
             "gd": 2,
             "points": 5,
-            "form": ""
+            "form": "LWLLD"
           },
           {
             "rank": 4,
@@ -5509,7 +5509,7 @@
             "lost": 5,
             "gd": -10,
             "points": 3,
-            "form": ""
+            "form": "LLLWL"
           }
         ]
       },
@@ -5526,7 +5526,7 @@
             "lost": 1,
             "gd": 9,
             "points": 15,
-            "form": ""
+            "form": "WLWWW"
           },
           {
             "rank": 2,
@@ -5538,7 +5538,7 @@
             "lost": 2,
             "gd": 3,
             "points": 10,
-            "form": ""
+            "form": "DWWWL"
           },
           {
             "rank": 3,
@@ -5550,7 +5550,7 @@
             "lost": 2,
             "gd": 10,
             "points": 10,
-            "form": ""
+            "form": "DWLLW"
           },
           {
             "rank": 4,
@@ -5562,7 +5562,7 @@
             "lost": 6,
             "gd": -22,
             "points": 0,
-            "form": ""
+            "form": "LLLLL"
           }
         ]
       },
@@ -5579,7 +5579,7 @@
             "lost": 0,
             "gd": 7,
             "points": 16,
-            "form": ""
+            "form": "WWDWW"
           },
           {
             "rank": 2,
@@ -5591,7 +5591,7 @@
             "lost": 2,
             "gd": -1,
             "points": 8,
-            "form": ""
+            "form": "DWWDL"
           },
           {
             "rank": 3,
@@ -5603,7 +5603,7 @@
             "lost": 2,
             "gd": -1,
             "points": 6,
-            "form": ""
+            "form": "LLDDD"
           },
           {
             "rank": 4,
@@ -5615,7 +5615,7 @@
             "lost": 4,
             "gd": -5,
             "points": 2,
-            "form": ""
+            "form": "DLLLD"
           }
         ]
       },
@@ -5632,7 +5632,7 @@
             "lost": 0,
             "gd": 7,
             "points": 12,
-            "form": ""
+            "form": "WDWDD"
           },
           {
             "rank": 2,
@@ -5644,7 +5644,7 @@
             "lost": 0,
             "gd": 1,
             "points": 8,
-            "form": ""
+            "form": "DDDDW"
           },
           {
             "rank": 3,
@@ -5656,7 +5656,7 @@
             "lost": 3,
             "gd": -5,
             "points": 7,
-            "form": ""
+            "form": "DWLWL"
           },
           {
             "rank": 4,
@@ -5668,7 +5668,7 @@
             "lost": 3,
             "gd": -3,
             "points": 3,
-            "form": ""
+            "form": "LLDLD"
           }
         ]
       },
@@ -5685,7 +5685,7 @@
             "lost": 0,
             "gd": 14,
             "points": 14,
-            "form": ""
+            "form": "WWDWW"
           },
           {
             "rank": 2,
@@ -5697,7 +5697,7 @@
             "lost": 0,
             "gd": 3,
             "points": 12,
-            "form": ""
+            "form": "DWDWW"
           },
           {
             "rank": 3,
@@ -5709,7 +5709,7 @@
             "lost": 4,
             "gd": -8,
             "points": 4,
-            "form": ""
+            "form": "DLWLL"
           },
           {
             "rank": 4,
@@ -5721,7 +5721,7 @@
             "lost": 5,
             "gd": -9,
             "points": 3,
-            "form": ""
+            "form": "LLLLL"
           }
         ]
       },
@@ -5738,7 +5738,7 @@
             "lost": 0,
             "gd": 2,
             "points": 8,
-            "form": ""
+            "form": "LWDWD"
           },
           {
             "rank": 2,
@@ -5750,7 +5750,7 @@
             "lost": 2,
             "gd": 0,
             "points": 4,
-            "form": ""
+            "form": "DLDLW"
           },
           {
             "rank": 3,
@@ -5762,7 +5762,7 @@
             "lost": 1,
             "gd": -2,
             "points": 3,
-            "form": ""
+            "form": "LDDLD"
           }
         ]
       },
@@ -5779,7 +5779,7 @@
             "lost": 0,
             "gd": 2,
             "points": 8,
-            "form": ""
+            "form": "LDDWW"
           },
           {
             "rank": 2,
@@ -5791,7 +5791,7 @@
             "lost": 1,
             "gd": 2,
             "points": 7,
-            "form": ""
+            "form": "LWDLW"
           },
           {
             "rank": 3,
@@ -5803,7 +5803,7 @@
             "lost": 3,
             "gd": -4,
             "points": 1,
-            "form": ""
+            "form": "LLDLL"
           }
         ]
       }
@@ -5822,7 +5822,7 @@
             "lost": 0,
             "gd": 6,
             "points": 7,
-            "form": ""
+            "form": "WWDWD"
           },
           {
             "rank": 2,
@@ -5834,7 +5834,7 @@
             "lost": 0,
             "gd": 2,
             "points": 5,
-            "form": ""
+            "form": "WDDWD"
           },
           {
             "rank": 3,
@@ -5846,7 +5846,7 @@
             "lost": 2,
             "gd": -3,
             "points": 3,
-            "form": ""
+            "form": "DWLLW"
           },
           {
             "rank": 4,
@@ -5858,7 +5858,7 @@
             "lost": 2,
             "gd": -5,
             "points": 1,
-            "form": ""
+            "form": "DDLDL"
           }
         ]
       },
@@ -5875,7 +5875,7 @@
             "lost": 0,
             "gd": 5,
             "points": 9,
-            "form": ""
+            "form": "WWDWW"
           },
           {
             "rank": 2,
@@ -5887,7 +5887,7 @@
             "lost": 1,
             "gd": 0,
             "points": 4,
-            "form": ""
+            "form": "DWLDL"
           },
           {
             "rank": 3,
@@ -5899,7 +5899,7 @@
             "lost": 1,
             "gd": -3,
             "points": 2,
-            "form": ""
+            "form": "WWLDD"
           },
           {
             "rank": 4,
@@ -5911,7 +5911,7 @@
             "lost": 2,
             "gd": -2,
             "points": 1,
-            "form": ""
+            "form": "DDLDL"
           }
         ]
       },
@@ -5928,7 +5928,7 @@
             "lost": 0,
             "gd": 1,
             "points": 5,
-            "form": ""
+            "form": "DDDWL"
           },
           {
             "rank": 2,
@@ -5940,7 +5940,7 @@
             "lost": 0,
             "gd": 0,
             "points": 3,
-            "form": ""
+            "form": "WDDDD"
           },
           {
             "rank": 3,
@@ -5952,7 +5952,7 @@
             "lost": 0,
             "gd": 0,
             "points": 3,
-            "form": ""
+            "form": "LDDDL"
           },
           {
             "rank": 4,
@@ -5964,7 +5964,7 @@
             "lost": 1,
             "gd": -1,
             "points": 2,
-            "form": ""
+            "form": "WDLDD"
           }
         ]
       },
@@ -5981,7 +5981,7 @@
             "lost": 1,
             "gd": 2,
             "points": 6,
-            "form": ""
+            "form": "WLWWL"
           },
           {
             "rank": 2,
@@ -5993,7 +5993,7 @@
             "lost": 0,
             "gd": 1,
             "points": 5,
-            "form": ""
+            "form": "DDWDL"
           },
           {
             "rank": 3,
@@ -6005,7 +6005,7 @@
             "lost": 1,
             "gd": 0,
             "points": 4,
-            "form": ""
+            "form": "DLWWL"
           },
           {
             "rank": 4,
@@ -6017,7 +6017,7 @@
             "lost": 2,
             "gd": -3,
             "points": 1,
-            "form": ""
+            "form": "WDLLD"
           }
         ]
       },
@@ -6034,7 +6034,7 @@
             "lost": 1,
             "gd": 1,
             "points": 4,
-            "form": ""
+            "form": "WWLDL"
           },
           {
             "rank": 2,
@@ -6046,7 +6046,7 @@
             "lost": 1,
             "gd": 1,
             "points": 4,
-            "form": ""
+            "form": "WLWDL"
           },
           {
             "rank": 3,
@@ -6058,7 +6058,7 @@
             "lost": 1,
             "gd": 0,
             "points": 4,
-            "form": ""
+            "form": "WWLDD"
           },
           {
             "rank": 4,
@@ -6070,7 +6070,7 @@
             "lost": 1,
             "gd": -2,
             "points": 4,
-            "form": ""
+            "form": "WWLWD"
           }
         ]
       },
@@ -6087,7 +6087,7 @@
             "lost": 1,
             "gd": 2,
             "points": 6,
-            "form": ""
+            "form": "WWLDD"
           },
           {
             "rank": 2,
@@ -6099,7 +6099,7 @@
             "lost": 1,
             "gd": 0,
             "points": 6,
-            "form": ""
+            "form": "WLWWL"
           },
           {
             "rank": 3,
@@ -6111,7 +6111,7 @@
             "lost": 1,
             "gd": 0,
             "points": 4,
-            "form": ""
+            "form": "DLDWL"
           },
           {
             "rank": 4,
@@ -6123,32 +6123,32 @@
             "lost": 2,
             "gd": -2,
             "points": 1,
-            "form": ""
+            "form": "DWLDL"
           }
         ]
       }
     ]
   },
   "leagueUpdated": {
-    "cl": "2026-11-27T19:12:49.931599+00:00",
-    "en": "2026-11-27T19:12:49.931599+00:00",
-    "es": "2026-11-27T19:12:49.931599+00:00",
-    "de": "2026-11-27T19:12:49.931599+00:00",
-    "it": "2026-11-27T19:12:49.931599+00:00",
-    "fr": "2026-11-27T19:12:49.931599+00:00",
-    "br": "2026-11-27T19:12:49.931599+00:00",
-    "nl": "2026-11-27T19:12:49.931599+00:00",
-    "pt": "2026-11-27T19:12:49.931599+00:00",
-    "eng2": "2026-11-27T19:12:49.931599+00:00",
-    "sa": "2026-11-27T19:14:03.356755+00:00",
-    "sd": "2026-11-27T19:14:03.453799+00:00",
-    "rw": "2026-11-27T19:14:03.555659+00:00",
-    "qa": "2026-11-27T19:14:03.667864+00:00",
-    "el": "2026-11-27T19:14:03.769192+00:00",
-    "cafcl": "2026-11-27T19:14:03.867509+00:00",
-    "afcelite": "2026-11-27T19:14:03.965857+00:00",
-    "nations": "2026-11-27T19:14:04.071618+00:00",
-    "euro": "2026-11-27T19:14:04.185236+00:00"
+    "cl": "2026-11-28T01:29:25.783302+00:00",
+    "en": "2026-11-28T01:29:25.783302+00:00",
+    "es": "2026-11-28T01:29:25.783302+00:00",
+    "de": "2026-11-28T01:29:25.783302+00:00",
+    "it": "2026-11-28T01:29:25.783302+00:00",
+    "fr": "2026-11-28T01:29:25.783302+00:00",
+    "br": "2026-11-28T01:29:25.783302+00:00",
+    "nl": "2026-11-28T01:29:25.783302+00:00",
+    "pt": "2026-11-28T01:29:25.783302+00:00",
+    "eng2": "2026-11-28T01:29:25.783302+00:00",
+    "sa": "2026-11-28T01:30:42.468620+00:00",
+    "sd": "2026-11-28T01:30:42.645707+00:00",
+    "rw": "2026-11-28T01:30:42.837704+00:00",
+    "qa": "2026-11-28T01:30:43.008375+00:00",
+    "el": "2026-11-28T01:30:43.176519+00:00",
+    "cafcl": "2026-11-28T01:30:43.354682+00:00",
+    "afcelite": "2026-11-28T01:30:43.538759+00:00",
+    "nations": "2026-11-28T01:30:43.718955+00:00",
+    "euro": "2026-11-28T01:30:43.903698+00:00"
   },
   "leagueSource": {
     "cl": "football-data.org",
